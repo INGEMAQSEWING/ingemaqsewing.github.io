@@ -297,6 +297,23 @@ details.versiones summary { cursor: pointer; font-size: 14px; color: var(--suave
 .boton:active, .boton-2:active { transform: scale(.97); }
 @media (hover: hover) and (pointer: fine) { .boton:hover { background: #6cf0ff; } }
 .dir { font-family: var(--f-dato); font-size: 17px; color: var(--texto); overflow-wrap: anywhere; flex-basis: 100%; }
+/* Descargas: tablero de terminales — una fila por programa, botones de fuente a la derecha */
+.grupo-d { margin-top: 22px; }
+.grupo-d > h3 { font-family: var(--f-dato); font-size: 13px; font-weight: 500; color: var(--cian); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 10px; }
+.lista-d { list-style: none; margin: 0; padding: 0; border: 1px solid var(--linea); border-radius: var(--r-l); background: rgba(12,26,51,.75); overflow: hidden; }
+.lista-d > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 20px; align-items: center; padding: 14px 18px; border-top: 1px solid var(--linea); }
+.lista-d > li:first-child { border-top: 0; }
+.lista-d b { display: block; font-family: var(--f-titulo); font-size: 19px; font-weight: 600; line-height: 1.2; }
+.lista-d .det { font-family: var(--f-dato); font-size: 12.5px; color: var(--suave); }
+.fuentes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.fuentes a { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 8px 14px; border-radius: var(--r-m); font: 600 14.5px var(--f-titulo); text-decoration: none; border: 1px solid var(--cian); color: var(--cian); white-space: nowrap; }
+.fuentes a.principal { background: var(--cian); color: #041022; box-shadow: 0 0 14px rgba(34,227,255,.35); }
+.fuentes a:hover { background: rgba(34,227,255,.14); }
+.fuentes a.principal:hover { background: #6cf0ff; }
+@media (max-width: 620px) { .lista-d > li { grid-template-columns: minmax(0, 1fr); } .fuentes { justify-content: flex-start; } }
+.avisos-d { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 22px; }
+.avisos-d p { margin: 0; padding: 12px 16px; border-left: 3px solid var(--ambar); background: rgba(255,201,77,.06); border-radius: 0 var(--r-m) var(--r-m) 0; font-size: 15px; color: #c4d4ea; }
+.avisos-d b { color: var(--texto); }
 footer { margin-top: 80px; border-top: 1px solid var(--linea); }
 footer .ancho { padding-block: 26px 40px; color: var(--suave); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
 footer p { margin: 0; }
@@ -317,6 +334,7 @@ footer p { margin: 0; }
       <a href="#web">Apps web</a>
       <a href="#github">GitHub</a>
       <a href="#skills">Skills</a>
+      <a href="#descargas">Descargas</a>
       <a href="#contacto">Contacto</a>
     </nav>
   </div>
@@ -335,6 +353,7 @@ footer p { margin: 0; }
         <li>2 proyectos libres en GitHub</li>
         <li>2 skills en preparación</li>
       </ul>
+      <p style="margin:22px 0 0"><a class="boton" href="#descargas">Ir a descargas</a></p>
     </div>
 
     <nav class="mapa" aria-label="Mapa de secciones">
@@ -402,30 +421,30 @@ footer p { margin: 0; }
     </ol>
     <div class="rejilla">
       <article class="tarjeta destacada">
-        <div class="fila"><span class="ver">v1.0.12 · Windows 32 y 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <div class="fila"><span class="ver">v1.0.14 · Windows 32 y 64 bits</span><span class="estado prueba">En prueba</span></div>
         <h3>EDWIN CNC CAD-CAM</h3>
-        <p>Dibujo 2D en DXF y generador de código G para plasma con Mach3. Próximamente: escoger el lado del corte (por fuera, por dentro o sobre la línea).</p>
+        <p>Dibujo 2D en DXF y generador de código G para plasma con Mach3. Usted escoge el lado del corte: por fuera, por dentro o sobre la línea.</p>
         <ul class="plugins" aria-label="Plugins"><li>Generador de código G</li><li>Matriz</li><li>Arandela</li></ul>
         <details class="versiones">
           <summary>Versiones<span class="vh"> de EDWIN CNC CAD-CAM</span></summary>
           <ul class="lista-ver">
-            <li><b>1.0.14</b><span>Lado del corte en el código G (próxima)</span></li>
-            <li><b>1.0.13</b><span>CAD2CAM: distancia directa, escribir 100 y Enter (próxima)</span></li>
+            <li><b>1.0.14</b><span>Lado del corte en el código G</span></li>
+            <li><b>1.0.13</b><span>CAD2CAM: distancia directa, escribir 100 y Enter</span></li>
             <li><b>1.0.12</b><span>Nace la variante CAD2CAM</span></li>
             <li><b>1.0.9</b><span>Un solo instalador para 32 y 64 bits</span></li>
             <li><b>1.0.7</b><span>Generador de código G para Mach3</span></li>
             <li><b>1.0.5</b><span>Primera versión de prueba</span></li>
           </ul>
         </details>
-        <div class="enlaces"><a href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases">Descargas en GitHub<span class="vh"> de EDWIN CNC CAD-CAM</span> <span aria-hidden="true">↗</span></a></div>
+        <div class="enlaces"><a href="#descargas">Descargar<span class="vh"> EDWIN CNC CAD-CAM</span></a><a href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases">Todas las versiones<span class="vh"> en GitHub</span> <span aria-hidden="true">↗</span></a></div>
       </article>
 
       <article class="tarjeta">
-        <div class="fila"><span class="ver">v1.0.12 · Windows 32 y 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <div class="fila"><span class="ver">v1.0.14 · Windows 32 y 64 bits</span><span class="estado prueba">En prueba</span></div>
         <h3>EDWIN CNC CAD2CAM</h3>
         <p>El mismo programa, en español, para quien ya dibuja escribiendo comandos: L para línea, C para círculo, Enter repite la última orden, F8 traza recto y F3 se pega a los puntos del dibujo. Barras de herramientas a los lados, como en los programas de siempre.</p>
-        <ul class="plugins" aria-label="Plugins"><li>Comandos de teclado</li><li>Distancia directa (próxima)</li><li>Matriz</li><li>Arandela</li></ul>
-        <div class="enlaces"><a href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/tag/v1.0.12-prueba">Descargar CAD2CAM 1.0.12<span class="vh"> desde GitHub</span> <span aria-hidden="true">↗</span></a></div>
+        <ul class="plugins" aria-label="Plugins"><li>Comandos de teclado</li><li>Distancia directa</li><li>Matriz</li><li>Arandela</li></ul>
+        <div class="enlaces"><a href="#descargas">Descargar<span class="vh"> EDWIN CNC CAD2CAM</span></a></div>
       </article>
 
       <article class="tarjeta">
@@ -443,6 +462,7 @@ footer p { margin: 0; }
           </ul>
         </details>
         <div class="enlaces">
+          <a href="#descargas">Descargar<span class="vh"> EDWIN CNC 3D</span></a>
           <a href="manual-edwin-cnc-3d/">Manual<span class="vh"> de EDWIN CNC 3D</span></a>
           <a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d">Código fuente<span class="vh"> de EDWIN CNC 3D</span> <span aria-hidden="true">↗</span></a>
         </div>
@@ -459,16 +479,19 @@ footer p { margin: 0; }
         <div class="fila"><span class="ver">v1.0.4 · Android</span><span class="estado prueba">En prueba</span></div>
         <h3>QR Speaker</h3>
         <p>Dice en voz alta el monto de cada pago que le llega por Nequi o Daviplata, para que no tenga que mirar el celular mientras atiende. Además tiene 25 bancos y billeteras de Colombia en prueba, hasta confirmarlos con pagos reales.</p>
+        <div class="enlaces"><a href="#descargas">Descargar<span class="vh"> QR Speaker</span></a></div>
       </article>
       <article class="tarjeta">
         <div class="fila"><span class="ver">Android · Bluetooth</span><span class="estado camino">En desarrollo</span></div>
         <h3>CNC Control Phone</h3>
         <p>Mueva la mesa de plasma desde el celular: flechas para X y Y, START y STOP. El celular se conecta por Bluetooth al computador de Mach3, como si fuera un teclado.</p>
+        <div class="enlaces"><a href="#descargas">Descargar<span class="vh"> CNC Control Phone</span></a></div>
       </article>
       <article class="tarjeta">
         <div class="fila"><span class="ver">Android · Etapa 0</span><span class="estado camino">En desarrollo</span></div>
         <h3>Lycan Analytics</h3>
         <p>Análisis de video de tenis de mesa grabado con el celular. Hoy cuenta los golpes de cada peloteo por el sonido y exporta el video con marcador. Después vienen la postura, los metros recorridos, la pelota y sus botes.</p>
+        <div class="enlaces"><a href="#descargas">Descargar<span class="vh"> Lycan Analytics</span></a></div>
       </article>
     </div>
 
@@ -550,6 +573,66 @@ footer p { margin: 0; }
         <h3>Desdoblar láminas</h3>
         <p>Del modelo de una tolva o un ducto al plano de corte en DXF, con las líneas de doblez marcadas.</p>
       </article>
+    </div>
+  </section>
+
+  <!-- Descargas -->
+  <section id="descargas" class="ancho" aria-labelledby="descargas-t">
+    <div class="cabeza"><span class="cod">↓</span><h2 id="descargas-t">Descargas</h2></div>
+    <p class="intro">Todas las versiones de prueba en un solo lugar. Puede bajarlas desde MEGA o desde GitHub: es el mismo archivo.</p>
+
+    <div class="grupo-d">
+      <h3>Programas para Windows</h3>
+      <ul class="lista-d">
+        <li>
+          <div><b>EDWIN CNC CAD-CAM</b><span class="det">v1.0.14 · Windows 32 y 64 bits · 101 MB</span></div>
+          <div class="fuentes">
+            <a class="principal" href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/download/v1.0.14-prueba/EDWIN-CNC-CAD-CAM-1.0.14-Windows-32-y-64-bits.exe">Descargar<span class="vh"> EDWIN CNC CAD-CAM desde GitHub</span></a>
+          </div>
+        </li>
+        <li>
+          <div><b>EDWIN CNC CAD2CAM</b><span class="det">v1.0.14 · Windows 32 y 64 bits · 101 MB</span></div>
+          <div class="fuentes">
+            <a class="principal" href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/zgslCLTL">MEGA<span class="vh">: descargar EDWIN CNC CAD2CAM</span></a>
+            <a href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/download/v1.0.14-prueba/EDWIN-CNC-CAD2CAM-1.0.14-Windows-32-y-64-bits.exe">GitHub<span class="vh">: descargar EDWIN CNC CAD2CAM</span></a>
+          </div>
+        </li>
+        <li>
+          <div><b>EDWIN CNC 3D</b><span class="det">v1.0.2 · Windows 64 bits · instalador 112 MB o portable 153 MB</span></div>
+          <div class="fuentes">
+            <a class="principal" href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/releases/download/v1.0.2-prueba/EDWIN-CNC-3D-1.0.2-Windows-64-bits.exe">Instalador<span class="vh"> de EDWIN CNC 3D desde GitHub</span></a>
+            <a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/releases/download/v1.0.2-prueba/EDWIN-CNC-3D-1.0.2-portable.zip">Portable .zip<span class="vh"> de EDWIN CNC 3D</span></a>
+            <a href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/f50Bwaza">MEGA (v1.0.0)<span class="vh">: versión anterior de EDWIN CNC 3D</span></a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="grupo-d">
+      <h3>Apps para Android (.apk)</h3>
+      <ul class="lista-d">
+        <li>
+          <div><b>QR Speaker</b><span class="det">v1.0.4 · Android · 1,7 MB</span></div>
+          <div class="fuentes"><a class="principal" href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/usdADbgb">MEGA<span class="vh">: descargar QR Speaker</span></a></div>
+        </li>
+        <li>
+          <div><b>CNC Control Phone</b><span class="det">v1.0.1 · Android · 2,1 MB</span></div>
+          <div class="fuentes"><a class="principal" href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/XlUmRZKA">MEGA<span class="vh">: descargar CNC Control Phone</span></a></div>
+        </li>
+        <li>
+          <div><b>Lycan Analytics</b><span class="det">v1.0.1 · Android · 5,5 MB · versión temprana</span></div>
+          <div class="fuentes"><a class="principal" href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/60lWXR5K">MEGA<span class="vh">: descargar Lycan Analytics</span></a></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="fuentes" style="justify-content:flex-start;margin-top:16px">
+      <a href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg">Ver la carpeta completa en MEGA</a>
+    </div>
+
+    <div class="avisos-d">
+      <p><b>Windows:</b> si aparece «Windows protegió su PC», toque <b>Más información</b> y luego <b>Ejecutar de todas formas</b>. Sale porque el instalador todavía no tiene firma digital.</p>
+      <p><b>Android:</b> al abrir el .apk, el celular pide permiso para instalar apps de esa fuente (Chrome, Archivos o MEGA). Actívelo solo para ese paso.</p>
     </div>
   </section>
 
