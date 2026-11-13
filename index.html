@@ -49,10 +49,10 @@
    "name": "EDWIN CNC CAD-CAM",
    "applicationCategory": "DesignApplication",
    "operatingSystem": "Windows (32 y 64 bits)",
-   "softwareVersion": "1.0.12",
+   "softwareVersion": "1.0.14",
    "inLanguage": "es",
    "description": "Dibujo 2D en DXF y generador de código G para mesas de plasma con Mach3.",
-   "downloadUrl": "https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/tag/v1.0.12-prueba",
+   "downloadUrl": "https://ingemaqsewing.github.io/#descargas",
    "author": {
     "@id": "https://ingemaqsewing.github.io/#org"
    }
@@ -62,10 +62,10 @@
    "name": "EDWIN CNC CAD2CAM",
    "applicationCategory": "DesignApplication",
    "operatingSystem": "Windows (32 y 64 bits)",
-   "softwareVersion": "1.0.12",
+   "softwareVersion": "1.0.14",
    "inLanguage": "es",
    "description": "Dibujo 2D en DXF con comandos de teclado en español y generador de código G para mesas de plasma con Mach3.",
-   "downloadUrl": "https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/tag/v1.0.12-prueba",
+   "downloadUrl": "https://ingemaqsewing.github.io/#descargas",
    "author": {
     "@id": "https://ingemaqsewing.github.io/#org"
    }
@@ -78,6 +78,20 @@
    "softwareVersion": "1.0.2",
    "inLanguage": "es",
    "description": "Modelado 3D de tolvas, ductos y sinfines con desdoblado de caras a DXF para corte por plasma.",
+   "downloadUrl": "https://ingemaqsewing.github.io/#descargas",
+   "author": {
+    "@id": "https://ingemaqsewing.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Lycan Mouse Control",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Windows 10 y 11 (64 bits)",
+   "softwareVersion": "1.0.0",
+   "inLanguage": "es",
+   "description": "Maneja el ratón con gestos de las manos frente a la cámara del portátil, para dibujo 2D y modelado 3D.",
+   "downloadUrl": "https://ingemaqsewing.github.io/#descargas",
    "author": {
     "@id": "https://ingemaqsewing.github.io/#org"
    }
@@ -411,7 +425,7 @@ footer p { margin: 0; }
   <!-- 01 CAD-CAM -->
   <section id="cadcam" class="ancho" aria-labelledby="cadcam-t">
     <div class="cabeza"><span class="cod">01</span><h2 id="cadcam-t">Diseño CAD-CAM</h2></div>
-    <p class="intro">Tres programas para Windows para diseñar y cortar con plasma: EDWIN CNC 3D saca el plano DXF, y CAD-CAM o CAD2CAM sacan el código G listo para Mach3.</p>
+    <p class="intro">Tres programas para Windows para diseñar y cortar con plasma: EDWIN CNC 3D saca el plano DXF, y CAD-CAM o CAD2CAM sacan el código G listo para Mach3. Y Lycan Mouse Control, para manejar el ratón con las manos mientras diseña.</p>
     <ol class="flujo" role="list" aria-label="Recorrido de una pieza">
       <li>EDWIN CNC 3D</li><li class="flecha" aria-hidden="true">→</li>
       <li>Plano DXF (mm)</li><li class="flecha" aria-hidden="true">→</li>
@@ -467,6 +481,17 @@ footer p { margin: 0; }
           <a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d">Código fuente<span class="vh"> de EDWIN CNC 3D</span> <span aria-hidden="true">↗</span></a>
         </div>
       </article>
+
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">v1.0.0 · Windows 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <h3>Lycan Mouse Control</h3>
+        <p>Maneje el ratón con las manos frente a la cámara del portátil. Apunte con el índice, pellizque para hacer clic y cierre el puño para el clic derecho. En 3D, agarre el modelo con las dos manos y gírelo. Se adapta solo a EDWIN CNC 3D, SketchUp, FreeCAD, Blender y CAD-CAM.</p>
+        <ul class="plugins" aria-label="Funciones"><li>Modo 2D</li><li>Modo 3D</li><li>Perfiles por programa</li><li>Pausa con Ctrl+Alt+M</li></ul>
+        <div class="enlaces">
+          <a href="#descargas">Descargar<span class="vh"> Lycan Mouse Control</span></a>
+          <a href="lycan-mouse-control/">Manual y video<span class="vh"> de Lycan Mouse Control</span></a>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -498,8 +523,8 @@ footer p { margin: 0; }
     <div class="lab" role="group" aria-labelledby="lab-t">
       <p id="lab-t" class="eti">Laboratorio · ideas en exploración</p>
       <div>
-        <h3>Ratón por gestos</h3>
-        <p>Manejar el computador con la mano frente a la cámara: mover el puntero, hacer clic, clic derecho con el puño y acercar o alejar el dibujo.</p>
+        <h3>Control con la cara</h3>
+        <p>Para quien no puede usar las manos: mover el puntero con la cabeza y hacer clic con un gesto de la cara. Después, escribir con un teclado en pantalla que se maneja con parpadeos.</p>
       </div>
       <div>
         <h3>Mesa CNC por señas</h3>
@@ -603,6 +628,13 @@ footer p { margin: 0; }
             <a class="principal" href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/releases/download/v1.0.2-prueba/EDWIN-CNC-3D-1.0.2-Windows-64-bits.exe">Instalador<span class="vh"> de EDWIN CNC 3D desde GitHub</span></a>
             <a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/releases/download/v1.0.2-prueba/EDWIN-CNC-3D-1.0.2-portable.zip">Portable .zip<span class="vh"> de EDWIN CNC 3D</span></a>
             <a href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/f50Bwaza">MEGA (v1.0.0)<span class="vh">: versión anterior de EDWIN CNC 3D</span></a>
+          </div>
+        </li>
+        <li>
+          <div><b>Lycan Mouse Control</b><span class="det">v1.0.0 · Windows 64 bits · necesita cámara</span></div>
+          <div class="fuentes">
+            <a class="principal" href="https://github.com/INGEMAQSEWING/lycan-mouse-control/releases/download/v1.0.0-prueba/Lycan-Mouse-Control-1.0.0-Windows-64-bits.exe">Instalador<span class="vh"> de Lycan Mouse Control desde GitHub</span></a>
+            <a href="https://github.com/INGEMAQSEWING/lycan-mouse-control/releases/download/v1.0.0-prueba/Lycan-Mouse-Control-1.0.0-portable.zip">Portable .zip<span class="vh"> de Lycan Mouse Control</span></a>
           </div>
         </li>
       </ul>

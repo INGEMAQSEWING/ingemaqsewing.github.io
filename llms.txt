@@ -2,10 +2,11 @@
 
 > Programas para Windows para diseñar y cortar lámina con mesas de plasma (Mach3), apps Android y LycanRating, la plataforma de torneos de tenis de mesa. Hecho en Colombia. Contacto: ingemaqsewing@gmail.com
 
-## Programas para plasma (Windows)
-- EDWIN CNC CAD-CAM 1.0.12 (prueba): dibujo 2D en DXF y generador de código G para Mach3. Windows 32 y 64 bits. Descargas: https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases
-- EDWIN CNC CAD2CAM 1.0.12 (prueba): el mismo programa con comandos de teclado en español. Descarga: https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/tag/v1.0.12-prueba
-- EDWIN CNC 3D 1.0.2 (en prueba, sin descarga pública todavía): modelado 3D de tolvas, ductos y sinfines con desdoblado de caras a DXF. Windows 10 y 11 de 64 bits. Manual: https://ingemaqsewing.github.io/manual-edwin-cnc-3d/
+## Programas para Windows
+- EDWIN CNC CAD-CAM 1.0.14 (prueba): dibujo 2D en DXF y generador de código G para Mach3, con lado del corte. Windows 32 y 64 bits. Descargas: https://ingemaqsewing.github.io/#descargas
+- EDWIN CNC CAD2CAM 1.0.14 (prueba): el mismo programa con comandos de teclado en español y distancia directa. Descargas: https://ingemaqsewing.github.io/#descargas
+- EDWIN CNC 3D 1.0.2 (prueba): modelado 3D de tolvas, ductos y sinfines con desdoblado de caras a DXF, helicoidal y foto a DXF. Windows 10 y 11 de 64 bits. Manual: https://ingemaqsewing.github.io/manual-edwin-cnc-3d/
+- Lycan Mouse Control 1.0.0 (prueba): maneja el ratón con gestos de las manos frente a la cámara del portátil, con modo 2D y modo 3D (girar el modelo con las dos manos) y perfiles para EDWIN CNC 3D, SketchUp, FreeCAD, Blender y CAD-CAM. Windows 10 y 11 de 64 bits. Manual y video: https://ingemaqsewing.github.io/lycan-mouse-control/
 
 ## Apps
 - LycanRating (en vivo): torneos de tenis de mesa con inscripción, llaves, mesas, resultados en vivo, rating y ranking. https://www.lycantenisdemesa.com
@@ -15,3 +16,4 @@
 ## Código abierto
 - https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam (fork de LibreCAD 2.2.1, GPL-2)
 - https://github.com/INGEMAQSEWING/edwin-cnc-3d (fork de IngeTrazo 0.6.1, GPL-3)
+- https://github.com/INGEMAQSEWING/lycan-mouse-control

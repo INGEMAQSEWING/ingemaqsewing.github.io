@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Manual Lycan Mouse Control 1.0.0: maneje el ratón con las manos</title>
+<meta name="description" content="Cómo instalar y usar Lycan Mouse Control 1.0.0: maneje el ratón con gestos de las manos frente a la cámara del portátil, en 2D y 3D. Dibujos de cada seña, atajos y solución de problemas.">
+<link rel="canonical" href="https://ingemaqsewing.github.io/lycan-mouse-control/">
+<meta name="theme-color" content="#050b18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='8'%20fill='%23050b18'/%3E%3Cpath%20d='M20%203%2035%2011.5v17L20%2037%205%2028.5v-17Z'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.2'/%3E%3Cpath%20d='M13%2014v12h7M23%2014h3a6%206%200%200%201%200%2012h-3Z'%20fill='none'%20stroke='%23e6f1ff'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lycan Developments">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://ingemaqsewing.github.io/lycan-mouse-control/">
+<meta property="og:title" content="Manual de Lycan Mouse Control 1.0.0">
+<meta property="og:description" content="Maneje el ratón con las manos frente a la cámara del portátil: señas para 2D y 3D, con un dibujo de cada una.">
+<meta property="og:image" content="https://ingemaqsewing.github.io/lycan-mouse-control/img/og-lycan-mouse-control.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lycan Mouse Control: video tutorial, con el dibujo de dos manos en puño agarrando un volante para girar un modelo en 3D">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Mismo estilo del portafolio (noche azul, neón cian, tarjetas con borde luminoso)
+   con la estructura del manual de EDWIN CNC 3D: índice a la izquierda, pasos y avisos. */
+:root {
+  --fondo: #050b18;
+  --fondo-2: #0a1428;
+  --placa: #0c1a33;
+  --linea: #16345c;
+  --texto: #e6f1ff;
+  --texto-2: #c4d4ea;
+  --suave: #8ea6c8;
+  --cian: #22e3ff;
+  --cian-oscuro: #0aa6c2;
+  --verde: #35f2a0;
+  --ambar: #ffc94d;
+  --rojo: #ff7a6b;
+  --r-s: 6px; --r-m: 10px; --r-l: 14px;
+  --f-titulo: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --f-texto: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-dato: "JetBrains Mono", Consolas, "Courier New", monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; min-height: 100vh;
+  background:
+    radial-gradient(900px 500px at 50% -120px, rgba(34,227,255,.16), transparent 70%),
+    linear-gradient(var(--fondo), var(--fondo-2) 60%, var(--fondo));
+  background-repeat: no-repeat;
+  background-color: var(--fondo);
+  color: var(--texto);
+  font-family: var(--f-texto); font-size: 17px; line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: var(--cian); }
+a:focus-visible, summary:focus-visible, video:focus-visible { outline: 2px solid var(--cian); outline-offset: 3px; border-radius: 4px; }
+.saltar { position: absolute; left: 16px; top: -60px; background: var(--cian); color: #041022; padding: 10px 14px; border-radius: 8px; font-weight: 600; z-index: 10; text-decoration: none; }
+.saltar:focus { top: 12px; }
+.ancho {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Barra superior (igual a la portada) */
+.barra { border-bottom: 1px solid var(--linea); background: rgba(5,11,24,.7); }
+.barra .ancho { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--texto); }
+.logo svg { width: 34px; height: 34px; flex: none; filter: drop-shadow(0 0 6px rgba(34,227,255,.6)); }
+.logo b { font-family: var(--f-titulo); font-size: 19px; letter-spacing: .04em; }
+.volver { color: var(--suave); text-decoration: none; font-size: 15px; padding-block: 8px; }
+.volver:hover { color: var(--cian); }
+
+/* Encabezado del manual */
+.portada { padding-block: 44px 28px; border-bottom: 1px solid var(--linea); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 32px; align-items: end; }
+@media (max-width: 760px) { .portada { grid-template-columns: minmax(0, 1fr); padding-top: 32px; } }
+.eti { font-family: var(--f-dato); font-size: 13px; color: var(--cian); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 12px; }
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(34px, 6vw, 60px); line-height: 1.04; margin: 0; text-wrap: balance; text-transform: uppercase; }
+h1 em { font-style: normal; color: var(--cian); text-shadow: 0 0 18px rgba(34,227,255,.55); }
+.lema { color: var(--suave); font-size: 18px; max-width: 52ch; margin: 14px 0 0; }
+.lema b { color: var(--texto); font-weight: 600; }
+.version { font-family: var(--f-dato); font-size: 13px; color: var(--cian); border: 1px solid rgba(34,227,255,.45); background: rgba(34,227,255,.08); padding: 5px 12px; border-radius: 999px; white-space: nowrap; justify-self: start; }
+
+/* Rejilla: índice + contenido */
+.envoltura { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-bottom: 24px; }
+@media (max-width: 900px) { .envoltura { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+nav.indice { position: sticky; top: 20px; align-self: start; padding-top: 30px; }
+nav.indice p { font-family: var(--f-dato); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--cian); margin: 0 0 10px; }
+nav.indice ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.indice a { display: block; padding: 6px 10px; color: var(--texto-2); text-decoration: none; border-left: 2px solid var(--linea); font-size: 15px; }
+nav.indice a:hover, nav.indice a:focus-visible { border-left-color: var(--cian); color: var(--texto); background: rgba(34,227,255,.06); }
+@media (max-width: 900px) {
+  nav.indice { position: static; padding-top: 22px; }
+  nav.indice ol { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+}
+
+main { min-width: 0; }
+section { padding-top: 46px; scroll-margin-top: 12px; }
+.cabeza { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-bottom: 12px; }
+.cabeza .cod { font: 500 13px var(--f-dato); color: var(--cian); border: 1px solid var(--cian); border-radius: 8px; padding: 4px 8px; background: var(--placa); box-shadow: 0 0 12px rgba(34,227,255,.35); }
+.cabeza::after { content: ""; flex: 1 1 60px; height: 1px; background: linear-gradient(90deg, rgba(34,227,255,.6), transparent); order: 3; }
+h2 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(26px, 4vw, 36px); line-height: 1.1; margin: 0; text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; }
+h3 { font-family: var(--f-titulo); font-weight: 600; font-size: 22px; line-height: 1.2; margin: 26px 0 8px; }
+p, li { max-width: 70ch; }
+p { margin: 0 0 12px; color: var(--texto-2); }
+li { color: var(--texto-2); margin-bottom: 4px; }
+b, strong { color: var(--texto); font-weight: 600; }
+kbd { font-family: var(--f-dato); font-size: 14px; color: var(--texto); border: 1px solid rgba(34,227,255,.45); border-bottom-width: 3px; background: var(--placa); padding: 1px 7px; border-radius: 6px; white-space: nowrap; }
+.ruta { font-family: var(--f-dato); font-size: 14.5px; background: var(--placa); border: 1px solid var(--linea); padding: 1px 7px; border-radius: 5px; overflow-wrap: anywhere; }
+
+/* Pasos numerados */
+ol.pasos { counter-reset: paso; list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 12px; }
+ol.pasos > li { counter-increment: paso; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; align-items: start; margin: 0; }
+ol.pasos > li::before {
+  content: counter(paso); width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px;
+  border: 1px solid var(--cian); color: var(--cian); background: var(--placa); font: 600 16px var(--f-titulo);
+  box-shadow: 0 0 10px rgba(34,227,255,.3);
+}
+ol.pasos > li > div { min-width: 0; padding-top: 3px; }
+
+/* Avisos */
+.nota, .ojo { padding: 12px 16px; margin: 16px 0; border-left: 3px solid var(--cian); background: rgba(34,227,255,.06); border-radius: 0 var(--r-m) var(--r-m) 0; max-width: 74ch; }
+.ojo { border-left-color: var(--ambar); background: rgba(255,201,77,.07); }
+.nota p, .ojo p { margin: 4px 0; }
+.rotulo { font: 600 14px var(--f-dato); letter-spacing: .08em; text-transform: uppercase; margin-right: 8px; color: var(--cian); }
+.ojo .rotulo { color: var(--ambar); }
+
+/* Tarjetas (como en la portada) */
+.tarjeta {
+  min-width: 0; position: relative;
+  background: linear-gradient(180deg, rgba(16,38,74,.9), rgba(10,22,44,.9));
+  border: 1px solid rgba(34,227,255,.28); border-radius: var(--r-l); padding: 18px;
+  box-shadow: inset 0 1px 0 rgba(34,227,255,.22), 0 0 22px -10px rgba(34,227,255,.45);
+}
+.tarjeta::before, .tarjeta::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--cian); box-shadow: 0 0 8px var(--cian); top: -3px; left: 22px; }
+.tarjeta::after { top: auto; bottom: -3px; left: auto; right: 22px; }
+.datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 16px; margin: 16px 0; }
+.datos .tarjeta h3 { margin: 0 0 6px; font-size: 19px; color: var(--cian); }
+.datos .tarjeta p { margin: 0; font-size: 15.5px; }
+
+/* Señas */
+.senas { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 20px; margin: 18px 0; padding: 0; list-style: none; }
+.senas > li { margin: 0; max-width: none; display: flex; flex-direction: column; gap: 8px; padding: 0 0 16px; }
+.senas figure { margin: 0; border-bottom: 1px solid rgba(34,227,255,.3); border-radius: var(--r-l) var(--r-l) 0 0; overflow: hidden; background: #071128; }
+.senas img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; }
+.senas h3 { margin: 6px 16px 0; font-size: 21px; }
+.senas p { margin: 0 16px; font-size: 15.5px; }
+.hace { display: inline-block; margin: 0 16px; font: 500 13px var(--f-dato); color: var(--verde); border: 1px solid rgba(53,242,160,.45); background: rgba(53,242,160,.08); border-radius: 999px; padding: 3px 10px; align-self: flex-start; }
+.hace.opcional { color: var(--ambar); border-color: rgba(255,201,77,.45); background: rgba(255,201,77,.08); }
+.senas .tarjeta { padding: 0 0 16px; }
+
+/* Video */
+.video { position: relative; margin: 16px 0 8px; border-radius: var(--r-l); overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid rgba(34,227,255,.35); box-shadow: 0 0 32px rgba(34,227,255,.14);
+  background: radial-gradient(500px 240px at 50% 40%, rgba(34,227,255,.16), transparent 70%), var(--placa); }
+.video .espera { position: absolute; inset: 0; display: grid; place-content: center; gap: 6px; text-align: center; padding: 16px; color: var(--suave); font-size: 15px; }
+.video .espera b { font: 600 20px var(--f-titulo); color: var(--texto); }
+.video video { position: relative; display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; }
+
+/* Tablas */
+.tabla { overflow-x: auto; margin: 14px 0; max-width: 100%; border: 1px solid var(--linea); border-radius: var(--r-l); background: rgba(12,26,51,.75); }
+table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
+.tabla.ancha table { min-width: 560px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-top: 1px solid var(--linea); color: var(--texto-2); }
+thead th { border-top: 0; font: 500 12.5px var(--f-dato); letter-spacing: .1em; text-transform: uppercase; color: var(--cian); background: rgba(34,227,255,.05); }
+td:first-child { color: var(--texto); font-weight: 600; }
+
+@media (max-width: 620px) {
+  .tabla.ancha { border: 0; background: none; overflow: visible; }
+  .tabla.ancha table { min-width: 0; }
+  .tabla.ancha thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .tabla.ancha tr { display: block; margin-bottom: 12px; border: 1px solid var(--linea); border-radius: var(--r-m); background: rgba(12,26,51,.75); padding: 6px 0; }
+  .tabla.ancha td { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 10px; border: 0; padding: 5px 14px; }
+  .tabla.ancha td::before { content: attr(data-label); font: 500 12px var(--f-dato); letter-spacing: .06em; text-transform: uppercase; color: var(--cian); padding-top: 3px; }
+  .tabla.ancha td:first-child { font-family: var(--f-titulo); font-size: 18px; }
+}
+
+/* Preguntas */
+details { border-top: 1px solid var(--linea); padding: 4px 0; max-width: 74ch; }
+details:last-of-type { border-bottom: 1px solid var(--linea); }
+summary { cursor: pointer; font-weight: 600; padding: 10px 0; color: var(--texto); }
+summary::marker { color: var(--cian); }
+details p, details ul { margin: 0 0 12px; }
+
+footer { margin-top: 64px; border-top: 1px solid var(--linea); }
+footer .ancho { padding-block: 26px 40px; color: var(--suave); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+footer p { margin: 0; color: var(--suave); max-width: none; }
+</style>
+</head>
+<body>
+<a class="saltar" href="#que-es">Saltar al contenido</a>
+<header class="barra">
+  <div class="ancho">
+    <a class="logo" href="../" aria-label="Lycan Developments, ir a la portada">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 35 11.5v17L20 37 5 28.5v-17Z" fill="none" stroke="#22e3ff" stroke-width="2.2"/><path d="M13 14v12h7M23 14h3a6 6 0 0 1 0 12h-3Z" fill="none" stroke="#e6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>LYCAN DEVELOPMENTS</b>
+    </a>
+    <a class="volver" href="../#cadcam">← Volver a los proyectos</a>
+  </div>
+</header>
+
+<div class="ancho">
+  <div class="portada">
+    <div>
+      <p class="eti">Manual · Windows · Cámara</p>
+      <h1>Lycan <em>Mouse Control</em></h1>
+      <p class="lema">Maneje el ratón con <b>gestos de las manos</b> frente a la cámara del portátil. Para dibujar en 2D y girar modelos en 3D.</p>
+    </div>
+    <span class="version">Versión 1.0.0 · Windows 64 bits</span>
+  </div>
+
+  <div class="envoltura">
+    <nav class="indice" aria-label="Contenido">
+      <p>Contenido</p>
+      <ol>
+        <li><a href="#que-es">Qué es</a></li>
+        <li><a href="#video">Video tutorial</a></li>
+        <li><a href="#requisitos">Requisitos</a></li>
+        <li><a href="#instalar">Instalar</a></li>
+        <li><a href="#primera-vez">La primera vez</a></li>
+        <li><a href="#senas-2d">Señas 2D</a></li>
+        <li><a href="#senas-3d">Señas 3D</a></li>
+        <li><a href="#atajos">Atajos de teclado</a></li>
+        <li><a href="#perfiles">Programas</a></li>
+        <li><a href="#seguridad">Seguridad</a></li>
+        <li><a href="#problemas">Problemas frecuentes</a></li>
+        <li><a href="#privacidad">Privacidad</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <section id="que-es" aria-labelledby="t-que-es">
+        <div class="cabeza"><span class="cod">01</span><h2 id="t-que-es">Qué es y para qué sirve</h2></div>
+        <p>Lycan Mouse Control mira sus manos con la cámara del portátil y mueve el puntero por usted. Con señas sencillas hace clic, arrastra, acerca y aleja el dibujo, y gira modelos en 3D.</p>
+        <p>Está pensado para diseño: <b>EDWIN CNC CAD-CAM</b> y LibreCAD en 2D, y <b>EDWIN CNC 3D</b>, SketchUp, FreeCAD y Blender en 3D.</p>
+        <div class="datos">
+          <div class="tarjeta"><h3>Girar modelos</h3><p>Agarre el modelo con las dos manos, como un volante, y gírelo.</p></div>
+          <div class="tarjeta"><h3>Presentar</h3><p>Muestre un diseño al cliente sin acercarse al teclado.</p></div>
+          <div class="tarjeta"><h3>Descansar la mano</h3><p>Alterne con el ratón para no cansar siempre la misma mano.</p></div>
+        </div>
+        <div class="nota"><p><span class="rotulo">Importante</span>Es un <b>complemento</b> del ratón, no lo reemplaza. Para marcar puntos exactos, use el zoom y el enganche (las ayudas para pegarse a puntos) del programa de dibujo.</p></div>
+      </section>
+
+      <section id="video" aria-labelledby="t-video">
+        <div class="cabeza"><span class="cod">02</span><h2 id="t-video">Video tutorial</h2></div>
+        <p>Vea las señas en acción antes de empezar.</p>
+        <div class="video">
+          <div class="espera" aria-hidden="true"><b>Video tutorial</b><span>Lycan Mouse Control paso a paso</span></div>
+          <video controls preload="none" playsinline poster="video/portada.jpg" aria-label="Video tutorial de Lycan Mouse Control">
+            <source src="video/tutorial-lycan-mouse-control.mp4" type="video/mp4">
+            <track kind="subtitles" srclang="es" label="Español" src="video/tutorial-lycan-mouse-control.vtt" default>
+            Su navegador no puede mostrar este video. <a href="video/tutorial-lycan-mouse-control.mp4">Descárguelo aquí</a>.
+          </video>
+        </div>
+      </section>
+
+      <section id="requisitos" aria-labelledby="t-requisitos">
+        <div class="cabeza"><span class="cod">03</span><h2 id="t-requisitos">Requisitos</h2></div>
+        <div class="datos">
+          <div class="tarjeta"><h3>Windows</h3><p>Windows 10 u 11 de 64 bits.</p></div>
+          <div class="tarjeta"><h3>Cámara</h3><p>La del portátil sirve. También una cámara web por USB.</p></div>
+          <div class="tarjeta"><h3>Equipo</h3><p>No necesita tarjeta de video. Funciona en un portátil común.</p></div>
+          <div class="tarjeta"><h3>Luz</h3><p>Una lámpara frente a usted. Evite tener una ventana detrás.</p></div>
+        </div>
+      </section>
+
+      <section id="instalar" aria-labelledby="t-instalar">
+        <div class="cabeza"><span class="cod">04</span><h2 id="t-instalar">Instalar</h2></div>
+        <ol class="pasos">
+          <li><div>Entre a <a href="https://ingemaqsewing.github.io/#descargas">ingemaqsewing.github.io, sección Descargas</a> y descargue el instalador <span class="ruta">Lycan-Mouse-Control-1.0.0-Windows-64-bits.exe</span>.</div></li>
+          <li><div>Ábralo con doble clic. No pide permisos de administrador.</div></li>
+          <li><div>Si quiere, marque <b>crear un ícono en el escritorio</b> o <b>abrir al encender el computador</b>.</div></li>
+          <li><div>Al terminar, abra <b>Lycan Mouse Control</b> desde el menú Inicio o el escritorio.</div></li>
+        </ol>
+        <div class="ojo">
+          <p><span class="rotulo">Si Windows lo detiene</span>Puede salir un aviso azul que dice <b>«Windows protegió su PC»</b> (SmartScreen). Sale porque el programa es nuevo y todavía pocas personas lo han descargado.</p>
+          <p>Haga clic en <b>«Más información»</b> y luego en <b>«Ejecutar de todas formas»</b>.</p>
+        </div>
+        <p>Si más adelante lo desinstala, el programa le pregunta si quiere borrar su configuración. Si dice que no, la conserva para la próxima vez.</p>
+      </section>
+
+      <section id="primera-vez" aria-labelledby="t-primera">
+        <div class="cabeza"><span class="cod">05</span><h2 id="t-primera">La primera vez</h2></div>
+        <p>La primera vez se abre un <b>asistente</b> que le enseña las señas paso a paso. Mientras practica, el ratón no hace nada. Puede saltar cualquier paso.</p>
+        <ol class="pasos">
+          <li><div><b>Prepare la luz.</b> Encienda una lámpara frente a usted, no detrás. Si hay una ventana a su espalda, la cámara ve la mano oscura.</div></li>
+          <li><div><b>Acomódese.</b> Apoye el codo en la mesa. Ponga la mano a unos <b>40 a 60 cm</b> de la cámara, con la palma hacia la pantalla.</div></li>
+          <li><div><b>Escoja su mano:</b> derecha o izquierda. Con ella moverá el puntero.</div></li>
+          <li><div><b>Ajuste a su mano</b> (unos 40 segundos): el programa le pide abrir la mano, cerrar el puño y hacer cada seña. Así aprende cómo son sus manos.</div></li>
+          <li><div><b>Practique</b> activar, mover, hacer clic, clic derecho, acercar y alejar, y pausar. Si escogió 3D, también girar, mover y soltar el modelo.</div></li>
+        </ol>
+        <div class="nota"><p><span class="rotulo">Arranca en pausa</span>Cada vez que lo abre, el programa empieza <b>en pausa</b>: sus manos no mueven nada hasta que usted haga la seña de activar. Así no hace clics por accidente.</p></div>
+        <p>Puede volver al asistente cuando quiera desde el menú <b>? ▸ Volver a practicar señas</b>. En ese mismo menú está la <b>chuleta de señas</b>, un resumen para tener a la vista.</p>
+      </section>
+
+      <section id="senas-2d" aria-labelledby="t-senas-2d">
+        <div class="cabeza"><span class="cod">06</span><h2 id="t-senas-2d">Señas de Mouse Control 2D</h2></div>
+        <p>Los dibujos muestran la mano derecha como usted la ve en la pantalla, en espejo. Con la mano izquierda es igual, al revés.</p>
+        <ul class="senas">
+          <li class="tarjeta">
+            <figure><img src="img/senas/activar.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano con el índice y el corazón estirados y pegados; el anular y el meñique doblados y el pulgar encima de ellos. Un reloj indica sostener un momento."></figure>
+            <span class="hace">Activar</span>
+            <h3>Dos dedos juntos</h3>
+            <p>Estando en pausa, estire el índice y el corazón <b>bien pegados</b>, como diciendo «dos». Doble los otros dedos. Sosténgala un momento (un cuarto de segundo).</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/pausar.svg" width="800" height="600" loading="lazy" decoding="async" alt="La misma seña de dos dedos juntos hecha dos veces seguidas, con el símbolo de pausa."></figure>
+            <span class="hace">Pausar y soltar todo</span>
+            <h3>Dos dedos juntos, dos veces</h3>
+            <p>Estando activo, haga la misma seña <b>dos veces seguidas</b>, rápido (en menos de un segundo). Pausar es como levantar el ratón para reacomodarlo.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/mover.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano con solo el dedo índice estirado; flechas hacia arriba y a los lados, y la flecha del puntero en la pantalla."></figure>
+            <span class="hace">Mover el puntero</span>
+            <h3>Dedo índice</h3>
+            <p>El puntero sigue la punta del índice. Funciona como un espejo: si mueve la mano a la derecha, el puntero va a la derecha. El programa quita el temblor.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/clic-izquierdo.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano con el pulgar y el índice tocándose por las puntas, formando un anillo, con un destello donde se tocan. Al lado, un ratón con el botón izquierdo encendido."></figure>
+            <span class="hace">Clic izquierdo</span>
+            <h3>Pellizco pulgar + índice</h3>
+            <p>Junte la punta del pulgar con la del índice y suéltelas. El clic cae donde estaba el puntero <b>justo antes</b> de cerrar los dedos, para que no se corra.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/arrastrar.svg" width="800" height="600" loading="lazy" decoding="async" alt="La mano en pellizco se mueve hacia un lado sin abrir los dedos; el ratón tiene el botón izquierdo sostenido."></figure>
+            <span class="hace">Arrastrar</span>
+            <h3>Pellizco sostenido y mover</h3>
+            <p>Junte pulgar e índice y, <b>sin soltarlos</b>, mueva la mano. Abra los dedos para soltar. Sirve para mover piezas o hacer una ventana de selección.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/doble-clic.svg" width="800" height="600" loading="lazy" decoding="async" alt="Pellizco de pulgar e índice con doble destello y la marca dos veces; el ratón con el botón izquierdo encendido."></figure>
+            <span class="hace">Doble clic</span>
+            <h3>Dos pellizcos rápidos</h3>
+            <p>Haga el pellizco dos veces seguidas, rápido, sin mover la mano.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/clic-derecho.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano cerrada en puño con el pulgar por encima, un reloj que indica sostener un momento, y un ratón con el botón derecho encendido."></figure>
+            <span class="hace">Clic derecho</span>
+            <h3>Puño cerrado</h3>
+            <p>Cierre la mano en puño un momento (un quinto de segundo) y ábrala. Deje el pulgar por encima de los dedos.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/acercar-alejar.svg" width="800" height="600" loading="lazy" decoding="async" alt="Las dos manos haciendo pellizco. Flechas hacia afuera con una lupa con más: acercar. Flechas hacia adentro con una lupa con menos: alejar."></figure>
+            <span class="hace">Acercar / alejar</span>
+            <h3>Dos manos en pellizco: separar o juntar</h3>
+            <p>Haga pellizco con <b>las dos manos</b>. Sepárelas para acercar el dibujo y júntelas para alejarlo. Es como mover la rueda del ratón, sin pasarse de velocidad.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/mover-dibujo.svg" width="800" height="600" loading="lazy" decoding="async" alt="Las dos manos en pellizco movidas juntas hacia el mismo lado; una cruz de flechas y un ratón con el botón del medio encendido."></figure>
+            <span class="hace">Mover el dibujo</span>
+            <h3>Dos manos en pellizco movidas juntas</h3>
+            <p>Haga pellizco con las dos manos y muévalas <b>juntas</b>, sin cambiar la distancia entre ellas. El dibujo se desplaza, como con el botón del medio del ratón.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/zoom-una-mano.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano con el pulgar tocando la punta del dedo corazón doblado y el índice estirado. Una flecha hacia arriba con lupa de más y otra hacia abajo con lupa de menos."></figure>
+            <span class="hace opcional">Opcional · viene apagada</span>
+            <h3>Zoom con una mano</h3>
+            <p>Junte el pulgar con el <b>corazón</b> y suba la mano para acercar o bájela para alejar. Para usarla, actívela en <b>⚙ Opciones ▸ Señas ▸ Zoom con una mano</b>.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/sacar-mano.svg" width="800" height="600" loading="lazy" decoding="async" alt="Una mano abierta sale del recuadro de la cámara, marcado con líneas punteadas."></figure>
+            <span class="hace">Soltar todo</span>
+            <h3>Sacar la mano</h3>
+            <p>Si la cámara deja de ver su mano, el programa <b>suelta todos los botones</b> casi de inmediato. Si pasan 10 segundos sin ver manos, se pone en pausa solo.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section id="senas-3d" aria-labelledby="t-senas-3d">
+        <div class="cabeza"><span class="cod">07</span><h2 id="t-senas-3d">Señas de Mouse Control 3D</h2></div>
+        <p>En 3D sirven <b>todas las señas de 2D</b>, más estas. Cambie entre 2D y 3D con <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>D</kbd> o con el botón <b>2D/3D</b> de la ventana. Al cambiar, queda en pausa.</p>
+        <ul class="senas">
+          <li class="tarjeta">
+            <figure><img src="img/senas/girar-3d.svg" width="800" height="600" loading="lazy" decoding="async" alt="Dos manos cerradas en puño agarrando un volante, con flechas que muestran el giro."></figure>
+            <span class="hace">Girar el modelo</span>
+            <h3>Dos puños, como un volante</h3>
+            <p>Cierre <b>las dos manos</b> como si agarrara un volante y gírelas. También puede subirlas y bajarlas juntas. El modelo gira como con el botón del medio sostenido.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/soltar-3d.svg" width="800" height="600" loading="lazy" decoding="async" alt="Las dos manos abiertas con los dedos estirados y separados."></figure>
+            <span class="hace">Soltar</span>
+            <h3>Abrir las manos</h3>
+            <p>Para dejar de girar o de mover, abra las manos. Se suelta todo.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/mover-modelo-3d.svg" width="800" height="600" loading="lazy" decoding="async" alt="Las dos manos en pellizco movidas juntas hacia el mismo lado; al lado, la tecla Shift más el botón del medio del ratón."></figure>
+            <span class="hace">Mover el modelo</span>
+            <h3>Dos manos en pellizco movidas juntas</h3>
+            <p>Igual que mover el dibujo en 2D. En 3D el programa usa Shift + botón del medio (o lo que pida su programa de dibujo).</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/senas/clic-derecho.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano cerrada en puño con el pulgar por encima, y un ratón con el botón derecho encendido."></figure>
+            <span class="hace">Clic derecho</span>
+            <h3>Puño con una sola mano</h3>
+            <p>En 3D el puño de una mano espera un poco más (medio segundo) antes del clic derecho. Así no se confunde con el agarre de las dos manos.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section id="atajos" aria-labelledby="t-atajos">
+        <div class="cabeza"><span class="cod">08</span><h2 id="t-atajos">Atajos de teclado</h2></div>
+        <p>Funcionan aunque tenga otro programa al frente. Puede cambiarlos en <b>⚙ Opciones ▸ Atajos</b>.</p>
+        <div class="tabla">
+          <table>
+            <thead><tr><th scope="col">Atajo</th><th scope="col">Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>M</kbd></td><td>Pausar o activar.</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>X</kbd></td><td>Salir del programa (antes suelta todo).</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd></td><td>Mostrar u ocultar la ventana.</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>D</kbd></td><td>Cambiar entre 2D y 3D (queda en pausa).</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>P</kbd></td><td>Modo dibujo fino: el puntero se mueve más suave.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="nota"><p><span class="rotulo">Teclado latinoamericano</span>No se usa <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Q</kbd> porque en este teclado escribe «@». Al abrir, el programa revisa que ningún atajo escriba una letra o un símbolo en su teclado. Si alguno lo hace, no lo usa y le avisa.</p></div>
+      </section>
+
+      <section id="perfiles" aria-labelledby="t-perfiles">
+        <div class="cabeza"><span class="cod">09</span><h2 id="t-perfiles">Programas que reconoce</h2></div>
+        <p>Cada programa de dibujo usa botones distintos para girar y mover la vista. Lycan Mouse Control se da cuenta solo de cuál programa tiene al frente y usa la combinación correcta. Usted hace siempre las mismas señas.</p>
+        <div class="tabla ancha">
+          <table>
+            <thead><tr><th scope="col">Programa</th><th scope="col">Girar</th><th scope="col">Mover</th><th scope="col">Acercar / alejar</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Programa">EDWIN CNC 3D</td><td data-label="Girar">Botón del medio</td><td data-label="Mover">Shift + medio</td><td data-label="Acercar / alejar">Suave, de a poquitos</td></tr>
+              <tr><td data-label="Programa">SketchUp</td><td data-label="Girar">Botón del medio</td><td data-label="Mover">Shift + medio</td><td data-label="Acercar / alejar">Normal</td></tr>
+              <tr><td data-label="Programa">FreeCAD (estilo CAD)</td><td data-label="Girar">Medio + izquierdo</td><td data-label="Mover">Botón del medio</td><td data-label="Acercar / alejar">Normal</td></tr>
+              <tr><td data-label="Programa">FreeCAD (estilo Blender)</td><td data-label="Girar">Botón del medio</td><td data-label="Mover">Shift + medio</td><td data-label="Acercar / alejar">Normal</td></tr>
+              <tr><td data-label="Programa">Blender</td><td data-label="Girar">Botón del medio</td><td data-label="Mover">Shift + medio</td><td data-label="Acercar / alejar">Normal</td></tr>
+              <tr><td data-label="Programa">EDWIN CNC CAD-CAM y LibreCAD</td><td data-label="Girar">—</td><td data-label="Mover">Botón del medio</td><td data-label="Acercar / alejar">Pasos completos, máximo 8 por segundo</td></tr>
+              <tr><td data-label="Programa">Cualquier otro (genérico)</td><td data-label="Girar">Botón del medio</td><td data-label="Mover">Medio en 2D, Shift + medio en 3D</td><td data-label="Acercar / alejar">Normal</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="nota"><p><span class="rotulo">FreeCAD</span>Funciona mejor con el estilo «Blender»: en FreeCAD vaya a <span class="ruta">Editar ▸ Preferencias ▸ Visualización ▸ Navegación</span> y escoja «Blender». Lycan Mouse Control nota ese cambio solo.</p></div>
+        <p>Si abre un programa 3D estando en 2D, el programa le sugiere pasar a 3D. También puede escoger el programa a mano en <b>⚙ Opciones ▸ General ▸ Programa</b>.</p>
+      </section>
+
+      <section id="seguridad" aria-labelledby="t-seguridad">
+        <div class="cabeza"><span class="cod">10</span><h2 id="t-seguridad">Seguridad: nada queda presionado</h2></div>
+        <ul>
+          <li>Si la cámara pierde su mano, si pausa, si cambia de modo o de programa, si sale, o si algo falla: el programa <b>suelta siempre todos los botones</b> y las teclas Shift, Ctrl y Alt.</li>
+          <li>Con el puntero encima de la ventana de Lycan Mouse Control no se hacen clics.</li>
+          <li>Si el programa que tiene al frente se abrió <b>como administrador</b>, Windows no deja que otro programa lo maneje. Lycan Mouse Control queda <b>en espera</b> y le avisa. Para manejarlo con gestos, use el menú <b>? ▸ Reiniciar como administrador</b>.</li>
+          <li>Después de 20 minutos seguidos le recuerda bajar los brazos y descansar un minuto.</li>
+        </ul>
+        <div class="ojo"><p><span class="rotulo">Si algo quedó presionado</span>Por ejemplo, si cerró el programa a la fuerza: presione y suelte la tecla <kbd>Shift</kbd> y el botón de la rueda del ratón.</p></div>
+      </section>
+
+      <section id="problemas" aria-labelledby="t-problemas">
+        <div class="cabeza"><span class="cod">11</span><h2 id="t-problemas">Problemas frecuentes</h2></div>
+        <details>
+          <summary>La cámara no abre o sale «Sin imagen de la cámara»</summary>
+          <p>Casi siempre es porque otro programa la está usando: Zoom, Teams, Meet o la app Cámara. Ciérrelo y espere unos segundos. Si tiene varias cámaras, escoja la correcta en <b>⚙ Opciones ▸ General ▸ Cámara</b>.</p>
+        </details>
+        <details>
+          <summary>El puntero tiembla</summary>
+          <ul>
+            <li>Active el <b>modo dibujo fino</b> con <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>P</kbd>.</li>
+            <li>Ponga más luz frente a usted.</li>
+            <li>Apoye el codo en la mesa y mueva solo la muñeca.</li>
+            <li>En <b>⚙ Opciones ▸ Puntero</b>, mueva la barra hacia «Más estable».</li>
+          </ul>
+        </details>
+        <details>
+          <summary>El clic se corre de donde apuntaba</summary>
+          <p>Deje la mano quieta un instante antes de cerrar los dedos y haga el pellizco sin mover la muñeca. El programa ya pone el clic donde apuntaba justo antes. Para puntos exactos, acerque el dibujo con el zoom y use el enganche del programa de dibujo.</p>
+        </details>
+        <details>
+          <summary>No reconoce la seña</summary>
+          <ul>
+            <li>Revise que esté <b>activo</b>: si dice PAUSADO, haga la seña de activar.</li>
+            <li>Marque bien la seña: para activar, índice y corazón bien pegados; para el clic, que las puntas se toquen; para el puño, todos los dedos cerrados.</li>
+            <li>La mano a 40 a 60 cm de la cámara, con la palma hacia la pantalla.</li>
+            <li>La seña de activar sostenida más de un segundo y medio no cuenta: hágala y suéltela.</li>
+            <li>Repita el ajuste a su mano en <b>? ▸ Volver a practicar señas</b>.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>Se pausa solo</summary>
+          <p>Pasa cuando la cámara no ve ninguna mano por 10 segundos. Es para que no haga clics si usted se para. Haga la seña de activar para seguir.</p>
+        </details>
+        <details>
+          <summary>Dice «En espera»</summary>
+          <p>El programa que tiene al frente se abrió como administrador. Use el menú <b>? ▸ Reiniciar como administrador</b>, o abra su programa de dibujo de forma normal.</p>
+        </details>
+        <details>
+          <summary>Mi programa de dibujo no gira o no mueve bien</summary>
+          <p>Revise en <b>⚙ Opciones ▸ General ▸ Programa</b> que diga «Automático», o escoja su programa de la lista. En FreeCAD, use el estilo de navegación «Blender».</p>
+        </details>
+      </section>
+
+      <section id="privacidad" aria-labelledby="t-privacidad">
+        <div class="cabeza"><span class="cod">12</span><h2 id="t-privacidad">Privacidad</h2></div>
+        <ul>
+          <li>Lycan Mouse Control <b>no guarda ni envía imágenes</b> de la cámara. Las mira en el momento y las descarta.</li>
+          <li>Todo pasa dentro de su computador. No necesita internet para funcionar.</li>
+          <li>Solo guarda sus opciones y el ajuste de su mano en <span class="ruta">%APPDATA%\Lycan Mouse Control\config.json</span>. Si ese archivo se daña, el programa lo aparta y usa los valores de fábrica.</li>
+          <li>Si algo falla, lo anota en un registro de texto, sin imágenes. Lo abre desde el menú <b>? ▸ Abrir carpeta de registros</b>.</li>
+        </ul>
+        <p>¿Dudas o algo no funciona? Escriba a <a href="mailto:ingemaqsewing@gmail.com">ingemaqsewing@gmail.com</a>.</p>
+      </section>
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="ancho">
+    <p><b>Lycan Developments</b> · EDWIN CNC · Manual de Lycan Mouse Control 1.0.0, noviembre de 2026</p>
+    <p><a href="../">Volver a la portada</a></p>
+  </div>
+</footer>
+</body>
+</html>
