@@ -1,14 +1,14 @@
 # Lycan Developments
 
-> Programas gratis para Windows para diseñar y cortar lámina con mesas de plasma (Mach3), apps Android y LycanRating, la plataforma de torneos de tenis de mesa. Hecho en Colombia. Contacto: ingemaqsewing@gmail.com
+> Programas para Windows para diseñar y cortar lámina con mesas de plasma (Mach3), apps Android y LycanRating, la plataforma de torneos de tenis de mesa. Hecho en Colombia. Contacto: ingemaqsewing@gmail.com
 
-## Programas para plasma (Windows, gratis)
+## Programas para plasma (Windows)
 - EDWIN CNC CAD-CAM 1.0.12 (prueba): dibujo 2D en DXF y generador de código G para Mach3. Windows 32 y 64 bits. Descargas: https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases
 - EDWIN CNC CAD2CAM 1.0.12 (prueba): el mismo programa con comandos de teclado en español. Descarga: https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/tag/v1.0.12-prueba
 - EDWIN CNC 3D 1.0.2 (en prueba, sin descarga pública todavía): modelado 3D de tolvas, ductos y sinfines con desdoblado de caras a DXF. Windows 10 y 11 de 64 bits. Manual: https://ingemaqsewing.github.io/manual-edwin-cnc-3d/
 
 ## Apps
-- LycanRating (en vivo, gratis): torneos de tenis de mesa con inscripción, llaves, mesas, resultados en vivo, rating y ranking. https://www.lycantenisdemesa.com
+- LycanRating (en vivo): torneos de tenis de mesa con inscripción, llaves, mesas, resultados en vivo, rating y ranking. https://www.lycantenisdemesa.com
 - QR Speaker (Android, en prueba): dice en voz alta el monto de cada pago que llega por Nequi o Daviplata.
 - CNC Control Phone y Lycan Analytics (Android, en desarrollo).
 
