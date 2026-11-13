@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Programas gratis de dibujo y código G para mesas de plasma con Mach3, apps Android y LycanRating, la plataforma de torneos de tenis de mesa. Hecho en Colombia.">
+<link rel="canonical" href="https://ingemaqsewing.github.io/">
+<meta name="theme-color" content="#050b18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='8'%20fill='%23050b18'/%3E%3Cpath%20d='M20%203%2035%2011.5v17L20%2037%205%2028.5v-17Z'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.2'/%3E%3Cpath%20d='M13%2014v12h7M23%2014h3a6%206%200%200%201%200%2012h-3Z'%20fill='none'%20stroke='%23e6f1ff'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lycan Developments">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://ingemaqsewing.github.io/">
+<meta property="og:title" content="Lycan Developments: del taller al software">
+<meta property="og:description" content="CAD-CAM gratis para mesas de plasma con Mach3, apps Android y LycanRating para torneos de tenis de mesa.">
+<meta property="og:image" content="https://ingemaqsewing.github.io/og-portada.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Núcleo neón cian con cables hacia CAD-CAM, apps móviles, apps web, GitHub y skills">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://ingemaqsewing.github.io/#org",
+   "name": "Lycan Developments",
+   "url": "https://ingemaqsewing.github.io/",
+   "email": "ingemaqsewing@gmail.com",
+   "areaServed": "CO",
+   "sameAs": [
+    "https://github.com/INGEMAQSEWING",
+    "https://www.lycantenisdemesa.com"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://ingemaqsewing.github.io/#web",
+   "url": "https://ingemaqsewing.github.io/",
+   "name": "Lycan Developments",
+   "inLanguage": "es-CO",
+   "publisher": {
+    "@id": "https://ingemaqsewing.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "EDWIN CNC CAD-CAM",
+   "applicationCategory": "DesignApplication",
+   "operatingSystem": "Windows (32 y 64 bits)",
+   "softwareVersion": "1.0.12",
+   "inLanguage": "es",
+   "description": "Dibujo 2D en DXF y generador de código G para mesas de plasma con Mach3.",
+   "downloadUrl": "https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/tag/v1.0.12-prueba",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "COP"
+   },
+   "author": {
+    "@id": "https://ingemaqsewing.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "EDWIN CNC CAD2CAM",
+   "applicationCategory": "DesignApplication",
+   "operatingSystem": "Windows (32 y 64 bits)",
+   "softwareVersion": "1.0.12",
+   "inLanguage": "es",
+   "description": "Dibujo 2D en DXF con comandos de teclado en español y generador de código G para mesas de plasma con Mach3.",
+   "downloadUrl": "https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/tag/v1.0.12-prueba",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "COP"
+   },
+   "author": {
+    "@id": "https://ingemaqsewing.github.io/#org"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "EDWIN CNC 3D",
+   "applicationCategory": "DesignApplication",
+   "operatingSystem": "Windows 10 y 11 (64 bits)",
+   "softwareVersion": "1.0.2",
+   "inLanguage": "es",
+   "description": "Modelado 3D de tolvas, ductos y sinfines con desdoblado de caras a DXF para corte por plasma.",
+   "author": {
+    "@id": "https://ingemaqsewing.github.io/#org"
+   }
+  },
+  {
+   "@type": "WebApplication",
+   "name": "LycanRating",
+   "url": "https://www.lycantenisdemesa.com",
+   "applicationCategory": "SportsApplication",
+   "operatingSystem": "Navegador web",
+   "inLanguage": "es",
+   "description": "Plataforma de torneos de tenis de mesa: inscripción, llaves, mesas, resultados en vivo, rating y ranking.",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "COP"
+   },
+   "author": {
+    "@id": "https://ingemaqsewing.github.io/#org"
+   }
+  }
+ ]
+}
+</script>
+<title>Lycan Developments: CAD-CAM para plasma, apps y LycanRating</title>
+<script>document.documentElement.lang = 'es-CO';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: tablero de control en una noche de neón — un "centro" con cables que salen a cada sección
+   (como el post de referencia), y debajo cada sección como una placa de circuito con sus tarjetas. */
+:root {
+  --fondo: #050b18;
+  --fondo-2: #0a1428;
+  --placa: #0c1a33;
+  --linea: #16345c;
+  --texto: #e6f1ff;
+  --texto-2: #c4d4ea;
+  --suave: #8ea6c8;
+  --cian: #22e3ff;
+  --cian-oscuro: #0aa6c2;
+  --verde: #35f2a0;
+  --ambar: #ffc94d;
+  --r-s: 6px; --r-m: 10px; --r-l: 14px;
+  --f-titulo: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --f-texto: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-dato: "JetBrains Mono", Consolas, "Courier New", monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; min-height: 100vh;
+  background:
+    radial-gradient(900px 500px at 50% -120px, rgba(34,227,255,.16), transparent 70%),
+    linear-gradient(var(--fondo), var(--fondo-2) 60%, var(--fondo));
+  background-repeat: no-repeat;
+  background-color: var(--fondo);
+  color: var(--texto);
+  font-family: var(--f-texto); font-size: 16.5px; line-height: 1.6;
+}
+a { color: var(--cian); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--cian); outline-offset: 3px; border-radius: 4px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.saltar { position: absolute; left: 16px; top: -60px; background: var(--cian); color: #041022; padding: 10px 14px; border-radius: 8px; font-weight: 600; z-index: 10; text-decoration: none; }
+.saltar:focus { top: 12px; }
+.ancho {
+  max-width: 1140px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Barra superior */
+.barra { border-bottom: 1px solid var(--linea); background: rgba(5,11,24,.7); }
+.barra .ancho { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--texto); }
+.logo svg { width: 34px; height: 34px; flex: none; filter: drop-shadow(0 0 6px rgba(34,227,255,.6)); }
+.logo b { font-family: var(--f-titulo); font-size: 19px; letter-spacing: .04em; }
+.barra nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.barra nav a { color: var(--suave); text-decoration: none; font-size: 14.5px; }
+.barra nav a:hover { color: var(--cian); }
+@media (max-width: 600px) {
+  .barra nav { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; width: 100%; gap: 0 12px; }
+  .barra nav a { padding-block: 9px; }
+}
+
+/* Portada */
+.portada { padding-block: 56px 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 32px; align-items: center; position: relative; isolation: isolate; }
+.portada::before {
+  content: ""; position: absolute; inset: -40px 0 0; z-index: -1; opacity: .07; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%2322e3ff' stroke-width='1.2'%3E%3Cpath d='M0 30h40l10 10h40M60 120V80l10-10V0M120 90H90l-10-10'/%3E%3Ccircle cx='90' cy='40' r='3'/%3E%3Ccircle cx='70' cy='70' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask: radial-gradient(60% 70% at 70% 40%, #000, transparent);
+  mask: radial-gradient(60% 70% at 70% 40%, #000, transparent);
+}
+@media (max-width: 880px) { .portada { grid-template-columns: minmax(0, 1fr); padding-top: 36px; } }
+.eti { font-family: var(--f-dato); font-size: 13px; color: var(--cian); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 14px; }
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(38px, 6.4vw, 66px); line-height: 1.02; margin: 0; text-wrap: balance; text-transform: uppercase; }
+h1 em { font-style: normal; color: var(--cian); text-shadow: 0 0 18px rgba(34,227,255,.55); }
+.lema { color: var(--suave); font-size: 18px; max-width: 46ch; margin: 18px 0 0; }
+.lema b { color: var(--texto); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; padding: 0; list-style: none; }
+.chips li { font-family: var(--f-dato); font-size: 13px; color: var(--texto); border: 1px solid var(--linea); padding: 5px 10px; border-radius: 999px; background: rgba(12,26,51,.7); }
+
+/* Centro con cables (mapa de secciones) */
+.mapa { min-width: 0; }
+.centro { width: 100%; max-width: 100%; height: auto; display: block; }
+.centro-m { display: none; }
+.centro-m text { font-size: 20px; }
+.centro-m .num { font-size: 15px; }
+@media (max-width: 600px) { .centro-d { display: none; } .centro-m { display: block; } }
+@media (max-width: 880px) { .centro-d { max-width: 560px; margin-inline: auto; } }
+.centro .cable { fill: none; stroke: var(--cian-oscuro); stroke-width: 1.6; opacity: .75; }
+.centro .pulsos { filter: drop-shadow(0 0 4px var(--cian)); }
+.centro .pulso { fill: none; stroke: var(--cian); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 12 2000; animation: corre calc((var(--l) + 152) * 9ms) linear infinite; }
+.centro .p2 { animation-delay: -.7s; } .centro .p3 { animation-delay: -1.4s; } .centro .p4 { animation-delay: -2.1s; } .centro .p5 { animation-delay: -2.8s; }
+@keyframes corre { from { stroke-dashoffset: 12px; } to { stroke-dashoffset: calc((var(--l) + 140) * -1px); } }
+.centro.quieto .pulso { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .centro .pulso { animation: none; stroke-dasharray: none; opacity: .35; } }
+.centro .nodo rect { fill: var(--placa); stroke: var(--cian); stroke-width: 1.4; transition: fill .15s ease, stroke-width .15s ease; }
+.centro a:hover .nodo rect { fill: #10264a; stroke-width: 2.4; }
+.centro a:focus-visible { outline: none; }
+.centro a:focus-visible .nodo rect { fill: #10264a; stroke: #fff; stroke-width: 2.4; filter: drop-shadow(0 0 8px var(--cian)); }
+.centro text { font-family: var(--f-titulo); font-size: 15px; font-weight: 600; fill: var(--texto); }
+.centro .num { font-family: var(--f-dato); font-size: 11.5px; fill: var(--cian); font-weight: 400; }
+.centro .nucleo { fill: #071226; stroke: var(--cian); stroke-width: 2; filter: drop-shadow(0 0 14px rgba(34,227,255,.65)); }
+.centro .anillo { fill: none; stroke: var(--cian); stroke-width: 1; opacity: .35; stroke-dasharray: 3 6; }
+@media (prefers-reduced-motion: no-preference) {
+  .centro .nucleo, .centro .letra, .centro .nodo { transform-box: fill-box; transform-origin: center; }
+  .centro .nucleo, .centro .letra { animation: nace .5s cubic-bezier(.23,1,.32,1) both; }
+  .centro .cable { stroke-dasharray: 1; stroke-dashoffset: 1; animation: tiende .6s cubic-bezier(.23,1,.32,1) .25s forwards; }
+  .centro .nodo { animation: nace .35s cubic-bezier(.23,1,.32,1) .65s both; }
+  .centro .pulsos { animation: aparece .3s ease-out 1s both; }
+  section:target .cabeza .cod { animation: enciende 1.2s cubic-bezier(.23,1,.32,1) .35s both; }
+}
+@keyframes nace { from { opacity: 0; transform: scale(.94); } }
+@keyframes tiende { to { stroke-dashoffset: 0; } }
+@keyframes aparece { from { opacity: 0; } }
+@keyframes enciende { 30% { color: #fff; text-shadow: 0 0 2px var(--cian), 0 0 14px var(--cian); } }
+
+/* Secciones */
+section { padding-block: 64px 8px; scroll-margin-top: 12px; }
+.cabeza { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin-bottom: 8px; position: relative; }
+.cabeza .cod { font: 500 13px var(--f-dato); color: var(--cian); border: 1px solid var(--cian); border-radius: 8px; padding: 4px 8px; background: var(--placa); box-shadow: 0 0 12px rgba(34,227,255,.35); }
+.cabeza::after { content: ""; flex: 1 1 60px; height: 1px; background: linear-gradient(90deg, rgba(34,227,255,.6), transparent); order: 3; }
+h2 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 0; text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; hyphens: auto; }
+.intro { color: var(--suave); max-width: 66ch; margin: 6px 0 22px; }
+.rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+@media (max-width: 400px) { .rejilla { grid-template-columns: minmax(0, 1fr); } }
+#cadcam .rejilla { align-items: start; }
+
+.tarjeta {
+  min-width: 0; position: relative;
+  background: linear-gradient(180deg, rgba(16,38,74,.9), rgba(10,22,44,.9));
+  border: 1px solid rgba(34,227,255,.28); border-radius: var(--r-l); padding: 20px 20px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+  box-shadow: inset 0 1px 0 rgba(34,227,255,.22), 0 0 22px -10px rgba(34,227,255,.45);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.tarjeta::before, .tarjeta::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--cian); box-shadow: 0 0 8px var(--cian); top: -3px; left: 22px; }
+.tarjeta::after { top: auto; bottom: -3px; left: auto; right: 22px; }
+@media (hover: hover) and (pointer: fine) {
+  .tarjeta:has(a):hover { border-color: var(--cian); box-shadow: 0 0 0 1px rgba(34,227,255,.35), 0 0 32px rgba(34,227,255,.2); }
+}
+.tarjeta:focus-within { border-color: var(--cian); box-shadow: 0 0 0 1px rgba(34,227,255,.35), 0 0 32px rgba(34,227,255,.2); }
+/* Destacada solo cuando la rejilla tiene 2 columnas (con 3 columnas dejaría huecos) */
+@media (min-width: 701px) and (max-width: 967px) { .tarjeta.destacada { grid-column: span 2; } }
+.tarjeta h3 { font-family: var(--f-titulo); font-weight: 600; font-size: 22px; line-height: 1.15; margin: 0; }
+.tarjeta p { margin: 0; color: var(--texto-2); }
+#github .tarjeta h3 { font-family: var(--f-dato); font-weight: 500; font-size: 19px; }
+.captura { margin: -20px -20px 4px; padding: 10px; background: #0a1428; border-bottom: 1px solid rgba(34,227,255,.35); border-radius: var(--r-l) var(--r-l) 0 0; }
+.captura img { display: block; width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: contain; border-radius: 8px; filter: brightness(.88); box-shadow: 0 0 0 1px rgba(34,227,255,.35), 0 0 18px rgba(34,227,255,.18); }
+.fila { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.fila .estado { margin-left: auto; }
+.estado { font-family: var(--f-dato); font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+@media (max-width: 360px) { .estado { white-space: normal; } }
+.vivo { color: var(--verde); border-color: rgba(53,242,160,.45); background: rgba(53,242,160,.08); }
+.prueba { color: var(--cian); border-color: rgba(34,227,255,.45); background: rgba(34,227,255,.08); }
+.camino { color: var(--ambar); border-color: rgba(255,201,77,.45); background: rgba(255,201,77,.08); }
+.abierto { color: var(--texto); border-color: rgba(230,241,255,.35); background: rgba(230,241,255,.05); }
+.ver { font-family: var(--f-dato); font-size: 13px; color: var(--suave); }
+.plugins { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 2px 0 0; list-style: none; }
+.plugins li { font-size: 13px; padding: 3px 9px; border-radius: var(--r-s); background: rgba(34,227,255,.08); color: var(--texto); border: 1px solid rgba(34,227,255,.2); }
+.enlaces { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: auto; padding-top: 6px; font-size: 14.5px; }
+.enlaces a { display: inline-block; padding-block: 8px; text-decoration: none; font-weight: 500; }
+.enlaces a:hover { text-decoration: underline; }
+
+/* Flujo del taller */
+.flujo { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 22px; padding: 0; list-style: none; font-family: var(--f-dato); font-size: 13.5px; }
+.flujo li { padding: 6px 12px; border: 1px solid var(--linea); border-radius: var(--r-m); background: rgba(12,26,51,.8); }
+.flujo li.flecha { border: 0; background: none; padding: 0; color: var(--cian); }
+@media (max-width: 600px) {
+  .flujo { flex-direction: column; align-items: stretch; gap: 2px; }
+  .flujo li { text-align: center; }
+  .flujo li.flecha { align-self: center; transform: rotate(90deg); line-height: 1; }
+}
+@media (min-width: 601px) and (max-width: 880px) { .flujo { font-size: 12.5px; gap: 6px; } .flujo li { padding: 6px 9px; } }
+
+/* Versiones */
+details.versiones { border-top: 1px dashed var(--linea); padding-top: 8px; }
+details.versiones summary { cursor: pointer; font-size: 14px; color: var(--suave); padding-block: 8px; }
+.lista-ver { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 4px; font-size: 14px; }
+.lista-ver li { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 8px; }
+.lista-ver b { font-family: var(--f-dato); font-weight: 500; color: var(--cian); font-variant-numeric: tabular-nums; }
+
+/* Laboratorio */
+.lab { margin-top: 26px; border: 1px dashed rgba(255,201,77,.4); border-radius: var(--r-l); padding: 18px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px 28px; }
+@media (max-width: 600px) { .lab { padding: 18px 16px; } }
+.lab .eti { grid-column: 1 / -1; margin: 0; color: var(--ambar); }
+.lab h3 { font-family: var(--f-titulo); font-size: 19px; margin: 0 0 4px; color: var(--ambar); }
+.lab p { margin: 0; color: var(--texto-2); font-size: 15px; }
+
+/* Contacto */
+.contacto { margin-top: 8px; border: 1px solid var(--cian-oscuro); border-radius: var(--r-l); padding: 26px 24px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 20px 32px; align-items: center; background: radial-gradient(600px 200px at 0% 0%, rgba(34,227,255,.14), transparent 70%), var(--placa); box-shadow: 0 0 36px rgba(34,227,255,.1); }
+@media (max-width: 760px) { .contacto { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) { .contacto { padding: 22px 16px; } }
+.contacto .intro { margin-bottom: 0; }
+.correo { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; min-width: 0; }
+.boton { display: inline-flex; align-items: center; font: 600 16px var(--f-titulo); color: #041022; background: var(--cian); border-radius: var(--r-m); padding: 12px 18px; min-height: 44px; text-decoration: none; box-shadow: 0 0 18px rgba(34,227,255,.45); transition: transform .16s cubic-bezier(.23,1,.32,1), background-color .15s ease; }
+.boton-2 { font: 600 15px var(--f-titulo); color: var(--cian); background: transparent; border: 1px solid var(--cian); border-radius: var(--r-m); padding: 11px 16px; min-height: 44px; cursor: pointer; transition: transform .16s cubic-bezier(.23,1,.32,1); }
+.boton:active, .boton-2:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) { .boton:hover { background: #6cf0ff; } }
+.dir { font-family: var(--f-dato); font-size: 17px; color: var(--texto); overflow-wrap: anywhere; flex-basis: 100%; }
+footer { margin-top: 80px; border-top: 1px solid var(--linea); }
+footer .ancho { padding-block: 26px 40px; color: var(--suave); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+footer p { margin: 0; }
+</style>
+
+</head>
+<body>
+<a class="saltar" href="#cadcam">Saltar al contenido</a>
+<header class="barra">
+  <div class="ancho">
+    <a class="logo" href="#inicio" aria-label="Lycan Developments, inicio">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 35 11.5v17L20 37 5 28.5v-17Z" fill="none" stroke="#22e3ff" stroke-width="2.2"/><path d="M13 14v12h7M23 14h3a6 6 0 0 1 0 12h-3Z" fill="none" stroke="#e6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>LYCAN DEVELOPMENTS</b>
+    </a>
+    <nav aria-label="Secciones">
+      <a href="#cadcam">CAD-CAM</a>
+      <a href="#moviles">Apps móviles</a>
+      <a href="#web">Apps web</a>
+      <a href="#github">GitHub</a>
+      <a href="#skills">Skills</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="ancho portada">
+    <div>
+      <p class="eti">Software · EDWIN CNC · LycanRating</p>
+      <h1>Del taller <em>al software</em></h1>
+      <p class="lema"><b>Lycan Developments</b> hace, desde Colombia, programas gratis para dibujar y cortar lámina en mesas de plasma con Mach3, apps Android y LycanRating, la plataforma de torneos de tenis de mesa. Cada proyecto nació de un problema real, en el taller o en el club.</p>
+      <ul class="chips" aria-label="Resumen">
+        <li>3 programas de diseño</li>
+        <li>3 apps móviles</li>
+        <li>LycanRating en vivo</li>
+        <li>2 proyectos libres en GitHub</li>
+        <li>2 skills en preparación</li>
+      </ul>
+    </div>
+
+    <nav class="mapa" aria-label="Mapa de secciones">
+      <svg class="centro centro-d" viewBox="0 0 560 380" focusable="false">
+        <g aria-hidden="true">
+          <path class="cable" pathLength="1" d="M280 190 H190 V62 H150"/>
+          <path class="cable" pathLength="1" d="M280 190 H370 V62 H410"/>
+          <path class="cable" pathLength="1" d="M280 190 H120"/>
+          <path class="cable" pathLength="1" d="M280 190 H440"/>
+          <path class="cable" pathLength="1" d="M280 190 V318"/>
+          <g class="pulsos">
+            <path class="pulso" style="--l:208" d="M230 190 H190 V62 H150"/>
+            <path class="pulso p2" style="--l:208" d="M330 190 H370 V62 H410"/>
+            <path class="pulso p3" style="--l:110" d="M230 190 H120"/>
+            <path class="pulso p4" style="--l:110" d="M330 190 H440"/>
+            <path class="pulso p5" style="--l:78" d="M280 240 V318"/>
+          </g>
+          <circle class="anillo" cx="280" cy="190" r="70"/>
+          <circle class="nucleo" cx="280" cy="190" r="50"/>
+          <path class="letra" d="M262 176v28h12M282 176h6a14 14 0 0 1 0 28h-6Z" fill="none" stroke="#22e3ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <a href="#cadcam" aria-label="01, CAD-CAM"><g class="nodo"><rect x="14" y="38" width="136" height="48" rx="10"/><text x="30" y="58" class="num">01</text><text x="30" y="77">CAD-CAM</text></g></a>
+        <a href="#moviles" aria-label="02, Apps móviles"><g class="nodo"><rect x="410" y="38" width="136" height="48" rx="10"/><text x="426" y="58" class="num">02</text><text x="426" y="77">Apps móviles</text></g></a>
+        <a href="#web" aria-label="03, Apps web"><g class="nodo"><rect x="14" y="166" width="106" height="48" rx="10"/><text x="30" y="186" class="num">03</text><text x="30" y="205">Apps web</text></g></a>
+        <a href="#github" aria-label="04, GitHub"><g class="nodo"><rect x="440" y="166" width="106" height="48" rx="10"/><text x="456" y="186" class="num">04</text><text x="456" y="205">GitHub</text></g></a>
+        <a href="#skills" aria-label="05, Skills"><g class="nodo"><rect x="222" y="318" width="116" height="48" rx="10"/><text x="238" y="338" class="num">05</text><text x="238" y="357">Skills</text></g></a>
+      </svg>
+      <svg class="centro centro-m" viewBox="0 0 360 322" focusable="false">
+        <g aria-hidden="true">
+          <path class="cable" pathLength="1" d="M180 112 V90 H82 V60"/>
+          <path class="cable" pathLength="1" d="M180 112 V90 H278 V60"/>
+          <path class="cable" pathLength="1" d="M142 150 H120"/>
+          <path class="cable" pathLength="1" d="M218 150 H240"/>
+          <path class="cable" pathLength="1" d="M180 188 V262"/>
+          <g class="pulsos">
+            <path class="pulso" style="--l:150" d="M180 112 V90 H82 V60"/>
+            <path class="pulso p2" style="--l:150" d="M180 112 V90 H278 V60"/>
+            <path class="pulso p3" style="--l:22" d="M142 150 H120"/>
+            <path class="pulso p4" style="--l:22" d="M218 150 H240"/>
+            <path class="pulso p5" style="--l:74" d="M180 188 V262"/>
+          </g>
+          <circle class="anillo" cx="180" cy="150" r="52"/>
+          <circle class="nucleo" cx="180" cy="150" r="38"/>
+          <g transform="translate(180 150) scale(.8) translate(-280 -190)"><path class="letra" d="M262 176v28h12M282 176h6a14 14 0 0 1 0 28h-6Z" fill="none" stroke="#22e3ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+        </g>
+        <a href="#cadcam" aria-label="01, CAD-CAM"><g class="nodo"><rect x="2" y="4" width="160" height="56" rx="10"/><text x="16" y="26" class="num">01</text><text x="16" y="50">CAD-CAM</text></g></a>
+        <a href="#moviles" aria-label="02, Apps móviles"><g class="nodo"><rect x="198" y="4" width="160" height="56" rx="10"/><text x="212" y="26" class="num">02</text><text x="212" y="50">Apps móviles</text></g></a>
+        <a href="#web" aria-label="03, Apps web"><g class="nodo"><rect x="2" y="122" width="118" height="56" rx="10"/><text x="16" y="144" class="num">03</text><text x="16" y="168">Apps web</text></g></a>
+        <a href="#github" aria-label="04, GitHub"><g class="nodo"><rect x="240" y="122" width="118" height="56" rx="10"/><text x="254" y="144" class="num">04</text><text x="254" y="168">GitHub</text></g></a>
+        <a href="#skills" aria-label="05, Skills"><g class="nodo"><rect x="120" y="262" width="120" height="56" rx="10"/><text x="134" y="284" class="num">05</text><text x="134" y="308">Skills</text></g></a>
+      </svg>
+    </nav>
+  </div>
+
+  <!-- 01 CAD-CAM -->
+  <section id="cadcam" class="ancho" aria-labelledby="cadcam-t">
+    <div class="cabeza"><span class="cod">01</span><h2 id="cadcam-t">Diseño CAD-CAM</h2></div>
+    <p class="intro">Tres programas gratuitos para Windows para diseñar y cortar con plasma: EDWIN CNC 3D saca el plano DXF, y CAD-CAM o CAD2CAM sacan el código G listo para Mach3.</p>
+    <ol class="flujo" role="list" aria-label="Recorrido de una pieza">
+      <li>EDWIN CNC 3D</li><li class="flecha" aria-hidden="true">→</li>
+      <li>Plano DXF (mm)</li><li class="flecha" aria-hidden="true">→</li>
+      <li>CAD-CAM / CAD2CAM</li><li class="flecha" aria-hidden="true">→</li>
+      <li>Código G</li><li class="flecha" aria-hidden="true">→</li>
+      <li>Mesa de plasma</li>
+    </ol>
+    <div class="rejilla">
+      <article class="tarjeta destacada">
+        <div class="fila"><span class="ver">v1.0.12 · Windows 32 y 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <h3>EDWIN CNC CAD-CAM</h3>
+        <p>Dibujo 2D en DXF y generador de código G para plasma con Mach3. Próximamente: escoger el lado del corte (por fuera, por dentro o sobre la línea).</p>
+        <ul class="plugins" aria-label="Plugins"><li>Generador de código G</li><li>Matriz</li><li>Arandela</li></ul>
+        <details class="versiones">
+          <summary>Versiones<span class="vh"> de EDWIN CNC CAD-CAM</span></summary>
+          <ul class="lista-ver">
+            <li><b>1.0.14</b><span>Lado del corte en el código G (próxima)</span></li>
+            <li><b>1.0.13</b><span>CAD2CAM: distancia directa, escribir 100 y Enter (próxima)</span></li>
+            <li><b>1.0.12</b><span>Nace la variante CAD2CAM</span></li>
+            <li><b>1.0.9</b><span>Un solo instalador para 32 y 64 bits</span></li>
+            <li><b>1.0.7</b><span>Generador de código G para Mach3</span></li>
+            <li><b>1.0.5</b><span>Primera versión de prueba</span></li>
+          </ul>
+        </details>
+        <div class="enlaces"><a href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases">Descargas en GitHub<span class="vh"> de EDWIN CNC CAD-CAM</span> <span aria-hidden="true">↗</span></a></div>
+      </article>
+
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">v1.0.12 · Windows 32 y 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <h3>EDWIN CNC CAD2CAM</h3>
+        <p>El mismo programa, en español, para quien ya dibuja escribiendo comandos: L para línea, C para círculo, Enter repite la última orden, F8 traza recto y F3 se pega a los puntos del dibujo. Barras de herramientas a los lados, como en los programas de siempre.</p>
+        <ul class="plugins" aria-label="Plugins"><li>Comandos de teclado</li><li>Distancia directa (próxima)</li><li>Matriz</li><li>Arandela</li></ul>
+        <div class="enlaces"><a href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/tag/v1.0.12-prueba">Descargar CAD2CAM 1.0.12<span class="vh"> desde GitHub</span> <span aria-hidden="true">↗</span></a></div>
+      </article>
+
+      <article class="tarjeta">
+        <figure class="captura"><img src="manual-edwin-cnc-3d/img/ventana-desdoblar.png" width="800" height="640" loading="lazy" decoding="async" alt="Tolva desdoblada en EDWIN CNC 3D: lámina de 1467,2 × 740,3 mm lista para DXF"></figure>
+        <div class="fila"><span class="ver">v1.0.2 · Windows 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <h3>EDWIN CNC 3D</h3>
+        <p>Modelado 3D para tolvas, ductos y sinfines. Desdobla las caras que usted escoja y le entrega el plano de corte en DXF. También pasa a DXF una pieza plana a partir de una foto del celular, tomada sobre una hoja de marcas que usted imprime.</p>
+        <ul class="plugins" aria-label="Plugins"><li>Desdoblar caras</li><li>Helicoidal (sinfín)</li><li>Escala por 2 puntos</li><li>Foto → DXF</li></ul>
+        <details class="versiones">
+          <summary>Versiones<span class="vh"> de EDWIN CNC 3D</span></summary>
+          <ul class="lista-ver">
+            <li><b>1.0.2</b><span>Escala por 2 puntos y Foto → plano → DXF</span></li>
+            <li><b>1.0.1</b><span>Helicoidal (sinfín)</span></li>
+            <li><b>1.0.0</b><span>Desdoblar caras seleccionadas</span></li>
+          </ul>
+        </details>
+        <div class="enlaces">
+          <a href="manual-edwin-cnc-3d/">Manual<span class="vh"> de EDWIN CNC 3D</span></a>
+          <a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d">Código fuente<span class="vh"> de EDWIN CNC 3D</span> <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 02 Móviles -->
+  <section id="moviles" class="ancho" aria-labelledby="moviles-t">
+    <div class="cabeza"><span class="cod">02</span><h2 id="moviles-t">Aplicaciones móviles</h2></div>
+    <p class="intro">Tres apps para Android: una para el negocio, una para el taller y una para el entrenamiento.</p>
+    <div class="rejilla">
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">v1.0.4 · Android</span><span class="estado prueba">En prueba</span></div>
+        <h3>QR Speaker</h3>
+        <p>Dice en voz alta el monto de cada pago que le llega por Nequi o Daviplata, para que no tenga que mirar el celular mientras atiende. Además tiene 25 bancos y billeteras de Colombia en prueba, hasta confirmarlos con pagos reales.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Android · Bluetooth</span><span class="estado camino">En desarrollo</span></div>
+        <h3>CNC Control Phone</h3>
+        <p>Mueva la mesa de plasma desde el celular: flechas para X y Y, START y STOP. El celular se conecta por Bluetooth al computador de Mach3, como si fuera un teclado.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Android · Etapa 0</span><span class="estado camino">En desarrollo</span></div>
+        <h3>Lycan Analytics</h3>
+        <p>Análisis de video de tenis de mesa grabado con el celular. Hoy cuenta los golpes de cada peloteo por el sonido y exporta el video con marcador. Después vienen la postura, los metros recorridos, la pelota y sus botes.</p>
+      </article>
+    </div>
+
+    <div class="lab" role="group" aria-labelledby="lab-t">
+      <p id="lab-t" class="eti">Laboratorio · ideas en exploración</p>
+      <div>
+        <h3>Ratón por gestos</h3>
+        <p>Manejar el computador con la mano frente a la cámara: mover el puntero, hacer clic, clic derecho con el puño y acercar o alejar el dibujo.</p>
+      </div>
+      <div>
+        <h3>Mesa CNC por señas</h3>
+        <p>Mover la mesa con las mismas señas con que se guía un camión, solo antes de cortar. Cuando empieza el corte, la cámara deja de obedecer hasta que termina el código G. El paro de emergencia sigue siendo el botón físico.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Web -->
+  <section id="web" class="ancho" aria-labelledby="web-t">
+    <div class="cabeza"><span class="cod">03</span><h2 id="web-t">Aplicaciones web</h2></div>
+    <p class="intro">Plataformas que funcionan en el navegador, sin instalar nada.</p>
+    <div class="rejilla">
+      <article class="tarjeta destacada">
+        <div class="fila"><span class="ver">Gratis · en línea</span><span class="estado vivo">En vivo</span></div>
+        <h3>LycanRating</h3>
+        <p>Torneos de tenis de mesa de principio a fin: inscripción, llaves, mesas, resultados en vivo, rating y ranking. Cada club tiene su propia página.</p>
+        <div class="enlaces"><a href="https://www.lycantenisdemesa.com">lycantenisdemesa.com <span aria-hidden="true">↗</span></a></div>
+      </article>
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Dentro de LycanRating</span><span class="estado vivo">En vivo</span></div>
+        <h3>Análisis biomecánico</h3>
+        <p>El jugador sube un video de hasta 10 segundos de su topspin de derecha o de revés. Recibe los ángulos de su golpe con un veredicto, ve cómo va mejorando y descarga el informe en PDF.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Niveles 1 y 2 · gratis</span><span class="estado vivo">En vivo</span></div>
+        <h3>Academia LycanRating</h3>
+        <p>Lecciones cortas en video para aprender a organizar torneos con la plataforma, en dos niveles (el segundo es «Mi primer torneo»), con evaluación y certificado. La ruta para torneos federados viene después.</p>
+        <div class="enlaces"><a href="https://www.lycantenisdemesa.com/#/academia">Ver la Academia <span aria-hidden="true">↗</span></a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 04 GitHub -->
+  <section id="github" class="ancho" aria-labelledby="github-t">
+    <div class="cabeza"><span class="cod">04</span><h2 id="github-t">Contribuciones a GitHub</h2></div>
+    <p class="intro">Proyectos de software libre que tomé como base y amplié para el corte con plasma. El código queda abierto, con la misma licencia del original.</p>
+    <div class="rejilla">
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Fork de LibreCAD 2.2.1 · GPL-2</span><span class="estado abierto">Público</span></div>
+        <h3>edwin-cnc-cad-cam</h3>
+        <p>Le agregué el generador de código G para Mach3, la variante CAD2CAM en español con comandos de teclado y un solo instalador para 32 y 64 bits.</p>
+        <div class="enlaces"><a href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam">Ver repositorio<span class="vh"> edwin-cnc-cad-cam</span> <span aria-hidden="true">↗</span></a></div>
+      </article>
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Fork de IngeTrazo 0.6.1 · GPL-3</span><span class="estado abierto">Público</span></div>
+        <h3>edwin-cnc-3d</h3>
+        <p>Le agregué el desdoblado de caras a DXF, la helicoidal para sinfines, la escala por dos puntos y el calco de piezas desde una foto.</p>
+        <div class="enlaces"><a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d">Ver repositorio<span class="vh"> edwin-cnc-3d</span> <span aria-hidden="true">↗</span></a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 05 Skills -->
+  <section id="skills" class="ancho" aria-labelledby="skills-t">
+    <div class="cabeza"><span class="cod">05</span><h2 id="skills-t">Skills para GitHub</h2></div>
+    <p class="intro">Instrucciones listas para que un asistente de inteligencia artificial, como Claude, sepa hacer cálculos de taller y de tenis de mesa. Las publicaré gratis en GitHub para que cualquiera las descargue.</p>
+    <div class="rejilla">
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Tenis de mesa</span><span class="estado camino">En preparación</span></div>
+        <h3>RPM del saque</h3>
+        <p>Calcula cuántas vueltas por minuto da la pelota en su saque. Así mide el efecto y ve si mejora de un saque al siguiente.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Tenis de mesa</span><span class="estado camino">En preparación</span></div>
+        <h3>Análisis biomecánico</h3>
+        <p>Los ángulos del topspin de derecha y de revés, con los rangos de referencia, para revisar la técnica desde un video.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Taller · plasma</span><span class="estado camino">Idea</span></div>
+        <h3>Desdoblar láminas</h3>
+        <p>Del modelo de una tolva o un ducto al plano de corte en DXF, con las líneas de doblez marcadas.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="contacto" class="ancho" aria-labelledby="contacto-t">
+    <div class="contacto">
+      <div>
+        <p class="eti">Contacto</p>
+        <h2 id="contacto-t">¿Tiene un problema en el taller o en su club?</h2>
+        <p class="intro">Escríbame para preguntar por los programas, las apps, LycanRating o una mesa de plasma EDWIN CNC.</p>
+      </div>
+      <div class="correo">
+        <a class="boton" href="mailto:ingemaqsewing@gmail.com?subject=Consulta%20desde%20el%20portafolio">Escribir un correo</a>
+        <button type="button" id="copiar" class="boton-2">Copiar dirección</button>
+        <span id="correo" class="dir">ingemaqsewing<wbr>@gmail.com</span>
+        <span id="copiado" class="ver" role="status"></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="ancho">
+    <p><b>Lycan Developments</b> · EDWIN CNC · LycanRating</p>
+    <p>Colombia · 2026</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var aviso = document.getElementById('copiado'), correo = 'ingemaqsewing@gmail.com', t;
+  function avisar(m) {
+    aviso.textContent = ''; clearTimeout(t);
+    setTimeout(function () { aviso.textContent = m; t = setTimeout(function () { aviso.textContent = ''; }, 4000); }, 50);
+  }
+  function marcar() {
+    var r = document.createRange(); r.selectNodeContents(document.getElementById('correo'));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    avisar(ok ? 'Correo copiado' : (matchMedia('(pointer: coarse)').matches ? 'Correo seleccionado: déjelo presionado para copiar' : 'Correo seleccionado: cópielo con Ctrl + C'));
+  }
+  document.getElementById('copiar').addEventListener('click', function () {
+    if (!navigator.clipboard) { marcar(); return; }
+    try { navigator.clipboard.writeText(correo).then(function () { avisar('Correo copiado'); }, marcar); } catch (e) { marcar(); }
+  });
+  // Los pulsos del mapa se detienen cuando el mapa no está en pantalla
+  document.querySelectorAll('.centro').forEach(function (c) {
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { c.classList.toggle('quieto', !e[0].isIntersecting); }).observe(c);
+  });
+})();
+</script>
+</body>
+</html>

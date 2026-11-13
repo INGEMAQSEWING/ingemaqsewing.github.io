@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Cómo usar EDWIN CNC 3D 1.0.2: desdoblar caras de tolvas y ductos, hacer un sinfín, escalar por 2 puntos y pasar una pieza de una foto a DXF para plasma.">
+<link rel="canonical" href="https://ingemaqsewing.github.io/manual-edwin-cnc-3d/">
+<meta name="theme-color" content="#f7f6f2">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='8'%20fill='%23050b18'/%3E%3Cpath%20d='M20%203%2035%2011.5v17L20%2037%205%2028.5v-17Z'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.2'/%3E%3Cpath%20d='M13%2014v12h7M23%2014h3a6%206%200%200%201%200%2012h-3Z'%20fill='none'%20stroke='%23e6f1ff'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lycan Developments">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://ingemaqsewing.github.io/manual-edwin-cnc-3d/">
+<meta property="og:title" content="Manual de EDWIN CNC 3D 1.0.2">
+<meta property="og:description" content="Desdoblar tolvas y ductos, hacer un sinfín, escalar por 2 puntos y pasar una pieza de una foto a DXF para corte por plasma.">
+<meta property="og:image" content="https://ingemaqsewing.github.io/manual-edwin-cnc-3d/img/ventana-desdoblar.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Tolva cónica desdoblada en EDWIN CNC 3D: lámina de 1467,2 × 740,3 mm">
+<meta name="twitter:card" content="summary_large_image">
+<title>Manual EDWIN CNC 3D 1.0.2: desdoblar tolvas, sinfín y foto a DXF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: manual de taller — índice fijo a la izquierda en PC, una sola columna en el celular;
+   franjas amarillas tipo cinta de seguridad solo en los títulos de cada herramienta. */
+:root {
+  --bg: #f7f6f2;
+  --papel: #ffffff;
+  --tinta: #1d1d1b;
+  --suave: #5b5a55;
+  --linea: #dcdad2;
+  --amarillo: #f2b705;
+  --amarillo-tinta: #6b4f00;
+  --rojo: #c8321e;
+  --naranja: #e07b00;
+  --naranja-texto: #a85600;
+  --verde: #2f6d3a;
+  --nota: #fff6d6;
+  --cod: #efede6;
+  --f-titulo: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --f-texto: "Barlow", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-medida: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161614; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #34332e;
+    --amarillo: #f2b705; --amarillo-tinta: #f6cf55; --rojo: #f0705c; --naranja: #f3a23a; --naranja-texto: #f3a23a; --verde: #7cc488;
+    --nota: #2b2615; --cod: #2a2925; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161614; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #34332e;
+  --amarillo: #f2b705; --amarillo-tinta: #f6cf55; --rojo: #f0705c; --naranja: #f3a23a; --naranja-texto: #f3a23a; --verde: #7cc488;
+  --nota: #2b2615; --cod: #2a2925; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--tinta);
+  font-family: var(--f-texto); font-size: 17px; line-height: 1.6;
+}
+.envoltura {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+  display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px;
+}
+@media (max-width: 860px) { .envoltura { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+
+/* Encabezado */
+header.portada {
+  grid-column: 1 / -1;
+  padding-block: 40px 28px;
+  border-bottom: 3px solid var(--tinta);
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;
+}
+.marca { display: flex; align-items: center; gap: 14px; }
+.logo {
+  width: 54px; height: 54px; flex: none; background: var(--amarillo); color: #1d1d1b;
+  display: grid; place-items: center; font-family: var(--f-titulo); font-weight: 700; font-size: 26px;
+  border: 3px solid #1d1d1b;
+}
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(34px, 6vw, 54px); line-height: 1; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+.sub { margin: 6px 0 0; color: var(--suave); }
+.version { font-family: var(--f-medida); font-size: 14px; color: var(--suave); border: 1px solid var(--linea); padding: 4px 10px; background: var(--papel); }
+
+/* Índice */
+nav.indice { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); align-self: start; padding-top: 28px; }
+nav.indice p { font-family: var(--f-titulo); font-size: 15px; letter-spacing: .12em; text-transform: uppercase; color: var(--suave); margin: 0 0 8px; }
+nav.indice ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.indice a { display: block; padding: 6px 10px; color: var(--tinta); text-decoration: none; border-left: 3px solid transparent; font-size: 15px; }
+nav.indice a:hover { border-left-color: var(--amarillo); background: var(--papel); }
+nav.indice a:focus-visible { border-left-color: var(--amarillo); background: var(--papel); outline: 2px solid var(--tinta); outline-offset: -2px; }
+@media (max-width: 860px) {
+  nav.indice { position: static; padding-top: 20px; }
+  nav.indice ol { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+}
+
+main { min-width: 0; padding-top: 12px; }
+section { padding-top: 36px; scroll-margin-top: 16px; }
+h2 {
+  font-family: var(--f-titulo); font-weight: 700; font-size: clamp(28px, 4vw, 36px); line-height: 1.1;
+  margin: 0 0 14px; text-wrap: balance; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+h2 .cinta {
+  height: 14px; width: 56px; flex: none;
+  background: repeating-linear-gradient(-45deg, var(--amarillo) 0 8px, #1d1d1b 8px 16px);
+}
+h3 { font-family: var(--f-titulo); font-weight: 600; font-size: 23px; margin: 26px 0 8px; letter-spacing: .01em; }
+p, li { max-width: 68ch; }
+a { color: inherit; }
+.donde { font-family: var(--f-medida); font-size: 14.5px; background: var(--cod); padding: 2px 7px; border-radius: 3px; overflow-wrap: anywhere; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+@media (min-width: 861px) { .donde { white-space: nowrap; } }
+kbd { font-family: var(--f-medida); font-size: 13.5px; border: 1px solid var(--linea); border-bottom-width: 2px; background: var(--papel); padding: 1px 6px; border-radius: 3px; }
+.mm { font-family: var(--f-medida); font-size: .92em; }
+
+/* Pasos (orden real) */
+ol.pasos { counter-reset: paso; list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 10px; }
+ol.pasos > li { counter-increment: paso; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; }
+ol.pasos > li::before {
+  content: counter(paso); width: 30px; height: 30px; display: grid; place-items: center;
+  background: var(--tinta); color: var(--bg); font-family: var(--f-titulo); font-weight: 700; font-size: 18px;
+}
+ol.pasos > li > div { min-width: 0; padding-top: 2px; }
+
+/* Flujo del taller */
+.flujo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 18px 0 6px; border: 2px solid var(--tinta); background: var(--papel); }
+.flujo div { padding: 12px 14px; border-right: 2px solid var(--tinta); position: relative; min-width: 0; }
+.flujo div:last-child { border-right: 0; }
+.flujo b { display: block; font-family: var(--f-titulo); font-size: 19px; }
+.flujo span { font-size: 14px; color: var(--suave); }
+.flujo .aqui { background: var(--amarillo); color: #1d1d1b; }
+.flujo .aqui span { color: #3d3416; }
+@media (max-width: 620px) {
+  .flujo { grid-template-columns: minmax(0, 1fr); }
+  .flujo div { border-right: 0; border-bottom: 2px solid var(--tinta); }
+  .flujo div:last-child { border-bottom: 0; }
+}
+
+/* Capturas */
+figure { margin: 16px 0; max-width: 100%; }
+figure img { display: block; max-width: 100%; height: auto; border: 1px solid var(--linea); background: #fff; box-shadow: 0 1px 0 var(--linea); }
+figcaption { font-size: 14px; color: var(--suave); margin-top: 6px; }
+.dos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+@media (max-width: 620px) { .dos { grid-template-columns: minmax(0, 1fr); } }
+
+/* Notas */
+.nota, .ojo { padding: 12px 16px; margin: 16px 0; border-left: 5px solid var(--amarillo); background: var(--nota); max-width: 72ch; }
+.ojo { border-left-color: var(--rojo); }
+.nota .rotulo, .ojo .rotulo { font-family: var(--f-titulo); font-size: 17px; letter-spacing: .04em; text-transform: uppercase; margin-right: 6px; }
+.nota p, .ojo p { margin: 4px 0; }
+
+/* Tablas */
+.tabla { overflow-x: auto; margin: 14px 0; max-width: 100%; }
+table { border-collapse: collapse; width: 100%; min-width: 480px; background: var(--papel); font-size: 15.5px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--linea); }
+th { font-family: var(--f-titulo); font-size: 16px; letter-spacing: .05em; text-transform: uppercase; border-bottom: 2px solid var(--tinta); }
+td:first-child { font-weight: 600; white-space: nowrap; }
+.capa { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--tinta); }
+
+/* Preguntas */
+details { border-top: 1px solid var(--linea); padding: 10px 0; max-width: 72ch; }
+details:last-of-type { border-bottom: 1px solid var(--linea); }
+summary { cursor: pointer; font-weight: 600; }
+summary:focus-visible, a:focus-visible { outline: 2px solid var(--tinta); outline-offset: 2px; }
+details p { margin: 8px 0 0; }
+
+footer { grid-column: 1 / -1; margin-top: 48px; padding-top: 18px; border-top: 3px solid var(--tinta); font-size: 14px; color: var(--suave); }
+footer p { max-width: none; margin: 4px 0; }
+</style>
+
+</head>
+<body>
+<nav aria-label="Volver" style="max-width:1180px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-left,0px)) 0"><a href="../#cadcam">← Volver a los proyectos</a></nav>
+<div class="envoltura">
+  <header class="portada">
+    <div class="marca">
+      <div class="logo" aria-hidden="true">3D</div>
+      <div>
+        <h1>Manual EDWIN CNC 3D</h1>
+        <p class="sub">Del modelo en 3D a la lámina cortada en la mesa de plasma.</p>
+      </div>
+    </div>
+    <span class="version">Versión 1.0.2 · Windows 64 bits</span>
+  </header>
+
+  <nav class="indice" aria-label="Contenido">
+    <p>Contenido</p>
+    <ol>
+      <li><a href="#empezar">Para empezar</a></li>
+      <li><a href="#desdoblar">Desdoblar caras</a></li>
+      <li><a href="#helicoidal">Helicoidal (sinfín)</a></li>
+      <li><a href="#escala">Escala por 2 puntos</a></li>
+      <li><a href="#foto">Foto → DXF</a></li>
+      <li><a href="#capas">Capas del DXF</a></li>
+      <li><a href="#problemas">Problemas comunes</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="empezar">
+      <h2><span class="cinta" aria-hidden="true"></span>Para empezar</h2>
+      <p>EDWIN CNC 3D sirve para dibujar piezas en 3D (tolvas, ductos, helicoidales) y sacarles el <b>plano de corte</b> en un archivo DXF. Ese archivo se abre en EDWIN CNC CAD-CAM, que hace el código G para la mesa de plasma.</p>
+      <div class="flujo" role="list">
+        <div class="aqui" role="listitem"><b>EDWIN CNC 3D</b><span>Dibujar, desdoblar o calcar de una foto</span></div>
+        <div role="listitem"><b>Archivo DXF</b><span>El plano en milímetros</span></div>
+        <div role="listitem"><b>EDWIN CNC CAD-CAM</b><span>Código G (Mach3)</span></div>
+        <div role="listitem"><b>Mesa de plasma</b><span>Corte de la lámina</span></div>
+      </div>
+
+      <h3>Instalar</h3>
+      <ol class="pasos">
+        <li><div>Pida el instalador <span class="donde">EDWIN-CNC-3D-1.0.2-Windows-64-bits.exe</span> a ingemaqsewing@gmail.com (versión de prueba) y siga los pasos. Funciona en Windows 10 y 11 de 64 bits.</div></li>
+        <li><div>Si ya tenía una versión anterior, instale encima: no hace falta desinstalar nada.</div></li>
+      </ol>
+
+      <h3>Dónde están las herramientas de EDWIN CNC</h3>
+      <p>Las cuatro herramientas para corte están en tres lugares:</p>
+      <ul>
+        <li>El menú <span class="donde">Extensiones ▸ EDWIN CNC</span>.</li>
+        <li>La barra de botones <b>EDWIN CNC</b>: <i>Desdoblar caras</i>, <i>Helicoidal</i>, <i>Escala 2 puntos</i> y <i>Foto → DXF</i>. Si no la ve, haga clic derecho en una zona vacía de las barras y active «EDWIN CNC».</li>
+        <li>El <b>clic derecho</b> sobre caras o grupos seleccionados, para «Desdoblar caras (EDWIN CNC)…».</li>
+      </ul>
+      <div class="nota"><p><b class="rotulo">Medidas</b>El programa trabaja en milímetros. Dibuje la pieza con su <b>medida interna</b>: el plano sale con la medida tal cual está dibujada, sin compensar el espesor de la lámina.</p></div>
+    </section>
+
+    <section id="desdoblar">
+      <h2><span class="cinta" aria-hidden="true"></span>Desdoblar caras</h2>
+      <p>Acuesta en plano las caras que usted escoja: la tolva entera, la mitad, una pestaña. Usted decide cómo partir la pieza según el tamaño de la lámina y la dobladora.</p>
+      <ol class="pasos">
+        <li><div><b>Seleccione las caras.</b> Clic en una cara; <kbd>Ctrl</kbd> + clic para agregar más. También puede seleccionar un grupo entero.</div></li>
+        <li><div>Toque <b>Desdoblar caras</b> en la barra, o <span class="donde">Extensiones ▸ EDWIN CNC ▸ Desdoblar caras seleccionadas…</span></div></li>
+        <li><div>Revise la <b>vista previa</b>. Escriba el <b>nombre de la pieza</b> (sale escrito en el plano).</div></li>
+        <li><div>En <b>Marcar dobleces desde</b> ponga desde cuántos grados una arista se marca como doblez. Con <span class="mm">15°</span> las aristas casi planas de un cono no se marcan, y los quiebres de verdad sí.</div></li>
+        <li><div>Toque <b>Guardar DXF…</b> y ábralo en EDWIN CNC CAD-CAM.</div></li>
+      </ol>
+      <figure>
+        <img src="img/ventana-desdoblar.png" width="800" height="640" alt="Ventana Desdoblar caras con una tolva cónica acostada en plano: lámina de 1467,2 por 740,3 mm">
+        <figcaption>Tolva cónica de Ø600 a Ø300 y 400 de alto, desdoblada: sale una lámina de 1467,2 × 740,3 mm.</figcaption>
+      </figure>
+      <div class="nota"><p><b class="rotulo">Avisos</b>Si una cara está torcida (sus puntas no están en un mismo plano) o el plano se monta sobre sí mismo, la ventana lo avisa. En ese caso seleccione menos caras y desdoble por partes.</p></div>
+    </section>
+
+    <section id="helicoidal">
+      <h2><span class="cinta" aria-hidden="true"></span>Helicoidal (sinfín)</h2>
+      <p>Dibuja la aleta de un sinfín con sus medidas. Después se escogen tramos pequeños y se desdoblan, como se hacía en SketchUp.</p>
+      <div class="dos">
+        <div>
+          <ol class="pasos">
+            <li><div>Toque <b>Helicoidal</b> en la barra, o <span class="donde">Extensiones ▸ EDWIN CNC ▸ Helicoidal (sinfín)…</span></div></li>
+            <li><div>Escriba las medidas (vea la tabla) y toque <b>Dibujar</b>. La helicoidal queda como un grupo, con el eje vertical en el origen.</div></li>
+            <li><div><b>Doble clic</b> sobre ella para entrar al grupo.</div></li>
+            <li><div>Clic en un tramo: se selecciona entero. <kbd>Ctrl</kbd> + clic para agregar los siguientes.</div></li>
+            <li><div>Toque <b>Desdoblar caras</b> y guarde el DXF.</div></li>
+          </ol>
+        </div>
+        <figure>
+          <img src="img/ventana-helicoidal.png" loading="lazy" decoding="async" width="331" height="390" alt="Ventana Helicoidal con diámetro de afuera 300 mm, eje 76 mm, paso 300 mm, 1 vuelta y 36 tramos por vuelta">
+          <figcaption>Las medidas quedan guardadas para la próxima vez.</figcaption>
+        </figure>
+      </div>
+      <div class="tabla">
+        <table>
+          <thead><tr><th>Casilla</th><th>Qué es</th></tr></thead>
+          <tbody>
+            <tr><td>Diámetro de afuera</td><td>El borde exterior de la aleta.</td></tr>
+            <tr><td>Diámetro del eje (tubo)</td><td>Donde la aleta va soldada al tubo.</td></tr>
+            <tr><td>Paso</td><td>Lo que sube la aleta en una vuelta completa.</td></tr>
+            <tr><td>Número de vueltas</td><td>Puede ser fraccionario: <span class="mm">0,5</span> es media vuelta.</td></tr>
+            <tr><td>Tramos por vuelta</td><td>En cuántos pedazos se parte cada vuelta. Con <span class="mm">36</span>, cada tramo es de <span class="mm">10°</span>.</td></tr>
+            <tr><td>Tramos a lo ancho</td><td>En cuántos pedazos se parte del eje al borde. Normalmente <span class="mm">1</span>.</td></tr>
+            <tr><td>Sentido</td><td>Derecha o izquierda, según hacia dónde debe empujar el sinfín.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nota"><p><b class="rotulo">Tramos pequeños</b>La helicoidal se estira al formarla, así que ningún plano es exacto. Mientras más pequeño el tramo que desdobla, menos se deforma.</p>
+      <p>La ventana también muestra el <b>dato de taller</b>: la arandela abierta equivalente a una vuelta (radio de adentro, radio de afuera, ancho y abertura), por si prefiere cortarla así.</p></div>
+    </section>
+
+    <section id="escala">
+      <h2><span class="cinta" aria-hidden="true"></span>Escala por 2 puntos</h2>
+      <p>Pone el modelo a la medida real cuando usted conoce una distancia: un modelo importado que vino a otra escala, una foto puesta como referencia, un escaneo.</p>
+      <div class="dos">
+        <div>
+          <ol class="pasos">
+            <li><div>Toque <b>Escala 2 puntos</b> en la barra, o <span class="donde">Extensiones ▸ EDWIN CNC ▸ Escala por 2 puntos</span></div></li>
+            <li><div>Clic en el <b>primer punto</b> de una medida que conozca. Se pega a esquinas y bordes, igual que la cinta métrica.</div></li>
+            <li><div>Clic en el <b>segundo punto</b>.</div></li>
+            <li><div>Escriba la <b>medida real</b> en milímetros (la de la cinta) y toque <b>Escalar</b>.</div></li>
+          </ol>
+        </div>
+        <figure>
+          <img src="img/ventana-escala.png" loading="lazy" decoding="async" width="362" height="178" alt="Ventana Escala por 2 puntos: distancia actual 200 mm, medida real 500 mm, todo se multiplica por 2,5">
+          <figcaption>Medía 200 mm y en la realidad mide 500: todo se multiplica por 2,5.</figcaption>
+        </figure>
+      </div>
+      <ul>
+        <li><b>Sin nada seleccionado</b> se escala todo el modelo. <b>Con algo seleccionado</b>, solo eso.</li>
+        <li>No se escalan los grupos bloqueados, las líneas guía, los textos ni las cotas. La ventana lo recuerda.</li>
+        <li>Se deshace con <kbd>Ctrl</kbd> + <kbd>Z</kbd>.</li>
+        <li>Si está dentro de un grupo, salga primero (<kbd>Esc</kbd> o clic afuera).</li>
+      </ul>
+    </section>
+
+    <section id="foto">
+      <h2><span class="cinta" aria-hidden="true"></span>Foto → plano → DXF</h2>
+      <p>Calca una pieza plana (plantilla, brida, letra, platina) desde una foto del celular y la guarda en DXF a escala real, lista para cortar.</p>
+
+      <h3>1. Imprimir la hoja de marcas (una sola vez)</h3>
+      <div class="dos">
+        <div>
+          <ol class="pasos">
+            <li><div>Abra <b>Foto → DXF</b> y toque <b>Hoja de marcas para imprimir…</b></div></li>
+            <li><div>Escoja <b>Hoja de escala EDWIN</b> en papel carta o A4 y guarde el PDF.</div></li>
+            <li><div>Imprímalo a <b>tamaño real</b>: al <span class="mm">100 %</span>, sin «ajustar a la página».</div></li>
+            <li><div>Mida la regla de abajo con un flexómetro: debe dar <span class="mm">100 mm</span>. Si no, revise la impresión.</div></li>
+          </ol>
+          <div class="nota"><p><b class="rotulo">Las 4 marcas</b>Son los cuadros negros de las esquinas. El programa las reconoce en la foto y con ellas endereza la imagen y saca la escala. No las tape ni las doble.</p></div>
+        </div>
+        <figure>
+          <img src="img/hoja.png" loading="lazy" decoding="async" width="700" height="905" alt="Hoja de escala EDWIN: cuatro marcas cuadradas en las esquinas, título arriba y regla de 100 mm abajo">
+          <figcaption>Hoja de escala EDWIN. La zona útil para la pieza es la del centro, entre las marcas.</figcaption>
+        </figure>
+      </div>
+
+      <h3>2. Tomar la foto</h3>
+      <ul>
+        <li>Ponga la pieza en el <b>centro de la hoja</b>, sin tapar las marcas.</li>
+        <li>Tome la foto <b>desde arriba</b>, lo más derecho que pueda, con las 4 marcas completas en la foto.</li>
+        <li>Luz pareja, <b>sin sombra</b> de usted ni del celular encima de la pieza.</li>
+        <li>Lámina brillante: <b>ópaquela</b> con talco o spray mate. Los reflejos confunden el contorno.</li>
+        <li>No use zoom digital ni modo retrato. Pásese la foto al PC (WhatsApp Web, cable o correo).</li>
+      </ul>
+
+      <h3>3. Sacar el contorno</h3>
+      <ol class="pasos">
+        <li><div>Toque <b>Abrir foto…</b> y escoja la foto.</div></li>
+        <li><div>El programa endereza la foto y dibuja el contorno: <b style="color:var(--rojo)">rojo</b> es el corte de afuera y <b style="color:var(--naranja-texto)">naranja</b>, los huecos.</div></li>
+        <li><div>Revise la medida que aparece («Pieza 1: …») contra el flexómetro.</div></li>
+        <li><div>Toque <b>Guardar DXF…</b>, o <b>Poner en el modelo 3D</b> para seguir trabajándola (por ejemplo, darle espesor).</div></li>
+      </ol>
+      <div class="dos">
+        <figure>
+          <img src="img/foto-celular.jpg" loading="lazy" decoding="async" width="700" height="971" alt="Foto torcida de la hoja de marcas con una brida redonda encima, con luz más oscura a la derecha">
+          <figcaption>La foto como sale del celular: torcida y con luz dispareja.</figcaption>
+        </figure>
+        <figure>
+          <img src="img/ventana-foto.jpg" loading="lazy" decoding="async" width="980" height="720" alt="Ventana Foto a DXF con la foto enderezada y la brida marcada: 99,8 por 99,8 mm con 1 hueco">
+          <figcaption>Ya enderezada: brida de Ø100 medida en 99,8 mm, con su hueco.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Si el contorno no sale bien</h3>
+      <div class="tabla">
+        <table>
+          <thead><tr><th>Ajuste</th><th>Para qué sirve</th></tr></thead>
+          <tbody>
+            <tr><td>Sensibilidad automática</td><td>Quítela y mueva la barra si el contorno se come parte de la pieza o agarra sombras.</td></tr>
+            <tr><td>La pieza es más OSCURA</td><td>Desmárquela si la pieza es más clara que el fondo.</td></tr>
+            <tr><td>Suavizar el contorno</td><td>Más alto, menos puntos y bordes más lisos. Con <span class="mm">0,30 mm</span> se ve bien en casi todo.</td></tr>
+            <tr><td>Ignorar manchas menores de</td><td>Quita puntos sueltos y polvo. Súbalo si salen manchitas como piezas o huecos.</td></tr>
+            <tr><td>Solo la pieza más grande</td><td>Desmárquelo para calcar varias piezas de la misma foto.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Piezas grandes</h3>
+      <p>En <b>Cómo se da la escala</b> hay dos maneras más:</p>
+      <ul>
+        <li><b>4 marcas grandes:</b> imprima «4 marcas grandes» (una marca por hoja) y póngalas en las esquinas de un rectángulo alrededor de la pieza, cada una en la esquina que dice. Mida entre los <b>centros</b> (la cruz blanca): el ancho va de la marca 0 a la 1 y el alto, de la 0 a la 3. Las dos diagonales deben medir lo mismo. Escriba el ancho y el alto en la ventana.</li>
+        <li><b>4 esquinas a mano:</b> sin marcas. Escriba el ancho y el alto de algo rectangular que salga en la foto (por ejemplo, una lámina de <span class="mm">1220 × 2440</span>) y haga clic en sus 4 esquinas, empezando por la de arriba a la izquierda. Si las marca en otro orden, el programa las ordena solo.</li>
+      </ul>
+      <div class="ojo"><p><b class="rotulo">Antes de cortar</b>Una foto tiene error. Con la hoja y una buena foto queda cerca de ±1 mm; con piezas grandes, más. Mida siempre la pieza con el flexómetro y compare. Si la ventana dice «toca el borde o se mete en una marca», la pieza puede estar recortada: tome otra foto con la pieza más centrada.</p></div>
+    </section>
+
+    <section id="capas">
+      <h2><span class="cinta" aria-hidden="true"></span>Capas del DXF</h2>
+      <p>Los DXF salen en milímetros, con las mismas capas que usa EDWIN CNC CAD-CAM:</p>
+      <div class="tabla">
+        <table>
+          <thead><tr><th>Capa</th><th>Qué lleva</th><th>En la mesa</th></tr></thead>
+          <tbody>
+            <tr><td><span class="capa" style="background:#e53935" aria-hidden="true"></span>CORTE</td><td>Contorno de la pieza y huecos.</td><td>Se corta.</td></tr>
+            <tr><td><span class="capa" style="background:#f2b705" aria-hidden="true"></span>MARCADO</td><td>Líneas de doblez (solo al desdoblar).</td><td>Se marca o se usa de guía para doblar.</td></tr>
+            <tr><td><span class="capa" style="background:#8a8a8a" aria-hidden="true"></span>REFERENCIA</td><td>Nombre de la pieza y medidas.</td><td>No se corta.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="problemas">
+      <h2><span class="cinta" aria-hidden="true"></span>Problemas comunes</h2>
+      <details>
+        <summary>No veo la barra EDWIN CNC</summary>
+        <p>Haga clic derecho en una zona vacía de las barras de arriba y active «EDWIN CNC». Las mismas herramientas están en <span class="donde">Extensiones ▸ EDWIN CNC</span>.</p>
+      </details>
+      <details>
+        <summary>Toco «Desdoblar caras» y me sale un aviso</summary>
+        <p>No hay caras seleccionadas. Seleccione primero las caras (clic y <kbd>Ctrl</kbd> + clic) o el grupo entero.</p>
+      </details>
+      <details>
+        <summary>No puedo seleccionar un tramo de la helicoidal</summary>
+        <p>La helicoidal es un grupo: haga doble clic sobre ella para entrar y luego seleccione los tramos.</p>
+      </details>
+      <details>
+        <summary>Foto → DXF dice que no encuentra todas las marcas</summary>
+        <p>El mensaje dice cuál falta. Que las 4 salgan completas en la foto, enfocadas, sin reflejo ni sombra encima, y que la hoja no esté arrugada. Si imprimió las marcas grandes, revise que esté en el modo «4 marcas grandes».</p>
+      </details>
+      <details>
+        <summary>La medida de la foto no coincide con la cinta</summary>
+        <p>Revise que la hoja se haya impreso al 100 % (la regla debe medir 100 mm). Tome la foto más derecha y desde más arriba. En el modo de marcas grandes, revise el ancho y el alto escritos y que las diagonales midan lo mismo.</p>
+      </details>
+      <details>
+        <summary>El contorno sale con huecos o pedazos de más</summary>
+        <p>Casi siempre son reflejos o sombras. Opaque la lámina, cambie la luz o use la sensibilidad a mano. Suba «Ignorar manchas menores de» para quitar puntos sueltos.</p>
+      </details>
+      <details>
+        <summary>Escalé y algo no cambió de tamaño</summary>
+        <p>Los grupos bloqueados, las líneas guía, los textos y las cotas no se escalan. Desbloquee el grupo y repita. Recuerde que si tenía algo seleccionado, solo se escaló eso.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <p><b>EDWIN CNC 3D</b> es gratuito y viene con las máquinas EDWIN CNC. Está basado en IngeTrazo (licencia GPL-3).</p>
+    <p>Manual de la versión 1.0.2, noviembre de 2026.</p>
+  </footer>
+</div>
+</body>
+</html>
