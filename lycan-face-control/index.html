@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Manual Lycan Face Control 1.0.0: maneje el computador con la cabeza y la cara</title>
-<meta name="description" content="Cómo instalar y usar Lycan Face Control 1.0.0: mueva el puntero con la cabeza, haga clic quedándose quieto o con un gesto de la cara, y escriba o hable con un teclado grande en pantalla. Pensado para personas con ELA y quienes las cuidan.">
+<title>Manual Lycan Face Control 1.1.0: maneje el computador con la cabeza, los ojos y la cara</title>
+<meta name="description" content="Cómo instalar y usar Lycan Face Control 1.1.0: mueva el puntero con la cabeza o con los ojos, haga clic quedándose quieto o con un gesto de la cara, pida ayuda con un botón de emergencia, y escriba o hable con un teclado grande en pantalla. Pensado para personas con ELA y quienes las cuidan.">
 <link rel="canonical" href="https://ingemaqsewing.github.io/lycan-face-control/">
 <meta name="theme-color" content="#050b18">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='8'%20fill='%23050b18'/%3E%3Cpath%20d='M20%203%2035%2011.5v17L20%2037%205%2028.5v-17Z'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.2'/%3E%3Cpath%20d='M13%2014v12h7M23%2014h3a6%206%200%200%201%200%2012h-3Z'%20fill='none'%20stroke='%23e6f1ff'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -12,8 +12,8 @@
 <meta property="og:site_name" content="Lycan Developments">
 <meta property="og:locale" content="es_CO">
 <meta property="og:url" content="https://ingemaqsewing.github.io/lycan-face-control/">
-<meta property="og:title" content="Manual de Lycan Face Control 1.0.0">
-<meta property="og:description" content="Maneje el computador solo con la cabeza y la cara: puntero, clic sin manos, teclado grande y voz sin internet. Con un dibujo de cada gesto.">
+<meta property="og:title" content="Manual de Lycan Face Control 1.1.0">
+<meta property="og:description" content="Maneje el computador solo con la cabeza, los ojos y la cara: puntero, clic sin manos, botón AYUDA de emergencia, teclado grande y voz sin internet. Con un dibujo de cada gesto.">
 <meta property="og:image" content="https://ingemaqsewing.github.io/lycan-face-control/img/og-lycan-face-control.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -187,6 +187,8 @@ ol.pasos > li > div { min-width: 0; padding-top: 3px; }
 .maqueta-barra li span { font-size: 24px; color: var(--cian); line-height: 1.1; }
 .maqueta-barra li.encendido { border-color: var(--verde); box-shadow: 0 0 14px rgba(53,242,160,.35); }
 .maqueta-barra li.encendido span { color: var(--verde); }
+.maqueta-barra li.ayuda { border-color: #ff6b6b; background: rgba(255,107,107,.14); margin-top: 8px; }
+.maqueta-barra li.ayuda span { color: #ff6b6b; font-weight: 700; }
 
 /* Maqueta del teclado: las filas de arriba hacia abajo */
 .filas-teclado { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 8px; max-width: 760px; counter-reset: fila; }
@@ -255,9 +257,9 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
     <div>
       <p class="eti">Manual · Windows · Sin manos</p>
       <h1>Lycan <em>Face Control</em></h1>
-      <p class="lema">Maneje el computador <b>solo con la cabeza y la cara</b>: mueva el puntero, haga clic sin manos y escriba o hable con un teclado grande en pantalla.</p>
+      <p class="lema">Maneje el computador <b>solo con la cabeza, los ojos y la cara</b>: mueva el puntero, haga clic sin manos, pida ayuda con un botón y escriba o hable con un teclado grande en pantalla.</p>
     </div>
-    <span class="version">Versión 1.0.0 · Windows 64 bits</span>
+    <span class="version">Versión 1.1.0 · Windows 64 bits</span>
   </div>
 
   <div class="envoltura">
@@ -265,13 +267,16 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       <p>Contenido</p>
       <ol>
         <li><a href="#que-es">Qué es y para quién</a></li>
+        <li><a href="#novedades">Novedades de la 1.1.0</a></li>
         <li><a href="#video">Video tutorial</a></li>
         <li><a href="#instalar">Descargar e instalar</a></li>
         <li><a href="#primera-vez">Primera vez y calibración</a></li>
         <li><a href="#puntero">Mover el puntero</a></li>
+        <li><a href="#ojos">Mover con los ojos</a></li>
         <li><a href="#quieto">Clic quedándose quieto</a></li>
         <li><a href="#gestos">Gestos de la cara</a></li>
         <li><a href="#barra">Barra de acciones</a></li>
+        <li><a href="#ayuda">Botón AYUDA</a></li>
         <li><a href="#teclado">Teclado en pantalla</a></li>
         <li><a href="#barrido">Barrido con parpadeo</a></li>
         <li><a href="#hablar">Hablar</a></li>
@@ -280,6 +285,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
         <li><a href="#cuidadores">Para el cuidador</a></li>
         <li><a href="#atajos">Atajos de teclado</a></li>
         <li><a href="#opciones">Opciones</a></li>
+        <li><a href="#preguntas">Preguntas frecuentes</a></li>
         <li><a href="#problemas">Problemas frecuentes</a></li>
         <li><a href="#privacidad">Privacidad</a></li>
         <li><a href="#limites">Con honestidad</a></li>
@@ -300,8 +306,22 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
         <div class="nota"><p><span class="rotulo">Todo en su computador</span>No necesita internet. La imagen de la cámara se usa en el momento y nunca se guarda ni se envía. La voz es la de Windows y también funciona sin conexión.</p></div>
       </section>
 
+      <section id="novedades" aria-labelledby="t-novedades">
+        <div class="cabeza"><span class="cod">02</span><h2 id="t-novedades">Novedades de la 1.1.0</h2></div>
+        <p>Si ya usaba la 1.0, todo lo que conocía sigue igual: de fábrica el puntero se mueve con la cabeza, como antes. Esto es lo nuevo:</p>
+        <div class="datos">
+          <div class="tarjeta"><h3>Botón AYUDA</h3><p>Un botón rojo de emergencia. Quieto unos 2,5 segundos sobre él: la pantalla se pone roja y suena una alarma hasta que alguien venga. <a href="#ayuda">Ver cómo funciona</a>.</p></div>
+          <div class="tarjeta"><h3>Mover con los ojos</h3><p>Ahora el puntero también puede seguir la mirada, o los ojos y la cabeza juntos. <a href="#ojos">Ver cómo elegirlo</a>.</p></div>
+          <div class="tarjeta"><h3>Velocidad del puntero</h3><p>Dos botones grandes, «Más lento» y «Más rápido», y un ajuste aparte para arriba y abajo. <a href="#velocidad">Ver la velocidad</a>.</p></div>
+          <div class="tarjeta"><h3>Lupa</h3><p>Agranda una zona pequeña para hacer clic justo donde quiere. <a href="#lupa">Ver la lupa</a>.</p></div>
+          <div class="tarjeta"><h3>Sin clic</h3><p>Modo lectura: quedarse quieto no hace clic, para leer o ver un video tranquilo. <a href="#sin-clic">Ver «Sin clic»</a>.</p></div>
+          <div class="tarjeta"><h3>Minimizar</h3><p>La barra y el teclado se esconden en una pestaña del borde, sin perder lo escrito. <a href="#minimizar">Ver «Minimizar»</a>.</p></div>
+        </div>
+        <p>Además: el botón de instrucciones ahora se llama <b>«Cómo usar»</b> (la palabra AYUDA queda solo para la emergencia), hay un atajo nuevo para el cuidador, <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd>, que apaga la alarma, y se corrigieron detalles de tamaño de letra y contraste. Al pasar de la 1.0 a la 1.1 se conservan la calibración, los gestos, las frases y los atajos.</p>
+      </section>
+
       <section id="video" aria-labelledby="t-video">
-        <div class="cabeza"><span class="cod">02</span><h2 id="t-video">Video tutorial</h2></div>
+        <div class="cabeza"><span class="cod">03</span><h2 id="t-video">Video tutorial</h2></div>
         <p>Un recorrido corto por la calibración, los gestos y el teclado.</p>
         <div class="video">
           <div class="espera" aria-hidden="true"><b>Video tutorial</b><span>Lycan Face Control paso a paso</span></div>
@@ -315,7 +335,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="instalar" aria-labelledby="t-instalar">
-        <div class="cabeza"><span class="cod">03</span><h2 id="t-instalar">Descargar e instalar</h2></div>
+        <div class="cabeza"><span class="cod">04</span><h2 id="t-instalar">Descargar e instalar</h2></div>
         <div class="datos">
           <div class="tarjeta"><h3>Windows</h3><p>Windows 10 u 11 de 64 bits, con unos 300 MB libres.</p></div>
           <div class="tarjeta"><h3>Cámara</h3><p>La del portátil sirve. También una cámara web por USB.</p></div>
@@ -325,8 +345,8 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <div class="tarjeta">
             <h3>Instalador (recomendado)</h3>
             <p>Crea el acceso en el menú Inicio y, si quiere, en el escritorio.</p>
-            <span class="archivo">Lycan-Face-Control-1.0.0-Windows-64-bits.exe</span>
-            <a class="boton-desc" href="https://github.com/INGEMAQSEWING/lycan-face-control/releases/download/v1.0.0-prueba/Lycan-Face-Control-1.0.0-Windows-64-bits.exe">
+            <span class="archivo">Lycan-Face-Control-1.1.0-Windows-64-bits.exe · ≈55 MB</span>
+            <a class="boton-desc" href="https://github.com/INGEMAQSEWING/lycan-face-control/releases/download/v1.1.0-prueba/Lycan-Face-Control-1.1.0-Windows-64-bits.exe">
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M5 20h14"/></svg>
               Descargar instalador
             </a>
@@ -334,8 +354,8 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <div class="tarjeta">
             <h3>Versión portable</h3>
             <p>Sin instalar: descomprima la carpeta y abra <span class="ruta">LycanFaceControl.exe</span>.</p>
-            <span class="archivo">Lycan-Face-Control-1.0.0-portable.zip</span>
-            <a class="boton-desc secundario" href="https://github.com/INGEMAQSEWING/lycan-face-control/releases/download/v1.0.0-prueba/Lycan-Face-Control-1.0.0-portable.zip">
+            <span class="archivo">Lycan-Face-Control-1.1.0-portable.zip · ≈87 MB</span>
+            <a class="boton-desc secundario" href="https://github.com/INGEMAQSEWING/lycan-face-control/releases/download/v1.1.0-prueba/Lycan-Face-Control-1.1.0-portable.zip">
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M5 20h14"/></svg>
               Descargar ZIP
             </a>
@@ -351,11 +371,12 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <p><span class="rotulo">Si Windows lo detiene</span>Puede salir un aviso azul que dice <b>«Windows protegió su PC»</b> (SmartScreen). Sale porque el programa es nuevo y no tiene firma digital, que tiene un costo anual.</p>
           <p>Haga clic en <b>«Más información»</b> y luego en <b>«Ejecutar de todas formas»</b>.</p>
         </div>
+        <div class="nota"><p><span class="rotulo">Si ya tiene la 1.0</span>Instale la 1.1.0 encima, sin desinstalar: se conservan la calibración, los gestos, las frases y los atajos. Con la versión portable, descomprima la nueva carpeta y abra su <span class="ruta">LycanFaceControl.exe</span>; la configuración es la misma.</p></div>
         <p>Si más adelante lo desinstala, el programa le pregunta si quiere borrar también la configuración (calibración, gestos, frases rápidas, palabras aprendidas y atajos). Si dice que no, la conserva para la próxima vez. El código está en <a href="https://github.com/INGEMAQSEWING/lycan-face-control">github.com/INGEMAQSEWING/lycan-face-control</a>.</p>
       </section>
 
       <section id="primera-vez" aria-labelledby="t-primera">
-        <div class="cabeza"><span class="cod">04</span><h2 id="t-primera">La primera vez y la calibración</h2></div>
+        <div class="cabeza"><span class="cod">05</span><h2 id="t-primera">La primera vez y la calibración</h2></div>
         <div class="figura">
           <div>
             <p>La primera vez se abre una <b>bienvenida</b> de cuatro pantallas: qué hace el programa, cómo acomodar la cámara, cómo se hace clic y, al final, la <b>calibración guiada</b>.</p>
@@ -369,6 +390,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <figure><img src="img/gestos/posicion.svg" width="800" height="600" loading="lazy" decoding="async" alt="Una cara frente a la pantalla, con la cámara a la altura de los ojos y a una distancia de 50 a 70 centímetros; luz de frente y sin ventana detrás."><figcaption>La cámara a la altura de los ojos, a 50 a 70 cm.</figcaption></figure>
         </div>
         <h3>La calibración (unos dos minutos)</h3>
+        <p>En la primera pantalla de la calibración se elige con qué se moverá el puntero: <b>«Mover el puntero con ◀ La cabeza ▶»</b>. Con ◀ y ▶ se cambia entre «La cabeza», «Los ojos» y «Ojos y cabeza»; luego se elige <b>«Empezar»</b>. Si no sabe cuál, deje «La cabeza»: es la de siempre. Vea <a href="#ojos">Mover con los ojos</a>.</p>
         <p>Cada paso <b>avanza solo</b> cuando termina: la persona solo sigue las instrucciones de la pantalla. El cuidador puede elegir <b>«Repetir este paso»</b> o <b>«Atrás»</b> con el ratón. Nada se graba: el programa solo guarda unos números.</p>
         <ol class="pasos">
           <li><div><b>Posición.</b> La cara en el centro de la cámara, a un brazo de distancia. El programa dice si hay que acercarse o alejarse.</div></li>
@@ -379,12 +401,13 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <li><div><b>Parpadeo largo</b> (solo si usa el barrido o «Solo comunicación»). Cierre los ojos hasta que la barra se ponga verde y ábralos, tres veces. En «Solo comunicación» no se piden los giros de la cabeza.</div></li>
           <li><div><b>Probar los gestos:</b> abrir la boca, levantar las cejas y, si está encendida, sonreír, tres veces cada uno. Se puede <b>omitir</b> el que no use. Si un gesto casi no se nota, se deja con el ajuste de fábrica y la pantalla final lo dice.</div></li>
           <li><div><b>Prueba final.</b> Lleve el puntero a cuatro círculos y quédese quieto sobre cada uno. Con el barrido, la prueba es el parpadeo largo y la ventana se cierra sola.</div></li>
+          <li><div><b>Solo si eligió los ojos:</b> cuatro pasos más para los ojos. Están explicados en <a href="#calibrar-ojos">Calibrar los ojos</a>.</div></li>
         </ol>
         <div class="nota"><p><span class="rotulo">Repetirla</span>Calibre otra vez desde el botón <b>Calibrar</b> de la ventana principal cuando cambie la posición de la cama o la silla, cuando mueva la cámara o si la persona está más cansada que de costumbre.</p></div>
       </section>
 
       <section id="puntero" aria-labelledby="t-puntero">
-        <div class="cabeza"><span class="cod">05</span><h2 id="t-puntero">Mover el puntero</h2></div>
+        <div class="cabeza"><span class="cod">06</span><h2 id="t-puntero">Mover el puntero</h2></div>
         <div class="figura">
           <div>
             <p>Gire la cabeza a los lados y arriba o abajo: el puntero la sigue. El programa quita el temblor y no hace falta forzar el cuello. Si la persona voltea la cabeza <b>mucho más allá</b> de lo cómodo (para mirar a alguien, ver televisión o comer), el puntero se queda quieto y no hace clics hasta que vuelva a mirar la pantalla.</p>
@@ -399,11 +422,64 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <div class="tarjeta"><h3>Como una almohadilla</h3><p>El puntero avanza lo que se mueva la cabeza, como el panel táctil de un portátil.</p></div>
           <div class="tarjeta"><h3>Palanca</h3><p>Para quien mueve poco el cuello: el puntero sigue avanzando mientras la cabeza esté girada.</p></div>
         </div>
-        <p>En la misma pestaña están la <b>velocidad del puntero</b> (de 1 a 10: con 10 basta un movimiento pequeño) y la <b>suavidad</b>, que quita el temblor.</p>
+        <p>En la misma pestaña está la <b>suavidad</b>, que quita el temblor.</p>
+        <h3 id="velocidad">La velocidad del puntero</h3>
+        <p>En <b>Opciones ▸ Puntero</b>, la fila <b>«Velocidad del puntero»</b> tiene dos botones grandes: <b>«◀ Más lento»</b> y <b>«Más rápido ▶»</b>. En el medio dice en qué número está, por ejemplo <b>«3 de 10»</b>, que es el valor de fábrica.</p>
+        <ul>
+          <li><b>Más rápido:</b> basta un movimiento pequeño de la cabeza. Sirve si mover el cuello cansa.</li>
+          <li><b>Más lento:</b> el puntero va más calmado y es más fácil atinarle a las cosas pequeñas.</li>
+          <li>Con cualquier número se llega a <b>toda la pantalla</b>, y la calibración no cambia. No hay que calibrar de nuevo.</li>
+          <li>El cambio se nota <b>al instante</b>: pruébelo moviendo la cabeza. Si no le gusta, <b>«Cancelar»</b> lo deshace.</li>
+        </ul>
+        <p>Justo debajo está <b>«Velocidad arriba y abajo»</b>, con «−» y «+». Viene en <b>120 %</b> y va de 80 a 200 %. «Igual» quiere decir que va igual que a los lados. <b>Súbalo si a la persona le cuesta más mover la cabeza arriba y abajo que a los lados</b>, algo muy común cuando está recostada.</p>
+      </section>
+
+      <section id="ojos" aria-labelledby="t-ojos">
+        <div class="cabeza"><span class="cod">07</span><h2 id="t-ojos">Mover el puntero con los ojos</h2></div>
+        <div class="figura">
+          <div>
+            <p>Desde la 1.1.0, el puntero también puede ir <b>a donde la persona mira</b>. Sirve cuando mover la cabeza cansa mucho o ya casi no se puede.</p>
+            <p>Hay tres formas, en <b>Opciones ▸ Puntero ▸ «Mover el puntero con»</b>, o en la primera pantalla de la calibración:</p>
+            <ul>
+              <li><b>La cabeza</b> (de fábrica): igual que en la 1.0.</li>
+              <li><b>Los ojos</b>: el puntero sigue la mirada.</li>
+              <li><b>Ojos y cabeza (recomendado)</b>: los ojos llevan el puntero <b>cerca</b> y un movimiento pequeño de la cabeza lo deja <b>justo encima</b>. Es la más precisa de las dos con ojos.</li>
+            </ul>
+          </div>
+          <figure><img src="img/gestos/mirada.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara mira hacia la pantalla sin girar la cabeza; el puntero cae dentro de un círculo de 3 a 5 centímetros alrededor de donde mira."><figcaption>Con los ojos, el puntero cae cerca de donde se mira.</figcaption></figure>
+        </div>
+        <div class="ojo"><p><span class="rotulo">La verdad sobre la precisión</span>Con una cámara web común, el puntero cae a <b>unos 3 a 5 cm de donde se mira</b>, no en el punto exacto. Alcanza para botones grandes, como los de la barra y el teclado de este programa, pero no para una letra pequeña de una página web. Para cosas pequeñas use la <a href="#lupa">lupa</a> o «Ojos y cabeza». Al final de la calibración el programa le dice cuántos centímetros le dio a usted.</p></div>
+        <h3 id="calibrar-ojos">Calibrar los ojos</h3>
+        <p>Si eligió «Los ojos» u «Ojos y cabeza», después de los pasos de la cabeza vienen cuatro más:</p>
+        <ol class="pasos">
+          <li><div><b>Ojos: centro.</b> «Mire el punto del centro sin mover la cabeza.»</div></li>
+          <li><div><b>Ojos: puntos.</b> Aparecen 9 puntos, uno por uno. «Siga el punto solo con los ojos. Deje la cabeza quieta.»</div></li>
+          <li><div><b>Ojos fijos, cabeza en movimiento.</b> Mire un punto y mueva un poco la cabeza: así el programa aprende a no confundir un movimiento de la cabeza con uno de los ojos.</div></li>
+          <li><div><b>Ojos: comprobar.</b> Cuatro puntos para medir qué tan cerca cae el puntero. Al final dice, por ejemplo: «Con los ojos, el puntero cae a unos 4 cm de donde usted mira. Use botones de al menos 5 cm o la lupa.»</div></li>
+        </ol>
+        <p>Si los ojos no se ven bien (un párpado caído, reflejos en las gafas), la calibración <b>no se queda detenida</b>: a los 15 segundos sigue sola. Si al final no pudo calibrar los ojos, lo dice y el puntero queda <b>con la cabeza</b>, que sí quedó calibrada.</p>
+        <h3>Consejos de luz y postura para los ojos</h3>
+        <div class="datos">
+          <div class="tarjeta"><h3>Luz de frente</h3><p>Una lámpara o una ventana delante de la cara, no detrás. Los ojos necesitan más luz que la cabeza.</p></div>
+          <div class="tarjeta"><h3>Cámara a la altura de los ojos</h3><p>Centrada debajo o encima de la pantalla, a 50 a 70 cm. Si la cámara queda muy abajo, los párpados tapan los ojos.</p></div>
+          <div class="tarjeta"><h3>Cabeza apoyada</h3><p>Con los ojos conviene que la cabeza esté quieta: un cojín o el espaldar ayudan. Si cambió de posición, recentre.</p></div>
+          <div class="tarjeta"><h3>Gafas</h3><p>Si hay reflejos, incline un poco la pantalla o la lámpara hasta que el reflejo no caiga sobre los ojos.</p></div>
+        </div>
+        <h3>Cómo se comporta con los ojos</h3>
+        <ul>
+          <li><b>Parpadear no mueve el puntero ni hace clic.</b> Cerrar los ojos lo deja quieto donde estaba.</li>
+          <li>El clic quedándose quieto funciona igual, pero con su propio tiempo: <b>«Tiempo quieto para hacer clic con los ojos»</b> (1,3 segundos de fábrica).</li>
+          <li><b>Pegar el puntero a los botones grandes</b> (encendido de fábrica): cerca de un botón de este programa, el puntero se pega a su centro. Así es más fácil elegir.</li>
+          <li><b>Abrir la lupa antes de cada clic con los ojos</b> (encendido de fábrica): antes de hacer clic aparece la <a href="#lupa">lupa</a> para afinar.</li>
+          <li><b>Recentrar</b> (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> o el botón de la ventana) muestra un punto en el centro y dice «Mire el punto del centro un segundo…». La corrección se conserva aunque después cambie alguna opción.</li>
+          <li>La ventana <b>«Cómo usar»</b> tiene una página nueva, <b>«Con los ojos»</b>.</li>
+        </ul>
+        <p>Los demás ajustes de los ojos están en la página siguiente de <b>Opciones ▸ Puntero</b>: suavidad con los ojos, cuántos puntos usar para calibrarlos (9 o 5) y, solo con «Ojos y cabeza», la <b>distancia para que el puntero salte hacia su mirada</b> (200 px) y la <b>velocidad del ajuste con la cabeza</b> (0,4 ×). Si la cámara trabaja con poca resolución (menos de 1280×720), aparece el botón <b>«Sí, cambiar»</b>, que vale desde la próxima vez que se abra el programa.</p>
+        <div class="nota"><p><span class="rotulo">Para volver a la cabeza</span>Cambiar de «Los ojos» a «La cabeza» lo hace el cuidador en Opciones ▸ Puntero. No hay un gesto para eso a propósito: cambiar solo haría saltar el puntero sin aviso.</p></div>
       </section>
 
       <section id="quieto" aria-labelledby="t-quieto">
-        <div class="cabeza"><span class="cod">06</span><h2 id="t-quieto">Clic quedándose quieto</h2></div>
+        <div class="cabeza"><span class="cod">08</span><h2 id="t-quieto">Clic quedándose quieto</h2></div>
         <div class="figura">
           <div>
             <p>Es la forma más sencilla de hacer clic: lleve el puntero sobre algo y <b>quédese quieto un momento</b>. Junto al puntero aparece un <b>anillo verde que se va llenando</b>. Cuando se completa (en 1 segundo, de fábrica), se hace el clic y suena un toque suave.</p>
@@ -415,8 +491,8 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="gestos" aria-labelledby="t-gestos">
-        <div class="cabeza"><span class="cod">07</span><h2 id="t-gestos">Gestos de la cara</h2></div>
-        <p>Los gestos son otra forma de hacer clic, más rápida que quedarse quieto. Así vienen de fábrica; cada uno se puede encender, apagar o cambiar en <b>Opciones ▸ Gestos</b>, y la ventana de <b>Ayuda</b> siempre muestra cómo están puestos.</p>
+        <div class="cabeza"><span class="cod">09</span><h2 id="t-gestos">Gestos de la cara</h2></div>
+        <p>Los gestos son otra forma de hacer clic, más rápida que quedarse quieto. Así vienen de fábrica; cada uno se puede encender, apagar o cambiar en <b>Opciones ▸ Gestos</b>, y la ventana <b>«Cómo usar»</b> siempre muestra cómo están puestos.</p>
         <ul class="gestos">
           <li class="tarjeta">
             <figure><img src="img/gestos/clic-boca.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara con la boca abierta un momento, con un destello; al lado, el ratón con el botón izquierdo encendido."></figure>
@@ -462,12 +538,12 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           </li>
         </ul>
         <h3>Qué se puede asignar a cada gesto</h3>
-        <p>Cada gesto tiene dos acciones: <b>«Al hacerlo»</b> (un momento) y <b>«Al sostenerlo 2 segundos»</b>. Se puede elegir entre: nada, clic (el que esté elegido en la barra), clic izquierdo, clic derecho, doble clic, arrastrar, pausar o reanudar, abrir el teclado, recentrar, y en el teclado borrar, hablar, elegir o avanzar el barrido. También se ajustan la <b>sensibilidad</b> y el <b>tiempo que hay que sostenerlo</b>.</p>
+        <p>Cada gesto tiene dos acciones: <b>«Al hacerlo»</b> (un momento) y <b>«Al sostenerlo 2 segundos»</b>. Se puede elegir entre: nada, clic (el que esté elegido en la barra), clic izquierdo, clic derecho, doble clic, arrastrar, pausar o reanudar, abrir el teclado, recentrar, y en el teclado borrar, hablar, elegir o avanzar el barrido. Para la acción al sostenerlo también está <b>«Pedir AYUDA (alarma)»</b>: vea el <a href="#ayuda">botón AYUDA</a>. También se ajustan la <b>sensibilidad</b> y el <b>tiempo que hay que sostenerlo</b>.</p>
         <div class="nota"><p><span class="rotulo">Pruébelo ahora</span>En Opciones ▸ Gestos hay una barra que se mueve en vivo mientras la persona hace el gesto. Así se ve si la sensibilidad está bien antes de guardar.</p></div>
       </section>
 
       <section id="barra" aria-labelledby="t-barra">
-        <div class="cabeza"><span class="cod">08</span><h2 id="t-barra">La barra de acciones</h2></div>
+        <div class="cabeza"><span class="cod">10</span><h2 id="t-barra">La barra de acciones</h2></div>
         <p>Es una columna de botones grandes, siempre visible, a la derecha de la pantalla. Se elige un botón <b>quedándose quieto sobre él</b> (1 segundo de fábrica).</p>
         <ul class="maqueta-barra" aria-label="Botones de la barra de acciones">
           <li class="encendido"><span aria-hidden="true">●</span>Clic</li>
@@ -477,6 +553,10 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <li><span aria-hidden="true">↕</span>Desplazar</li>
           <li><span aria-hidden="true">⌨</span>Teclado</li>
           <li><span aria-hidden="true">❚❚</span>Pausa</li>
+          <li><span aria-hidden="true">⊘</span>Sin clic</li>
+          <li><span aria-hidden="true">⊕</span>Lupa</li>
+          <li><span aria-hidden="true">▁</span>Minimizar</li>
+          <li class="ayuda"><span aria-hidden="true">!</span>AYUDA</li>
         </ul>
         <div class="tabla ancha">
           <table>
@@ -489,6 +569,10 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
               <tr><td data-label="Botón">Desplazar</td><td data-label="Qué hace">Para bajar o subir una página: incline la cabeza hacia arriba o hacia abajo y la página se mueve sola. Para salir, elija <b>«Terminar»</b>; también termina solo si no desplaza durante un rato.</td></tr>
               <tr><td data-label="Botón">Teclado</td><td data-label="Qué hace">Abre el <a href="#teclado">teclado en pantalla</a>.</td></tr>
               <tr><td data-label="Botón">Pausa</td><td data-label="Qué hace">Pausa el programa. El botón cambia a <b>«Reanudar»</b>.</td></tr>
+              <tr><td data-label="Botón">Sin clic</td><td data-label="Qué hace"><b>Nuevo.</b> Modo lectura: quedarse quieto no hace clic. Vea <a href="#sin-clic">abajo</a>.</td></tr>
+              <tr><td data-label="Botón">Lupa</td><td data-label="Qué hace"><b>Nuevo.</b> Agranda una zona para hacer un clic preciso. Vea <a href="#lupa">la lupa</a>.</td></tr>
+              <tr><td data-label="Botón">Minimizar</td><td data-label="Qué hace"><b>Nuevo.</b> Esconde la barra en una pestaña del borde. Vea <a href="#minimizar">Minimizar</a>.</td></tr>
+              <tr><td data-label="Botón">AYUDA</td><td data-label="Qué hace"><b>Nuevo.</b> Botón rojo de emergencia, al final y un poco separado. Vea el <a href="#ayuda">botón AYUDA</a>.</td></tr>
             </tbody>
           </table>
         </div>
@@ -501,17 +585,105 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <figure><img src="img/gestos/desplazar.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara inclinada hacia arriba; flechas arriba y abajo, y una página que se mueve."><figcaption>Desplazar: incline la cabeza y la página se mueve.</figcaption></figure>
         </div>
         <p>Con el puntero encima de las ventanas de Lycan Face Control no se hacen clics por accidente: los botones grandes se eligen quedándose quieto sobre ellos.</p>
+        <p>Si los botones no caben en la pantalla, la barra se arma en dos columnas. Con el teclado abierto, la barra no muestra «Sin clic», «Lupa» ni «Minimizar», para dejarle espacio al teclado.</p>
+
+        <h3 id="sin-clic">«Sin clic»: para leer o ver un video</h3>
+        <p>Elija <b>«Sin clic»</b> (⊘) cuando quiera leer, ver un video o descansar la mirada sobre la pantalla sin que se haga clic. Quedarse quieto <b>no hace clic</b>, pero los <b>gestos sí</b> siguen funcionando. Junto al puntero dice «Sin clic» para que no se olvide. Para volver a hacer clic, elija <b>«Clic»</b> en la barra.</p>
+        <p>Si no lo usa, se quita de la barra en <b>Opciones ▸ Comodidad ▸ «Botón «Sin clic» en la barra»</b>.</p>
+
+        <h3 id="lupa">La lupa: un clic preciso</h3>
+        <div class="figura">
+          <div>
+            <ol class="pasos">
+              <li><div>Elija <b>«Lupa»</b> (⊕) en la barra.</div></li>
+              <li><div>Lleve el puntero <b>cerca</b> de lo que quiere y quédese quieto.</div></li>
+              <li><div>Aparece esa zona <b>agrandada 3 veces</b>, al lado, sin taparla. Arriba dice «Lleve el puntero al punto exacto y quédese quieto para hacer clic.».</div></li>
+              <li><div>Lleve el puntero al punto exacto dentro de la lupa y <b>quédese quieto</b>: se hace el clic allí.</div></li>
+            </ol>
+            <p>Abajo de la lupa está el botón <b>«Cerrar lupa»</b>. Si no hace clic, la lupa se cierra sola a los <b>8 segundos</b> y avisa «Cerré la lupa sin hacer clic.».</p>
+            <p>En <b>Opciones ▸ Clic</b> se ajusta cuánto agranda (de 2 a 5 veces), el tamaño de la parte que agranda (200 px de fábrica) y a los cuántos segundos se cierra sola. Se quita de la barra con <b>«Botón «Lupa» en la barra»</b>.</p>
+          </div>
+          <figure><img src="img/gestos/lupa.svg" width="800" height="600" loading="lazy" decoding="async" alt="La lupa: una zona pequeña de la pantalla se ve agrandada tres veces al lado; el puntero hace clic en el punto exacto y abajo está el botón Cerrar lupa."><figcaption>La lupa agranda la zona 3 veces.</figcaption></figure>
+        </div>
+
+        <h3 id="minimizar">Minimizar: la pantalla libre</h3>
+        <div class="figura">
+          <div>
+            <p>El botón <b>«Minimizar»</b> (▁) esconde la barra para ver la pantalla completa. En el borde queda una <b>pestaña pequeña que dice «Barra»</b>, con una flecha hacia donde se abre, y <b>debajo de ella su propio botón AYUDA</b>: la emergencia siempre está a mano.</p>
+            <p><b>Para volver a abrir la barra</b>, deje el puntero <b>0,6 segundos</b> sobre la pestaña. Funciona también en pausa.</p>
+            <p>Lo minimizado no se guarda: al abrir el programa, la barra aparece según <b>Opciones ▸ Comodidad ▸ «Mostrar la barra al abrir»</b>. En el modo Desplazar y con el teclado abierto no se ofrece «Minimizar».</p>
+          </div>
+          <figure><img src="img/gestos/minimizar.svg" width="800" height="600" loading="lazy" decoding="async" alt="La pantalla libre con la barra minimizada: en el borde queda una pestaña Barra con su botón AYUDA debajo; el puntero sobre la pestaña la vuelve a abrir."><figcaption>La pestaña «Barra» y su botón AYUDA.</figcaption></figure>
+        </div>
+      </section>
+
+      <section id="ayuda" aria-labelledby="t-ayuda">
+        <div class="cabeza"><span class="cod">11</span><h2 id="t-ayuda">El botón AYUDA: pedir ayuda sin voz</h2></div>
+        <p>Para una persona que no puede hablar ni moverse, llamar a alguien en la noche o cuando está sola en el cuarto es lo más difícil. El botón rojo <b>AYUDA</b> sirve para eso: hace sonar una <b>alarma fuerte</b> por los parlantes del computador y pone la pantalla roja <b>hasta que alguien venga</b>.</p>
+        <h3>Cómo se pide ayuda</h3>
+        <div class="figura">
+          <div>
+            <ol class="pasos">
+              <li><div>Lleve el puntero al botón rojo <b>AYUDA</b>. Está al final de la barra, un poco separado de los demás. También está en el teclado (a la izquierda de la caja del texto) y debajo de la pestaña de la barra minimizada.</div></li>
+              <li><div><b>Quédese quieto unos 2,5 segundos</b> sobre él, hasta que se llene el círculo.</div></li>
+              <li><div>Listo: empieza la alarma.</div></li>
+            </ol>
+            <p>Funciona <b>también en pausa</b> y con la barra minimizada, porque pedir ayuda tiene que funcionar siempre.</p>
+            <p><b>Con el barrido</b> (solo parpadeos), AYUDA está en la <b>primera fila</b>, después de Sí y No, y se elige con un parpadeo largo como cualquier tecla.</p>
+          </div>
+          <figure><img src="img/gestos/boton-ayuda.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara quieta; el puntero sobre el botón rojo AYUDA, al final de la barra, con un círculo que se llena en unos 2,5 segundos."><figcaption>Quieto unos 2,5 s sobre AYUDA.</figcaption></figure>
+        </div>
+        <div class="calido"><p><span class="rotulo">No se pide por accidente</span>Un parpadeo, un gesto corto, un clic con gesto encima del botón o pasar el puntero por encima <b>nunca</b> piden ayuda. Hay que quedarse quieto sobre el botón hasta que el círculo se llene.</p></div>
+        <h3>Qué pasa cuando se pide</h3>
+        <div class="figura">
+          <div>
+            <ul>
+              <li>La <b>pantalla se pone roja</b> y cambia de tono una vez por segundo, para que se note desde lejos.</li>
+              <li>En letras grandes dice <b>«NECESITO AYUDA»</b> y <b>«Por favor, que venga…»</b> con el nombre del cuidador que esté escrito en Opciones.</li>
+              <li>Suena una <b>alarma fuerte</b>, y la voz dice «Necesito ayuda. Por favor, que venga…» cada 12 segundos.</li>
+              <li>Mientras dura, el programa <b>no hace ningún clic</b> en otras cosas.</li>
+            </ul>
+          </div>
+          <figure><img src="img/gestos/emergencia.svg" width="800" height="600" loading="lazy" decoding="async" alt="La pantalla roja de emergencia: dice NECESITO AYUDA y Por favor, que venga Marta; suena una alarma y abajo está el botón verde Ya me atendieron."><figcaption>La pantalla roja y el botón «Ya me atendieron».</figcaption></figure>
+        </div>
+        <h3>Cómo se apaga</h3>
+        <ul>
+          <li><b>La persona:</b> quedarse quieto <b>3 segundos</b> sobre el botón verde <b>«Ya me atendieron»</b>.</li>
+          <li><b>El cuidador:</b> presionar <kbd>Esc</kbd>, hacer clic con el ratón en «Ya me atendieron» o usar <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd>.</li>
+        </ul>
+        <p>Al apagarla se ve «Alarma apagada.». Si por algún motivo la pantalla roja no se puede mostrar, <b>la alarma suena igual</b> y aparece un aviso que dice cómo apagarla.</p>
+        <div class="ojo"><p><span class="rotulo">Importante</span>La alarma suena <b>solo en este computador</b>: no envía mensajes por internet ni al celular. Deje el <b>volumen de Windows alto</b> y los parlantes encendidos, y que el computador quede donde alguien pueda oírlo.</p></div>
+        <div class="calido"><p><span class="rotulo">Para el cuidador: pruébenlo juntos</span>El primer día, siéntese con la persona y pruebe la alarma de verdad: que ella pida ayuda con el botón y usted la apague. Así los dos saben cómo suena, cuánto tarda y que funciona. En <b>Opciones ▸ Emergencia</b> está <b>«Probar la alarma (3 segundos)»</b>, que suena 3 segundos con la pantalla roja sin cambiar nada. Repita la prueba de vez en cuando, y siempre que mueva el computador o cambie los parlantes.</p></div>
+        <h3>Ajustes de la emergencia</h3>
+        <p>En <b>Opciones ▸ Emergencia</b> (entre paréntesis, el valor de fábrica):</p>
+        <div class="tabla ancha">
+          <table>
+            <thead><tr><th scope="col">Opción</th><th scope="col">Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Opción">Botón AYUDA (emergencia)</td><td data-label="Qué hace">Muestra u oculta el botón (Sí).</td></tr>
+              <tr><td data-label="Opción">Probar la alarma (3 segundos)</td><td data-label="Qué hace">Suena 3 segundos con la pantalla roja, sin cambiar nada.</td></tr>
+              <tr><td data-label="Opción">Lo que dice la voz cuando pide ayuda</td><td data-label="Qué hace">El mensaje («Necesito ayuda»), hasta 60 letras.</td></tr>
+              <tr><td data-label="Opción">Volumen de la alarma</td><td data-label="Qué hace">De 10 a 100 % (100 %).</td></tr>
+              <tr><td data-label="Opción">Decir el mensaje en voz alta</td><td data-label="Qué hace">Si la voz repite el mensaje (Sí).</td></tr>
+              <tr><td data-label="Opción">Repetir el mensaje cada</td><td data-label="Qué hace">De 5 a 60 segundos (12 s).</td></tr>
+              <tr><td data-label="Opción">Tiempo quieto sobre AYUDA para pedir ayuda</td><td data-label="Qué hace">De 1,5 a 5 segundos (2,5 s).</td></tr>
+              <tr><td data-label="Opción">Tiempo quieto sobre «Ya me atendieron»</td><td data-label="Qué hace">De 2 a 5 segundos (3 s).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Si a la persona le resulta más fácil un gesto que el botón, en <b>Opciones ▸ Gestos</b> se puede poner <b>«Pedir AYUDA (alarma)»</b> como acción <b>al sostener</b> un gesto. Si apaga el botón AYUDA, ese gesto sigue pidiendo ayuda, y el programa se lo recuerda.</p>
+        <div class="nota"><p><span class="rotulo">No es lo mismo que la frase urgente</span>La frase rápida «¡Ayuda, llamen a alguien!» del teclado se dice una vez, con una alerta. El botón AYUDA, en cambio, <b>sigue sonando hasta que alguien lo apague</b>.</p></div>
       </section>
 
       <section id="teclado" aria-labelledby="t-teclado">
-        <div class="cabeza"><span class="cod">09</span><h2 id="t-teclado">El teclado en pantalla</h2></div>
+        <div class="cabeza"><span class="cod">12</span><h2 id="t-teclado">El teclado en pantalla</h2></div>
         <p>Se abre con el botón <b>Teclado</b> de la barra (o el cuidador con <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd>). Tiene teclas grandes en español, con <b>ñ</b> y tildes. Para escribir una tecla, <b>quédese quieto sobre ella</b> (1 segundo de fábrica). De arriba hacia abajo tiene:</p>
         <ol class="filas-teclado">
-          <li><b>El mensaje</b><span>Lo que va escribiendo, en letra grande, con los botones <b>Hablar</b>, <b>Repetir</b> y <b>Escribir</b>.</span></li>
+          <li><b>El mensaje</b><span>Lo que va escribiendo, en letra grande, con los botones <b>Hablar</b>, <b>Repetir</b>, <b>Escribir</b> y <b>Minimizar</b>. A la izquierda de la caja del texto está el botón rojo <b>AYUDA</b>.</span></li>
           <li><b>Frases rápidas</b><span><b>Sí</b>, <b>No</b> y cinco frases de uso diario, a un solo paso.</span></li>
           <li><b>Sugerencias</b><span>Cinco palabras que completan lo que está escribiendo. Elegir una ahorra muchas letras.</span></li>
           <li><b>Las letras</b><span>Cuatro filas. Con la cabeza vienen en el orden del teclado normal (q w e r t y…); con el barrido, las más usadas primero.</span></li>
-          <li><b>Acciones</b><span>Borrar, Borrar palabra, Deshacer, Copiar, Limpiar, Frases, Barrido, Pausa, Ayuda y Cerrar.</span></li>
+          <li><b>Acciones</b><span>Borrar, Borrar palabra, Deshacer, Copiar, Limpiar, Frases, Barrido, Pausa, Cómo usar y Cerrar.</span></li>
         </ol>
         <h3>Tildes, mayúsculas y números</h3>
         <ul>
@@ -535,15 +707,18 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           </table>
         </div>
         <p>En <b>Opciones ▸ Teclado y voz</b> se elige si «Escribir» manda el <b>mensaje completo</b> (de fábrica) o <b>cada letra al instante</b>, el tamaño de las teclas, el tiempo para elegir una tecla y si una tecla se repite cuando el puntero se queda encima.</p>
+        <h3>Minimizar el teclado</h3>
+        <p>El botón <b>«Minimizar»</b>, arriba a la derecha junto a Hablar, Repetir y Escribir, esconde el teclado <b>sin borrar lo escrito</b> y deja una pestaña <b>«⌨ Teclado»</b> en el borde. Para volver a abrirlo: deje el puntero 0,6 segundos sobre la pestaña, elija «Teclado» en la barra o use <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd>. Con el barrido o «Solo comunicación» no se ofrece, para que el teclado no se esconda sin forma de volver.</p>
+        <p>El botón de instrucciones ahora se llama <b>«Cómo usar»</b>, en el teclado y en la ventana principal. La palabra AYUDA queda solo para la emergencia.</p>
         <div class="nota"><p><span class="rotulo">Sugerencias que aprenden</span>Las sugerencias mejoran con las palabras que la persona usa. Esto se puede apagar o borrar; vea <a href="#privacidad">Privacidad</a>.</p></div>
       </section>
 
       <section id="barrido" aria-labelledby="t-barrido">
-        <div class="cabeza"><span class="cod">10</span><h2 id="t-barrido">Barrido: si la persona solo puede parpadear</h2></div>
+        <div class="cabeza"><span class="cod">13</span><h2 id="t-barrido">Barrido: si la persona solo puede parpadear</h2></div>
         <div class="figura">
           <div>
             <p>Cuando mover la cabeza ya no es posible o cansa mucho, el teclado puede <b>avanzar solo</b>. Primero se iluminan las filas, una por una. Con un <b>parpadeo largo</b> se entra a la fila iluminada; luego se iluminan sus teclas y otro parpadeo largo elige la tecla. <b>«↩ Volver»</b> regresa a las filas.</p>
-            <p>El orden está pensado para comunicarse rápido: primero las <b>frases rápidas</b> (Sí, No, «¡Ayuda, llamen a alguien!»), luego las sugerencias, las letras y las acciones.</p>
+            <p>El orden está pensado para comunicarse rápido: primero las <b>frases rápidas</b> (Sí, No, el botón rojo <b>AYUDA</b> y «¡Ayuda, llamen a alguien!»), luego las sugerencias, las letras y las acciones. AYUDA se elige con un parpadeo largo, como cualquier tecla, y hace sonar la <a href="#ayuda">alarma</a>.</p>
             <p>Se activa con el botón <b>Barrido</b> del teclado. En <b>Opciones ▸ Teclado y voz</b> se ajusta cuánto espera en cada fila o tecla (1,5 segundos de fábrica; más tiempo es más tranquilo).</p>
           </div>
           <figure><img src="img/gestos/barrido.svg" width="800" height="600" loading="lazy" decoding="async" alt="Teclado en modo barrido: una fila iluminada en ámbar y dentro de ella una tecla en verde; la cara con los ojos cerrados elige."><figcaption>Una fila iluminada; un parpadeo largo elige.</figcaption></figure>
@@ -560,7 +735,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="hablar" aria-labelledby="t-hablar">
-        <div class="cabeza"><span class="cod">11</span><h2 id="t-hablar">Hablar con la voz del computador</h2></div>
+        <div class="cabeza"><span class="cod">14</span><h2 id="t-hablar">Hablar con la voz del computador</h2></div>
         <p>El botón <b>Hablar</b> dice el mensaje en voz alta con una voz en español de Windows (por ejemplo «Sabina»). <b>No necesita internet.</b> Mientras habla, el mensaje se muestra en letra grande, para que también se pueda leer.</p>
         <ul>
           <li>El volumen y la velocidad de la voz se ajustan en <b>Opciones ▸ Teclado y voz</b>.</li>
@@ -572,7 +747,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="frases" aria-labelledby="t-frases">
-        <div class="cabeza"><span class="cod">12</span><h2 id="t-frases">Frases rápidas</h2></div>
+        <div class="cabeza"><span class="cod">15</span><h2 id="t-frases">Frases rápidas</h2></div>
         <p>Frases listas para decir con un solo paso. Las de la primera categoría aparecen siempre en la fila rápida del teclado, junto a <b>Sí</b> y <b>No</b>:</p>
         <ul class="chips" aria-label="Frases de la fila rápida">
           <li class="urgente">¡Ayuda, llamen a alguien!</li><li>Tengo sed</li><li>Tengo dolor</li><li>Cambiarme de posición</li><li>Llamar a…</li>
@@ -590,7 +765,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="seguridad" aria-labelledby="t-seguridad">
-        <div class="cabeza"><span class="cod">13</span><h2 id="t-seguridad">Pausa y seguridad: nada queda presionado</h2></div>
+        <div class="cabeza"><span class="cod">16</span><h2 id="t-seguridad">Pausa y seguridad: nada queda presionado</h2></div>
         <div class="figura">
           <div>
             <ul>
@@ -609,7 +784,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="cuidadores" aria-labelledby="t-cuidadores">
-        <div class="cabeza"><span class="cod">14</span><h2 id="t-cuidadores">Consejos para el cuidador</h2></div>
+        <div class="cabeza"><span class="cod">17</span><h2 id="t-cuidadores">Consejos para el cuidador</h2></div>
         <div class="datos">
           <div class="tarjeta"><h3>La postura</h3><p>Cámara a la altura de los ojos, a 50 a 70 cm. Luz de frente. Si cambia la cama o la silla, recentre o calibre de nuevo.</p></div>
           <div class="tarjeta"><h3>El cansancio</h3><p>Si la persona se cansa, suba la velocidad del puntero para mover menos el cuello, o use el barrido del teclado.</p></div>
@@ -624,13 +799,15 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <li><b>Una franja de color</b> arriba de la pantalla muestra el estado de un vistazo (activo, en pausa, sin cara). Se apaga en Opciones ▸ Comodidad.</li>
           <li><b>Recordatorio de descanso:</b> puede pedir que recuerde descansar el cuello cada cierto tiempo (viene apagado).</li>
           <li><b>Si hace clics sin querer</b> con la boca (al toser o reír), suba el tiempo de la boca en Opciones ▸ Gestos o apague ese gesto.</li>
+          <li><b>Prueben juntos el botón AYUDA</b> el primer día, y deje el volumen de Windows alto. Escriba su nombre en Opciones para que la pantalla diga «Por favor, que venga…» con su nombre. Vea <a href="#ayuda">el botón AYUDA</a>.</li>
+          <li><b>Para leer o ver videos</b>, enséñele el botón «Sin clic»: así no se abren cosas sin querer.</li>
         </ul>
         <div class="calido"><p><span class="rotulo">Un recordatorio</span>Detrás de cada frase hay una persona que se toma su tiempo para decirla. Espere a que termine de escribir; la frase «Espere, estoy escribiendo» existe para eso.</p></div>
       </section>
 
       <section id="atajos" aria-labelledby="t-atajos">
-        <div class="cabeza"><span class="cod">15</span><h2 id="t-atajos">Atajos de teclado (para el cuidador)</h2></div>
-        <p>Funcionan aunque haya otro programa al frente. Se cambian en <b>Opciones ▸ Atajos</b>, y la Ayuda muestra siempre los que estén puestos.</p>
+        <div class="cabeza"><span class="cod">18</span><h2 id="t-atajos">Atajos de teclado (para el cuidador)</h2></div>
+        <p>Funcionan aunque haya otro programa al frente. Se cambian en <b>Opciones ▸ Atajos</b>, y la ventana «Cómo usar» muestra siempre los que estén puestos.</p>
         <div class="tabla">
           <table>
             <thead><tr><th scope="col">Atajo</th><th scope="col">Qué hace</th></tr></thead>
@@ -640,6 +817,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
               <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd></td><td>Recentrar: tomar la posición actual como centro.</td></tr>
               <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Inicio</kbd></td><td>Mostrar la ventana principal.</td></tr>
               <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Fin</kbd></td><td>Cerrar el programa (antes suelta todo).</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></td><td><b>Nuevo.</b> Apagar la alarma del botón AYUDA.</td></tr>
             </tbody>
           </table>
         </div>
@@ -647,26 +825,71 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="opciones" aria-labelledby="t-opciones">
-        <div class="cabeza"><span class="cod">16</span><h2 id="t-opciones">Las Opciones, pestaña por pestaña</h2></div>
+        <div class="cabeza"><span class="cod">19</span><h2 id="t-opciones">Las Opciones, pestaña por pestaña</h2></div>
         <p>Cada valor se cambia con botones grandes <b>«−»</b> y <b>«+»</b>, para que la persona también pueda ajustarlos con la cabeza. Los cambios se prueban al instante; <b>«Cancelar»</b> los deshace y <b>«Guardar»</b> los deja. <b>«Valores de fábrica»</b> vuelve a lo original sin borrar la calibración ni los atajos.</p>
         <div class="tabla ancha">
           <table>
             <thead><tr><th scope="col">Pestaña</th><th scope="col">Qué se ajusta</th></tr></thead>
             <tbody>
-              <tr><td data-label="Pestaña">Puntero</td><td data-label="Ajusta">Velocidad (1 a 10), suavidad y forma de mover: Directo, Almohadilla o Palanca.</td></tr>
-              <tr><td data-label="Pestaña">Clic</td><td data-label="Ajusta">Clic al quedarse quieto, el tiempo, cuánto se puede mover, la espera entre clics, el sonido, el tiempo para elegir un botón de la barra y si sigue en el modo elegido.</td></tr>
+              <tr><td data-label="Pestaña">Puntero</td><td data-label="Ajusta">Mover el puntero con la cabeza, los ojos u ojos y cabeza; velocidad del puntero («Más lento» / «Más rápido», de 1 a 10) y velocidad arriba y abajo; suavidad; forma de mover: Directo, Almohadilla o Palanca. En la página siguiente, los ajustes de los ojos.</td></tr>
+              <tr><td data-label="Pestaña">Clic</td><td data-label="Ajusta">Clic al quedarse quieto, el tiempo, cuánto se puede mover, la espera entre clics, el sonido, el tiempo para elegir un botón de la barra, si sigue en el modo elegido y la lupa (cuánto agranda, su tamaño y cuándo se cierra sola).</td></tr>
               <tr><td data-label="Pestaña">Gestos</td><td data-label="Ajusta">Boca, cejas, sonrisa y ojos: encendido, sensibilidad, tiempo, qué hacen al hacerlos y al sostenerlos. Duración del parpadeo largo y si exige dos seguidos.</td></tr>
               <tr><td data-label="Pestaña">Teclado y voz</td><td data-label="Ajusta">Orden de las letras, tiempo por tecla, barrido y su velocidad, cómo escribe en otros programas, tamaño de las teclas, volumen y velocidad de la voz, género de las frases, «Solo comunicación», aprender palabras, nombre del cuidador y editar las frases.</td></tr>
-              <tr><td data-label="Pestaña">Comodidad</td><td data-label="Ajusta">Tamaño de la letra, alto contraste, lugar y tamaño de la barra, franja de color, sonidos, recordatorio de descanso, mostrar el video de la cámara, abrir al encender el computador y cómo empezar al abrir.</td></tr>
-              <tr><td data-label="Pestaña">Atajos</td><td data-label="Ajusta">Los cinco atajos del cuidador.</td></tr>
+              <tr><td data-label="Pestaña">Comodidad</td><td data-label="Ajusta">Tamaño de la letra, alto contraste, lugar y tamaño de la barra, franja de color, sonidos, recordatorio de descanso, mostrar el video de la cámara, abrir al encender el computador, cómo empezar al abrir, mostrar la barra al abrir y los botones «Sin clic» y «Lupa» en la barra.</td></tr>
+              <tr><td data-label="Pestaña">Emergencia</td><td data-label="Ajusta"><b>Nueva.</b> El botón AYUDA, probar la alarma, el mensaje, el volumen y los tiempos. Vea <a href="#ayuda">el botón AYUDA</a>.</td></tr>
+              <tr><td data-label="Pestaña">Atajos</td><td data-label="Ajusta">Los seis atajos del cuidador, incluido «Apagar la alarma de AYUDA».</td></tr>
             </tbody>
           </table>
         </div>
         <p>Mientras las Opciones están abiertas, el programa suelta todo por seguridad.</p>
       </section>
 
+      <section id="preguntas" aria-labelledby="t-preguntas">
+        <div class="cabeza"><span class="cod">20</span><h2 id="t-preguntas">Preguntas frecuentes</h2></div>
+        <details>
+          <summary>¿Qué es mejor: la cabeza o los ojos?</summary>
+          <p>Si la persona mueve la cabeza sin cansarse, la cabeza es más precisa. Si mover la cabeza cansa o ya casi no se puede, pruebe <b>«Ojos y cabeza»</b>: los ojos llevan el puntero cerca y un movimiento pequeño lo deja encima. «Los ojos» solos sirven para botones grandes.</p>
+        </details>
+        <details>
+          <summary>¿Con los ojos puedo hacer clic en un enlace pequeño de una página web?</summary>
+          <p>Directamente, casi nunca: con una cámara web común el puntero cae a unos 3 a 5 cm de donde se mira. Use la <a href="#lupa">lupa</a>, que agranda la zona, o deje encendida «Abrir la lupa antes de cada clic con los ojos». También ayuda agrandar la página con el zoom del navegador.</p>
+        </details>
+        <details>
+          <summary>¿El botón AYUDA avisa al celular o llama a alguien?</summary>
+          <p>No. Suena una alarma en el computador y la pantalla se pone roja. No usa internet. Por eso el computador debe quedar donde alguien lo oiga, con el volumen alto.</p>
+        </details>
+        <details>
+          <summary>¿Y si pide ayuda sin querer?</summary>
+          <p>Es difícil, porque hay que quedarse quieto unos 2,5 segundos sobre el botón; pasar por encima o parpadear no cuenta. Si pasa, la persona se queda quieta 3 segundos sobre «Ya me atendieron», o el cuidador presiona <kbd>Esc</kbd>. Si le pasa seguido, suba el «Tiempo quieto sobre AYUDA para pedir ayuda» en Opciones ▸ Emergencia.</p>
+        </details>
+        <details>
+          <summary>¿Funciona el botón AYUDA si el programa está en pausa?</summary>
+          <p>Sí, a propósito: pedir ayuda tiene que funcionar siempre. También funciona con la barra minimizada, desde la pestaña.</p>
+        </details>
+        <details>
+          <summary>¿Puedo quitar el botón AYUDA?</summary>
+          <p>Sí, en Opciones ▸ Emergencia ▸ «Botón AYUDA (emergencia)». Le recomendamos dejarlo: no estorba y puede hacer mucha falta.</p>
+        </details>
+        <details>
+          <summary>Escondí la barra y no la encuentro</summary>
+          <p>Busque la pestaña <b>«Barra»</b> en el borde de la pantalla donde estaba la barra, y deje el puntero 0,6 segundos encima. Si cierra y abre el programa, la barra vuelve a aparecer.</p>
+        </details>
+        <details>
+          <summary>¿Qué diferencia hay entre «Sin clic» y «Pausa»?</summary>
+          <p>Con «Sin clic» el puntero se sigue moviendo y los gestos funcionan, pero quedarse quieto no hace clic: sirve para leer. Con «Pausa» el puntero no se mueve y no hace nada hasta reanudar.</p>
+        </details>
+        <details>
+          <summary>¿Dónde quedó el botón «Ayuda» de las instrucciones?</summary>
+          <p>Ahora se llama <b>«Cómo usar»</b>. Se cambió para que la palabra AYUDA quede solo para la emergencia.</p>
+        </details>
+        <details>
+          <summary>¿Tengo que calibrar de nuevo al cambiar la velocidad?</summary>
+          <p>No. Con cualquier velocidad se llega a toda la pantalla y la calibración se conserva.</p>
+        </details>
+      </section>
+
       <section id="problemas" aria-labelledby="t-problemas">
-        <div class="cabeza"><span class="cod">17</span><h2 id="t-problemas">Problemas frecuentes</h2></div>
+        <div class="cabeza"><span class="cod">21</span><h2 id="t-problemas">Problemas frecuentes</h2></div>
         <details>
           <summary>Dice «No veo su cara»</summary>
           <p>Acerque a la persona a la cámara o mejore la luz de frente. Evite una ventana o una lámpara detrás. Revise que nada tape la cámara.</p>
@@ -710,6 +933,19 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <p>Pasa cuando no ve la cara durante 10 segundos, o cuando ve otra cara. Si la pausa fue automática, sigue solo cuando la persona vuelve. Si no, elija «Reanudar» con la cabeza o use <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Espacio</kbd>.</p>
         </details>
         <details>
+          <summary>Con los ojos, el puntero no va a donde miro</summary>
+          <ul>
+            <li>Elija <b>Recentrar</b> y mire el punto del centro un segundo.</li>
+            <li>Mejore la luz de frente y ponga la cámara a la altura de los ojos.</li>
+            <li>Repita la calibración, con la cabeza apoyada y sin moverla mientras sigue los puntos.</li>
+            <li>Si dice que no pudo calibrar los ojos (párpado caído, reflejos), use la cabeza o el barrido.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>La alarma de AYUDA suena muy bajo</summary>
+          <p>Suba el volumen de Windows y revise que los parlantes estén encendidos. En Opciones ▸ Emergencia, deje el «Volumen de la alarma» en 100 % y use «Probar la alarma».</p>
+        </details>
+        <details>
           <summary>No se oye la voz</summary>
           <p>Revise el volumen de Windows y el de la voz en Opciones ▸ Teclado y voz. Si no hay voces en español, agréguelas en <span class="ruta">Configuración ▸ Hora e idioma ▸ Voz</span>.</p>
         </details>
@@ -717,7 +953,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="privacidad" aria-labelledby="t-privacidad">
-        <div class="cabeza"><span class="cod">18</span><h2 id="t-privacidad">Privacidad</h2></div>
+        <div class="cabeza"><span class="cod">22</span><h2 id="t-privacidad">Privacidad</h2></div>
         <ul>
           <li>La imagen de la cámara <b>se procesa en el computador y nunca se guarda ni se envía</b>. El programa no usa internet.</li>
           <li>De fábrica ni siquiera se muestra el video: la ventana enseña una silueta de puntos de la cara. Se puede encender en Opciones ▸ Comodidad.</li>
@@ -728,12 +964,13 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="limites" aria-labelledby="t-limites">
-        <div class="cabeza"><span class="cod">19</span><h2 id="t-limites">Con honestidad: lo que no puede hacer</h2></div>
+        <div class="cabeza"><span class="cod">23</span><h2 id="t-limites">Con honestidad: lo que no puede hacer</h2></div>
         <ul>
-          <li><b>No sigue la mirada.</b> Con una cámara web común no es preciso. Para quien no puede mover la cabeza está el barrido con parpadeo largo.</li>
+          <li><b>Con los ojos no es exacto.</b> Con una cámara web común el puntero cae a unos 3 a 5 cm de donde se mira. Sirve para botones grandes y con la lupa, no para cosas pequeñas. Para quien no puede mover ni la cabeza ni los ojos con precisión está el barrido con parpadeo largo.</li>
+          <li>El botón AYUDA <b>no avisa por internet ni al celular</b>: solo suena en el computador.</li>
           <li>Si la persona pierde también el control de los párpados, este programa ya no le sirve: hacen falta sistemas especializados, como los seguidores de mirada con cámara infrarroja. Consulte con su equipo de salud.</li>
           <li>Los programas abiertos como administrador no reciben clics ni texto.</li>
-          <li>Es una <b>versión de prueba</b> (1.0.0). Se probó con caras dibujadas por computador; la prueba con personas está en curso. Si algo no responde bien, la calibración y los ajustes de Opciones son la primera ayuda, y nos ayuda mucho que nos cuente.</li>
+          <li>Es una <b>versión de prueba</b> (1.1.0). Se probó con caras dibujadas por computador; la prueba con personas está en curso. Si algo no responde bien, la calibración y los ajustes de Opciones son la primera ayuda, y nos ayuda mucho que nos cuente.</li>
         </ul>
         <p>¿Dudas, ideas o algo no funciona? Escriba a <a href="mailto:ingemaqsewing@gmail.com">ingemaqsewing@gmail.com</a>. Cada comentario ayuda a que el programa sirva a más personas.</p>
       </section>
@@ -743,7 +980,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
 
 <footer>
   <div class="ancho">
-    <p><b>Lycan Developments</b> · EDWIN CNC · Manual de Lycan Face Control 1.0.0, noviembre de 2026 · Código abierto, licencia MIT</p>
+    <p><b>Lycan Developments</b> · EDWIN CNC · Manual de Lycan Face Control 1.1.0, noviembre de 2026 · Código abierto, licencia MIT</p>
     <p><a href="../">Volver a la portada</a></p>
   </div>
 </footer>

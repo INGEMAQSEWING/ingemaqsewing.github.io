@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="La pantalla libre con la barra minimizada: en el borde queda una pestaña Barra con su botón AYUDA debajo; el puntero sobre la pestaña la vuelve a abrir">
+<title>La pantalla libre con la barra minimizada: en el borde queda una pestaña Barra con su botón AYUDA debajo; el puntero sobre la pestaña la vuelve a abrir</title>
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071128"/><stop offset="1" stop-color="#0b1a36"/></linearGradient>
+<radialGradient id="luz" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#22e3ff" stop-opacity=".13"/><stop offset="1" stop-color="#22e3ff" stop-opacity="0"/></radialGradient>
+<pattern id="puntos" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.2" fill="#1d3b66"/></pattern>
+<filter id="brillo" filterUnits="userSpaceOnUse" x="-3000" y="-3000" width="6000" height="6000"><feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<marker id="punta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#ffc94d"/></marker>
+<marker id="punta-v" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#35f2a0"/></marker>
+</defs>
+<rect width="800" height="600" fill="url(#fondo)"/><rect width="800" height="600" fill="url(#puntos)"/><rect width="800" height="600" fill="url(#luz)"/>
+<g filter="url(#brillo)"><rect x="60" y="60" width="640" height="400" rx="12" fill="#0a1a33" stroke="#3c6fa8" stroke-width="4"/></g><path d="M355,460 L340,496 L420,496 L405,460" fill="none" stroke="#3c6fa8" stroke-width="4" stroke-linejoin="round"/>
+<rect x="100" y="110" width="380" height="14" rx="7" fill="#3c6fa8" opacity=".6"/>
+<rect x="100" y="156" width="300" height="14" rx="7" fill="#3c6fa8" opacity=".6"/>
+<rect x="100" y="202" width="300" height="14" rx="7" fill="#3c6fa8" opacity=".6"/>
+<rect x="100" y="248" width="380" height="14" rx="7" fill="#3c6fa8" opacity=".6"/>
+<rect x="100" y="294" width="300" height="14" rx="7" fill="#3c6fa8" opacity=".6"/>
+<rect x="100" y="340" width="300" height="14" rx="7" fill="#3c6fa8" opacity=".6"/>
+<g filter="url(#brillo)"><rect x="604" y="120" width="92" height="120" rx="10" fill="rgba(34,227,255,.16)" stroke="#22e3ff" stroke-width="3.5"/></g>
+<circle cx="650" cy="168" r="28" fill="none" stroke="#3c6fa8" stroke-width="7" opacity=".55"/><path d="M650,140 A28,28 0 1 1 633.5,190.7" fill="none" stroke="#35f2a0" stroke-width="7" stroke-linecap="round" filter="url(#brillo)"/>
+<path d="M645,163 L645,192.9 L652.8,185.8 L658.6,198.8 L663.9,196.2 L658,183.8 L668.4,183.8 Z" fill="#e6f1ff" stroke="#050b18" stroke-width="3" stroke-linejoin="round" filter="url(#brillo)"/>
+<text x="650" y="226" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="20" fill="#e6f1ff">« Barra</text>
+<g filter="url(#brillo)"><rect x="604" y="252" width="92" height="86" rx="14" fill="rgba(255,107,107,.22)" stroke="#ff6b6b" stroke-width="4.5"/></g><text x="650" y="295" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="28.0" fill="#ff6b6b">!</text><text x="650" y="324.2" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="16.0" fill="#e6f1ff">AYUDA</text>
+<text x="380" y="540" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="24" fill="#ffc94d">Quieto 0,6 s sobre la pestaña: vuelve la barra</text>
+<text x="380" y="576" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="500" font-size="21" fill="#e6f1ff">La pestaña tiene su propio botón AYUDA</text>
+</svg>

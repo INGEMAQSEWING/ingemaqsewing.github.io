@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="La pantalla roja de emergencia: dice NECESITO AYUDA y Por favor, que venga Marta; suena una alarma y abajo está el botón verde Ya me atendieron">
+<title>La pantalla roja de emergencia: dice NECESITO AYUDA y Por favor, que venga Marta; suena una alarma y abajo está el botón verde Ya me atendieron</title>
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071128"/><stop offset="1" stop-color="#0b1a36"/></linearGradient>
+<radialGradient id="luz" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#22e3ff" stop-opacity=".13"/><stop offset="1" stop-color="#22e3ff" stop-opacity="0"/></radialGradient>
+<pattern id="puntos" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.2" fill="#1d3b66"/></pattern>
+<filter id="brillo" filterUnits="userSpaceOnUse" x="-3000" y="-3000" width="6000" height="6000"><feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<marker id="punta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#ffc94d"/></marker>
+<marker id="punta-v" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#35f2a0"/></marker>
+</defs>
+<rect width="800" height="600" fill="url(#fondo)"/><rect width="800" height="600" fill="url(#puntos)"/><rect width="800" height="600" fill="url(#luz)"/>
+<g filter="url(#brillo)"><rect x="40" y="40" width="720" height="400" rx="18" fill="#b00000" stroke="#ff6b6b" stroke-width="4"/></g>
+<text x="400" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="62" fill="#ffffff">NECESITO AYUDA</text>
+<text x="400" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="600" font-size="30" fill="#ffffff">Por favor, que venga Marta.</text>
+<g fill="#ffffff"><path d="M92,290 h24 l28,-24 v80 l-28,-24 h-24 Z"/></g>
+<g fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"><path d="M160,286 q14,20 0,40"/><path d="M176,272 q28,34 0,68"/></g>
+<g filter="url(#brillo)"><rect x="270" y="250" width="320" height="90" rx="16" fill="#0b3a26" stroke="#35f2a0" stroke-width="4.5"/></g>
+<text x="430" y="306" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="30" fill="#ffffff">Ya me atendieron</text>
+<text x="430" y="390" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="500" font-size="22" fill="#ffffff">Quieto 3 s sobre el botón verde</text>
+<text x="400" y="505" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="26" fill="#ffc94d">El cuidador: Esc, un clic o Ctrl+Alt+A</text>
+<text x="400" y="548" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="500" font-size="21" fill="#e6f1ff">Suena una alarma y la voz repite el mensaje</text>
+</svg>
