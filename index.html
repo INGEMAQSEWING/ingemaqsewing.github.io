@@ -97,6 +97,21 @@
    }
   },
   {
+   "@type": "SoftwareApplication",
+   "name": "Lycan Face Control",
+   "applicationCategory": "UtilitiesApplication",
+   "operatingSystem": "Windows 10 y 11 (64 bits)",
+   "softwareVersion": "1.0.0",
+   "inLanguage": "es",
+   "description": "Maneja el computador solo con la cabeza y la cara, para personas con ELA u otras discapacidades motoras: puntero con la cabeza, clic por permanencia o con gestos, teclado en pantalla con barrido y voz sin internet.",
+   "url": "https://ingemaqsewing.github.io/lycan-face-control/",
+   "downloadUrl": "https://ingemaqsewing.github.io/#descargas",
+   "isAccessibleForFree": true,
+   "author": {
+    "@id": "https://ingemaqsewing.github.io/#org"
+   }
+  },
+  {
    "@type": "WebApplication",
    "name": "LycanRating",
    "url": "https://www.lycantenisdemesa.com",
@@ -425,7 +440,7 @@ footer p { margin: 0; }
   <!-- 01 CAD-CAM -->
   <section id="cadcam" class="ancho" aria-labelledby="cadcam-t">
     <div class="cabeza"><span class="cod">01</span><h2 id="cadcam-t">Diseño CAD-CAM</h2></div>
-    <p class="intro">Tres programas para Windows para diseñar y cortar con plasma: EDWIN CNC 3D saca el plano DXF, y CAD-CAM o CAD2CAM sacan el código G listo para Mach3. Y Lycan Mouse Control, para manejar el ratón con las manos mientras diseña.</p>
+    <p class="intro">Tres programas para Windows para diseñar y cortar con plasma: EDWIN CNC 3D saca el plano DXF, y CAD-CAM o CAD2CAM sacan el código G listo para Mach3. Y dos programas para manejar el computador sin tocar el ratón: Lycan Mouse Control, con las manos mientras diseña, y Lycan Face Control, solo con la cabeza y la cara.</p>
     <ol class="flujo" role="list" aria-label="Recorrido de una pieza">
       <li>EDWIN CNC 3D</li><li class="flecha" aria-hidden="true">→</li>
       <li>Plano DXF (mm)</li><li class="flecha" aria-hidden="true">→</li>
@@ -483,13 +498,24 @@ footer p { margin: 0; }
       </article>
 
       <article class="tarjeta">
-        <div class="fila"><span class="ver">v1.0.0 · Windows 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <div class="fila"><span class="ver">v1.0.1 · Windows 64 bits</span><span class="estado prueba">En prueba</span></div>
         <h3>Lycan Mouse Control</h3>
         <p>Maneje el ratón con las manos frente a la cámara del portátil. Apunte con el índice, pellizque para hacer clic y cierre el puño para el clic derecho. En 3D, agarre el modelo con las dos manos y gírelo. Se adapta solo a EDWIN CNC 3D, SketchUp, FreeCAD, Blender y CAD-CAM.</p>
         <ul class="plugins" aria-label="Funciones"><li>Modo 2D</li><li>Modo 3D</li><li>Perfiles por programa</li><li>Pausa con Ctrl+Alt+M</li></ul>
         <div class="enlaces">
           <a href="#descargas">Descargar<span class="vh"> Lycan Mouse Control</span></a>
           <a href="lycan-mouse-control/">Manual y video<span class="vh"> de Lycan Mouse Control</span></a>
+        </div>
+      </article>
+
+      <article class="tarjeta" id="face-control">
+        <div class="fila"><span class="ver">v1.0.0 · Windows 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <h3>Lycan Face Control</h3>
+        <p>Maneje el computador solo con la cabeza y la cara. Pensado para personas con ELA y otras condiciones que no dejan usar las manos. El clic se hace quedándose quieto o con un gesto que usted escoge; los parpadeos naturales nunca hacen clic. Trae un teclado grande en español, que también se maneja con parpadeos, y voz que habla sin internet.</p>
+        <ul class="plugins" aria-label="Funciones"><li>Clic por permanencia</li><li>Gestos de la cara</li><li>Teclado y barrido</li><li>Voz sin internet</li></ul>
+        <div class="enlaces">
+          <a href="#descargas">Descargar<span class="vh"> Lycan Face Control</span></a>
+          <a href="lycan-face-control/">Manual y video<span class="vh"> de Lycan Face Control</span></a>
         </div>
       </article>
     </div>
@@ -524,7 +550,7 @@ footer p { margin: 0; }
       <p id="lab-t" class="eti">Laboratorio · ideas en exploración</p>
       <div>
         <h3>Control con la cara</h3>
-        <p>Para quien no puede usar las manos: mover el puntero con la cabeza y hacer clic con un gesto de la cara. Después, escribir con un teclado en pantalla que se maneja con parpadeos.</p>
+        <p>Salió del laboratorio: ya es <a href="#face-control">Lycan Face Control</a>, un programa en prueba para manejar el computador con la cabeza, hacer clic con un gesto de la cara y escribir con un teclado en pantalla que se maneja con parpadeos.</p>
       </div>
       <div>
         <h3>Mesa CNC por señas</h3>
@@ -635,6 +661,14 @@ footer p { margin: 0; }
           <div class="fuentes">
             <a class="principal" href="https://github.com/INGEMAQSEWING/lycan-mouse-control/releases/download/v1.0.1-prueba/Lycan-Mouse-Control-1.0.1-Windows-64-bits.exe">Instalador<span class="vh"> de Lycan Mouse Control desde GitHub</span></a>
             <a href="https://github.com/INGEMAQSEWING/lycan-mouse-control/releases/download/v1.0.1-prueba/Lycan-Mouse-Control-1.0.1-portable.zip">Portable .zip<span class="vh"> de Lycan Mouse Control</span></a>
+          </div>
+        </li>
+        <li>
+          <div><b>Lycan Face Control</b><span class="det">v1.0.0 · Windows 64 bits · necesita cámara</span></div>
+          <div class="fuentes">
+            <a class="principal" href="https://github.com/INGEMAQSEWING/lycan-face-control/releases/download/v1.0.0-prueba/Lycan-Face-Control-1.0.0-Windows-64-bits.exe">Instalador<span class="vh"> de Lycan Face Control desde GitHub</span></a>
+            <a href="https://github.com/INGEMAQSEWING/lycan-face-control/releases/download/v1.0.0-prueba/Lycan-Face-Control-1.0.0-portable.zip">Portable .zip<span class="vh"> de Lycan Face Control</span></a>
+            <a href="lycan-face-control/">Manual<span class="vh"> de Lycan Face Control</span></a>
           </div>
         </li>
       </ul>

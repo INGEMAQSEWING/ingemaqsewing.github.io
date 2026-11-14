@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Una cara girando la cabeza; flechas a los lados y arriba y abajo, y el puntero que se mueve en la pantalla">
+<title>Una cara girando la cabeza; flechas a los lados y arriba y abajo, y el puntero que se mueve en la pantalla</title>
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071128"/><stop offset="1" stop-color="#0b1a36"/></linearGradient>
+<radialGradient id="luz" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#22e3ff" stop-opacity=".13"/><stop offset="1" stop-color="#22e3ff" stop-opacity="0"/></radialGradient>
+<pattern id="puntos" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.2" fill="#1d3b66"/></pattern>
+<filter id="brillo" filterUnits="userSpaceOnUse" x="-3000" y="-3000" width="6000" height="6000"><feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<marker id="punta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#ffc94d"/></marker>
+<marker id="punta-v" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#35f2a0"/></marker>
+</defs>
+<rect width="800" height="600" fill="url(#fondo)"/><rect width="800" height="600" fill="url(#puntos)"/><rect width="800" height="600" fill="url(#luz)"/>
+<g transform="translate(285,300) scale(1.2)" opacity="1.0">
+<path d="M-36,96 L-40,140 C-90,150 -150,168 -178,215 L-185,262 L185,262 L178,215 C150,168 90,150 40,140 L36,96 Z" fill="#0a1a33" stroke="#3c6fa8" stroke-width="2.7" stroke-linejoin="round"/>
+<ellipse cx="-91.9" cy="6" rx="15" ry="27" fill="#0f2347" stroke="#22e3ff" stroke-width="3.4" filter="url(#brillo)"/>
+<ellipse cx="92.4" cy="6" rx="11.7" ry="27" fill="#0f2347" stroke="#22e3ff" stroke-width="3.4" filter="url(#brillo)"/>
+<ellipse cx="3.3" cy="0" rx="95" ry="122" fill="#0f2347" stroke="#22e3ff" stroke-width="3.4" filter="url(#brillo)"/>
+<path d="M-79,-52 C-53.5,-118 86.5,-118 89,-52" fill="none" stroke="#3c6fa8" stroke-width="3" stroke-linecap="round"/>
+<g fill="none" stroke="#22e3ff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#brillo)">
+<path d="M-40.5,-14 Q-21.5,-34.9 -2.5,-14 Q-21.5,3.6 -40.5,-14 Z" fill="#0a1a33"/>
+<circle cx="-19.3" cy="-14.5" r="6.5" fill="#22e3ff" stroke="none"/>
+<path d="M-44.5,-37 Q-21.5,-48 1.5,-39" stroke-width="4.5"/>
+<path d="M37.4,-14 Q54.5,-34.9 71.6,-14 Q54.5,3.6 37.4,-14 Z" fill="#0a1a33"/>
+<circle cx="56.7" cy="-14.5" r="6.5" fill="#22e3ff" stroke="none"/>
+<path d="M33.4,-37 Q54.5,-48 75.6,-39" stroke-width="4.5"/>
+<path d="M16.2,-10 Q9.2,20 17.2,24 Q24.2,25 27.2,21" stroke-width="2.9"/>
+<path d="M-7.5,58 Q16.5,62 40.5,58"/>
+</g>
+</g>
+<path d="M120,150 A200,200 0 0 1 450,150" fill="none" stroke="#ffc94d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#punta)" marker-start="url(#punta)" filter="url(#brillo)"/>
+<path d="M520,190 L520,410" fill="none" stroke="#ffc94d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#punta)" marker-start="url(#punta)" filter="url(#brillo)"/>
+<rect x="575" y="150" width="190" height="135" rx="12" fill="none" stroke="#3c6fa8" stroke-width="4"/>
+<path d="M640,285 L630,315 L710,315 L700,285" fill="none" stroke="#3c6fa8" stroke-width="4" stroke-linejoin="round"/>
+<path d="M600,250 C640,210 670,230 700,190" fill="none" stroke="#3c6fa8" stroke-width="3.5" stroke-dasharray="3 9" stroke-linecap="round"/>
+<path d="M700,178 L700,221.7 L711.4,211.2 L720,230.2 L727.5,226.4 L719,208.4 L734.2,208.4 Z" fill="#e6f1ff" stroke="#050b18" stroke-width="3" stroke-linejoin="round" filter="url(#brillo)"/>
+</svg>

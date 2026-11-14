@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="La cara con la boca abierta sostenida dos segundos; el reloj lleno y el símbolo de pausa">
+<title>La cara con la boca abierta sostenida dos segundos; el reloj lleno y el símbolo de pausa</title>
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071128"/><stop offset="1" stop-color="#0b1a36"/></linearGradient>
+<radialGradient id="luz" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#22e3ff" stop-opacity=".13"/><stop offset="1" stop-color="#22e3ff" stop-opacity="0"/></radialGradient>
+<pattern id="puntos" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.2" fill="#1d3b66"/></pattern>
+<filter id="brillo" filterUnits="userSpaceOnUse" x="-3000" y="-3000" width="6000" height="6000"><feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<marker id="punta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#ffc94d"/></marker>
+<marker id="punta-v" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#35f2a0"/></marker>
+</defs>
+<rect width="800" height="600" fill="url(#fondo)"/><rect width="800" height="600" fill="url(#puntos)"/><rect width="800" height="600" fill="url(#luz)"/>
+<g transform="translate(290,310) scale(1.3)" opacity="1.0">
+<path d="M-36,96 L-40,140 C-90,150 -150,168 -178,215 L-185,262 L185,262 L178,215 C150,168 90,150 40,140 L36,96 Z" fill="#0a1a33" stroke="#3c6fa8" stroke-width="2.6" stroke-linejoin="round"/>
+<ellipse cx="-96" cy="6" rx="15" ry="27" fill="#0f2347" stroke="#22e3ff" stroke-width="3.2" filter="url(#brillo)"/>
+<ellipse cx="96" cy="6" rx="15" ry="27" fill="#0f2347" stroke="#22e3ff" stroke-width="3.2" filter="url(#brillo)"/>
+<ellipse cx="0" cy="0" rx="95" ry="122" fill="#0f2347" stroke="#22e3ff" stroke-width="3.2" filter="url(#brillo)"/>
+<path d="M-84,-52 C-70,-118 70,-118 84,-52" fill="none" stroke="#3c6fa8" stroke-width="2.9" stroke-linecap="round"/>
+<g fill="none" stroke="#22e3ff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#brillo)">
+<path d="M-57,-14 Q-38,-34.9 -19,-14 Q-38,3.6 -57,-14 Z" fill="#0a1a33"/>
+<circle cx="-38" cy="-14.5" r="6.5" fill="#22e3ff" stroke="none"/>
+<path d="M-61,-37 Q-38,-48 -15,-39" stroke-width="4.4"/>
+<path d="M19,-14 Q38,-34.9 57,-14 Q38,3.6 19,-14 Z" fill="#0a1a33"/>
+<circle cx="38" cy="-14.5" r="6.5" fill="#22e3ff" stroke="none"/>
+<path d="M15,-37 Q38,-48 61,-39" stroke-width="4.4"/>
+<path d="M-2,-10 Q-9,20 -1,24 Q6,25 9,21" stroke-width="2.7"/>
+<ellipse cx="0" cy="67.1" rx="19.1" ry="25.9" fill="#050b18"/>
+<path d="M-11.5,85.2 Q0,72.3 11.5,85.2" stroke="#3c6fa8" stroke-width="2.6"/>
+</g>
+</g>
+<g filter="url(#brillo)"><circle cx="470" cy="115" r="34" fill="#0a1a33" stroke="#ffc94d" stroke-width="4"/><circle cx="470" cy="115" r="32" fill="#ffc94d" opacity=".85"/></g>
+<g filter="url(#brillo)"><rect x="425.4" y="179.5" width="89.2" height="47.6" rx="13.6" fill="#0a1a33" stroke="#ffc94d" stroke-width="3.5"/><text x="470" y="216.2" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="34" fill="#ffc94d">2 s</text></g>
+<g filter="url(#brillo)"><rect x="601.4" y="215" width="30.6" height="90" rx="6" fill="#ffc94d"/><rect x="648" y="215" width="30.6" height="90" rx="6" fill="#ffc94d"/></g>
+<text x="640" y="360" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="30" fill="#ffc94d">Pausa</text>
+</svg>

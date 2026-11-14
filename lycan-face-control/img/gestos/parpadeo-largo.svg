@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="La cara con los ojos cerrados un momento largo; una barra que se llena y se pone verde">
+<title>La cara con los ojos cerrados un momento largo; una barra que se llena y se pone verde</title>
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071128"/><stop offset="1" stop-color="#0b1a36"/></linearGradient>
+<radialGradient id="luz" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#22e3ff" stop-opacity=".13"/><stop offset="1" stop-color="#22e3ff" stop-opacity="0"/></radialGradient>
+<pattern id="puntos" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.2" fill="#1d3b66"/></pattern>
+<filter id="brillo" filterUnits="userSpaceOnUse" x="-3000" y="-3000" width="6000" height="6000"><feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<marker id="punta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#ffc94d"/></marker>
+<marker id="punta-v" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#35f2a0"/></marker>
+</defs>
+<rect width="800" height="600" fill="url(#fondo)"/><rect width="800" height="600" fill="url(#puntos)"/><rect width="800" height="600" fill="url(#luz)"/>
+<g transform="translate(260,310) scale(1.3)" opacity="1.0">
+<path d="M-36,96 L-40,140 C-90,150 -150,168 -178,215 L-185,262 L185,262 L178,215 C150,168 90,150 40,140 L36,96 Z" fill="#0a1a33" stroke="#3c6fa8" stroke-width="2.6" stroke-linejoin="round"/>
+<ellipse cx="-96" cy="6" rx="15" ry="27" fill="#0f2347" stroke="#22e3ff" stroke-width="3.2" filter="url(#brillo)"/>
+<ellipse cx="96" cy="6" rx="15" ry="27" fill="#0f2347" stroke="#22e3ff" stroke-width="3.2" filter="url(#brillo)"/>
+<ellipse cx="0" cy="0" rx="95" ry="122" fill="#0f2347" stroke="#22e3ff" stroke-width="3.2" filter="url(#brillo)"/>
+<path d="M-84,-52 C-70,-118 70,-118 84,-52" fill="none" stroke="#3c6fa8" stroke-width="2.9" stroke-linecap="round"/>
+<g fill="none" stroke="#22e3ff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#brillo)">
+<path d="M-57,-14 Q-38,-3 -19,-14"/>
+<path d="M-48.5,-9.6 L-51.2,-2.6" stroke-width="2.3"/>
+<path d="M-38,-8.5 L-38,-1.5" stroke-width="2.3"/>
+<path d="M-27.5,-9.6 L-24.8,-2.6" stroke-width="2.3"/>
+<path d="M-61,-37 Q-38,-48 -15,-39" stroke-width="4.4"/>
+<path d="M19,-14 Q38,-3 57,-14"/>
+<path d="M27.5,-9.6 L24.8,-2.6" stroke-width="2.3"/>
+<path d="M38,-8.5 L38,-1.5" stroke-width="2.3"/>
+<path d="M48.5,-9.6 L51.2,-2.6" stroke-width="2.3"/>
+<path d="M15,-37 Q38,-48 61,-39" stroke-width="4.4"/>
+<path d="M-2,-10 Q-9,20 -1,24 Q6,25 9,21" stroke-width="2.7"/>
+<path d="M-24,58 Q0,62 24,58"/>
+</g>
+</g>
+<rect x="470" y="250" width="220" height="46" rx="23" fill="#0a1a33" stroke="#3c6fa8" stroke-width="3.5"/><rect x="475" y="255" width="210" height="36" rx="18" fill="#35f2a0" filter="url(#brillo)"/><path d="M716,273 l14,14 l26,-30" fill="none" stroke="#35f2a0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#brillo)"/>
+<text x="580" y="225" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="600" font-size="22" fill="#e6f1ff">Ojos cerrados un momento largo</text>
+<text x="580" y="345" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="500" font-size="21" fill="#e6f1ff">La barra se llena y se pone verde:</text>
+<text x="580" y="375" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="23" fill="#35f2a0">ya puede abrir los ojos</text>
+</svg>

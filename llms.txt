@@ -7,6 +7,7 @@
 - EDWIN CNC CAD2CAM 1.0.14 (prueba): el mismo programa con comandos de teclado en español y distancia directa. Descargas: https://ingemaqsewing.github.io/#descargas
 - EDWIN CNC 3D 1.0.2 (prueba): modelado 3D de tolvas, ductos y sinfines con desdoblado de caras a DXF, helicoidal y foto a DXF. Windows 10 y 11 de 64 bits. Manual: https://ingemaqsewing.github.io/manual-edwin-cnc-3d/
 - Lycan Mouse Control 1.0.1 (prueba): maneja el ratón con gestos de las manos frente a la cámara del portátil, con modo 2D y modo 3D (girar el modelo con las dos manos) y perfiles para EDWIN CNC 3D, SketchUp, FreeCAD, Blender y CAD-CAM. Windows 10 y 11 de 64 bits. Manual y video: https://ingemaqsewing.github.io/lycan-mouse-control/
+- Lycan Face Control 1.0.0 (prueba): maneja el computador solo con la cabeza y la cara, para personas con ELA u otras discapacidades motoras. Puntero con la cabeza, clic por permanencia o con gestos de la cara (boca, cejas, sonrisa, parpadeo largo; los parpadeos naturales no hacen clic), barra de acciones, teclado en pantalla en español con modo barrido, frases rápidas y voz de Windows sin internet. Windows 10 y 11 de 64 bits. Manual y video: https://ingemaqsewing.github.io/lycan-face-control/
 
 ## Apps
 - LycanRating (en vivo): torneos de tenis de mesa con inscripción, llaves, mesas, resultados en vivo, rating y ranking. https://www.lycantenisdemesa.com
@@ -17,3 +18,4 @@
 - https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam (fork de LibreCAD 2.2.1, GPL-2)
 - https://github.com/INGEMAQSEWING/edwin-cnc-3d (fork de IngeTrazo 0.6.1, GPL-3)
 - https://github.com/INGEMAQSEWING/lycan-mouse-control
+- https://github.com/INGEMAQSEWING/lycan-face-control

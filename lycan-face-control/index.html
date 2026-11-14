@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Manual Lycan Face Control 1.0.0: maneje el computador con la cabeza y la cara</title>
+<meta name="description" content="Cómo instalar y usar Lycan Face Control 1.0.0: mueva el puntero con la cabeza, haga clic quedándose quieto o con un gesto de la cara, y escriba o hable con un teclado grande en pantalla. Pensado para personas con ELA y quienes las cuidan.">
+<link rel="canonical" href="https://ingemaqsewing.github.io/lycan-face-control/">
+<meta name="theme-color" content="#050b18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='8'%20fill='%23050b18'/%3E%3Cpath%20d='M20%203%2035%2011.5v17L20%2037%205%2028.5v-17Z'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.2'/%3E%3Cpath%20d='M13%2014v12h7M23%2014h3a6%206%200%200%201%200%2012h-3Z'%20fill='none'%20stroke='%23e6f1ff'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lycan Developments">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://ingemaqsewing.github.io/lycan-face-control/">
+<meta property="og:title" content="Manual de Lycan Face Control 1.0.0">
+<meta property="og:description" content="Maneje el computador solo con la cabeza y la cara: puntero, clic sin manos, teclado grande y voz sin internet. Con un dibujo de cada gesto.">
+<meta property="og:image" content="https://ingemaqsewing.github.io/lycan-face-control/img/og-lycan-face-control.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lycan Face Control: dibujo de una cara serena y un puntero con un anillo verde que se llena para hacer clic">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Mismo estilo que el manual de Lycan Mouse Control (noche azul, neón cian, tarjetas con borde luminoso). */
+:root {
+  --fondo: #050b18;
+  --fondo-2: #0a1428;
+  --placa: #0c1a33;
+  --linea: #16345c;
+  --texto: #e6f1ff;
+  --texto-2: #c4d4ea;
+  --suave: #8ea6c8;
+  --cian: #22e3ff;
+  --cian-oscuro: #0aa6c2;
+  --verde: #35f2a0;
+  --ambar: #ffc94d;
+  --rojo: #ff7a6b;
+  --r-s: 6px; --r-m: 10px; --r-l: 14px;
+  --f-titulo: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --f-texto: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-dato: "JetBrains Mono", Consolas, "Courier New", monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; min-height: 100vh;
+  background:
+    radial-gradient(900px 500px at 50% -120px, rgba(34,227,255,.16), transparent 70%),
+    linear-gradient(var(--fondo), var(--fondo-2) 60%, var(--fondo));
+  background-repeat: no-repeat;
+  background-color: var(--fondo);
+  color: var(--texto);
+  font-family: var(--f-texto); font-size: 17px; line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: var(--cian); }
+a:focus-visible, summary:focus-visible, video:focus-visible { outline: 2px solid var(--cian); outline-offset: 3px; border-radius: 4px; }
+.saltar { position: absolute; left: 16px; top: -60px; background: var(--cian); color: #041022; padding: 10px 14px; border-radius: 8px; font-weight: 600; z-index: 10; text-decoration: none; }
+.saltar:focus { top: 12px; }
+.ancho {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Barra superior (igual a la portada) */
+.barra { border-bottom: 1px solid var(--linea); background: rgba(5,11,24,.7); }
+.barra .ancho { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--texto); }
+.logo svg { width: 34px; height: 34px; flex: none; filter: drop-shadow(0 0 6px rgba(34,227,255,.6)); }
+.logo b { font-family: var(--f-titulo); font-size: 19px; letter-spacing: .04em; }
+.volver { color: var(--suave); text-decoration: none; font-size: 15px; padding-block: 8px; }
+.volver:hover { color: var(--cian); }
+
+/* Encabezado del manual */
+.portada { padding-block: 44px 28px; border-bottom: 1px solid var(--linea); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 32px; align-items: end; }
+@media (max-width: 760px) { .portada { grid-template-columns: minmax(0, 1fr); padding-top: 32px; } }
+.eti { font-family: var(--f-dato); font-size: 13px; color: var(--cian); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 12px; }
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(34px, 6vw, 60px); line-height: 1.04; margin: 0; text-wrap: balance; text-transform: uppercase; }
+h1 em { font-style: normal; color: var(--cian); text-shadow: 0 0 18px rgba(34,227,255,.55); }
+.lema { color: var(--suave); font-size: 18px; max-width: 54ch; margin: 14px 0 0; }
+.lema b { color: var(--texto); font-weight: 600; }
+.version { font-family: var(--f-dato); font-size: 13px; color: var(--cian); border: 1px solid rgba(34,227,255,.45); background: rgba(34,227,255,.08); padding: 5px 12px; border-radius: 999px; white-space: nowrap; justify-self: start; }
+
+/* Rejilla: índice + contenido */
+.envoltura { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-bottom: 24px; }
+@media (max-width: 900px) { .envoltura { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+nav.indice { position: sticky; top: 20px; align-self: start; padding-top: 30px; max-height: calc(100vh - 20px); overflow-y: auto; }
+nav.indice p { font-family: var(--f-dato); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--cian); margin: 0 0 10px; }
+nav.indice ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.indice a { display: block; padding: 5px 10px; color: var(--texto-2); text-decoration: none; border-left: 2px solid var(--linea); font-size: 15px; }
+nav.indice a:hover, nav.indice a:focus-visible { border-left-color: var(--cian); color: var(--texto); background: rgba(34,227,255,.06); }
+@media (max-width: 900px) {
+  nav.indice { position: static; padding-top: 22px; max-height: none; overflow: visible; }
+  nav.indice ol { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+}
+
+main { min-width: 0; }
+section { padding-top: 46px; scroll-margin-top: 12px; }
+.cabeza { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-bottom: 12px; }
+.cabeza .cod { font: 500 13px var(--f-dato); color: var(--cian); border: 1px solid var(--cian); border-radius: 8px; padding: 4px 8px; background: var(--placa); box-shadow: 0 0 12px rgba(34,227,255,.35); }
+.cabeza::after { content: ""; flex: 1 1 60px; height: 1px; background: linear-gradient(90deg, rgba(34,227,255,.6), transparent); order: 3; }
+h2 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(26px, 4vw, 36px); line-height: 1.1; margin: 0; text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; }
+h3 { font-family: var(--f-titulo); font-weight: 600; font-size: 22px; line-height: 1.2; margin: 26px 0 8px; }
+p, li { max-width: 70ch; }
+p { margin: 0 0 12px; color: var(--texto-2); }
+li { color: var(--texto-2); margin-bottom: 4px; }
+b, strong { color: var(--texto); font-weight: 600; }
+kbd { font-family: var(--f-dato); font-size: 14px; color: var(--texto); border: 1px solid rgba(34,227,255,.45); border-bottom-width: 3px; background: var(--placa); padding: 1px 7px; border-radius: 6px; white-space: nowrap; }
+.ruta { font-family: var(--f-dato); font-size: 14.5px; background: var(--placa); border: 1px solid var(--linea); padding: 1px 7px; border-radius: 5px; overflow-wrap: anywhere; }
+
+/* Pasos numerados */
+ol.pasos { counter-reset: paso; list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 12px; }
+ol.pasos > li { counter-increment: paso; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; align-items: start; margin: 0; }
+ol.pasos > li::before {
+  content: counter(paso); width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px;
+  border: 1px solid var(--cian); color: var(--cian); background: var(--placa); font: 600 16px var(--f-titulo);
+  box-shadow: 0 0 10px rgba(34,227,255,.3);
+}
+ol.pasos > li > div { min-width: 0; padding-top: 3px; }
+
+/* Avisos */
+.nota, .ojo, .calido { padding: 12px 16px; margin: 16px 0; border-left: 3px solid var(--cian); background: rgba(34,227,255,.06); border-radius: 0 var(--r-m) var(--r-m) 0; max-width: 74ch; }
+.ojo { border-left-color: var(--ambar); background: rgba(255,201,77,.07); }
+.calido { border-left-color: var(--verde); background: rgba(53,242,160,.06); }
+.nota p, .ojo p, .calido p { margin: 4px 0; }
+.rotulo { font: 600 14px var(--f-dato); letter-spacing: .08em; text-transform: uppercase; margin-right: 8px; color: var(--cian); }
+.ojo .rotulo { color: var(--ambar); }
+.calido .rotulo { color: var(--verde); }
+
+/* Tarjetas (como en la portada) */
+.tarjeta {
+  min-width: 0; position: relative;
+  background: linear-gradient(180deg, rgba(16,38,74,.9), rgba(10,22,44,.9));
+  border: 1px solid rgba(34,227,255,.28); border-radius: var(--r-l); padding: 18px;
+  box-shadow: inset 0 1px 0 rgba(34,227,255,.22), 0 0 22px -10px rgba(34,227,255,.45);
+}
+.tarjeta::before, .tarjeta::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--cian); box-shadow: 0 0 8px var(--cian); top: -3px; left: 22px; }
+.tarjeta::after { top: auto; bottom: -3px; left: auto; right: 22px; }
+.datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 16px; margin: 16px 0; }
+.datos .tarjeta h3 { margin: 0 0 6px; font-size: 19px; color: var(--cian); }
+.datos .tarjeta p { margin: 0; font-size: 15.5px; }
+
+/* Descargas */
+.descargas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px; margin: 18px 0; }
+.descargas .tarjeta { display: flex; flex-direction: column; gap: 10px; }
+.descargas h3 { margin: 0; font-size: 20px; }
+.descargas p { margin: 0; font-size: 15.5px; }
+.boton-desc { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 10px 18px; border-radius: var(--r-m);
+  font: 700 17px var(--f-titulo); letter-spacing: .03em; text-decoration: none; color: #041022; background: var(--cian);
+  box-shadow: 0 0 18px rgba(34,227,255,.45); align-self: flex-start; margin-top: auto; }
+.boton-desc:hover { background: #6befff; }
+.boton-desc.secundario { color: var(--cian); background: transparent; border: 1px solid var(--cian); box-shadow: none; }
+.boton-desc.secundario:hover { background: rgba(34,227,255,.1); }
+.boton-desc svg { width: 20px; height: 20px; flex: none; }
+.archivo { font: 500 13.5px var(--f-dato); color: var(--suave); overflow-wrap: anywhere; }
+
+/* Dibujos de gestos */
+.gestos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 20px; margin: 18px 0; padding: 0; list-style: none; }
+.gestos > li { margin: 0; max-width: none; display: flex; flex-direction: column; gap: 8px; padding: 0 0 16px; }
+.gestos figure { margin: 0; border-bottom: 1px solid rgba(34,227,255,.3); border-radius: var(--r-l) var(--r-l) 0 0; overflow: hidden; background: #071128; }
+.gestos img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; }
+.gestos h3 { margin: 6px 16px 0; font-size: 21px; }
+.gestos p { margin: 0 16px; font-size: 15.5px; }
+.hace { display: inline-block; margin: 0 16px; font: 500 13px var(--f-dato); color: var(--verde); border: 1px solid rgba(53,242,160,.45); background: rgba(53,242,160,.08); border-radius: 999px; padding: 3px 10px; align-self: flex-start; }
+.hace.opcional { color: var(--ambar); border-color: rgba(255,201,77,.45); background: rgba(255,201,77,.08); }
+.hace.nunca { color: var(--rojo); border-color: rgba(255,122,107,.45); background: rgba(255,122,107,.08); }
+.gestos .tarjeta { padding: 0 0 16px; }
+
+/* Un dibujo grande junto al texto */
+.figura { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 20px 28px; align-items: start; margin: 16px 0; }
+.figura > div { min-width: 0; }
+.figura figure { margin: 0; border: 1px solid rgba(34,227,255,.3); border-radius: var(--r-l); overflow: hidden; background: #071128; box-shadow: 0 0 22px -10px rgba(34,227,255,.45); }
+.figura img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; }
+.figura figcaption { font-size: 14px; color: var(--suave); padding: 8px 12px; border-top: 1px solid var(--linea); }
+@media (max-width: 760px) { .figura { grid-template-columns: minmax(0, 1fr); } }
+
+/* Maqueta de la barra de acciones */
+.maqueta-barra { list-style: none; padding: 12px; margin: 16px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(98px, 1fr)); gap: 10px; max-width: 800px;
+  border: 1px solid var(--linea); border-radius: var(--r-l); background: rgba(12,26,51,.75); }
+.maqueta-barra li { margin: 0; display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 88px; padding: 8px 6px; text-align: center;
+  border: 1px solid rgba(34,227,255,.45); border-radius: 12px; background: var(--placa); color: var(--texto); font: 600 16px var(--f-titulo); }
+.maqueta-barra li span { font-size: 24px; color: var(--cian); line-height: 1.1; }
+.maqueta-barra li.encendido { border-color: var(--verde); box-shadow: 0 0 14px rgba(53,242,160,.35); }
+.maqueta-barra li.encendido span { color: var(--verde); }
+
+/* Maqueta del teclado: las filas de arriba hacia abajo */
+.filas-teclado { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 8px; max-width: 760px; counter-reset: fila; }
+.filas-teclado li { counter-increment: fila; margin: 0; max-width: none; display: grid; grid-template-columns: 34px 150px minmax(0, 1fr); gap: 12px; align-items: baseline;
+  padding: 10px 14px; border: 1px solid var(--linea); border-radius: var(--r-m); background: rgba(12,26,51,.75); font-size: 15.5px; }
+.filas-teclado li::before { content: counter(fila); font: 600 15px var(--f-titulo); color: var(--cian); }
+.filas-teclado b { font-family: var(--f-titulo); font-size: 17px; }
+@media (max-width: 620px) { .filas-teclado li { grid-template-columns: 26px minmax(0, 1fr); } .filas-teclado li > span { grid-column: 2; } }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; padding: 0; list-style: none; }
+.chips li { margin: 0; padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(34,227,255,.35); background: rgba(34,227,255,.06); font-size: 15px; color: var(--texto); }
+.chips li.urgente { border-color: rgba(255,122,107,.6); background: rgba(255,122,107,.1); }
+
+/* Video */
+.video { position: relative; margin: 16px 0 8px; border-radius: var(--r-l); overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid rgba(34,227,255,.35); box-shadow: 0 0 32px rgba(34,227,255,.14);
+  background: radial-gradient(500px 240px at 50% 40%, rgba(34,227,255,.16), transparent 70%), var(--placa); }
+.video .espera { position: absolute; inset: 0; display: grid; place-content: center; gap: 6px; text-align: center; padding: 16px; color: var(--suave); font-size: 15px; }
+.video .espera b { font: 600 20px var(--f-titulo); color: var(--texto); }
+.video video { position: relative; display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; }
+
+/* Tablas */
+.tabla { overflow-x: auto; margin: 14px 0; max-width: 100%; border: 1px solid var(--linea); border-radius: var(--r-l); background: rgba(12,26,51,.75); }
+table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
+.tabla.ancha table { min-width: 560px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-top: 1px solid var(--linea); color: var(--texto-2); }
+thead th { border-top: 0; font: 500 12.5px var(--f-dato); letter-spacing: .1em; text-transform: uppercase; color: var(--cian); background: rgba(34,227,255,.05); }
+td:first-child { color: var(--texto); font-weight: 600; }
+
+@media (max-width: 620px) {
+  .tabla.ancha { border: 0; background: none; overflow: visible; }
+  .tabla.ancha table { min-width: 0; }
+  .tabla.ancha thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .tabla.ancha tr { display: block; margin-bottom: 12px; border: 1px solid var(--linea); border-radius: var(--r-m); background: rgba(12,26,51,.75); padding: 6px 0; }
+  .tabla.ancha td { display: block; border: 0; padding: 5px 14px; }
+  .tabla.ancha td::before { content: attr(data-label); display: block; font: 500 12px var(--f-dato); letter-spacing: .06em; text-transform: uppercase; color: var(--cian); }
+  .tabla.ancha td:first-child::before { display: none; }
+  .tabla.ancha td:first-child { font-family: var(--f-titulo); font-size: 18px; }
+}
+
+/* Preguntas */
+details { border-top: 1px solid var(--linea); padding: 4px 0; max-width: 74ch; }
+details:last-of-type { border-bottom: 1px solid var(--linea); }
+summary { cursor: pointer; font-weight: 600; padding: 10px 0; color: var(--texto); }
+summary::marker { color: var(--cian); }
+details p, details ul { margin: 0 0 12px; }
+
+footer { margin-top: 64px; border-top: 1px solid var(--linea); }
+footer .ancho { padding-block: 26px 40px; color: var(--suave); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+footer p { margin: 0; color: var(--suave); max-width: none; }
+</style>
+</head>
+<body>
+<a class="saltar" href="#que-es">Saltar al contenido</a>
+<header class="barra">
+  <div class="ancho">
+    <a class="logo" href="../" aria-label="Lycan Developments, ir a la portada">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 35 11.5v17L20 37 5 28.5v-17Z" fill="none" stroke="#22e3ff" stroke-width="2.2"/><path d="M13 14v12h7M23 14h3a6 6 0 0 1 0 12h-3Z" fill="none" stroke="#e6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>LYCAN DEVELOPMENTS</b>
+    </a>
+    <a class="volver" href="../#cadcam">← Volver a los proyectos</a>
+  </div>
+</header>
+
+<div class="ancho">
+  <div class="portada">
+    <div>
+      <p class="eti">Manual · Windows · Sin manos</p>
+      <h1>Lycan <em>Face Control</em></h1>
+      <p class="lema">Maneje el computador <b>solo con la cabeza y la cara</b>: mueva el puntero, haga clic sin manos y escriba o hable con un teclado grande en pantalla.</p>
+    </div>
+    <span class="version">Versión 1.0.0 · Windows 64 bits</span>
+  </div>
+
+  <div class="envoltura">
+    <nav class="indice" aria-label="Contenido">
+      <p>Contenido</p>
+      <ol>
+        <li><a href="#que-es">Qué es y para quién</a></li>
+        <li><a href="#video">Video tutorial</a></li>
+        <li><a href="#instalar">Descargar e instalar</a></li>
+        <li><a href="#primera-vez">Primera vez y calibración</a></li>
+        <li><a href="#puntero">Mover el puntero</a></li>
+        <li><a href="#quieto">Clic quedándose quieto</a></li>
+        <li><a href="#gestos">Gestos de la cara</a></li>
+        <li><a href="#barra">Barra de acciones</a></li>
+        <li><a href="#teclado">Teclado en pantalla</a></li>
+        <li><a href="#barrido">Barrido con parpadeo</a></li>
+        <li><a href="#hablar">Hablar</a></li>
+        <li><a href="#frases">Frases rápidas</a></li>
+        <li><a href="#seguridad">Pausa y seguridad</a></li>
+        <li><a href="#cuidadores">Para el cuidador</a></li>
+        <li><a href="#atajos">Atajos de teclado</a></li>
+        <li><a href="#opciones">Opciones</a></li>
+        <li><a href="#problemas">Problemas frecuentes</a></li>
+        <li><a href="#privacidad">Privacidad</a></li>
+        <li><a href="#limites">Con honestidad</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <section id="que-es" aria-labelledby="t-que-es">
+        <div class="cabeza"><span class="cod">01</span><h2 id="t-que-es">Qué es y para quién</h2></div>
+        <p>Lycan Face Control mira la cara con la cámara del computador y convierte los movimientos de la cabeza en el movimiento del puntero. Un gesto sencillo, como abrir la boca o levantar las cejas, hace clic. Y un teclado grande en pantalla permite escribir y <b>decir en voz alta</b> lo que la persona quiere decir.</p>
+        <p>Está pensado para personas con <b>ELA</b> (esclerosis lateral amiotrófica) y otras condiciones que limitan el movimiento de las manos, y para quienes las acompañan y las cuidan.</p>
+        <div class="datos">
+          <div class="tarjeta"><h3>Comunicarse</h3><p>Frases listas como «Tengo sed», «Tengo dolor» o «Gracias», y un teclado para decir todo lo demás.</p></div>
+          <div class="tarjeta"><h3>Usar el computador</h3><p>Navegar, ver videos, leer, escribir mensajes. Lo mismo que con un ratón, con la cabeza.</p></div>
+          <div class="tarjeta"><h3>Solo con parpadeos</h3><p>Si la persona ya no mueve la cabeza, el teclado avanza solo y un parpadeo largo elige.</p></div>
+        </div>
+        <div class="calido"><p><span class="rotulo">Por qué existe</span>Este programa nació de una historia de familia: alguien muy querido vivió la ELA, y su familia tuvo que pagar un programa muy costoso para que pudiera comunicarse. Nadie debería tener que pagar una fortuna para poder decir «tengo sed» o «gracias». Lycan Face Control es de <b>código abierto</b> y <b>sin costo de licencia</b>.</p></div>
+        <div class="nota"><p><span class="rotulo">Todo en su computador</span>No necesita internet. La imagen de la cámara se usa en el momento y nunca se guarda ni se envía. La voz es la de Windows y también funciona sin conexión.</p></div>
+      </section>
+
+      <section id="video" aria-labelledby="t-video">
+        <div class="cabeza"><span class="cod">02</span><h2 id="t-video">Video tutorial</h2></div>
+        <p>Un recorrido corto por la calibración, los gestos y el teclado.</p>
+        <div class="video">
+          <div class="espera" aria-hidden="true"><b>Video tutorial</b><span>Lycan Face Control paso a paso</span></div>
+          <video controls preload="none" playsinline poster="video/portada.jpg" aria-label="Video tutorial de Lycan Face Control">
+            <source src="video/tutorial-lycan-face-control.mp4" type="video/mp4">
+            <track kind="subtitles" srclang="es" label="Español" src="video/tutorial-lycan-face-control.vtt" default>
+            Su navegador no puede mostrar este video. <a href="video/tutorial-lycan-face-control.mp4">Descárguelo aquí</a>.
+          </video>
+        </div>
+        <p>Dura 3 minutos y 50 segundos, con voz y subtítulos en español. También puede <a href="video/tutorial-lycan-face-control.mp4" download>descargar el video</a> o los <a href="video/tutorial-lycan-face-control.srt" download>subtítulos (.srt)</a>.</p>
+      </section>
+
+      <section id="instalar" aria-labelledby="t-instalar">
+        <div class="cabeza"><span class="cod">03</span><h2 id="t-instalar">Descargar e instalar</h2></div>
+        <div class="datos">
+          <div class="tarjeta"><h3>Windows</h3><p>Windows 10 u 11 de 64 bits, con unos 300 MB libres.</p></div>
+          <div class="tarjeta"><h3>Cámara</h3><p>La del portátil sirve. También una cámara web por USB.</p></div>
+          <div class="tarjeta"><h3>Equipo</h3><p>No necesita tarjeta de video ni internet. Funciona en un portátil común.</p></div>
+        </div>
+        <div class="descargas">
+          <div class="tarjeta">
+            <h3>Instalador (recomendado)</h3>
+            <p>Crea el acceso en el menú Inicio y, si quiere, en el escritorio.</p>
+            <span class="archivo">Lycan-Face-Control-1.0.0-Windows-64-bits.exe</span>
+            <a class="boton-desc" href="https://github.com/INGEMAQSEWING/lycan-face-control/releases/download/v1.0.0-prueba/Lycan-Face-Control-1.0.0-Windows-64-bits.exe">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M5 20h14"/></svg>
+              Descargar instalador
+            </a>
+          </div>
+          <div class="tarjeta">
+            <h3>Versión portable</h3>
+            <p>Sin instalar: descomprima la carpeta y abra <span class="ruta">LycanFaceControl.exe</span>.</p>
+            <span class="archivo">Lycan-Face-Control-1.0.0-portable.zip</span>
+            <a class="boton-desc secundario" href="https://github.com/INGEMAQSEWING/lycan-face-control/releases/download/v1.0.0-prueba/Lycan-Face-Control-1.0.0-portable.zip">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M5 20h14"/></svg>
+              Descargar ZIP
+            </a>
+          </div>
+        </div>
+        <ol class="pasos">
+          <li><div>Descargue el <b>instalador</b> con el botón de arriba.</div></li>
+          <li><div>Ábralo con doble clic. <b>No pide permisos de administrador.</b></div></li>
+          <li><div>Si quiere, marque <b>crear un ícono en el escritorio</b> y <b>abrir Lycan Face Control al encender el computador</b>. Esto último es útil si la persona va a usarlo todos los días: así no depende de que alguien lo abra.</div></li>
+          <li><div>Al terminar, abra <b>Lycan Face Control</b> desde el menú Inicio o el escritorio.</div></li>
+        </ol>
+        <div class="ojo">
+          <p><span class="rotulo">Si Windows lo detiene</span>Puede salir un aviso azul que dice <b>«Windows protegió su PC»</b> (SmartScreen). Sale porque el programa es nuevo y no tiene firma digital, que tiene un costo anual.</p>
+          <p>Haga clic en <b>«Más información»</b> y luego en <b>«Ejecutar de todas formas»</b>.</p>
+        </div>
+        <p>Si más adelante lo desinstala, el programa le pregunta si quiere borrar también la configuración (calibración, gestos, frases rápidas, palabras aprendidas y atajos). Si dice que no, la conserva para la próxima vez. El código está en <a href="https://github.com/INGEMAQSEWING/lycan-face-control">github.com/INGEMAQSEWING/lycan-face-control</a>.</p>
+      </section>
+
+      <section id="primera-vez" aria-labelledby="t-primera">
+        <div class="cabeza"><span class="cod">04</span><h2 id="t-primera">La primera vez y la calibración</h2></div>
+        <div class="figura">
+          <div>
+            <p>La primera vez se abre una <b>bienvenida</b> de cuatro pantallas: qué hace el programa, cómo acomodar la cámara, cómo se hace clic y, al final, la <b>calibración guiada</b>.</p>
+            <p><b>Antes de empezar, acomode la cámara:</b></p>
+            <ul>
+              <li>A la altura de los ojos, a unos <b>50 a 70 cm</b> de la cara.</li>
+              <li>Con la luz de frente o de lado. Evite una ventana detrás de la persona.</li>
+              <li>Si usa gafas con reflejos, incline un poco la pantalla.</li>
+            </ul>
+          </div>
+          <figure><img src="img/gestos/posicion.svg" width="800" height="600" loading="lazy" decoding="async" alt="Una cara frente a la pantalla, con la cámara a la altura de los ojos y a una distancia de 50 a 70 centímetros; luz de frente y sin ventana detrás."><figcaption>La cámara a la altura de los ojos, a 50 a 70 cm.</figcaption></figure>
+        </div>
+        <h3>La calibración (unos dos minutos)</h3>
+        <p>Cada paso <b>avanza solo</b> cuando termina: la persona solo sigue las instrucciones de la pantalla. El cuidador puede elegir <b>«Repetir este paso»</b> o <b>«Atrás»</b> con el ratón. Nada se graba: el programa solo guarda unos números.</p>
+        <ol class="pasos">
+          <li><div><b>Posición.</b> La cara en el centro de la cámara, a un brazo de distancia. El programa dice si hay que acercarse o alejarse.</div></li>
+          <li><div><b>Centro.</b> Mire al frente, a la mitad de la pantalla, y quédese quieto.</div></li>
+          <li><div><b>Izquierda, derecha, arriba y abajo.</b> Gire la cabeza <b>hasta donde le quede cómodo, sin forzar</b>. Con ese rango cómodo el puntero llega a toda la pantalla.</div></li>
+          <li><div><b>Cara en reposo.</b> Mire al frente con la cara relajada y la boca cerrada.</div></li>
+          <li><div><b>Parpadeo natural.</b> Parpadee como siempre, sin pensarlo. Así el programa aprende a no confundir esos parpadeos con un clic.</div></li>
+          <li><div><b>Parpadeo largo</b> (solo si usa el barrido o «Solo comunicación»). Cierre los ojos hasta que la barra se ponga verde y ábralos, tres veces. En «Solo comunicación» no se piden los giros de la cabeza.</div></li>
+          <li><div><b>Probar los gestos:</b> abrir la boca, levantar las cejas y, si está encendida, sonreír, tres veces cada uno. Se puede <b>omitir</b> el que no use. Si un gesto casi no se nota, se deja con el ajuste de fábrica y la pantalla final lo dice.</div></li>
+          <li><div><b>Prueba final.</b> Lleve el puntero a cuatro círculos y quédese quieto sobre cada uno. Con el barrido, la prueba es el parpadeo largo y la ventana se cierra sola.</div></li>
+        </ol>
+        <div class="nota"><p><span class="rotulo">Repetirla</span>Calibre otra vez desde el botón <b>Calibrar</b> de la ventana principal cuando cambie la posición de la cama o la silla, cuando mueva la cámara o si la persona está más cansada que de costumbre.</p></div>
+      </section>
+
+      <section id="puntero" aria-labelledby="t-puntero">
+        <div class="cabeza"><span class="cod">05</span><h2 id="t-puntero">Mover el puntero</h2></div>
+        <div class="figura">
+          <div>
+            <p>Gire la cabeza a los lados y arriba o abajo: el puntero la sigue. El programa quita el temblor y no hace falta forzar el cuello. Si la persona voltea la cabeza <b>mucho más allá</b> de lo cómodo (para mirar a alguien, ver televisión o comer), el puntero se queda quieto y no hace clics hasta que vuelva a mirar la pantalla.</p>
+            <p><b>Recentrar:</b> si la persona cambió de posición, mire al frente y elija <b>Recentrar</b> en la ventana principal (o el cuidador presiona <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>). El centro queda donde está mirando ahora.</p>
+          </div>
+          <figure><img src="img/gestos/mover-cabeza.svg" width="800" height="600" loading="lazy" decoding="async" alt="Una cara girando la cabeza; flechas a los lados y arriba y abajo, y el puntero que se mueve en la pantalla."><figcaption>El puntero sigue los giros de la cabeza.</figcaption></figure>
+        </div>
+        <h3>Tres formas de mover el puntero</h3>
+        <p>Se eligen en <b>Opciones ▸ Puntero ▸ Forma de mover el puntero</b>.</p>
+        <div class="datos">
+          <div class="tarjeta"><h3>Directo</h3><p>Viene así de fábrica. Cada posición de la cabeza es un punto de la pantalla.</p></div>
+          <div class="tarjeta"><h3>Como una almohadilla</h3><p>El puntero avanza lo que se mueva la cabeza, como el panel táctil de un portátil.</p></div>
+          <div class="tarjeta"><h3>Palanca</h3><p>Para quien mueve poco el cuello: el puntero sigue avanzando mientras la cabeza esté girada.</p></div>
+        </div>
+        <p>En la misma pestaña están la <b>velocidad del puntero</b> (de 1 a 10: con 10 basta un movimiento pequeño) y la <b>suavidad</b>, que quita el temblor.</p>
+      </section>
+
+      <section id="quieto" aria-labelledby="t-quieto">
+        <div class="cabeza"><span class="cod">06</span><h2 id="t-quieto">Clic quedándose quieto</h2></div>
+        <div class="figura">
+          <div>
+            <p>Es la forma más sencilla de hacer clic: lleve el puntero sobre algo y <b>quédese quieto un momento</b>. Junto al puntero aparece un <b>anillo verde que se va llenando</b>. Cuando se completa (en 1 segundo, de fábrica), se hace el clic y suena un toque suave.</p>
+            <p>Para no hacer clics sin querer, el anillo solo empieza después de mover el puntero a otro lugar: quedarse quieto mucho rato en el mismo punto no hace clic tras clic.</p>
+            <p>En <b>Opciones ▸ Clic</b> se ajusta el <b>tiempo quieto para hacer clic</b>, <b>cuánto se puede mover sin cancelar</b>, la <b>espera entre un clic y otro</b> y el sonido. También se puede apagar este clic y usar solo gestos.</p>
+          </div>
+          <figure><img src="img/gestos/clic-quieto.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara quieta mirando al frente; el puntero sobre algo de la pantalla con un anillo verde que se va llenando hasta hacer clic."><figcaption>El anillo se llena y hace clic.</figcaption></figure>
+        </div>
+      </section>
+
+      <section id="gestos" aria-labelledby="t-gestos">
+        <div class="cabeza"><span class="cod">07</span><h2 id="t-gestos">Gestos de la cara</h2></div>
+        <p>Los gestos son otra forma de hacer clic, más rápida que quedarse quieto. Así vienen de fábrica; cada uno se puede encender, apagar o cambiar en <b>Opciones ▸ Gestos</b>, y la ventana de <b>Ayuda</b> siempre muestra cómo están puestos.</p>
+        <ul class="gestos">
+          <li class="tarjeta">
+            <figure><img src="img/gestos/clic-boca.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara con la boca abierta un momento, con un destello; al lado, el ratón con el botón izquierdo encendido."></figure>
+            <span class="hace">Clic</span>
+            <h3>Abrir la boca</h3>
+            <p>Abra la boca un momento (algo más de medio segundo) y ciérrela. El clic cae donde está el puntero. Una boca abierta con una sacudida de la cabeza (tos, estornudo) o con los ojos achinados (risa, bostezo) no cuenta.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/gestos/clic-cejas.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara con las cejas levantadas y flechas hacia arriba; al lado, el ratón con el botón derecho encendido."></figure>
+            <span class="hace">Clic derecho</span>
+            <h3>Levantar las cejas</h3>
+            <p>Levante las cejas un momento y bájelas. Sirve para abrir el menú de opciones de algo, como el clic derecho del ratón.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/gestos/pausar-boca.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara con la boca abierta sostenida dos segundos; el reloj lleno y el símbolo de pausa."></figure>
+            <span class="hace">Pausar</span>
+            <h3>Boca abierta 2 segundos</h3>
+            <p>Mantenga la boca abierta <b>dos segundos</b> y ciérrela. El programa deja de mover el puntero y de hacer clics. Sirve para descansar, comer o conversar sin preocuparse.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/gestos/reanudar.svg" width="800" height="600" loading="lazy" decoding="async" alt="Para reanudar: la boca abierta unos tres segundos, o quedarse quieto dos segundos sobre el botón grande Reanudar."></figure>
+            <span class="hace">Reanudar</span>
+            <h3>Boca abierta 3 segundos, o el botón Reanudar</h3>
+            <p>Abra la boca unos <b>tres segundos</b> y ciérrela, o quédese quieto dos segundos sobre el botón grande <b>«Reanudar»</b>. Un bostezo muy largo, o con los ojos cerrados, no cuenta.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/gestos/parpadeo-largo.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara con los ojos cerrados un momento largo; una barra que se llena y se pone verde."></figure>
+            <span class="hace">Elegir en el barrido</span>
+            <h3>Parpadeo largo</h3>
+            <p>Cierre los ojos un momento largo (de fábrica, 0,8 segundos; la calibración lo ajusta a cada persona). Mientras están cerrados, una barra se llena y se pone <b>verde</b>: ya puede abrirlos. Se usa en el <a href="#barrido">barrido</a>; fuera de él no hace nada, salvo que el cuidador le asigne «Clic» en Opciones.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/gestos/parpadeo-natural.svg" width="800" height="600" loading="lazy" decoding="async" alt="Un parpadeo normal, rápido y sin querer: el ratón tachado, porque no hace nada."></figure>
+            <span class="hace nunca">Nunca hace nada</span>
+            <h3>Parpadeo natural</h3>
+            <p>Los parpadeos de siempre, los que se hacen sin pensar, <b>nunca hacen clic</b>, sin importar lo que se configure. El programa los aprende en la calibración para no confundirlos.</p>
+          </li>
+          <li class="tarjeta">
+            <figure><img src="img/gestos/sonrisa.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara sonriendo con la boca cerrada; un interruptor apagado que se enciende en Opciones."></figure>
+            <span class="hace opcional">Opcional · viene apagada</span>
+            <h3>Sonreír</h3>
+            <p>Sonría con la boca cerrada. Viene apagada porque una sonrisa espontánea, en medio de una conversación, haría clics sin querer. Si le sirve, enciéndala en <b>Opciones ▸ Gestos ▸ Sonrisa</b> y elija qué hace.</p>
+          </li>
+        </ul>
+        <h3>Qué se puede asignar a cada gesto</h3>
+        <p>Cada gesto tiene dos acciones: <b>«Al hacerlo»</b> (un momento) y <b>«Al sostenerlo 2 segundos»</b>. Se puede elegir entre: nada, clic (el que esté elegido en la barra), clic izquierdo, clic derecho, doble clic, arrastrar, pausar o reanudar, abrir el teclado, recentrar, y en el teclado borrar, hablar, elegir o avanzar el barrido. También se ajustan la <b>sensibilidad</b> y el <b>tiempo que hay que sostenerlo</b>.</p>
+        <div class="nota"><p><span class="rotulo">Pruébelo ahora</span>En Opciones ▸ Gestos hay una barra que se mueve en vivo mientras la persona hace el gesto. Así se ve si la sensibilidad está bien antes de guardar.</p></div>
+      </section>
+
+      <section id="barra" aria-labelledby="t-barra">
+        <div class="cabeza"><span class="cod">08</span><h2 id="t-barra">La barra de acciones</h2></div>
+        <p>Es una columna de botones grandes, siempre visible, a la derecha de la pantalla. Se elige un botón <b>quedándose quieto sobre él</b> (1 segundo de fábrica).</p>
+        <ul class="maqueta-barra" aria-label="Botones de la barra de acciones">
+          <li class="encendido"><span aria-hidden="true">●</span>Clic</li>
+          <li><span aria-hidden="true">●●</span>Doble</li>
+          <li><span aria-hidden="true">◑</span>Derecho</li>
+          <li><span aria-hidden="true">✥</span>Arrastrar</li>
+          <li><span aria-hidden="true">↕</span>Desplazar</li>
+          <li><span aria-hidden="true">⌨</span>Teclado</li>
+          <li><span aria-hidden="true">❚❚</span>Pausa</li>
+        </ul>
+        <div class="tabla ancha">
+          <table>
+            <thead><tr><th scope="col">Botón</th><th scope="col">Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Botón">Clic</td><td data-label="Qué hace">El clic normal. Está encendido de fábrica.</td></tr>
+              <tr><td data-label="Botón">Doble</td><td data-label="Qué hace">Elíjalo y luego haga clic (quieto o con un gesto) donde quiera: hace doble clic, por ejemplo para abrir una carpeta.</td></tr>
+              <tr><td data-label="Botón">Derecho</td><td data-label="Qué hace">El siguiente clic será clic derecho.</td></tr>
+              <tr><td data-label="Botón">Arrastrar</td><td data-label="Qué hace">Haga clic donde quiere agarrar; mueva la cabeza y <b>quédese quieto donde quiere soltar</b>. Por seguridad, se suelta solo si dura más de un minuto.</td></tr>
+              <tr><td data-label="Botón">Desplazar</td><td data-label="Qué hace">Para bajar o subir una página: incline la cabeza hacia arriba o hacia abajo y la página se mueve sola. Para salir, elija <b>«Terminar»</b>; también termina solo si no desplaza durante un rato.</td></tr>
+              <tr><td data-label="Botón">Teclado</td><td data-label="Qué hace">Abre el <a href="#teclado">teclado en pantalla</a>.</td></tr>
+              <tr><td data-label="Botón">Pausa</td><td data-label="Qué hace">Pausa el programa. El botón cambia a <b>«Reanudar»</b>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="figura">
+          <div>
+            <p>Después de un doble clic o un clic derecho, la barra <b>vuelve sola al clic normal</b>. Si prefiere que siga en ese modo hasta elegir «Clic» otra vez, cámbielo en <b>Opciones ▸ Clic</b>.</p>
+            <p>Mientras está en un modo especial, junto al puntero aparece un letrero pequeño («Doble», «Derecho», «Arrastrando», «Desplazando») para saber qué va a pasar.</p>
+            <p>En <b>Opciones ▸ Comodidad</b> se cambia el lugar de la barra (derecha, izquierda, arriba o abajo) y el tamaño de los botones.</p>
+          </div>
+          <figure><img src="img/gestos/desplazar.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara inclinada hacia arriba; flechas arriba y abajo, y una página que se mueve."><figcaption>Desplazar: incline la cabeza y la página se mueve.</figcaption></figure>
+        </div>
+        <p>Con el puntero encima de las ventanas de Lycan Face Control no se hacen clics por accidente: los botones grandes se eligen quedándose quieto sobre ellos.</p>
+      </section>
+
+      <section id="teclado" aria-labelledby="t-teclado">
+        <div class="cabeza"><span class="cod">09</span><h2 id="t-teclado">El teclado en pantalla</h2></div>
+        <p>Se abre con el botón <b>Teclado</b> de la barra (o el cuidador con <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd>). Tiene teclas grandes en español, con <b>ñ</b> y tildes. Para escribir una tecla, <b>quédese quieto sobre ella</b> (1 segundo de fábrica). De arriba hacia abajo tiene:</p>
+        <ol class="filas-teclado">
+          <li><b>El mensaje</b><span>Lo que va escribiendo, en letra grande, con los botones <b>Hablar</b>, <b>Repetir</b> y <b>Escribir</b>.</span></li>
+          <li><b>Frases rápidas</b><span><b>Sí</b>, <b>No</b> y cinco frases de uso diario, a un solo paso.</span></li>
+          <li><b>Sugerencias</b><span>Cinco palabras que completan lo que está escribiendo. Elegir una ahorra muchas letras.</span></li>
+          <li><b>Las letras</b><span>Cuatro filas. Con la cabeza vienen en el orden del teclado normal (q w e r t y…); con el barrido, las más usadas primero.</span></li>
+          <li><b>Acciones</b><span>Borrar, Borrar palabra, Deshacer, Copiar, Limpiar, Frases, Barrido, Pausa, Ayuda y Cerrar.</span></li>
+        </ol>
+        <h3>Tildes, mayúsculas y números</h3>
+        <ul>
+          <li><b>«´»</b> pone tilde a la vocal que siga (á, é, í, ó, ú). Dos veces seguidas pone diéresis (ü).</li>
+          <li><b>⇧</b> pone mayúscula a la siguiente letra, por ejemplo para escribir un nombre.</li>
+          <li><b>«123»</b> muestra los números y signos (@, -, /, :, $, %…). <b>«abc»</b> vuelve a las letras.</li>
+        </ul>
+        <h3>Los botones del mensaje</h3>
+        <div class="tabla ancha">
+          <table>
+            <thead><tr><th scope="col">Botón</th><th scope="col">Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Botón">Hablar</td><td data-label="Qué hace">Dice el mensaje en voz alta. Después, la primera letra que escriba empieza un mensaje nuevo.</td></tr>
+              <tr><td data-label="Botón">Repetir</td><td data-label="Qué hace">Vuelve a decir lo último que se dijo.</td></tr>
+              <tr><td data-label="Botón">Escribir</td><td data-label="Qué hace">Envía el mensaje al programa que estaba usando (un chat, un correo, el Bloc de notas). Antes, elija con la cabeza dónde quiere escribir.</td></tr>
+              <tr><td data-label="Botón">Copiar</td><td data-label="Qué hace">Copia el mensaje para pegarlo en otro programa.</td></tr>
+              <tr><td data-label="Botón">Borrar / Borrar palabra</td><td data-label="Qué hace">Borra la última letra o la última palabra.</td></tr>
+              <tr><td data-label="Botón">Deshacer</td><td data-label="Qué hace">Recupera lo que se borró, o el mensaje anterior después de Hablar.</td></tr>
+              <tr><td data-label="Botón">Limpiar</td><td data-label="Qué hace">Borra todo el mensaje; antes pregunta «Sí, borrar» o «No borrar».</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>En <b>Opciones ▸ Teclado y voz</b> se elige si «Escribir» manda el <b>mensaje completo</b> (de fábrica) o <b>cada letra al instante</b>, el tamaño de las teclas, el tiempo para elegir una tecla y si una tecla se repite cuando el puntero se queda encima.</p>
+        <div class="nota"><p><span class="rotulo">Sugerencias que aprenden</span>Las sugerencias mejoran con las palabras que la persona usa. Esto se puede apagar o borrar; vea <a href="#privacidad">Privacidad</a>.</p></div>
+      </section>
+
+      <section id="barrido" aria-labelledby="t-barrido">
+        <div class="cabeza"><span class="cod">10</span><h2 id="t-barrido">Barrido: si la persona solo puede parpadear</h2></div>
+        <div class="figura">
+          <div>
+            <p>Cuando mover la cabeza ya no es posible o cansa mucho, el teclado puede <b>avanzar solo</b>. Primero se iluminan las filas, una por una. Con un <b>parpadeo largo</b> se entra a la fila iluminada; luego se iluminan sus teclas y otro parpadeo largo elige la tecla. <b>«↩ Volver»</b> regresa a las filas.</p>
+            <p>El orden está pensado para comunicarse rápido: primero las <b>frases rápidas</b> (Sí, No, «¡Ayuda, llamen a alguien!»), luego las sugerencias, las letras y las acciones.</p>
+            <p>Se activa con el botón <b>Barrido</b> del teclado. En <b>Opciones ▸ Teclado y voz</b> se ajusta cuánto espera en cada fila o tecla (1,5 segundos de fábrica; más tiempo es más tranquilo).</p>
+          </div>
+          <figure><img src="img/gestos/barrido.svg" width="800" height="600" loading="lazy" decoding="async" alt="Teclado en modo barrido: una fila iluminada en ámbar y dentro de ella una tecla en verde; la cara con los ojos cerrados elige."><figcaption>Una fila iluminada; un parpadeo largo elige.</figcaption></figure>
+        </div>
+        <h3>«Solo comunicación»</h3>
+        <p>Para quien solo puede parpadear, el cuidador pone <b>Opciones ▸ Teclado y voz ▸ Solo comunicación</b> en <b>Sí</b>. Entonces:</p>
+        <ul>
+          <li>El teclado queda <b>siempre abierto</b> con barrido, y el puntero no se mueve.</li>
+          <li>Un parpadeo largo elige. Si la persona pausa, <b>dos parpadeos largos seguidos</b> quitan la pausa.</li>
+          <li>Los avisos («No veo su cara», la pausa) salen en una franja del propio teclado.</li>
+          <li>«Salir del barrido» y «Cerrar» no entran al barrido, para que la persona no quede sin forma de volver. El cuidador los tiene con el ratón.</li>
+        </ul>
+        <div class="ojo"><p><span class="rotulo">Calibre el parpadeo</span>Haga la calibración con el barrido o «Solo comunicación» ya encendidos: así se incluye el paso del parpadeo largo y queda ajustado a la persona.</p></div>
+      </section>
+
+      <section id="hablar" aria-labelledby="t-hablar">
+        <div class="cabeza"><span class="cod">11</span><h2 id="t-hablar">Hablar con la voz del computador</h2></div>
+        <p>El botón <b>Hablar</b> dice el mensaje en voz alta con una voz en español de Windows (por ejemplo «Sabina»). <b>No necesita internet.</b> Mientras habla, el mensaje se muestra en letra grande, para que también se pueda leer.</p>
+        <ul>
+          <li>El volumen y la velocidad de la voz se ajustan en <b>Opciones ▸ Teclado y voz</b>.</li>
+          <li>De fábrica, al elegir una frase rápida también se dice en voz alta. Se apaga con <b>«Decir las frases en voz alta»</b>.</li>
+          <li>Si el computador no tiene una voz en español, el programa avisa, usa la voz que haya (puede sonar en otro idioma) y muestra la frase en grande.</li>
+          <li>Si por algún motivo no se puede decir, aparece el aviso: «Muéstrele la pantalla a la persona».</li>
+        </ul>
+        <div class="nota"><p><span class="rotulo">Más voces</span>En Windows, vaya a <span class="ruta">Configuración ▸ Hora e idioma ▸ Voz</span> para agregar voces en español.</p></div>
+      </section>
+
+      <section id="frases" aria-labelledby="t-frases">
+        <div class="cabeza"><span class="cod">12</span><h2 id="t-frases">Frases rápidas</h2></div>
+        <p>Frases listas para decir con un solo paso. Las de la primera categoría aparecen siempre en la fila rápida del teclado, junto a <b>Sí</b> y <b>No</b>:</p>
+        <ul class="chips" aria-label="Frases de la fila rápida">
+          <li class="urgente">¡Ayuda, llamen a alguien!</li><li>Tengo sed</li><li>Tengo dolor</li><li>Cambiarme de posición</li><li>Llamar a…</li>
+        </ul>
+        <p>El botón <b>Frases</b> abre todas, por categorías: <b>Básicas</b> (Gracias, Por favor, No sé, Espere, estoy escribiendo…), <b>Necesidades</b> (Tengo hambre, Necesito ir al baño, Tengo frío, Acomódeme la cabeza, Necesito que me aspiren…), <b>Dolor</b> (dónde duele, si es fuerte o leve), <b>Urgencia</b> y <b>Afecto</b> (Te quiero, Estoy bien, Gracias por cuidarme…).</p>
+        <div class="ojo"><p><span class="rotulo">Frases urgentes</span>«¡Ayuda, llamen a alguien!», «Me falta el aire» y «Llamen al médico» suenan con una <b>alerta y a todo volumen</b>, aunque «Decir las frases en voz alta» esté apagado.</p></div>
+        <h3>Editar las frases (para el cuidador)</h3>
+        <ol class="pasos">
+          <li><div>Abra <b>Opciones ▸ Teclado y voz ▸ Editar las frases rápidas</b>.</div></li>
+          <li><div>Agregue, cambie, borre u ordene frases y categorías (hasta 12 categorías y 40 frases en cada una). Marque <b>Urgente</b> las que deben sonar con alerta.</div></li>
+          <li><div>Escriba el <b>nombre del cuidador</b> en Opciones: «Llamar a…» dirá, por ejemplo, «Llamar a Marta».</div></li>
+          <li><div>Elija si las frases van en <b>neutro, masculino o femenino</b> («Estoy cansado» o «Estoy cansada»). Para una frase propia con las dos formas, escríbala así: <span class="ruta">{cansado|cansada}</span>.</div></li>
+        </ol>
+        <p>Si algo sale mal, <b>«Volver a las de fábrica»</b> recupera las frases originales.</p>
+      </section>
+
+      <section id="seguridad" aria-labelledby="t-seguridad">
+        <div class="cabeza"><span class="cod">13</span><h2 id="t-seguridad">Pausa y seguridad: nada queda presionado</h2></div>
+        <div class="figura">
+          <div>
+            <ul>
+              <li>Si la cámara <b>deja de ver la cara</b>, el puntero se queda quieto al instante y, en menos de medio segundo, el programa <b>suelta cualquier botón</b> que estuviera presionado (por ejemplo, a mitad de un arrastre).</li>
+              <li>A los <b>10 segundos</b> sin ver la cara se pausa solo. Cuando la cara vuelve y se queda estable un segundo, sigue solo.</li>
+              <li>Si se pausa, se cierra el programa o algo falla, también suelta todo.</li>
+              <li>Si <b>otra persona</b> se pone frente a la cámara, suelta todo y espera. Si esa cara no se parece a la de la persona, se pausa y sigue cuando ella vuelve. Si es la misma persona (por ejemplo, la acomodaron más cerca), elija «Reanudar».</li>
+            </ul>
+          </div>
+          <figure><img src="img/gestos/sin-cara.svg" width="800" height="600" loading="lazy" decoding="async" alt="La cara sale del recuadro de la cámara: el programa suelta todos los botones."><figcaption>Si no ve la cara, suelta todo.</figcaption></figure>
+        </div>
+        <h3>La pausa del cuidador</h3>
+        <p>El cuidador puede pausar o reanudar en cualquier momento con <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Espacio</kbd> o con el botón <b>Pausar</b> de la ventana. Cuando <b>usted</b> pausa así, abrir la boca no la quita: un bostezo, la comida o el aseo no reactivan el puntero. La quitan el botón «Reanudar» (con la cabeza) y el atajo.</p>
+        <div class="nota"><p><span class="rotulo">Siempre se puede volver</span>El botón grande «Reanudar» existe siempre, y el atajo del cuidador también. El programa no deja guardar una configuración sin forma de reanudar.</p></div>
+        <p>Los programas abiertos <b>«como administrador»</b> no reciben clics ni texto de Lycan Face Control: Windows lo impide. El programa lo avisa.</p>
+      </section>
+
+      <section id="cuidadores" aria-labelledby="t-cuidadores">
+        <div class="cabeza"><span class="cod">14</span><h2 id="t-cuidadores">Consejos para el cuidador</h2></div>
+        <div class="datos">
+          <div class="tarjeta"><h3>La postura</h3><p>Cámara a la altura de los ojos, a 50 a 70 cm. Luz de frente. Si cambia la cama o la silla, recentre o calibre de nuevo.</p></div>
+          <div class="tarjeta"><h3>El cansancio</h3><p>Si la persona se cansa, suba la velocidad del puntero para mover menos el cuello, o use el barrido del teclado.</p></div>
+          <div class="tarjeta"><h3>Movimientos involuntarios</h3><p>Suba la suavidad (Opciones ▸ Puntero), y en Opciones ▸ Clic aumente «Cuánto se puede mover sin cancelar» y el tiempo quieto.</p></div>
+          <div class="tarjeta"><h3>Sus frases</h3><p>Ajuste las frases rápidas a la vida de la persona: nombres, rutinas, lo que pide a menudo.</p></div>
+        </div>
+        <ul>
+          <li><b>Paciencia al empezar.</b> Los primeros días cuestan. Empiece con ratos cortos y con el clic quedándose quieto, que es el más fácil.</li>
+          <li><b>La letra más grande:</b> Opciones ▸ Comodidad ▸ Tamaño de la letra, y <b>Alto contraste</b> (negro y amarillo) si ve con dificultad.</li>
+          <li><b>La ventana pequeña:</b> el botón <b>Pequeña</b> deja solo una tira con el estado y el botón Reanudar, para que no estorbe.</li>
+          <li><b>Abrir al encender:</b> en Opciones ▸ Comodidad, para que el programa esté listo sin que nadie tenga que abrirlo.</li>
+          <li><b>Una franja de color</b> arriba de la pantalla muestra el estado de un vistazo (activo, en pausa, sin cara). Se apaga en Opciones ▸ Comodidad.</li>
+          <li><b>Recordatorio de descanso:</b> puede pedir que recuerde descansar el cuello cada cierto tiempo (viene apagado).</li>
+          <li><b>Si hace clics sin querer</b> con la boca (al toser o reír), suba el tiempo de la boca en Opciones ▸ Gestos o apague ese gesto.</li>
+        </ul>
+        <div class="calido"><p><span class="rotulo">Un recordatorio</span>Detrás de cada frase hay una persona que se toma su tiempo para decirla. Espere a que termine de escribir; la frase «Espere, estoy escribiendo» existe para eso.</p></div>
+      </section>
+
+      <section id="atajos" aria-labelledby="t-atajos">
+        <div class="cabeza"><span class="cod">15</span><h2 id="t-atajos">Atajos de teclado (para el cuidador)</h2></div>
+        <p>Funcionan aunque haya otro programa al frente. Se cambian en <b>Opciones ▸ Atajos</b>, y la Ayuda muestra siempre los que estén puestos.</p>
+        <div class="tabla">
+          <table>
+            <thead><tr><th scope="col">Atajo</th><th scope="col">Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Espacio</kbd></td><td>Pausar o reanudar.</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd></td><td>Abrir o cerrar el teclado.</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd></td><td>Recentrar: tomar la posición actual como centro.</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Inicio</kbd></td><td>Mostrar la ventana principal.</td></tr>
+              <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Fin</kbd></td><td>Cerrar el programa (antes suelta todo).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="nota"><p><span class="rotulo">Teclado latinoamericano</span>Al guardar un atajo, el programa revisa que no escriba una letra, un símbolo o un acento en su teclado (por ejemplo, <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Q</kbd> escribe «@»). Si lo hace, no lo acepta y le dice por qué. Estos atajos tampoco chocan con los de Lycan Mouse Control.</p></div>
+      </section>
+
+      <section id="opciones" aria-labelledby="t-opciones">
+        <div class="cabeza"><span class="cod">16</span><h2 id="t-opciones">Las Opciones, pestaña por pestaña</h2></div>
+        <p>Cada valor se cambia con botones grandes <b>«−»</b> y <b>«+»</b>, para que la persona también pueda ajustarlos con la cabeza. Los cambios se prueban al instante; <b>«Cancelar»</b> los deshace y <b>«Guardar»</b> los deja. <b>«Valores de fábrica»</b> vuelve a lo original sin borrar la calibración ni los atajos.</p>
+        <div class="tabla ancha">
+          <table>
+            <thead><tr><th scope="col">Pestaña</th><th scope="col">Qué se ajusta</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Pestaña">Puntero</td><td data-label="Ajusta">Velocidad (1 a 10), suavidad y forma de mover: Directo, Almohadilla o Palanca.</td></tr>
+              <tr><td data-label="Pestaña">Clic</td><td data-label="Ajusta">Clic al quedarse quieto, el tiempo, cuánto se puede mover, la espera entre clics, el sonido, el tiempo para elegir un botón de la barra y si sigue en el modo elegido.</td></tr>
+              <tr><td data-label="Pestaña">Gestos</td><td data-label="Ajusta">Boca, cejas, sonrisa y ojos: encendido, sensibilidad, tiempo, qué hacen al hacerlos y al sostenerlos. Duración del parpadeo largo y si exige dos seguidos.</td></tr>
+              <tr><td data-label="Pestaña">Teclado y voz</td><td data-label="Ajusta">Orden de las letras, tiempo por tecla, barrido y su velocidad, cómo escribe en otros programas, tamaño de las teclas, volumen y velocidad de la voz, género de las frases, «Solo comunicación», aprender palabras, nombre del cuidador y editar las frases.</td></tr>
+              <tr><td data-label="Pestaña">Comodidad</td><td data-label="Ajusta">Tamaño de la letra, alto contraste, lugar y tamaño de la barra, franja de color, sonidos, recordatorio de descanso, mostrar el video de la cámara, abrir al encender el computador y cómo empezar al abrir.</td></tr>
+              <tr><td data-label="Pestaña">Atajos</td><td data-label="Ajusta">Los cinco atajos del cuidador.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Mientras las Opciones están abiertas, el programa suelta todo por seguridad.</p>
+      </section>
+
+      <section id="problemas" aria-labelledby="t-problemas">
+        <div class="cabeza"><span class="cod">17</span><h2 id="t-problemas">Problemas frecuentes</h2></div>
+        <details>
+          <summary>Dice «No veo su cara»</summary>
+          <p>Acerque a la persona a la cámara o mejore la luz de frente. Evite una ventana o una lámpara detrás. Revise que nada tape la cámara.</p>
+        </details>
+        <details>
+          <summary>Dice «No encuentro la cámara» u «Otro programa está usando la cámara»</summary>
+          <ul>
+            <li>Cierre Zoom, Teams, Meet o la app Cámara: solo un programa puede usarla a la vez.</li>
+            <li>Si la cámara está conectada y sigue igual, en <span class="ruta">Configuración de Windows ▸ Privacidad y seguridad ▸ Cámara</span> active <b>«Permitir que las aplicaciones de escritorio accedan a la cámara»</b>.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>El puntero tiembla</summary>
+          <p>Suba la <b>suavidad</b> en Opciones ▸ Puntero y ponga más luz de frente.</p>
+        </details>
+        <details>
+          <summary>El puntero no llega a los bordes de la pantalla</summary>
+          <p>Repita la calibración (girando hasta donde sea cómodo) o suba la velocidad del puntero. Si la persona mueve poco el cuello, pruebe la forma <b>Palanca</b>.</p>
+        </details>
+        <details>
+          <summary>Hace clics sin querer</summary>
+          <ul>
+            <li>Alargue el <b>tiempo quieto para hacer clic</b> en Opciones ▸ Clic, o apague el clic al quedarse quieto y use solo gestos.</li>
+            <li>Si tose o se ríe con la boca abierta y hace clic, suba el tiempo de la boca en Opciones ▸ Gestos o apague ese gesto.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>No reconoce un gesto</summary>
+          <p>Repita la calibración para que aprenda la cara en reposo. Luego suba la <b>sensibilidad</b> de ese gesto en Opciones ▸ Gestos y pruébelo con la barra en vivo. Si a la persona le cuesta un gesto, apáguelo y use otro, o el clic quedándose quieto.</p>
+        </details>
+        <details>
+          <summary>El parpadeo largo no responde en el barrido</summary>
+          <p>Cierre los ojos del todo y un poco más de tiempo, hasta que la barra se ponga verde. Con poca luz, sosténgalo un poco más. Repita la calibración con el barrido encendido o ajuste la <b>duración del parpadeo largo</b> en Opciones ▸ Gestos.</p>
+        </details>
+        <details>
+          <summary>No escribe en un programa</summary>
+          <p>Primero elija con la cabeza el programa donde quiere escribir y luego use «Escribir». Si aun así no escribe, ese programa puede estar abierto como administrador: Windows no lo permite. Use «Copiar» y pídale a alguien que lo pegue.</p>
+        </details>
+        <details>
+          <summary>Se pausó solo</summary>
+          <p>Pasa cuando no ve la cara durante 10 segundos, o cuando ve otra cara. Si la pausa fue automática, sigue solo cuando la persona vuelve. Si no, elija «Reanudar» con la cabeza o use <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Espacio</kbd>.</p>
+        </details>
+        <details>
+          <summary>No se oye la voz</summary>
+          <p>Revise el volumen de Windows y el de la voz en Opciones ▸ Teclado y voz. Si no hay voces en español, agréguelas en <span class="ruta">Configuración ▸ Hora e idioma ▸ Voz</span>.</p>
+        </details>
+        <p>Si algo falla, el programa lo anota en un registro de texto, sin imágenes y sin lo que la persona escribe: <span class="ruta">%APPDATA%\Lycan Face Control\registros</span>.</p>
+      </section>
+
+      <section id="privacidad" aria-labelledby="t-privacidad">
+        <div class="cabeza"><span class="cod">18</span><h2 id="t-privacidad">Privacidad</h2></div>
+        <ul>
+          <li>La imagen de la cámara <b>se procesa en el computador y nunca se guarda ni se envía</b>. El programa no usa internet.</li>
+          <li>De fábrica ni siquiera se muestra el video: la ventana enseña una silueta de puntos de la cara. Se puede encender en Opciones ▸ Comodidad.</li>
+          <li>Lo que la persona escribe o dice <b>no se anota</b> en los registros.</li>
+          <li>Para mejorar las sugerencias, el programa guarda en este computador <b>las palabras que la persona escribe, cuántas veces usó cada una y qué palabras van seguidas</b> (por ejemplo «tengo sed»). No guarda el orden de lo escrito, pero quien abra la carpeta de datos podría adivinar partes por las palabras que van juntas. Se apaga con <b>«Aprender mis palabras»</b> y se borra con <b>«Olvidar las palabras aprendidas»</b> (en el editor de frases).</li>
+          <li>La configuración, las frases y las palabras viven en <span class="ruta">%APPDATA%\Lycan Face Control</span>. Si un archivo se daña, el programa vuelve a los valores de fábrica y avisa.</li>
+        </ul>
+      </section>
+
+      <section id="limites" aria-labelledby="t-limites">
+        <div class="cabeza"><span class="cod">19</span><h2 id="t-limites">Con honestidad: lo que no puede hacer</h2></div>
+        <ul>
+          <li><b>No sigue la mirada.</b> Con una cámara web común no es preciso. Para quien no puede mover la cabeza está el barrido con parpadeo largo.</li>
+          <li>Si la persona pierde también el control de los párpados, este programa ya no le sirve: hacen falta sistemas especializados, como los seguidores de mirada con cámara infrarroja. Consulte con su equipo de salud.</li>
+          <li>Los programas abiertos como administrador no reciben clics ni texto.</li>
+          <li>Es una <b>versión de prueba</b> (1.0.0). Se probó con caras dibujadas por computador; la prueba con personas está en curso. Si algo no responde bien, la calibración y los ajustes de Opciones son la primera ayuda, y nos ayuda mucho que nos cuente.</li>
+        </ul>
+        <p>¿Dudas, ideas o algo no funciona? Escriba a <a href="mailto:ingemaqsewing@gmail.com">ingemaqsewing@gmail.com</a>. Cada comentario ayuda a que el programa sirva a más personas.</p>
+      </section>
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="ancho">
+    <p><b>Lycan Developments</b> · EDWIN CNC · Manual de Lycan Face Control 1.0.0, noviembre de 2026 · Código abierto, licencia MIT</p>
+    <p><a href="../">Volver a la portada</a></p>
+  </div>
+</footer>
+</body>
+</html>
