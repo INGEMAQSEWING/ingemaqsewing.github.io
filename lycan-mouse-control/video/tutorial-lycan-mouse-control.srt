@@ -1,0 +1,381 @@
+1
+00:00:00,500 --> 00:00:03,961
+Lycan Mouse Control, versión 1.0.2.
+
+2
+00:00:04,131 --> 00:00:08,283
+Maneje el ratón con gestos de las
+manos, frente a la cámara del portátil.
+
+3
+00:00:09,133 --> 00:00:12,609
+El programa mira sus manos con la
+cámara y mueve el puntero por usted.
+
+4
+00:00:12,779 --> 00:00:17,009
+Está pensado para diseño: dibujar
+en 2D y girar modelos en 3D.
+
+5
+00:00:17,179 --> 00:00:19,981
+Es un complemento del
+ratón, no lo reemplaza.
+
+6
+00:00:20,831 --> 00:00:26,087
+Para instalarlo, entre a
+ingemaqsewing.github.io, en la sección Descargas.
+
+7
+00:00:26,257 --> 00:00:28,915
+Descargue el instalador
+y ábralo con doble clic.
+
+8
+00:00:29,085 --> 00:00:31,619
+Después, ábralo desde el menú Inicio.
+
+9
+00:00:32,469 --> 00:00:37,290
+Si Windows muestra un aviso azul, no se
+preocupe: sale porque el programa es nuevo.
+
+10
+00:00:37,460 --> 00:00:39,646
+Haga clic en «Más información».
+
+11
+00:00:39,816 --> 00:00:42,311
+Y luego en «Ejecutar de todas formas».
+
+12
+00:00:43,161 --> 00:00:46,875
+Prepare buena luz: una lámpara
+frente a usted, no detrás.
+
+13
+00:00:47,045 --> 00:00:50,187
+Ponga la mano a unos 40
+a 60 cm de la cámara.
+
+14
+00:00:50,357 --> 00:00:55,624
+Un asistente le enseña cada seña.
+Mientras practica, el ratón no hace nada.
+
+15
+00:00:56,474 --> 00:00:59,176
+Cada vez que lo abre, el
+programa arranca en pausa.
+
+16
+00:00:59,346 --> 00:01:02,105
+Sus manos no mueven nada hasta
+que haga la seña de activar.
+
+17
+00:01:02,955 --> 00:01:04,874
+Ahora, las señas en 2D.
+
+18
+00:01:05,724 --> 00:01:10,998
+Para activar, estire el índice y el corazón
+bien pegados, y sostenga la seña un momento.
+
+19
+00:01:11,848 --> 00:01:15,923
+Para pausar, haga esa misma
+seña dos veces seguidas, rápido.
+
+20
+00:01:16,773 --> 00:01:21,704
+Para mover el puntero, use el dedo
+índice. El puntero sigue la punta.
+
+21
+00:01:22,554 --> 00:01:26,776
+Para hacer clic, junte la punta del
+pulgar con la del índice, y suéltelas.
+
+22
+00:01:27,626 --> 00:01:31,015
+Nuevo: también puede hacer clic
+juntando el pulgar con el anular.
+
+23
+00:01:31,185 --> 00:01:37,031
+¿Por qué? Con pulgar e índice, el dedo
+que apunta se mueve y el puntero se corre.
+
+24
+00:01:37,201 --> 00:01:41,583
+Con el anular, el índice queda quieto
+y el clic cae justo donde apunta.
+
+25
+00:01:41,753 --> 00:01:45,455
+Si lo sostiene, arrastra. Viene prendido.
+
+26
+00:01:46,305 --> 00:01:52,933
+Para arrastrar, junte los dedos y, sin
+soltarlos, mueva la mano. Ábralos para soltar.
+
+27
+00:01:53,783 --> 00:01:56,734
+Para el doble clic, haga el
+pellizco dos veces rápido.
+
+28
+00:01:57,584 --> 00:02:01,945
+O más fácil: junte el pulgar con el
+meñique un momento, y sale un doble clic.
+
+29
+00:02:02,115 --> 00:02:04,718
+Aunque lo sostenga, sale una sola vez.
+
+30
+00:02:04,888 --> 00:02:12,084
+En Opciones, pestaña «Clic», puede cambiarlo por
+clic derecho, Enter, Esc, deshacer u otra acción.
+
+31
+00:02:12,934 --> 00:02:16,804
+Para el clic derecho, cierre la
+mano en puño un momento, y ábrala.
+
+32
+00:02:17,654 --> 00:02:21,570
+Si prefiere, también puede hacer
+clic con una tecla o con un pedal.
+
+33
+00:02:21,740 --> 00:02:24,873
+De fábrica es el 5 de los números
+de la derecha del teclado.
+
+34
+00:02:25,043 --> 00:02:29,591
+Un toque es un clic, dos toques son
+doble clic, y si la sostiene, arrastra.
+
+35
+00:02:29,761 --> 00:02:32,109
+En pausa, la tecla escribe normal.
+
+36
+00:02:32,959 --> 00:02:37,643
+Para cambiar la tecla, abra Opciones
+(el engranaje), pestaña «Clic».
+
+37
+00:02:37,813 --> 00:02:40,862
+Si su teclado no tiene números
+a la derecha, marque «No».
+
+38
+00:02:41,032 --> 00:02:49,626
+O toque «Cambiar tecla». Luego apriete la tecla o
+pise el pedal que quiere usar. Con Esc, cancela.
+
+39
+00:02:50,476 --> 00:02:56,698
+Para acercar o alejar, haga pellizco con las dos
+manos: sepárelas para acercar y júntelas para alejar.
+
+40
+00:02:57,548 --> 00:03:01,755
+Para mover el dibujo, haga pellizco
+con las dos manos y muévalas juntas.
+
+41
+00:03:02,605 --> 00:03:08,363
+Para pasar página, muestre la palma abierta, con
+los dedos separados, y déjela quieta medio segundo.
+
+42
+00:03:08,533 --> 00:03:14,338
+Suena un aviso y en pantalla dice «PASANDO
+PÁGINA». Luego suba o baje la mano.
+
+43
+00:03:14,508 --> 00:03:17,063
+Para terminar, cierre la mano o apunte.
+
+44
+00:03:17,233 --> 00:03:20,423
+En los programas de diseño,
+este gesto hace zoom.
+
+45
+00:03:21,273 --> 00:03:25,793
+Para ir a lo siguiente o a lo anterior,
+pase la palma abierta rápido hacia un lado.
+
+46
+00:03:25,963 --> 00:03:30,924
+Manda las flechas del teclado. En
+el navegador, va atrás o adelante.
+
+47
+00:03:31,094 --> 00:03:35,118
+En los programas de diseño no hace nada,
+salvo que usted le ponga una tecla.
+
+48
+00:03:35,968 --> 00:03:42,135
+En Opciones, pestaña «Palma», puede ajustar todo esto
+y escoger qué tecla manda el barrido en cada programa.
+
+49
+00:03:42,985 --> 00:03:47,296
+Si saca la mano de la vista de la cámara,
+el programa suelta todos los botones.
+
+50
+00:03:47,466 --> 00:03:51,123
+Y si pasan 10 segundos sin ver
+manos, se pone en pausa solo.
+
+51
+00:03:51,973 --> 00:03:55,497
+Para modelos en 3D, presione Ctrl + Alt + D.
+
+52
+00:03:56,347 --> 00:03:59,564
+Nuevo: para girar el modelo,
+ahora basta una mano.
+
+53
+00:03:59,734 --> 00:04:03,474
+Cierre el puño y muévalo.
+El modelo gira con él.
+
+54
+00:04:03,644 --> 00:04:07,118
+Para soltarlo, abra la mano
+o apunte con el índice.
+
+55
+00:04:07,288 --> 00:04:10,701
+Si deja el puño quieto un momento,
+sigue siendo clic derecho.
+
+56
+00:04:11,551 --> 00:04:17,033
+Si prefiere el volante de antes, con los dos
+puños, escójalo en Opciones, pestaña «Girar».
+
+57
+00:04:17,883 --> 00:04:21,508
+También puede lanzar el modelo: suelte
+el puño mientras lo mueve rápido.
+
+58
+00:04:21,678 --> 00:04:27,475
+El modelo sigue girando y frena solo.
+Para atraparlo, cierre el puño otra vez.
+
+59
+00:04:27,645 --> 00:04:29,177
+Esta opción viene apagada.
+
+60
+00:04:30,027 --> 00:04:32,881
+Si abre la mano de golpe,
+puede despiezar el modelo.
+
+61
+00:04:33,051 --> 00:04:36,708
+Y si la cierra de golpe, desde
+la palma abierta, lo arma.
+
+62
+00:04:36,878 --> 00:04:40,981
+Solo funciona si usted escribe el atajo
+de su programa: ninguno viene puesto.
+
+63
+00:04:41,831 --> 00:04:47,278
+En Opciones, pestaña «Girar», escoge
+girar con un puño, con dos, o con los dos.
+
+64
+00:04:47,448 --> 00:04:49,591
+Aquí prende «Lanzar el modelo».
+
+65
+00:04:49,761 --> 00:04:56,143
+Y aquí escribe los atajos de abrir y cerrar.
+En SketchUp sirven Ctrl+Shift+G y Ctrl+G.
+
+66
+00:04:56,993 --> 00:05:01,090
+Para mover el modelo, haga pellizco
+con las dos manos y muévalas juntas.
+
+67
+00:05:01,940 --> 00:05:06,866
+Si se le cansa el brazo, pruebe la postura
+nueva: mano baja, cerca del teclado.
+
+68
+00:05:07,036 --> 00:05:10,923
+Se escoge en el asistente, o en
+Opciones, pestaña «Comodidad».
+
+69
+00:05:11,093 --> 00:05:15,262
+Después, vuelva a calibrar y
+procure que la cámara vea su muñeca.
+
+70
+00:05:16,112 --> 00:05:19,079
+Ctrl + Alt + M: pausar o activar.
+
+71
+00:05:19,249 --> 00:05:21,646
+Ctrl + Alt + X: salir.
+
+72
+00:05:21,816 --> 00:05:25,385
+Ctrl + Alt + O: mostrar
+u ocultar la ventana.
+
+73
+00:05:25,555 --> 00:05:28,987
+Ctrl + Alt + D: cambiar entre 2D y 3D.
+
+74
+00:05:29,157 --> 00:05:33,461
+Y Ctrl + Alt + P: dibujo fino,
+para un puntero más suave.
+
+75
+00:05:34,311 --> 00:05:39,607
+Lycan Mouse Control se da cuenta solo de cuál programa
+tiene al frente y usa la combinación correcta.
+
+76
+00:05:39,777 --> 00:05:41,853
+Usted hace siempre las mismas señas.
+
+77
+00:05:42,703 --> 00:05:48,802
+Si la cámara pierde su mano, si pausa o si sale, el
+programa suelta siempre los botones y las teclas.
+
+78
+00:05:48,972 --> 00:05:51,112
+Y no guarda ni envía imágenes de la cámara.
+
+79
+00:05:51,962 --> 00:05:57,497
+Encuentre el manual completo en
+ingemaqsewing.github.io/lycan-mouse-control
+
+80
+00:05:57,667 --> 00:05:58,742
+Gracias por ver.
