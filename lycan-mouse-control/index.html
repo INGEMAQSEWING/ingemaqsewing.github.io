@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Manual Lycan Mouse Control 1.0.1: maneje el ratón con las manos</title>
-<meta name="description" content="Cómo instalar y usar Lycan Mouse Control 1.0.1: maneje el ratón con gestos de las manos frente a la cámara del portátil, en 2D y 3D. Dibujos de cada seña, atajos y solución de problemas.">
+<title>Manual Lycan Mouse Control 1.0.2: maneje el ratón con las manos</title>
+<meta name="description" content="Cómo instalar y usar Lycan Mouse Control 1.0.2: maneje el ratón con gestos de las manos frente a la cámara del portátil, en 2D y 3D. Nuevo: clic con el anular, con una tecla o pedal, girar con un puño y pasar página con la palma. Dibujos de cada seña, atajos y solución de problemas.">
 <link rel="canonical" href="https://ingemaqsewing.github.io/lycan-mouse-control/">
 <meta name="theme-color" content="#050b18">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='8'%20fill='%23050b18'/%3E%3Cpath%20d='M20%203%2035%2011.5v17L20%2037%205%2028.5v-17Z'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.2'/%3E%3Cpath%20d='M13%2014v12h7M23%2014h3a6%206%200%200%201%200%2012h-3Z'%20fill='none'%20stroke='%23e6f1ff'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Lycan Developments">
 <meta property="og:locale" content="es_CO">
 <meta property="og:url" content="https://ingemaqsewing.github.io/lycan-mouse-control/">
-<meta property="og:title" content="Manual de Lycan Mouse Control 1.0.1">
+<meta property="og:title" content="Manual de Lycan Mouse Control 1.0.2">
 <meta property="og:description" content="Maneje el ratón con las manos frente a la cámara del portátil: señas para 2D y 3D, con un dibujo de cada una.">
 <meta property="og:image" content="https://ingemaqsewing.github.io/lycan-mouse-control/img/og-lycan-mouse-control.png">
 <meta property="og:image:width" content="1200">
@@ -90,13 +90,13 @@ h1 em { font-style: normal; color: var(--cian); text-shadow: 0 0 18px rgba(34,22
 /* Rejilla: índice + contenido */
 .envoltura { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-bottom: 24px; }
 @media (max-width: 900px) { .envoltura { grid-template-columns: minmax(0, 1fr); gap: 0; } }
-nav.indice { position: sticky; top: 20px; align-self: start; padding-top: 30px; }
+nav.indice { position: sticky; top: 0; align-self: start; padding-top: 30px; max-height: 100vh; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 16px; }
 nav.indice p { font-family: var(--f-dato); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--cian); margin: 0 0 10px; }
 nav.indice ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 nav.indice a { display: block; padding: 6px 10px; color: var(--texto-2); text-decoration: none; border-left: 2px solid var(--linea); font-size: 15px; }
 nav.indice a:hover, nav.indice a:focus-visible { border-left-color: var(--cian); color: var(--texto); background: rgba(34,227,255,.06); }
 @media (max-width: 900px) {
-  nav.indice { position: static; padding-top: 22px; }
+  nav.indice { position: static; padding-top: 22px; max-height: none; overflow: visible; }
   nav.indice ol { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 }
 
@@ -154,6 +154,10 @@ ol.pasos > li > div { min-width: 0; padding-top: 3px; }
 .hace { display: inline-block; margin: 0 16px; font: 500 13px var(--f-dato); color: var(--verde); border: 1px solid rgba(53,242,160,.45); background: rgba(53,242,160,.08); border-radius: 999px; padding: 3px 10px; align-self: flex-start; }
 .hace.opcional { color: var(--ambar); border-color: rgba(255,201,77,.45); background: rgba(255,201,77,.08); }
 .senas .tarjeta { padding: 0 0 16px; }
+.nuevo { display: inline-block; font: 600 11.5px var(--f-dato); letter-spacing: .1em; text-transform: uppercase; color: #041022; background: var(--verde); border-radius: 999px; padding: 2px 8px; vertical-align: middle; margin-left: 6px; }
+.senas > li > ul { margin: 0 16px; padding-left: 20px; font-size: 15.5px; }
+.senas > li > ul li { margin-bottom: 2px; }
+.senas > li { scroll-margin-top: 12px; }
 
 /* Video */
 .video { position: relative; margin: 16px 0 8px; border-radius: var(--r-l); overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid rgba(34,227,255,.35); box-shadow: 0 0 32px rgba(34,227,255,.14);
@@ -211,7 +215,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       <h1>Lycan <em>Mouse Control</em></h1>
       <p class="lema">Maneje el ratón con <b>gestos de las manos</b> frente a la cámara del portátil. Para dibujar en 2D y girar modelos en 3D.</p>
     </div>
-    <span class="version">Versión 1.0.1 · Windows 64 bits</span>
+    <span class="version">Versión 1.0.2 · Windows 64 bits</span>
   </div>
 
   <div class="envoltura">
@@ -219,12 +223,18 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       <p>Contenido</p>
       <ol>
         <li><a href="#que-es">Qué es</a></li>
+        <li><a href="#novedades">Novedades 1.0.2</a></li>
         <li><a href="#video">Video tutorial</a></li>
         <li><a href="#requisitos">Requisitos</a></li>
         <li><a href="#instalar">Instalar</a></li>
         <li><a href="#primera-vez">La primera vez</a></li>
         <li><a href="#senas-2d">Señas 2D</a></li>
+        <li><a href="#clics">Clics nuevos</a></li>
+        <li><a href="#palma">Palma y barrido</a></li>
         <li><a href="#senas-3d">Señas 3D</a></li>
+        <li><a href="#golpe">Abrir o cerrar de golpe</a></li>
+        <li><a href="#mano-baja">Mano baja</a></li>
+        <li><a href="#chuleta">Chuleta de señas</a></li>
         <li><a href="#atajos">Atajos de teclado</a></li>
         <li><a href="#perfiles">Programas</a></li>
         <li><a href="#seguridad">Seguridad</a></li>
@@ -239,15 +249,37 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
         <p>Lycan Mouse Control mira sus manos con la cámara del portátil y mueve el puntero por usted. Con señas sencillas hace clic, arrastra, acerca y aleja el dibujo, y gira modelos en 3D.</p>
         <p>Está pensado para diseño: <b>EDWIN CNC CAD-CAM</b> y LibreCAD en 2D, y <b>EDWIN CNC 3D</b>, SketchUp, FreeCAD y Blender en 3D.</p>
         <div class="datos">
-          <div class="tarjeta"><h3>Girar modelos</h3><p>Agarre el modelo con las dos manos, como un volante, y gírelo.</p></div>
+          <div class="tarjeta"><h3>Girar modelos</h3><p>Cierre el puño y muévalo: el modelo gira. Si prefiere, use las dos manos, como un volante.</p></div>
           <div class="tarjeta"><h3>Presentar</h3><p>Muestre un diseño al cliente sin acercarse al teclado.</p></div>
           <div class="tarjeta"><h3>Descansar la mano</h3><p>Alterne con el ratón para no cansar siempre la misma mano.</p></div>
         </div>
         <div class="nota"><p><span class="rotulo">Importante</span>Es un <b>complemento</b> del ratón, no lo reemplaza. Para marcar puntos exactos, use el zoom y el enganche (las ayudas para pegarse a puntos) del programa de dibujo.</p></div>
       </section>
 
+      <section id="novedades" aria-labelledby="t-novedades">
+        <div class="cabeza"><span class="cod">02</span><h2 id="t-novedades">Novedades de la 1.0.2</h2></div>
+        <p>La 1.0.2 trae clics más firmes, una tecla o pedal para hacer clic, una forma más fácil de girar en 3D y señas con la palma para pasar páginas. <b>Las señas de la 1.0.1 siguen funcionando igual.</b> Toque cada seña para ver su explicación con dibujo.</p>
+        <div class="tabla ancha">
+          <table>
+            <thead><tr><th scope="col">Seña o tecla</th><th scope="col">Qué hace</th><th scope="col">De fábrica</th><th scope="col">Dónde se cambia</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Seña"><a href="#clic-anular">Pulgar + anular</a></td><td data-label="Qué hace">Clic izquierdo y arrastrar. El índice que apunta no se mueve, así el clic no se corre.</td><td data-label="De fábrica">Prendido</td><td data-label="Dónde">⚙ Opciones ▸ Clic</td></tr>
+              <tr><td data-label="Seña"><a href="#clic-menique">Pulgar + meñique</a></td><td data-label="Qué hace">Doble clic, una sola vez aunque lo sostenga. Puede escoger otra acción.</td><td data-label="De fábrica">Doble clic</td><td data-label="Dónde">⚙ Opciones ▸ Clic</td></tr>
+              <tr><td data-label="Seña"><span><a href="#clic-tecla">Tecla 5 de los números de la derecha</a> (o la tecla o pedal que grabe)</span></td><td data-label="Qué hace">Un toque es un clic, dos toques un doble clic, sostenerla arrastra. En pausa escribe normal.</td><td data-label="De fábrica">Prendido</td><td data-label="Dónde">⚙ Opciones ▸ Clic ▸ Cambiar tecla</td></tr>
+              <tr><td data-label="Seña"><a href="#girar-un-puno">(3D) Un puño cerrado y movido</a></td><td data-label="Qué hace">Gira el modelo. Se suelta abriendo la mano o apuntando. Quieto un momento sigue siendo clic derecho.</td><td data-label="De fábrica">Un puño</td><td data-label="Dónde">⚙ Opciones ▸ Girar</td></tr>
+              <tr><td data-label="Seña"><a href="#lanzar">(3D) Soltar el puño moviéndolo rápido</a></td><td data-label="Qué hace">El modelo sigue girando y frena solo. Un puño lo atrapa.</td><td data-label="De fábrica">Apagado</td><td data-label="Dónde">⚙ Opciones ▸ Girar ▸ Lanzar</td></tr>
+              <tr><td data-label="Seña"><a href="#golpe">Abrir o cerrar la mano de golpe</a></td><td data-label="Qué hace">Manda el atajo que usted escriba (por ejemplo despiezar y armar).</td><td data-label="De fábrica">Sin atajo</td><td data-label="Dónde">⚙ Opciones ▸ Girar</td></tr>
+              <tr><td data-label="Seña"><a href="#palma-pagina">Palma abierta, quieta medio segundo; luego subir o bajar</a></td><td data-label="Qué hace">Pasa la página, como la rueda del ratón. En los programas de diseño hace zoom.</td><td data-label="De fábrica">Prendido</td><td data-label="Dónde">⚙ Opciones ▸ Palma</td></tr>
+              <tr><td data-label="Seña"><a href="#barrido">Palma pasada rápido a un lado</a></td><td data-label="Qué hace">Siguiente o anterior (flechas; en el navegador, Alt + flechas).</td><td data-label="De fábrica">Prendido</td><td data-label="Dónde">⚙ Opciones ▸ Palma</td></tr>
+              <tr><td data-label="Seña"><a href="#mano-baja">Mano baja, cerca del teclado</a></td><td data-label="Qué hace">Otra postura para trabajar, en el asistente y en la calibración.</td><td data-label="De fábrica">Apagado</td><td data-label="Dónde">⚙ Opciones ▸ Comodidad</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="nota"><p><span class="rotulo">Si viene de la 1.0.1</span>Al abrir verá una sola vez el aviso <b>«Nuevo: el 5 del teclado numérico hace clic. Se cambia o apaga en ⚙ &gt; Clic.»</b> El giro con dos puños, como un volante, sigue disponible en <b>⚙ Opciones ▸ Girar</b>: escoja «Dos puños» o «Los dos».</p></div>
+      </section>
+
       <section id="video" aria-labelledby="t-video">
-        <div class="cabeza"><span class="cod">02</span><h2 id="t-video">Video tutorial</h2></div>
+        <div class="cabeza"><span class="cod">03</span><h2 id="t-video">Video tutorial</h2></div>
         <p>Vea las señas en acción antes de empezar.</p>
         <div class="video">
           <div class="espera" aria-hidden="true"><b>Video tutorial</b><span>Lycan Mouse Control paso a paso</span></div>
@@ -260,7 +292,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="requisitos" aria-labelledby="t-requisitos">
-        <div class="cabeza"><span class="cod">03</span><h2 id="t-requisitos">Requisitos</h2></div>
+        <div class="cabeza"><span class="cod">04</span><h2 id="t-requisitos">Requisitos</h2></div>
         <div class="datos">
           <div class="tarjeta"><h3>Windows</h3><p>Windows 10 u 11 de 64 bits.</p></div>
           <div class="tarjeta"><h3>Cámara</h3><p>La del portátil sirve. También una cámara web por USB.</p></div>
@@ -270,9 +302,9 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="instalar" aria-labelledby="t-instalar">
-        <div class="cabeza"><span class="cod">04</span><h2 id="t-instalar">Instalar</h2></div>
+        <div class="cabeza"><span class="cod">05</span><h2 id="t-instalar">Instalar</h2></div>
         <ol class="pasos">
-          <li><div>Entre a <a href="https://ingemaqsewing.github.io/#descargas">ingemaqsewing.github.io, sección Descargas</a> y descargue el instalador <span class="ruta">Lycan-Mouse-Control-1.0.1-Windows-64-bits.exe</span>.</div></li>
+          <li><div>Entre a <a href="https://ingemaqsewing.github.io/#descargas">ingemaqsewing.github.io, sección Descargas</a> y descargue el instalador <span class="ruta">Lycan-Mouse-Control-1.0.2-Windows-64-bits.exe</span>. También puede bajarlo directo: <a href="https://github.com/INGEMAQSEWING/lycan-mouse-control/releases/download/v1.0.2-prueba/Lycan-Mouse-Control-1.0.2-Windows-64-bits.exe">instalador 1.0.2</a> o <a href="https://github.com/INGEMAQSEWING/lycan-mouse-control/releases/download/v1.0.2-prueba/Lycan-Mouse-Control-1.0.2-portable.zip">versión portable .zip</a> (se descomprime y se usa sin instalar).</div></li>
           <li><div>Ábralo con doble clic. No pide permisos de administrador.</div></li>
           <li><div>Si quiere, marque <b>crear un ícono en el escritorio</b> o <b>abrir al encender el computador</b>.</div></li>
           <li><div>Al terminar, abra <b>Lycan Mouse Control</b> desde el menú Inicio o el escritorio.</div></li>
@@ -281,25 +313,26 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <p><span class="rotulo">Si Windows lo detiene</span>Puede salir un aviso azul que dice <b>«Windows protegió su PC»</b> (SmartScreen). Sale porque el programa es nuevo y todavía pocas personas lo han descargado.</p>
           <p>Haga clic en <b>«Más información»</b> y luego en <b>«Ejecutar de todas formas»</b>.</p>
         </div>
+        <p>Si ya tiene la 1.0.1, instale la 1.0.2 encima: conserva sus opciones y el ajuste de su mano.</p>
         <p>Si más adelante lo desinstala, el programa le pregunta si quiere borrar su configuración. Si dice que no, la conserva para la próxima vez.</p>
       </section>
 
       <section id="primera-vez" aria-labelledby="t-primera">
-        <div class="cabeza"><span class="cod">05</span><h2 id="t-primera">La primera vez</h2></div>
+        <div class="cabeza"><span class="cod">06</span><h2 id="t-primera">La primera vez</h2></div>
         <p>La primera vez se abre un <b>asistente</b> que le enseña las señas paso a paso. Mientras practica, el ratón no hace nada. Puede saltar cualquier paso.</p>
         <ol class="pasos">
           <li><div><b>Prepare la luz.</b> Encienda una lámpara frente a usted, no detrás. Si hay una ventana a su espalda, la cámara ve la mano oscura.</div></li>
-          <li><div><b>Acomódese.</b> Apoye el codo en la mesa. Ponga la mano a unos <b>40 a 60 cm</b> de la cámara, con la palma hacia la pantalla.</div></li>
+          <li><div><b>Escoja la postura.</b> La de siempre es el <b>brazo apoyado</b>: el codo en la mesa y la mano a unos <b>40 a 60 cm</b> de la cámara, con la palma hacia la pantalla. La otra es <a href="#mano-baja">mano baja, cerca del teclado</a>. El asistente le dice cuál quedó escogida.</div></li>
           <li><div><b>Escoja su mano:</b> derecha o izquierda. Con ella moverá el puntero.</div></li>
           <li><div><b>Ajuste a su mano</b> (unos 40 segundos): el programa le pide abrir la mano, cerrar el puño y hacer cada seña. Así aprende cómo son sus manos.</div></li>
-          <li><div><b>Practique</b> activar, mover, hacer clic, clic derecho, acercar y alejar, y pausar. Si escogió 3D, también girar, mover y soltar el modelo.</div></li>
+          <li><div><b>Practique</b> activar, mover, hacer clic (con el índice o con el anular), clic derecho, acercar y alejar, y pausar. Luego pruebe la <a href="#clic-tecla">tecla de clic</a>: tóquela 2 veces para practicar, cada toque es un clic. Si no la quiere, escoja «No quiero clic con tecla». Si escogió 3D, también girar, mover y soltar el modelo.</div></li>
         </ol>
         <div class="nota"><p><span class="rotulo">Arranca en pausa</span>Cada vez que lo abre, el programa empieza <b>en pausa</b>: sus manos no mueven nada hasta que usted haga la seña de activar. Así no hace clics por accidente.</p></div>
         <p>Puede volver al asistente cuando quiera desde el menú <b>? ▸ Volver a practicar señas</b>. En ese mismo menú está la <b>chuleta de señas</b>, un resumen para tener a la vista.</p>
       </section>
 
       <section id="senas-2d" aria-labelledby="t-senas-2d">
-        <div class="cabeza"><span class="cod">06</span><h2 id="t-senas-2d">Señas de Mouse Control 2D</h2></div>
+        <div class="cabeza"><span class="cod">07</span><h2 id="t-senas-2d">Señas de Mouse Control 2D</h2></div>
         <p>Los dibujos muestran la mano derecha como usted la ve en la pantalla, en espejo. Con la mano izquierda es igual, al revés.</p>
         <ul class="senas">
           <li class="tarjeta">
@@ -324,7 +357,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
             <figure><img src="img/senas/clic-izquierdo.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano con el pulgar y el índice tocándose por las puntas, formando un anillo, con un destello donde se tocan. Al lado, un ratón con el botón izquierdo encendido."></figure>
             <span class="hace">Clic izquierdo</span>
             <h3>Pellizco pulgar + índice</h3>
-            <p>Junte la punta del pulgar con la del índice y suéltelas. El clic cae donde estaba el puntero <b>justo antes</b> de cerrar los dedos, para que no se corra.</p>
+            <p>Junte la punta del pulgar con la del índice y suéltelas. El clic cae donde estaba el puntero <b>justo antes</b> de cerrar los dedos, para que no se corra. Si aun así se le corre, use el <a href="#clic-anular">clic con el anular</a> o la <a href="#clic-tecla">tecla de clic</a>.</p>
           </li>
           <li class="tarjeta">
             <figure><img src="img/senas/arrastrar.svg" width="800" height="600" loading="lazy" decoding="async" alt="La mano en pellizco se mueve hacia un lado sin abrir los dedos; el ratón tiene el botón izquierdo sostenido."></figure>
@@ -336,7 +369,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
             <figure><img src="img/senas/doble-clic.svg" width="800" height="600" loading="lazy" decoding="async" alt="Pellizco de pulgar e índice con doble destello y la marca dos veces; el ratón con el botón izquierdo encendido."></figure>
             <span class="hace">Doble clic</span>
             <h3>Dos pellizcos rápidos</h3>
-            <p>Haga el pellizco dos veces seguidas, rápido, sin mover la mano.</p>
+            <p>Haga el pellizco dos veces seguidas, rápido, sin mover la mano. Más fácil: junte el <a href="#clic-menique">pulgar con el meñique</a> una vez.</p>
           </li>
           <li class="tarjeta">
             <figure><img src="img/senas/clic-derecho.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano cerrada en puño con el pulgar por encima, un reloj que indica sostener un momento, y un ratón con el botón derecho encendido."></figure>
@@ -371,21 +404,121 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
         </ul>
       </section>
 
-      <section id="senas-3d" aria-labelledby="t-senas-3d">
-        <div class="cabeza"><span class="cod">07</span><h2 id="t-senas-3d">Señas de Mouse Control 3D</h2></div>
-        <p>En 3D sirven <b>todas las señas de 2D</b>, más estas. Cambie entre 2D y 3D con <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>D</kbd> o con el botón <b>2D/3D</b> de la ventana. Al cambiar, queda en pausa.</p>
+      <section id="clics" aria-labelledby="t-clics">
+        <div class="cabeza"><span class="cod">08</span><h2 id="t-clics">Clics nuevos: anular, meñique y tecla</h2></div>
+        <p>Tres formas nuevas de hacer clic. Sirven en 2D y en 3D. El pellizco de siempre, pulgar + índice, sigue prendido; si no lo quiere, apáguelo en <b>⚙ Opciones ▸ Clic ▸ «Clic con pulgar + índice»</b>.</p>
         <ul class="senas">
+          <li class="tarjeta" id="clic-anular">
+            <figure><img src="img/senas/clic-anular.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano con el pulgar tocando la punta del anular doblado delante de la palma, con un destello; el índice sigue estirado apuntando. Al lado, un ratón con el botón izquierdo encendido."></figure>
+            <span class="hace">Clic izquierdo y arrastrar</span>
+            <h3>Pulgar + anular <span class="nuevo">Nuevo</span></h3>
+            <p>Junte la punta del pulgar con la del <b>anular</b> y suelte: es un clic. Si lo sostiene, arrastra; abra los dedos para soltar.</p>
+            <p>El <b>índice sigue apuntando y no se mueve</b>, por eso el clic no se corre. Viene prendido. Se cambia en <b>⚙ Opciones ▸ Clic ▸ «Clic con pulgar + anular»</b>.</p>
+          </li>
+          <li class="tarjeta" id="clic-menique">
+            <figure><img src="img/senas/clic-menique.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano con el pulgar tocando la punta del meñique y los otros tres dedos estirados, con un destello; la marca dos veces y el botón izquierdo del ratón."></figure>
+            <span class="hace">Doble clic (o la acción que escoja)</span>
+            <h3>Pulgar + meñique <span class="nuevo">Nuevo</span></h3>
+            <p>Junte el pulgar con el <b>meñique</b> un momento (una décima de segundo): hace un <b>doble clic</b>. Aunque lo sostenga, lo hace una sola vez.</p>
+            <p>En <b>⚙ Opciones ▸ Clic ▸ «Pulgar + meñique hace»</b> puede escoger otra acción: doble clic, clic derecho, clic del medio, Enter, Esc, Suprimir, deshacer (Ctrl+Z) o nada. La chuleta del programa muestra la que usted escogió.</p>
+          </li>
+          <li class="tarjeta" id="clic-tecla">
+            <figure><img src="img/senas/clic-tecla.svg" width="800" height="600" loading="lazy" decoding="async" alt="Teclado numérico con la tecla 5 encendida, o un pedal; al lado el ratón con el botón izquierdo encendido."></figure>
+            <span class="hace">Clic izquierdo con el teclado</span>
+            <h3>Clic con una tecla o pedal <span class="nuevo">Nuevo</span></h3>
+            <p>Apunte con el índice y haga el clic con la otra mano o con el pie. De fábrica es el <kbd>5</kbd> de los <b>números de la derecha</b> del teclado.</p>
+            <ul>
+              <li>Un toque: clic.</li>
+              <li>Dos toques: doble clic.</li>
+              <li>Sostenerla: arrastrar (el botón queda abajo hasta que la suelte).</li>
+            </ul>
+            <p><b>En pausa la tecla escribe normal.</b> Mientras el control está activo no escribe. Si el programa se detiene, vuelve a escribir sola.</p>
+          </li>
+        </ul>
+        <h3>Escoger la tecla o el pedal</h3>
+        <ol class="pasos">
+          <li><div>Abra <b>⚙ Opciones ▸ Clic</b> y deje marcada la casilla <b>«Clic con una tecla o pedal»</b>.</div></li>
+          <li><div>Responda <b>«¿Su teclado tiene números a la derecha?»</b>. Si dice <b>Sí</b>, usa el 5 de esos números. Si dice <b>No</b> (muchos portátiles no los tienen), grabe otra tecla.</div></li>
+          <li><div>Para grabar, haga clic en <b>«Cambiar tecla»</b>. Sale «Apriete ahora la tecla o el pedal que quiere usar… (Esc para cancelar)». Apriete la tecla o pise el pedal.</div></li>
+        </ol>
+        <div class="ojo"><p><span class="rotulo">Ojo</span>Si escoge una letra, Enter, Espacio, Tab o Retroceso, el programa la acepta pero le avisa: <b>mientras el control esté activo, esa tecla ya no escribirá</b>. Para no perder ninguna letra, use el 5 de la derecha, una tecla que no use (como F9) o un pedal.</p>
+        <p><kbd>Esc</kbd> cancela la grabación. Si no aprieta nada, se cancela sola a los 15 segundos. Shift, Ctrl, Alt, Windows y los botones del ratón no sirven como tecla de clic.</p></div>
+        <div class="nota"><p><span class="rotulo">Si se queda sin clic</span>Si apaga los dos pellizcos (índice y anular) y también la tecla, el programa le avisa: no tendría cómo hacer clic izquierdo.</p></div>
+      </section>
+
+      <section id="palma" aria-labelledby="t-palma">
+        <div class="cabeza"><span class="cod">09</span><h2 id="t-palma">Palma: pasar página y barrido</h2></div>
+        <p>Con la palma abierta puede leer documentos y páginas web, y pasar fotos o diapositivas, sin buscar el ratón. En las dos señas la palma va <b>abierta, con los dedos estirados y separados</b>. Una mano relajada no cuenta.</p>
+        <ul class="senas">
+          <li class="tarjeta" id="palma-pagina">
+            <figure><img src="img/senas/palma-pagina.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano abierta con los dedos separados, un reloj a medio llenar, flechas hacia arriba y hacia abajo, una página y la rueda del ratón."></figure>
+            <span class="hace">Pasar página (rueda)</span>
+            <h3>Palma quieta, luego subir o bajar <span class="nuevo">Nuevo</span></h3>
+            <p>Muestre la palma abierta y <b>quieta medio segundo</b>. Suena un aviso y se ve <b>«PASANDO PÁGINA»</b>. Luego suba o baje la mano para recorrer la página.</p>
+            <p><b>Para terminar:</b> cierre la mano, apunte, pellizque, haga la V, relaje la mano o sáquela de la cámara. Si la suelta apuntando rápido, la página sigue andando un poco y frena sola.</p>
+            <p>En los programas de diseño esta seña hace <b>zoom</b>, y ahí la página nunca sigue andando sola.</p>
+          </li>
+          <li class="tarjeta" id="barrido">
+            <figure><img src="img/senas/barrido.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano abierta con los dedos separados pasada rápido hacia un lado, con copias tenues que muestran el movimiento; la tecla de flecha a la derecha: siguiente."></figure>
+            <span class="hace">Siguiente / anterior</span>
+            <h3>Barrido a los lados <span class="nuevo">Nuevo</span></h3>
+            <p>Pase la palma abierta, con los dedos separados, <b>rápido</b> hacia la derecha o hacia la izquierda: siguiente o anterior.</p>
+            <ul>
+              <li>En la mayoría de programas manda las flechas <kbd>→</kbd> y <kbd>←</kbd> (fotos, diapositivas, PDF).</li>
+              <li>En Chrome, Edge, Firefox, Brave y Opera manda <kbd>Alt</kbd>+<kbd>→</kbd> y <kbd>Alt</kbd>+<kbd>←</kbd>: página siguiente o anterior.</li>
+              <li>En los programas de diseño no hace nada, salvo que usted le ponga una tecla.</li>
+            </ul>
+          </li>
+        </ul>
+        <h3>Ajustes de la palma</h3>
+        <p>Están en <b>⚙ Opciones ▸ Palma</b>:</p>
+        <div class="tabla">
+          <table>
+            <thead><tr><th scope="col">Opción</th><th scope="col">Para qué sirve</th><th scope="col">De fábrica</th></tr></thead>
+            <tbody>
+              <tr><td>Pasar página con la palma</td><td>Prende o apaga la seña de pasar página.</td><td>Prendido</td></tr>
+              <tr><td>La página sigue un poco al soltar</td><td>Si suelta apuntando rápido, la página sigue andando y frena sola.</td><td>Prendido</td></tr>
+              <tr><td>Para rápido ↔ Sigue andando</td><td>Cuánto sigue andando la página al soltar.</td><td>—</td></tr>
+              <tr><td>Al revés</td><td>«Subir la mano sube por la página, como la rueda del ratón». Márquela si le parece más natural.</td><td>Apagado</td></tr>
+              <tr><td>Barrido a los lados</td><td>Prende o apaga el barrido.</td><td>Prendido</td></tr>
+              <tr><td>Barrido a la derecha manda / Barrido a la izquierda manda</td><td>La tecla que manda el barrido en cada programa, por ejemplo «Derecha» o «Alt+Derecha».</td><td>Según el programa</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="senas-3d" aria-labelledby="t-senas-3d">
+        <div class="cabeza"><span class="cod">10</span><h2 id="t-senas-3d">Señas de Mouse Control 3D</h2></div>
+        <p>En 3D sirven <b>todas las señas de 2D</b>, más estas. Cambie entre 2D y 3D con <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>D</kbd> o con el botón <b>2D/3D</b> de la ventana. Al cambiar, queda en pausa.</p>
+        <p>Desde la 1.0.2 el modelo se gira con <b>un solo puño</b>. Escoja cómo prefiere girar en <b>⚙ Opciones ▸ Girar ▸ «Girar el modelo con»</b>: <b>Un puño</b> (de fábrica), <b>Dos puños</b> (el volante de la 1.0.1) o <b>Los dos</b>.</p>
+        <ul class="senas">
+          <li class="tarjeta" id="girar-un-puno">
+            <figure><img src="img/senas/girar-un-puno.svg" width="800" height="600" loading="lazy" decoding="async" alt="Una mano cerrada en puño que se mueve en curva, y al lado un modelo 3D, un cubo, girando."></figure>
+            <span class="hace">Girar el modelo</span>
+            <h3>Un puño cerrado y movido <span class="nuevo">Nuevo</span></h3>
+            <p>Cierre el puño y <b>muévalo</b>: el modelo gira hacia donde lleve la mano.</p>
+            <p><b>Para soltar:</b> abra la mano. También se suelta si apunta con el índice, pellizca o hace la V.</p>
+            <p>Si deja el puño <b>quieto</b> un momento (unos 0,3 segundos) y lo abre, sigue siendo <b>clic derecho</b>.</p>
+          </li>
+          <li class="tarjeta" id="lanzar">
+            <figure><img src="img/senas/lanzar-modelo.svg" width="800" height="600" loading="lazy" decoding="async" alt="Un puño se abre mientras se mueve rápido, con líneas de velocidad; el modelo 3D sigue girando solo."></figure>
+            <span class="hace opcional">Opcional · viene apagado</span>
+            <h3>Lanzar el modelo <span class="nuevo">Nuevo</span></h3>
+            <p>Mientras gira con un puño, <b>abra la mano moviéndola rápido</b>: el modelo sigue girando solo y frena poco a poco (como mucho 4 segundos).</p>
+            <p><b>Para atraparlo:</b> cierre el puño. También frena si saca la mano de la cámara o aprieta cualquier tecla.</p>
+            <p>Actívelo en <b>⚙ Opciones ▸ Girar ▸ «Lanzar el modelo (sigue girando)»</b> y ajuste la barra <b>«Frena rápido ↔ Sigue girando»</b>. Solo funciona con el giro de un puño (o «Los dos»).</p>
+          </li>
           <li class="tarjeta">
             <figure><img src="img/senas/girar-3d.svg" width="800" height="600" loading="lazy" decoding="async" alt="Dos manos cerradas en puño agarrando un volante, con flechas que muestran el giro."></figure>
-            <span class="hace">Girar el modelo</span>
+            <span class="hace opcional">Girar · con «Dos puños» o «Los dos»</span>
             <h3>Dos puños, como un volante</h3>
-            <p>Cierre <b>las dos manos</b> como si agarrara un volante y gírelas. También puede subirlas y bajarlas juntas. El modelo gira como con el botón del medio sostenido.</p>
+            <p>Cierre <b>las dos manos</b> como si agarrara un volante y gírelas. También puede subirlas y bajarlas juntas. El modelo gira como con el botón del medio sostenido. Es el giro de la 1.0.1; se escoge en <b>⚙ Opciones ▸ Girar</b>.</p>
           </li>
           <li class="tarjeta">
             <figure><img src="img/senas/soltar-3d.svg" width="800" height="600" loading="lazy" decoding="async" alt="Las dos manos abiertas con los dedos estirados y separados."></figure>
             <span class="hace">Soltar</span>
-            <h3>Abrir las manos</h3>
-            <p>Para dejar de girar o de mover, abra las manos. Se suelta todo.</p>
+            <h3>Abrir la mano</h3>
+            <p>Para dejar de girar o de mover, abra la mano (o las dos, si giraba con dos puños). Se suelta todo.</p>
           </li>
           <li class="tarjeta">
             <figure><img src="img/senas/mover-modelo-3d.svg" width="800" height="600" loading="lazy" decoding="async" alt="Las dos manos en pellizco movidas juntas hacia el mismo lado; al lado, la tecla Shift más el botón del medio del ratón."></figure>
@@ -396,15 +529,94 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <li class="tarjeta">
             <figure><img src="img/senas/clic-derecho.svg" width="800" height="600" loading="lazy" decoding="async" alt="Mano cerrada en puño con el pulgar por encima, y un ratón con el botón derecho encendido."></figure>
             <span class="hace">Clic derecho</span>
-            <h3>Puño con una sola mano</h3>
-            <p>En 3D el puño de una mano espera un poco más (medio segundo) antes del clic derecho. Así no se confunde con el agarre de las dos manos.</p>
+            <h3>Puño quieto con una sola mano</h3>
+            <p>Cierre el puño, déjelo <b>quieto</b> un momento y ábralo: es el clic derecho. Si mueve el puño, en cambio, gira el modelo. Con «Dos puños» espera un poco más (medio segundo), para no confundirse con el agarre de las dos manos.</p>
           </li>
         </ul>
+        <h3>Velocidad del giro</h3>
+        <p>La <b>Velocidad de giro 3D</b> está en <b>⚙ Opciones ▸ Puntero</b> y vale para todo giro. Si gira con un puño, en <b>⚙ Opciones ▸ Girar</b> está además <b>«Extra para un puño (además de la Velocidad de giro 3D)»</b>; de fábrica es 1,2.</p>
+      </section>
+
+      <section id="golpe" aria-labelledby="t-golpe">
+        <div class="cabeza"><span class="cod">11</span><h2 id="t-golpe">Abrir o cerrar la mano de golpe</h2></div>
+        <ul class="senas">
+          <li class="tarjeta">
+            <figure><img src="img/senas/abrir-cerrar-golpe.svg" width="800" height="600" loading="lazy" decoding="async" alt="Un puño que se abre de golpe en mano abierta, marcado despiezar, y una mano abierta que se cierra de golpe en puño, marcado armar."></figure>
+            <span class="hace">Manda el atajo que usted escriba</span>
+            <h3>Abrir de golpe: despiezar · Cerrar de golpe: armar <span class="nuevo">Nuevo</span></h3>
+            <p><b>Abra la mano de golpe</b>, desde el puño: manda el atajo de «despiezar» (separar las piezas del modelo).</p>
+            <p><b>Ciérrela de golpe</b>, desde la palma abierta: manda el atajo de «armar».</p>
+            <p>Abrir o cerrar la mano despacio no cuenta.</p>
+          </li>
+        </ul>
+        <div class="ojo"><p><span class="rotulo">Necesita un atajo</span>Esta seña solo hace algo si usted le escribe un atajo, porque <b>ningún programa trae uno de fábrica</b>. La casilla «Abrir / cerrar la mano de golpe» viene prendida, pero sin atajo no hace nada.</p></div>
+        <ol class="pasos">
+          <li><div>Abra <b>⚙ Opciones ▸ Girar ▸ «Atajos para el programa»</b> y escoja su programa.</div></li>
+          <li><div>Escriba el atajo en <b>«Abrir de golpe manda»</b> y en <b>«Cerrar de golpe manda»</b>. Se guarda al salir de la casilla, con Enter o con «Guardar».</div></li>
+        </ol>
+        <div class="tabla">
+          <table>
+            <thead><tr><th scope="col">Programa</th><th scope="col">Atajos que sirven</th></tr></thead>
+            <tbody>
+              <tr><td>SketchUp</td><td>Abrir de golpe: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> · Cerrar de golpe: <kbd>Ctrl</kbd>+<kbd>G</kbd></td></tr>
+              <tr><td>EDWIN CNC 3D</td><td>Primero póngale un atajo a «Desdoblar caras» en EDWIN CNC 3D (por ejemplo <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>U</kbd>) y luego escriba ese mismo atajo aquí.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>No se aceptan los atajos del propio Lycan Mouse Control (<kbd>Ctrl</kbd>+<kbd>Alt</kbd> con M, X, O, D o P). Si escribe uno de esos, sale el aviso «Ese atajo ya lo usa Lycan Mouse Control (…)» y el gesto no se usa.</p>
+      </section>
+
+      <section id="mano-baja" aria-labelledby="t-mano-baja">
+        <div class="cabeza"><span class="cod">12</span><h2 id="t-mano-baja">Postura: mano baja, cerca del teclado</h2></div>
+        <ul class="senas">
+          <li class="tarjeta">
+            <figure><img src="img/senas/mano-baja.svg" width="800" height="600" loading="lazy" decoding="async" alt="Un portátil con la cámara arriba; la mano apunta con el índice, baja y cerca del teclado, con la muñeca a la vista."></figure>
+            <span class="hace opcional">Opcional · viene apagada</span>
+            <h3>Mano baja <span class="nuevo">Nuevo</span></h3>
+            <p>Para trabajar con la mano <b>cerca del teclado</b>, sin levantar el brazo. Así pasa rápido de las señas a escribir.</p>
+            <p>Con esta postura, la calibración le pide que <b>se vea la muñeca</b> en la cámara.</p>
+          </li>
+        </ul>
+        <ol class="pasos">
+          <li><div>Escójala en el paso <b>«postura»</b> del asistente (es la segunda opción) o en <b>⚙ Opciones ▸ Comodidad</b>.</div></li>
+          <li><div>Después de cambiarla en Opciones, vuelva a calibrar con el botón <b>«Volver a practicar señas»</b> (abajo).</div></li>
+        </ol>
+      </section>
+
+      <section id="chuleta" aria-labelledby="t-chuleta">
+        <div class="cabeza"><span class="cod">13</span><h2 id="t-chuleta">Chuleta de señas</h2></div>
+        <p>Todas las señas en una sola tabla. El programa tiene su propia chuleta en el menú <b>?</b>; ahí solo salen las señas que usted tenga prendidas.</p>
+        <div class="tabla ancha">
+          <table>
+            <thead><tr><th scope="col">Seña</th><th scope="col">Qué hace</th><th scope="col">Modo</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Seña">Índice y corazón pegados, un momento</td><td data-label="Qué hace">Activar</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña">La misma seña dos veces rápido</td><td data-label="Qué hace">Pausar y soltar todo</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña">Índice estirado</td><td data-label="Qué hace">Mover el puntero</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña">Pulgar + índice (pellizco)</td><td data-label="Qué hace">Clic izquierdo; sostenido, arrastrar</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña"><span>Pulgar + anular <span class="nuevo">1.0.2</span></span></td><td data-label="Qué hace">Clic izquierdo sin mover el puntero; sostenido, arrastrar</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña"><span>Pulgar + meñique <span class="nuevo">1.0.2</span></span></td><td data-label="Qué hace">Doble clic (o la acción que escoja)</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña"><span>Tecla 5 de la derecha o pedal <span class="nuevo">1.0.2</span></span></td><td data-label="Qué hace">Toque: clic · dos toques: doble clic · sostener: arrastrar</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña">Dos pellizcos rápidos</td><td data-label="Qué hace">Doble clic</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña">Puño quieto un momento</td><td data-label="Qué hace">Clic derecho</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña">Dos manos en pellizco: separar o juntar</td><td data-label="Qué hace">Acercar o alejar</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña">Dos manos en pellizco movidas juntas</td><td data-label="Qué hace">Mover el dibujo o el modelo</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña">Pulgar + corazón, subir o bajar</td><td data-label="Qué hace">Zoom con una mano (opcional)</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña"><span>Palma quieta medio segundo, luego subir o bajar <span class="nuevo">1.0.2</span></span></td><td data-label="Qué hace">Pasar página (en programas de diseño, zoom)</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña"><span>Palma pasada rápido a un lado <span class="nuevo">1.0.2</span></span></td><td data-label="Qué hace">Siguiente o anterior</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña"><span>Abrir o cerrar la mano de golpe <span class="nuevo">1.0.2</span></span></td><td data-label="Qué hace">El atajo que usted escriba (despiezar o armar)</td><td data-label="Modo">2D y 3D</td></tr>
+              <tr><td data-label="Seña"><span>Puño cerrado y movido <span class="nuevo">1.0.2</span></span></td><td data-label="Qué hace">Girar el modelo; abrir la mano lo suelta</td><td data-label="Modo">3D</td></tr>
+              <tr><td data-label="Seña"><span>Soltar el puño moviéndolo rápido <span class="nuevo">1.0.2</span></span></td><td data-label="Qué hace">Lanzar: el modelo sigue girando (opcional)</td><td data-label="Modo">3D</td></tr>
+              <tr><td data-label="Seña">Dos puños, como un volante</td><td data-label="Qué hace">Girar el modelo (con «Dos puños» o «Los dos»)</td><td data-label="Modo">3D</td></tr>
+              <tr><td data-label="Seña">Sacar la mano de la cámara</td><td data-label="Qué hace">Soltar todo</td><td data-label="Modo">2D y 3D</td></tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section id="atajos" aria-labelledby="t-atajos">
-        <div class="cabeza"><span class="cod">08</span><h2 id="t-atajos">Atajos de teclado</h2></div>
-        <p>Funcionan aunque tenga otro programa al frente. Puede cambiarlos en <b>⚙ Opciones ▸ Atajos</b>.</p>
+        <div class="cabeza"><span class="cod">14</span><h2 id="t-atajos">Atajos de teclado</h2></div>
+        <p>Funcionan aunque tenga otro programa al frente. Puede cambiarlos en <b>⚙ Opciones ▸ Atajos</b>. Los gestos (abrir o cerrar de golpe, barrido) no pueden mandar estos atajos.</p>
         <div class="tabla">
           <table>
             <thead><tr><th scope="col">Atajo</th><th scope="col">Qué hace</th></tr></thead>
@@ -421,7 +633,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="perfiles" aria-labelledby="t-perfiles">
-        <div class="cabeza"><span class="cod">09</span><h2 id="t-perfiles">Programas que reconoce</h2></div>
+        <div class="cabeza"><span class="cod">15</span><h2 id="t-perfiles">Programas que reconoce</h2></div>
         <p>Cada programa de dibujo usa botones distintos para girar y mover la vista. Lycan Mouse Control se da cuenta solo de cuál programa tiene al frente y usa la combinación correcta. Usted hace siempre las mismas señas.</p>
         <div class="tabla ancha">
           <table>
@@ -442,18 +654,20 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="seguridad" aria-labelledby="t-seguridad">
-        <div class="cabeza"><span class="cod">10</span><h2 id="t-seguridad">Seguridad: nada queda presionado</h2></div>
+        <div class="cabeza"><span class="cod">16</span><h2 id="t-seguridad">Seguridad: nada queda presionado</h2></div>
         <ul>
           <li>Si la cámara pierde su mano, si pausa, si cambia de modo o de programa, si sale, o si algo falla: el programa <b>suelta siempre todos los botones</b> y las teclas Shift, Ctrl y Alt.</li>
           <li>Con el puntero encima de la ventana de Lycan Mouse Control no se hacen clics.</li>
           <li>Si el programa que tiene al frente se abrió <b>como administrador</b>, Windows no deja que otro programa lo maneje. Lycan Mouse Control queda <b>en espera</b> y le avisa. Para manejarlo con gestos, use el menú <b>? ▸ Reiniciar como administrador</b>.</li>
+          <li>La <b>tecla de clic</b> solo deja de escribir mientras el control está activo. En pausa, al salir o si el programa se detiene, vuelve a escribir normal.</li>
+          <li>Si cambia de programa en pleno giro con un puño, el giro se suelta sin dar un clic derecho por error.</li>
           <li>Después de 20 minutos seguidos le recuerda bajar los brazos y descansar un minuto.</li>
         </ul>
         <div class="ojo"><p><span class="rotulo">Si algo quedó presionado</span>Por ejemplo, si cerró el programa a la fuerza: presione y suelte la tecla <kbd>Shift</kbd> y el botón de la rueda del ratón.</p></div>
       </section>
 
       <section id="problemas" aria-labelledby="t-problemas">
-        <div class="cabeza"><span class="cod">11</span><h2 id="t-problemas">Problemas frecuentes</h2></div>
+        <div class="cabeza"><span class="cod">17</span><h2 id="t-problemas">Problemas frecuentes</h2></div>
         <details>
           <summary>La cámara no abre o sale «Sin imagen de la cámara»</summary>
           <p>Casi siempre es porque otro programa la está usando: Zoom, Teams, Meet o la app Cámara. Ciérrelo y espere unos segundos. Si tiene varias cámaras, escoja la correcta en <b>⚙ Opciones ▸ General ▸ Cámara</b>.</p>
@@ -472,14 +686,47 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
           <p>Abra <b>⚙ Opciones ▸ Puntero</b> (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd>) y mueva <b>Velocidad del puntero</b> o <b>Velocidad de giro 3D</b>, de 1 (lento) a 10 (rápido). El cambio se ve al momento. Con la velocidad baja hay que mover más la mano, pero el puntero es más preciso.</p>
         </details>
         <details>
-          <summary>El clic se corre de donde apuntaba</summary>
-          <p>Deje la mano quieta un instante antes de cerrar los dedos y haga el pellizco sin mover la muñeca. El programa ya pone el clic donde apuntaba justo antes. Para puntos exactos, acerque el dibujo con el zoom y use el enganche del programa de dibujo.</p>
+          <summary>El clic se me corre de donde apuntaba</summary>
+          <ul>
+            <li>Haga el clic con el <a href="#clic-anular"><b>pulgar + anular</b></a>: el índice que apunta no se mueve.</li>
+            <li>O use la <a href="#clic-tecla"><b>tecla de clic</b></a> (el 5 de la derecha o un pedal): la mano solo apunta.</li>
+            <li>Con el pellizco del índice, deje la mano quieta un instante antes de cerrar los dedos. El programa ya pone el clic donde apuntaba justo antes.</li>
+            <li>Para puntos exactos, acerque el dibujo con el zoom y use el enganche del programa de dibujo.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>El 5 del teclado numérico no escribe</summary>
+          <p>Desde la 1.0.2 el 5 de la derecha hace clic <b>mientras el control está activo</b>. En pausa escribe normal (<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>M</kbd>). Para cambiar la tecla o apagarla, vaya a <b>⚙ Opciones ▸ Clic</b>.</p>
+        </details>
+        <details>
+          <summary>Mi teclado no tiene números a la derecha</summary>
+          <p>En <b>⚙ Opciones ▸ Clic</b> responda <b>No</b> a «¿Su teclado tiene números a la derecha?» y use <b>«Cambiar tecla»</b> para grabar otra tecla (una que no use, como F9) o un pedal. Vea <a href="#clic-tecla">Clic con una tecla o pedal</a>.</p>
+        </details>
+        <details>
+          <summary>El meñique hace doble clic cuando no quiero</summary>
+          <p>Cambie lo que hace en <b>⚙ Opciones ▸ Clic ▸ «Pulgar + meñique hace»</b>: escoja otra acción o <b>Nada</b>.</p>
+        </details>
+        <details>
+          <summary>La página se mueve sola o pasa de página sin querer</summary>
+          <ul>
+            <li>Pasar página empieza cuando deja la <b>palma abierta y quieta medio segundo</b> (suena un aviso). Si no lo quiere, apague <b>«Pasar página con la palma»</b> en <b>⚙ Opciones ▸ Palma</b>.</li>
+            <li>Si la página sigue andando al soltar, apague <b>«La página sigue un poco al soltar»</b> o mueva la barra hacia «Para rápido».</li>
+            <li>Si pasa a la siguiente foto o página sin querer, apague <b>«Barrido a los lados»</b>.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>Abrir o cerrar la mano de golpe no hace nada</summary>
+          <p>Ningún programa trae atajo para esta seña. Escríbalo en <b>⚙ Opciones ▸ Girar ▸ «Atajos para el programa»</b>. Vea <a href="#golpe">Abrir o cerrar la mano de golpe</a>.</p>
+        </details>
+        <details>
+          <summary>En 3D el modelo gira cuando quería clic derecho</summary>
+          <p>Para el clic derecho deje el puño <b>quieto</b> un momento y ábralo; si lo mueve, gira. Si prefiere el volante de antes, escoja <b>«Dos puños»</b> en <b>⚙ Opciones ▸ Girar ▸ «Girar el modelo con»</b>.</p>
         </details>
         <details>
           <summary>No reconoce la seña</summary>
           <ul>
             <li>Revise que esté <b>activo</b>: si dice PAUSADO, haga la seña de activar.</li>
-            <li>Marque bien la seña: para activar, índice y corazón bien pegados; para el clic, que las puntas se toquen; para el puño, todos los dedos cerrados.</li>
+            <li>Marque bien la seña: para activar, índice y corazón bien pegados; para el clic, que las puntas se toquen; para el puño, todos los dedos cerrados; para la palma, los dedos estirados y separados.</li>
             <li>La mano a 40 a 60 cm de la cámara, con la palma hacia la pantalla.</li>
             <li>La seña de activar sostenida más de un segundo y medio no cuenta: hágala y suéltela.</li>
             <li>Repita el ajuste a su mano en <b>? ▸ Volver a practicar señas</b>.</li>
@@ -500,7 +747,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
       </section>
 
       <section id="privacidad" aria-labelledby="t-privacidad">
-        <div class="cabeza"><span class="cod">12</span><h2 id="t-privacidad">Privacidad</h2></div>
+        <div class="cabeza"><span class="cod">18</span><h2 id="t-privacidad">Privacidad</h2></div>
         <ul>
           <li>Lycan Mouse Control <b>no guarda ni envía imágenes</b> de la cámara. Las mira en el momento y las descarta.</li>
           <li>Todo pasa dentro de su computador. No necesita internet para funcionar.</li>
@@ -515,7 +762,7 @@ footer p { margin: 0; color: var(--suave); max-width: none; }
 
 <footer>
   <div class="ancho">
-    <p><b>Lycan Developments</b> · EDWIN CNC · Manual de Lycan Mouse Control 1.0.1, noviembre de 2026</p>
+    <p><b>Lycan Developments</b> · EDWIN CNC · Manual de Lycan Mouse Control 1.0.2, noviembre de 2026</p>
     <p><a href="../">Volver a la portada</a></p>
   </div>
 </footer>

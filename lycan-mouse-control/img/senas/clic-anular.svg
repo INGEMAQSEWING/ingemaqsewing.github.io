@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Pulgar y anular juntando las puntas delante de la palma, con un destello; el índice sigue estirado apuntando; el ratón con el botón izquierdo encendido">
+<title>Pulgar y anular juntando las puntas delante de la palma, con un destello; el índice sigue estirado apuntando; el ratón con el botón izquierdo encendido</title>
+<defs>
+<linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071128"/><stop offset="1" stop-color="#0b1a36"/></linearGradient>
+<radialGradient id="luz" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#22e3ff" stop-opacity=".13"/><stop offset="1" stop-color="#22e3ff" stop-opacity="0"/></radialGradient>
+<pattern id="puntos" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.2" fill="#1d3b66"/></pattern>
+<filter id="brillo" filterUnits="userSpaceOnUse" x="-3000" y="-3000" width="6000" height="6000"><feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<marker id="punta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#ffc94d"/></marker>
+<marker id="punta-v" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.6" markerHeight="3.6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 L2.5,5 Z" fill="#35f2a0"/></marker>
+</defs>
+<rect width="800" height="600" fill="url(#fondo)"/><rect width="800" height="600" fill="url(#puntos)"/><rect width="800" height="600" fill="url(#luz)"/>
+<g transform="translate(380,480) rotate(0) scale(2.3,2.3)" opacity="1.0">
+<path d="M-37,4 L37,4 L40,52 L-40,52 Z" fill="#0a1a33" stroke="#3c6fa8" stroke-width="1.5" stroke-linejoin="round"/>
+<g fill="none" stroke="#22e3ff" stroke-linecap="round" stroke-linejoin="round" filter="url(#brillo)"></g>
+<g fill="none" stroke="#0f2347" stroke-linecap="round" stroke-linejoin="round"></g>
+<g fill="none" stroke="#22e3ff" stroke-linecap="round" stroke-linejoin="round" filter="url(#brillo)"><path d="M-30,6 C-41.3,1.3 -35.3,-12.7 -37,-22 C-38.7,-31.3 -39.7,-40.7 -40,-50 C-40.3,-59.3 -40.5,-70.3 -39,-78 C-37.5,-85.7 -35.5,-92.2 -31,-96 C-26.5,-99.8 -18.5,-100.5 -12,-101 C-5.5,-101.5 1.7,-100.3 8,-99 C14.3,-97.7 21.3,-96.2 26,-93 C30.7,-89.8 34.2,-88.8 36,-80 C37.8,-71.2 37.8,-54.3 37,-40 C36.2,-25.7 42.2,-1.7 31,6 C19.8,13.7 -18.7,10.7 -30,6 Z" stroke-width="3.7" fill="#22e3ff"/><path d="M-24,-84 L-27.8,-119.8 L-30.2,-142.7 L-32.2,-161.6" stroke-width="20.7"/><path d="M-7,-88 L-6.3,-128 L-5.9,-153 L-5.5,-174" stroke-width="21.7"/><path d="M25,-78 L36.4,-103.6 L43.7,-120 L50.2,-134.6" stroke-width="18.2"/></g>
+<g fill="none" stroke="#0f2347" stroke-linecap="round" stroke-linejoin="round"><path d="M-30,6 C-41.3,1.3 -35.3,-12.7 -37,-22 C-38.7,-31.3 -39.7,-40.7 -40,-50 C-40.3,-59.3 -40.5,-70.3 -39,-78 C-37.5,-85.7 -35.5,-92.2 -31,-96 C-26.5,-99.8 -18.5,-100.5 -12,-101 C-5.5,-101.5 1.7,-100.3 8,-99 C14.3,-97.7 21.3,-96.2 26,-93 C30.7,-89.8 34.2,-88.8 36,-80 C37.8,-71.2 37.8,-54.3 37,-40 C36.2,-25.7 42.2,-1.7 31,6 C19.8,13.7 -18.7,10.7 -30,6 Z" stroke="none" fill="#0f2347"/><path d="M-24,-84 L-27.8,-119.8 L-30.2,-142.7 L-32.2,-161.6" stroke-width="17"/><path d="M-7,-88 L-6.3,-128 L-5.9,-153 L-5.5,-174" stroke-width="18"/><path d="M25,-78 L36.4,-103.6 L43.7,-120 L50.2,-134.6" stroke-width="14.5"/></g>
+<g fill="none" stroke="#22e3ff" stroke-linecap="round" stroke-linejoin="round" filter="url(#brillo)"><path d="M10,-96 L10.5,-74 L11,-56" stroke-width="20.2"/></g>
+<g fill="none" stroke="#0f2347" stroke-linecap="round" stroke-linejoin="round"><path d="M10,-96 L10.5,-74 L11,-56" stroke-width="16.5"/></g>
+<g fill="none" stroke="#22e3ff" stroke-linecap="round" stroke-linejoin="round" filter="url(#brillo)"><path d="M-27,-18 L-42,-36 L-28,-50 L-6,-54 L7,-55" stroke-width="22.7"/></g>
+<g fill="none" stroke="#0f2347" stroke-linecap="round" stroke-linejoin="round"><path d="M-27,-18 L-42,-36 L-28,-50 L-6,-54 L7,-55" stroke-width="19"/></g>
+</g>
+<g stroke="#35f2a0" stroke-width="5" stroke-linecap="round" filter="url(#brillo)"><line x1="418" y1="358.4" x2="432.1" y2="364.2"/><line x1="407.9" y1="368.5" x2="413.7" y2="382.6"/><line x1="393.5" y1="368.5" x2="387.7" y2="382.6"/><line x1="383.4" y1="358.4" x2="369.3" y2="364.2"/><line x1="383.4" y1="344" x2="369.3" y2="338.2"/><line x1="393.5" y1="333.9" x2="387.7" y2="319.8"/><line x1="407.9" y1="333.9" x2="413.7" y2="319.8"/><line x1="418" y1="344" x2="432.1" y2="338.2"/><circle cx="400.7" cy="351.2" r="5" fill="#35f2a0" stroke="none"/></g>
+<circle cx="306" cy="104.4" r="30" fill="none" stroke="#22e3ff" stroke-width="3" stroke-dasharray="5 9" opacity=".8"/>
+<g filter="url(#brillo)"><path d="M593.8,156.2 A46.2,46.2 0 0 1 686.2,156.2 L686.2,198.8 A46.2,46.2 0 0 1 593.8,198.8 Z" fill="#0a1a33" stroke="#22e3ff" stroke-width="3.8"/><line x1="593.8" y1="166.7" x2="686.2" y2="166.7" stroke="#22e3ff" stroke-width="3.1"/><path d="M636.2,113.8 A42.5,42.5 0 0 0 597.5,156.2 L597.5,166.7 L636.2,166.7 Z" fill="#35f2a0"/><line x1="640" y1="110" x2="640" y2="166.7" stroke="#22e3ff" stroke-width="3.1"/><rect x="631.2" y="127.5" width="17.5" height="30" rx="8.8" fill="#0a1a33" stroke="#22e3ff" stroke-width="3.1"/></g>
+<text x="640" y="300" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#35f2a0" letter-spacing="1">CLIC</text>
+</svg>
