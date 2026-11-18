@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>En laboratorio: proyectos en desarrollo de Lycan Developments</title>
+<meta name="description" content="Los proyectos que Lycan Developments tiene en el laboratorio: árbitro automático de tenis de mesa con cámara, agenda de citas para salones, control CNC y de robots, footwork por niveles, monitoreo de salud y más.">
+<link rel="canonical" href="https://ingemaqsewing.github.io/laboratorio/">
+<meta name="theme-color" content="#050b18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='8'%20fill='%23050b18'/%3E%3Cpath%20d='M20%203%2035%2011.5v17L20%2037%205%2028.5v-17Z'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.2'/%3E%3Cpath%20d='M13%2014v12h7M23%2014h3a6%206%200%200%201%200%2012h-3Z'%20fill='none'%20stroke='%23e6f1ff'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lycan Developments">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://ingemaqsewing.github.io/laboratorio/">
+<meta property="og:title" content="En laboratorio · Lycan Developments">
+<meta property="og:description" content="Árbitro automático de tenis de mesa, agenda de citas para salones, control CNC y de robots, footwork por niveles y monitoreo de salud: lo que viene.">
+<meta property="og:image" content="https://ingemaqsewing.github.io/og-portada.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --fondo: #050b18; --fondo-2: #0a1428; --placa: #0c1a33; --linea: #16345c;
+  --texto: #e6f1ff; --texto-2: #c4d4ea; --suave: #8ea6c8;
+  --cian: #22e3ff; --verde: #35f2a0; --ambar: #ffc94d;
+  --f-titulo: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --f-texto: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-dato: "JetBrains Mono", Consolas, "Courier New", monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh;
+  background:
+    radial-gradient(900px 500px at 50% -120px, rgba(34,227,255,.16), transparent 70%),
+    linear-gradient(var(--fondo), var(--fondo-2) 60%, var(--fondo));
+  background-repeat: no-repeat; background-color: var(--fondo);
+  color: var(--texto); font-family: var(--f-texto); font-size: 17px; line-height: 1.6; overflow-x: hidden;
+}
+a { color: var(--cian); }
+a:focus-visible { outline: 2px solid var(--cian); outline-offset: 3px; border-radius: 4px; }
+.ancho { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.barra { border-bottom: 1px solid var(--linea); background: rgba(5,11,24,.7); }
+.barra .ancho { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; justify-content: space-between; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--texto); }
+.logo svg { width: 34px; height: 34px; flex: none; filter: drop-shadow(0 0 6px rgba(34,227,255,.6)); }
+.logo b { font-family: var(--f-titulo); font-size: 19px; letter-spacing: .04em; }
+.volver { color: var(--suave); text-decoration: none; font-size: 15px; padding-block: 8px; }
+.volver:hover { color: var(--cian); }
+.portada { padding-block: 44px 28px; border-bottom: 1px solid var(--linea); }
+.eti { font-family: var(--f-dato); font-size: 13px; color: var(--cian); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 12px; }
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(34px, 6vw, 60px); line-height: 1.04; margin: 0; text-transform: uppercase; }
+h1 em { font-style: normal; color: var(--cian); text-shadow: 0 0 18px rgba(34,227,255,.55); }
+.lema { color: var(--suave); font-size: 18px; max-width: 60ch; margin: 14px 0 0; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 20px 0 0; padding: 0; list-style: none; color: var(--suave); font-size: 15px; }
+.estado { font-family: var(--f-dato); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+.estado.dev { color: var(--verde); border-color: rgba(53,242,160,.5); background: rgba(53,242,160,.08); }
+.estado.plan { color: var(--ambar); border-color: rgba(255,201,77,.5); background: rgba(255,201,77,.08); }
+main { padding-block: 34px 50px; }
+.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 18px; }
+.tarjeta { background: linear-gradient(180deg, rgba(12,26,51,.95), rgba(10,20,40,.95)); border: 1px solid var(--linea); border-radius: 14px; padding: 22px; box-shadow: 0 0 0 1px rgba(34,227,255,.04), 0 10px 30px rgba(0,0,0,.25); display: flex; flex-direction: column; gap: 10px; }
+.tarjeta:hover { border-color: rgba(34,227,255,.5); }
+.tarjeta .cab { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.tarjeta h2 { font-family: var(--f-titulo); font-size: 22px; line-height: 1.15; margin: 0; }
+.tarjeta .area { font-family: var(--f-dato); font-size: 12.5px; color: var(--suave); letter-spacing: .06em; text-transform: uppercase; margin: 0; }
+.tarjeta p { margin: 0; color: var(--texto-2); }
+.tarjeta ul { margin: 0; padding-left: 20px; color: var(--texto-2); font-size: 15.5px; }
+.tarjeta li { margin: 3px 0; }
+h2.seccion { font-family: var(--f-titulo); font-size: 26px; text-transform: uppercase; margin: 40px 0 16px; letter-spacing: .03em; }
+h2.seccion:first-child { margin-top: 0; }
+.nota { color: var(--suave); font-size: 15px; margin-top: 34px; border-top: 1px solid var(--linea); padding-top: 18px; }
+footer { border-top: 1px solid var(--linea); color: var(--suave); font-size: 14px; }
+footer .ancho { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding-block: 18px; }
+footer p { margin: 0; }
+</style>
+</head>
+<body>
+<header class="barra">
+  <div class="ancho">
+    <a class="logo" href="../" aria-label="Lycan Developments, ir a la portada">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 35 11.5v17L20 37 5 28.5v-17Z" fill="none" stroke="#22e3ff" stroke-width="2.2"/><path d="M13 14v12h7M23 14h3a6 6 0 0 1 0 12h-3Z" fill="none" stroke="#e6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>LYCAN DEVELOPMENTS</b>
+    </a>
+    <a class="volver" href="../">← Volver a los proyectos</a>
+  </div>
+</header>
+
+<div class="ancho">
+  <div class="portada">
+    <p class="eti">Laboratorio · Noviembre 2026</p>
+    <h1>En <em>laboratorio</em></h1>
+    <p class="lema">Ideas que ya están planteadas y proyectos que estamos construyendo. Cada uno empieza pequeño, se prueba con personas reales y crece con lo que aprendemos.</p>
+    <ul class="leyenda">
+      <li><span class="estado dev">En desarrollo</span> ya hay una primera versión en pruebas</li>
+      <li><span class="estado plan">Planteado</span> diseñado y a punto de iniciar</li>
+    </ul>
+  </div>
+</div>
+
+<main class="ancho">
+  <h2 class="seccion">En desarrollo</h2>
+  <div class="rejilla">
+    <article class="tarjeta">
+      <div class="cab"><h2>Rookie Ump</h2><span class="estado dev">En desarrollo</span></div>
+      <p class="area">Tenis de mesa · Visión artificial · LycanRating</p>
+      <p>Árbitro asistente con cámara para torneos de tenis de mesa. Sigue la bola, detecta los botes y lleva el marcador con las reglas oficiales.</p>
+      <ul>
+        <li>Marcador con señas del árbitro: punto, tiempo muerto y corrección</li>
+        <li>Canta el marcador con voz, como un árbitro de verdad</li>
+        <li>Detección de bola y botes en video de alta velocidad</li>
+        <li>Próximo: marcador en vivo de cada mesa en LycanRating</li>
+      </ul>
+    </article>
+    <article class="tarjeta">
+      <div class="cab"><h2>Agenda de citas para salones</h2><span class="estado dev">En desarrollo</span></div>
+      <p class="area">Belleza · Barbería · Uñas · Peluquería</p>
+      <p>Reservas en línea conectadas al calendario del salón. La cita queda en el calendario del negocio y en el de la clienta, con avisos en el celular.</p>
+      <ul>
+        <li>Link de reservas para Instagram con horas libres</li>
+        <li>Servicios con duración y precio</li>
+        <li>Confirmación y recordatorio por correo, y SMS opcional</li>
+        <li>Lista de clientas e historial de citas</li>
+      </ul>
+    </article>
+  </div>
+
+  <h2 class="seccion">Planteados</h2>
+  <div class="rejilla">
+    <article class="tarjeta">
+      <div class="cab"><h2>Lycan Motion Control</h2><span class="estado plan">Planteado</span></div>
+      <p class="area">CNC · Robótica · Industria</p>
+      <p>Plataforma propia de control numérico, al estilo de Mach3, para máquinas CNC y robots.</p>
+      <ul>
+        <li>Máquinas de 2, 2.5, 3, 4 y 5 ejes</li>
+        <li>Robots SCARA y brazos articulados</li>
+        <li>Lectura de código G e interpolación de trayectorias</li>
+      </ul>
+    </article>
+    <article class="tarjeta">
+      <div class="cab"><h2>Footwork por niveles</h2><span class="estado plan">Planteado</span></div>
+      <p class="area">Tenis de mesa · Entrenamiento</p>
+      <p>App para entrenar los desplazamientos con la cámara del celular, en un programa progresivo del nivel 1 al 5, con métricas de avance.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="cab"><h2>Monitoreo de salud</h2><span class="estado plan">Planteado</span></div>
+      <p class="area">Salud · Sensores · Alertas</p>
+      <p>Sensores de signos vitales integrados a la vida diaria, para avisar a tiempo a la familia ante un evento inesperado. Se desarrolla con asesoría médica.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="cab"><h2>Navegador académico</h2><span class="estado plan">Planteado</span></div>
+      <p class="area">Educación · Investigación</p>
+      <p>Herramienta para estudiantes que recoge y organiza información de páginas web, guarda la fuente con su cita y la exporta a Excel.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="cab"><h2>Mesa CNC por señas</h2><span class="estado plan">Planteado</span></div>
+      <p class="area">CNC · Plasma · Visión artificial</p>
+      <p>Mover la mesa con las mismas señas con que se guía un camión, solo antes de cortar. Cuando empieza el corte, la cámara deja de obedecer. El paro de emergencia sigue siendo el botón físico.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="cab"><h2>Pinpón con raqueta real</h2><span class="estado plan">Planteado</span></div>
+      <p class="area">Juego · Visión artificial</p>
+      <p>Juego en el navegador donde la cámara reconoce tu raqueta de verdad y la convierte en el control para jugar.</p>
+    </article>
+  </div>
+
+  <p class="nota">¿Te interesa probar alguno cuando esté listo? Escríbenos desde la <a href="../#contacto">sección de contacto</a>.</p>
+</main>
+
+<footer>
+  <div class="ancho">
+    <p><b>Lycan Developments</b> · EDWIN CNC · LycanRating</p>
+    <p>Colombia · 2026</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -363,7 +363,9 @@ footer p { margin: 0; }
       <a href="#web">Apps web</a>
       <a href="#github">GitHub</a>
       <a href="#skills">Skills</a>
+      <a href="#salud">Salud</a>
       <a href="#descargas">Descargas</a>
+      <a href="laboratorio/">En laboratorio</a>
       <a href="#contacto">Contacto</a>
     </nav>
   </div>
@@ -393,12 +395,14 @@ footer p { margin: 0; }
           <path class="cable" pathLength="1" d="M280 190 H120"/>
           <path class="cable" pathLength="1" d="M280 190 H440"/>
           <path class="cable" pathLength="1" d="M280 190 V318"/>
+          <path class="cable" pathLength="1" d="M280 190 V58"/>
           <g class="pulsos">
             <path class="pulso" style="--l:208" d="M230 190 H190 V62 H150"/>
             <path class="pulso p2" style="--l:208" d="M330 190 H370 V62 H410"/>
             <path class="pulso p3" style="--l:110" d="M230 190 H120"/>
             <path class="pulso p4" style="--l:110" d="M330 190 H440"/>
             <path class="pulso p5" style="--l:78" d="M280 240 V318"/>
+            <path class="pulso p2" style="--l:82" d="M280 140 V58"/>
           </g>
           <circle class="anillo" cx="280" cy="190" r="70"/>
           <circle class="nucleo" cx="280" cy="190" r="50"/>
@@ -409,6 +413,7 @@ footer p { margin: 0; }
         <a href="#web" aria-label="03, Apps web"><g class="nodo"><rect x="14" y="166" width="106" height="48" rx="10"/><text x="30" y="186" class="num">03</text><text x="30" y="205">Apps web</text></g></a>
         <a href="#github" aria-label="04, GitHub"><g class="nodo"><rect x="440" y="166" width="106" height="48" rx="10"/><text x="456" y="186" class="num">04</text><text x="456" y="205">GitHub</text></g></a>
         <a href="#skills" aria-label="05, Skills"><g class="nodo"><rect x="222" y="318" width="116" height="48" rx="10"/><text x="238" y="338" class="num">05</text><text x="238" y="357">Skills</text></g></a>
+        <a href="#salud" aria-label="06, Salud"><g class="nodo"><rect x="222" y="10" width="116" height="48" rx="10"/><text x="238" y="30" class="num">06</text><text x="238" y="49">Salud</text></g></a>
       </svg>
       <svg class="centro centro-m" viewBox="0 0 360 322" focusable="false">
         <g aria-hidden="true">
@@ -416,13 +421,15 @@ footer p { margin: 0; }
           <path class="cable" pathLength="1" d="M180 112 V90 H278 V60"/>
           <path class="cable" pathLength="1" d="M142 150 H120"/>
           <path class="cable" pathLength="1" d="M218 150 H240"/>
-          <path class="cable" pathLength="1" d="M180 188 V262"/>
+          <path class="cable" pathLength="1" d="M180 188 V230 H82 V262"/>
+          <path class="cable" pathLength="1" d="M180 188 V230 H278 V262"/>
           <g class="pulsos">
             <path class="pulso" style="--l:150" d="M180 112 V90 H82 V60"/>
             <path class="pulso p2" style="--l:150" d="M180 112 V90 H278 V60"/>
             <path class="pulso p3" style="--l:22" d="M142 150 H120"/>
             <path class="pulso p4" style="--l:22" d="M218 150 H240"/>
-            <path class="pulso p5" style="--l:74" d="M180 188 V262"/>
+            <path class="pulso p5" style="--l:172" d="M180 188 V230 H82 V262"/>
+            <path class="pulso p2" style="--l:172" d="M180 188 V230 H278 V262"/>
           </g>
           <circle class="anillo" cx="180" cy="150" r="52"/>
           <circle class="nucleo" cx="180" cy="150" r="38"/>
@@ -432,7 +439,8 @@ footer p { margin: 0; }
         <a href="#moviles" aria-label="02, Apps móviles"><g class="nodo"><rect x="198" y="4" width="160" height="56" rx="10"/><text x="212" y="26" class="num">02</text><text x="212" y="50">Apps móviles</text></g></a>
         <a href="#web" aria-label="03, Apps web"><g class="nodo"><rect x="2" y="122" width="118" height="56" rx="10"/><text x="16" y="144" class="num">03</text><text x="16" y="168">Apps web</text></g></a>
         <a href="#github" aria-label="04, GitHub"><g class="nodo"><rect x="240" y="122" width="118" height="56" rx="10"/><text x="254" y="144" class="num">04</text><text x="254" y="168">GitHub</text></g></a>
-        <a href="#skills" aria-label="05, Skills"><g class="nodo"><rect x="120" y="262" width="120" height="56" rx="10"/><text x="134" y="284" class="num">05</text><text x="134" y="308">Skills</text></g></a>
+        <a href="#skills" aria-label="05, Skills"><g class="nodo"><rect x="2" y="262" width="160" height="56" rx="10"/><text x="16" y="284" class="num">05</text><text x="16" y="308">Skills</text></g></a>
+        <a href="#salud" aria-label="06, Salud"><g class="nodo"><rect x="198" y="262" width="160" height="56" rx="10"/><text x="212" y="284" class="num">06</text><text x="212" y="308">Salud</text></g></a>
       </svg>
     </nav>
   </div>
@@ -440,7 +448,7 @@ footer p { margin: 0; }
   <!-- 01 CAD-CAM -->
   <section id="cadcam" class="ancho" aria-labelledby="cadcam-t">
     <div class="cabeza"><span class="cod">01</span><h2 id="cadcam-t">Diseño CAD-CAM</h2></div>
-    <p class="intro">Tres programas para Windows para diseñar y cortar con plasma: EDWIN CNC 3D saca el plano DXF, y CAD-CAM o CAD2CAM sacan el código G listo para Mach3. Y dos programas para manejar el computador sin tocar el ratón: Lycan Mouse Control, con las manos mientras diseña, y Lycan Face Control, solo con la cabeza y la cara.</p>
+    <p class="intro">Tres programas para Windows para diseñar y cortar con plasma: EDWIN CNC 3D saca el plano DXF, y CAD-CAM o CAD2CAM sacan el código G listo para Mach3. Y Lycan Mouse Control, para manejar el ratón con las manos mientras diseña, sin tocarlo.</p>
     <ol class="flujo" role="list" aria-label="Recorrido de una pieza">
       <li>EDWIN CNC 3D</li><li class="flecha" aria-hidden="true">→</li>
       <li>Plano DXF (mm)</li><li class="flecha" aria-hidden="true">→</li>
@@ -508,16 +516,6 @@ footer p { margin: 0; }
         </div>
       </article>
 
-      <article class="tarjeta" id="face-control">
-        <div class="fila"><span class="ver">v1.1.0 · Windows 64 bits</span><span class="estado prueba">En prueba</span></div>
-        <h3>Lycan Face Control</h3>
-        <p>Maneje el computador solo con la cabeza y la cara. Pensado para personas con ELA y otras condiciones que no dejan usar las manos. El clic se hace quedándose quieto o con un gesto que usted escoge; los parpadeos naturales nunca hacen clic. Trae un teclado grande en español, que también se maneja con parpadeos, y voz que habla sin internet. Nuevo en la 1.1.0: un botón AYUDA que hace sonar una alarma, mover el puntero con los ojos, lupa y velocidad ajustable.</p>
-        <ul class="plugins" aria-label="Funciones"><li>Clic por permanencia</li><li>Gestos de la cara</li><li>Botón AYUDA</li><li>Puntero con los ojos</li><li>Teclado y barrido</li><li>Voz sin internet</li></ul>
-        <div class="enlaces">
-          <a href="#descargas">Descargar<span class="vh"> Lycan Face Control</span></a>
-          <a href="lycan-face-control/">Manual y video<span class="vh"> de Lycan Face Control</span></a>
-        </div>
-      </article>
     </div>
   </section>
 
@@ -549,8 +547,8 @@ footer p { margin: 0; }
     <div class="lab" role="group" aria-labelledby="lab-t">
       <p id="lab-t" class="eti">Laboratorio · ideas en exploración</p>
       <div>
-        <h3>Control con la cara</h3>
-        <p>Salió del laboratorio: ya es <a href="#face-control">Lycan Face Control</a>, un programa en prueba para manejar el computador con la cabeza, hacer clic con un gesto de la cara y escribir con un teclado en pantalla que se maneja con parpadeos.</p>
+        <h3>Más proyectos en camino</h3>
+        <p>Árbitro automático de tenis de mesa, agenda de citas para salones, control CNC y de robots, y más. <a href="laboratorio/">Ver todo lo que está en laboratorio →</a></p>
       </div>
       <div>
         <h3>Mesa CNC por señas</h3>
@@ -623,6 +621,30 @@ footer p { margin: 0; }
         <div class="fila"><span class="ver">Taller · plasma</span><span class="estado camino">Idea</span></div>
         <h3>Desdoblar láminas</h3>
         <p>Del modelo de una tolva o un ducto al plano de corte en DXF, con las líneas de doblez marcadas.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 06 Salud -->
+  <section id="salud" class="ancho" aria-labelledby="salud-t">
+    <div class="cabeza"><span class="cod">06</span><h2 id="salud-t">Salud y accesibilidad</h2></div>
+    <p class="intro">Tecnología para cuidar a las personas: manejar el computador sin usar las manos y, más adelante, avisar a tiempo cuando algo no anda bien.</p>
+    <div class="rejilla">
+      <article class="tarjeta" id="face-control">
+        <div class="fila"><span class="ver">v1.1.0 · Windows 64 bits</span><span class="estado prueba">En prueba</span></div>
+        <h3>Lycan Face Control</h3>
+        <p>Maneje el computador solo con la cabeza y la cara. Pensado para personas con ELA y otras condiciones que no dejan usar las manos. El clic se hace quedándose quieto o con un gesto que usted escoge; los parpadeos naturales nunca hacen clic. Trae un teclado grande en español, que también se maneja con parpadeos, y voz que habla sin internet. Nuevo en la 1.1.0: un botón AYUDA que hace sonar una alarma, mover el puntero con los ojos, lupa y velocidad ajustable.</p>
+        <ul class="plugins" aria-label="Funciones"><li>Clic por permanencia</li><li>Gestos de la cara</li><li>Botón AYUDA</li><li>Puntero con los ojos</li><li>Teclado y barrido</li><li>Voz sin internet</li></ul>
+        <div class="enlaces">
+          <a href="#descargas">Descargar<span class="vh"> Lycan Face Control</span></a>
+          <a href="lycan-face-control/">Manual y video<span class="vh"> de Lycan Face Control</span></a>
+        </div>
+      </article>
+      <article class="tarjeta">
+        <div class="fila"><span class="ver">Sensores · alertas</span><span class="estado camino">En laboratorio</span></div>
+        <h3>Monitoreo de salud</h3>
+        <p>Sensores de signos vitales integrados a la vida diaria, para avisar a tiempo a la familia ante un evento inesperado. Se desarrolla con asesoría médica.</p>
+        <div class="enlaces"><a href="laboratorio/">Ver en laboratorio<span class="vh"> el monitoreo de salud</span></a></div>
       </article>
     </div>
   </section>
