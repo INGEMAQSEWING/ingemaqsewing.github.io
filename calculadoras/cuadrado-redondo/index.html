@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Calculadora de cuadrado a redondo · EDWIN CNC Taller</title>
+<meta name="description" content="Transición de cuadrado (o rectángulo) a redondo por triangulación: desarrollo en 1, 2 o 4 piezas, líneas de doblez y de prensado, tabla de trazado, acomodo en láminas. PDF y DXF para plasma.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: hoja de taller — formulario a la izquierda; opciones de corte, plano de las piezas y láminas a la derecha. */
+:root {
+  --bg: #f4f3ee; --papel: #ffffff; --tinta: #1d1d1b; --suave: #5b5a55; --linea: #d9d6cc;
+  --amarillo: #f2b705; --rojo: #c8321e; --azul: #1f5fa8; --nota: #fff6d6; --campo: #faf9f5;
+  --corte: #c8321e; --cota: #1f5fa8; --lamina: #e9e6dc; --pieza2: #2f6d3a; --marca: #b07a00;
+  --f-titulo: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-texto: "Barlow", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-medida: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151513; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #36352f;
+    --rojo: #f0705c; --azul: #7fb0ec; --nota: #2b2615; --campo: #262622; --corte: #f0705c; --cota: #7fb0ec; --lamina: #2a2a26; --pieza2: #7cc488; --marca: #f2c14e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151513; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #36352f;
+  --rojo: #f0705c; --azul: #7fb0ec; --nota: #2b2615; --campo: #262622; --corte: #f0705c; --cota: #7fb0ec; --lamina: #2a2a26; --pieza2: #7cc488; --marca: #f2c14e;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--tinta); font-family: var(--f-texto); font-size: 17px; line-height: 1.55; }
+a { color: inherit; }
+.ancho { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.cab { border-bottom: 3px solid var(--tinta); background: var(--papel); }
+header.cab .ancho { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.marca { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo { width: 44px; height: 44px; flex: none; background: var(--amarillo); color: #1d1d1b; border: 3px solid #1d1d1b; display: grid; place-items: center; font-family: var(--f-titulo); font-weight: 700; font-size: 17px; }
+.marca b { font-family: var(--f-titulo); font-size: 22px; display: block; line-height: 1; }
+.marca span { font-size: 13.5px; color: var(--suave); }
+nav.migas { font-size: 15px; color: var(--suave); }
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(32px, 5vw, 46px); line-height: 1.05; margin: 26px 0 6px; text-wrap: balance; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+h1 .cinta { width: 54px; height: 14px; flex: none; background: repeating-linear-gradient(-45deg, var(--amarillo) 0 8px, #1d1d1b 8px 16px); }
+.intro { margin: 0 0 22px; color: var(--suave); max-width: 72ch; }
+h2 { font-family: var(--f-titulo); font-size: 25px; margin: 0 0 10px; }
+h3 { font-family: var(--f-titulo); font-size: 21px; margin: 20px 0 8px; }
+.rejilla { display: grid; grid-template-columns: minmax(0, 390px) minmax(0, 1fr); gap: 28px; align-items: start; padding-bottom: 48px; }
+@media (max-width: 900px) { .rejilla { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--papel); border: 1px solid var(--linea); padding: 18px; min-width: 0; }
+.selector { display: inline-flex; border: 2px solid var(--tinta); margin: 0 8px 12px 0; }
+.selector button { font: 600 15px var(--f-texto); padding: 6px 12px; border: 0; background: transparent; color: var(--tinta); cursor: pointer; }
+.selector button[aria-pressed="true"] { background: var(--tinta); color: var(--bg); }
+.campo { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; padding: 10px 0; border-top: 1px solid var(--linea); }
+.num { width: 28px; height: 28px; display: grid; place-items: center; background: var(--tinta); color: var(--bg); font-family: var(--f-titulo); font-weight: 700; font-size: 17px; }
+.campo label { font-weight: 600; align-self: center; }
+.campo label small { font-weight: 400; color: var(--suave); }
+.entrada { grid-column: 2; display: flex; align-items: center; gap: 8px; }
+.entrada input, .entrada select { width: 100%; min-width: 0; font: 500 19px var(--f-medida); padding: 8px 10px; border: 2px solid var(--linea); background: var(--campo); color: var(--tinta); border-radius: 0; }
+.entrada select { font: 500 16px var(--f-texto); }
+.entrada input:focus, .entrada select:focus { outline: none; border-color: var(--amarillo); box-shadow: 0 0 0 2px var(--amarillo); }
+.entrada .u { font-family: var(--f-medida); color: var(--suave); min-width: 34px; }
+.entrada .x { font-family: var(--f-medida); color: var(--suave); }
+.ayuda { grid-column: 2; font-size: 14.5px; color: var(--suave); margin: 0; }
+.campo.activo .num { background: var(--amarillo); color: #1d1d1b; }
+details.mas { margin-top: 12px; border-top: 2px solid var(--tinta); padding-top: 10px; }
+details.mas summary { cursor: pointer; font-family: var(--f-titulo); font-size: 19px; }
+.error { background: var(--nota); border-left: 5px solid var(--rojo); padding: 10px 12px; margin: 12px 0 0; font-size: 15.5px; }
+.aviso { background: var(--nota); border-left: 5px solid var(--amarillo); padding: 10px 12px; margin: 12px 0 0; font-size: 15.5px; }
+figure.ilu { margin: 0 0 10px; }
+figure.ilu svg { width: 100%; height: auto; display: block; }
+figure.ilu figcaption { font-size: 13.5px; color: var(--suave); }
+.ilu-cota { stroke: var(--suave); fill: var(--suave); }
+.ilu-cota text { font: 600 15px var(--f-medida); stroke: none; }
+.ilu-cota.on { stroke: var(--rojo); fill: var(--rojo); }
+.ilu-cota.on line { stroke-width: 2.6; }
+.resumen { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.dato { border: 2px solid var(--tinta); padding: 8px 12px; background: var(--papel); }
+.dato span { display: block; font-size: 13.5px; color: var(--suave); }
+.dato b { font-family: var(--f-medida); font-size: 21px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.dato.grande { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.dato.grande span { color: #3d3416; }
+.opciones { display: grid; gap: 8px; margin-bottom: 8px; }
+.opcion { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 2px 10px; align-items: start; border: 2px solid var(--linea); padding: 10px 12px; cursor: pointer; background: var(--papel); }
+.opcion:has(input:checked) { border-color: var(--tinta); box-shadow: inset 5px 0 0 var(--amarillo); }
+.opcion input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: #1d1d1b; }
+.opcion b { font-family: var(--f-titulo); font-size: 19px; }
+.opcion .det { grid-column: 2; font-size: 15px; color: var(--suave); }
+.etiq { display: inline-block; font: 600 12.5px var(--f-texto); letter-spacing: .05em; text-transform: uppercase; padding: 1px 7px; margin-left: 6px; border: 1.5px solid var(--tinta); vertical-align: 2px; }
+.etiq.a { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.plano svg, .laminas svg { width: 100%; height: auto; display: block; background: var(--papel); }
+.corte { fill: none; stroke: var(--corte); stroke-width: 2.2; }
+.laminas .corte { stroke-width: 1.4; }
+.relleno { fill: var(--corte); opacity: .08; }
+.laminas .relleno { opacity: .13; }
+.laminas .relleno.b { fill: var(--pieza2); }
+.laminas .corte.b { stroke: var(--pieza2); }
+.hoja { fill: var(--lamina); stroke: var(--tinta); stroke-width: 1.4; }
+.doblez { stroke: var(--marca); stroke-width: 1.6; stroke-dasharray: 8 5; fill: none; }
+.plano text, .laminas text { font: 500 15px var(--f-medida); fill: var(--cota); paint-order: stroke; stroke: var(--papel); stroke-width: 6px; stroke-linejoin: round; }
+text.titulo { fill: var(--tinta) !important; font: 700 20px var(--f-titulo) !important; }
+text.num-p { fill: var(--tinta) !important; font: 700 15px var(--f-titulo) !important; stroke-width: 4px; }
+text.marca-t { fill: var(--marca) !important; }
+.tabla { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--linea); vertical-align: top; }
+td.v { font-family: var(--f-medida); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th { font-family: var(--f-titulo); font-size: 16px; letter-spacing: .05em; text-transform: uppercase; border-bottom: 2px solid var(--tinta); }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px; }
+.btn { font: 600 16px var(--f-texto); padding: 10px 16px; border: 2px solid var(--tinta); background: var(--papel); color: var(--tinta); cursor: pointer; }
+.btn.principal { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.btn:focus-visible, .selector button:focus-visible, .opcion:focus-within { outline: 3px solid var(--azul); outline-offset: 2px; }
+.nota-pie { font-size: 14.5px; color: var(--suave); }
+.pasos-taller { padding-left: 20px; margin: 6px 0; }
+.pasos-taller li { margin: 4px 0; max-width: 70ch; }
+footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size: 14px; color: var(--suave); }
+.solo-imprimir { display: none; }
+.pie-pdf { font-size: 9pt; color: #444; border-top: 1px solid #999; padding-top: 4px; justify-content: space-between; gap: 12px; }
+@media print {
+  @page { size: A4 portrait; margin: 12mm; }
+  body { background: #fff; color: #000; font-size: 11.5pt; }
+  header.cab, .panel.formulario, .botones, footer, .no-imprimir, details.mas, .intro, .nota-pie { display: none !important; }
+  .rejilla { display: block; }
+  .panel { border: 0; padding: 0; }
+  .solo-imprimir { display: block; }
+  .pie-pdf { display: flex !important; position: fixed; left: 0; right: 0; bottom: 0; background: #fff; }
+  main { padding-bottom: 12mm; }
+  .plano svg { max-height: 110mm; }
+  .laminas { break-before: page; }
+  .laminas svg { max-height: 80mm; }
+  .opcion:not(:has(input:checked)) { display: none; }
+  h1 { margin-top: 0; font-size: 22pt; }
+}
+</style>
+</head>
+<body>
+<header class="cab">
+  <div class="ancho">
+    <a class="marca" href="../">
+      <span class="logo" aria-hidden="true">CNC</span>
+      <span><b>EDWIN CNC Taller</b><span>Herramientas de diseño y calculadoras de metalmecánica</span></span>
+    </a>
+    <nav class="migas" aria-label="Ruta"><a href="../">Calculadoras</a> › Cuadrado a redondo</nav>
+  </div>
+</header>
+
+<main class="ancho">
+  <h1><span class="cinta" aria-hidden="true"></span>Cuadrado a redondo</h1>
+  <p class="intro">La transición de una boca cuadrada o rectangular a una redonda (ductos, tolvas, salidas a tubo), centrada. La calculadora la desarrolla por triangulación: le da la pieza plana con las líneas de doblez y de prensado, la tabla de trazado para hacerla a mano y el DXF para la mesa de plasma.</p>
+
+  <div class="rejilla">
+    <section class="panel formulario" aria-labelledby="t-medidas">
+      <h2 id="t-medidas">Medidas de la transición</h2>
+      <div class="selector" role="group" aria-label="Unidades">
+        <button type="button" id="u-mm" aria-pressed="true">mm</button>
+        <button type="button" id="u-in" aria-pressed="false">pulg</button>
+      </div>
+      <figure class="ilu" aria-hidden="true">
+        <svg viewBox="0 0 420 270">
+          <defs><marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>
+          <path d="M70,55 L290,55 L350,25 L130,25 Z" fill="var(--linea)" stroke="var(--tinta)" stroke-width="2"/>
+          <ellipse cx="210" cy="205" rx="62" ry="16" fill="none" stroke="var(--tinta)" stroke-width="2"/>
+          <path d="M70,55 L148,205 M290,55 L272,205 M350,25 L268,198 M70,55 L190,190 M290,55 L230,190" fill="none" stroke="var(--tinta)" stroke-width="1.6"/>
+          <g class="ilu-cota" id="c-a"><line x1="70" y1="74" x2="290" y2="74" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><text x="128" y="94">1 Largo</text></g>
+          <g class="ilu-cota" id="c-b"><line x1="302" y1="53" x2="352" y2="28" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><text x="414" y="70" text-anchor="end">2 Ancho</text></g>
+          <g class="ilu-cota" id="c-d"><line x1="148" y1="238" x2="272" y2="238" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><text x="168" y="262">3 Ø redondo</text></g>
+          <g class="ilu-cota" id="c-h"><line x1="30" y1="55" x2="30" y2="205" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><line x1="22" y1="205" x2="148" y2="205" stroke-width="1"/><text x="6" y="44">4 Alto</text></g>
+        </svg>
+        <figcaption>Transición vista en ángulo. La medida que está escribiendo se marca en rojo.</figcaption>
+      </figure>
+      <div class="campo" data-cota="c-a">
+        <span class="num">1</span><label for="A">Lado cuadrado: largo</label>
+        <div class="entrada"><input id="A" inputmode="decimal" autocomplete="off" value="600"><span class="u">mm</span></div>
+      </div>
+      <div class="campo" data-cota="c-b">
+        <span class="num">2</span><label for="B">Lado cuadrado: ancho <small>(igual al largo si es cuadrado)</small></label>
+        <div class="entrada"><input id="B" inputmode="decimal" autocomplete="off" value="600"><span class="u">mm</span></div>
+      </div>
+      <div class="campo" data-cota="c-d">
+        <span class="num">3</span><label for="D">Diámetro del redondo</label>
+        <div class="entrada"><input id="D" inputmode="decimal" autocomplete="off" value="400"><span class="u">mm</span></div>
+      </div>
+      <div class="campo" data-cota="c-h">
+        <span class="num">4</span><label for="H">Alto <small>(vertical, entre las dos bocas)</small></label>
+        <div class="entrada"><input id="H" inputmode="decimal" autocomplete="off" value="500"><span class="u">mm</span></div>
+        <p class="ayuda">No importa cuál boca va arriba: el desarrollo es el mismo.</p>
+      </div>
+      <details class="mas">
+        <summary>Más opciones</summary>
+        <div class="campo">
+          <span class="num">6</span><label for="lamina">Lámina</label>
+          <div class="entrada"><select id="lamina">
+            <option value="1220x2440">4 × 8 pies (1220 × 2440 mm)</option>
+            <option value="1220x3050">4 × 10 pies (1220 × 3050 mm)</option>
+            <option value="1500x3000">1500 × 3000 mm</option>
+            <option value="1524x3048">5 × 10 pies (1524 × 3048 mm)</option>
+          </select></div>
+        </div>
+        <div class="campo">
+          <span class="num">5</span><label for="N">Divisiones del redondo <small>(por cada cuarto)</small></label>
+          <div class="entrada"><input id="N" inputmode="numeric" autocomplete="off" value="6"></div>
+          <p class="ayuda">Más divisiones, curva más fina. Con 6 por cuarto (24 en total) queda bien para casi todo.</p>
+        </div>
+        <div class="campo">
+          <span class="num">7</span><label for="separa">Separación entre piezas y del borde</label>
+          <div class="entrada"><input id="separa" inputmode="decimal" autocomplete="off" value="10"><span class="u">mm</span></div>
+        </div>
+        <div class="campo">
+          <span class="num">8</span><label for="espesor">Espesor <small>(solo para el peso)</small></label>
+          <div class="entrada"><input id="espesor" inputmode="decimal" autocomplete="off" value="3"><span class="u">mm</span></div>
+        </div>
+      </details>
+      <div id="error" class="error" hidden role="alert"></div>
+    </section>
+
+    <section class="panel resultado" aria-labelledby="t-res" aria-live="polite">
+      <h2 id="t-res">Desarrollo y corte</h2>
+      <p class="solo-imprimir" id="imp-medidas"></p>
+      <div class="resumen">
+        <div class="dato grande"><span>Láminas</span><b id="r-lam">—</b></div>
+        <div class="dato"><span>Piezas</span><b id="r-pz">—</b></div>
+        <div class="dato"><span>Soldadura</span><b id="r-sol">—</b></div>
+        <div class="dato"><span>Capacidad</span><b id="r-lt">—</b></div>
+      </div>
+      <h3>¿Cómo la quiere cortar?</h3>
+      <div class="opciones" id="opciones" role="radiogroup" aria-label="Formas de cortar la tolva"></div>
+      <div id="avisos"></div>
+      <h3>Plano de las piezas</h3>
+      <div class="plano" id="planos"></div>
+      <div class="laminas">
+        <h3>Acomodo en las láminas</h3>
+        <div id="hojas"></div>
+      </div>
+      <div class="botones">
+        <button class="btn principal" type="button" id="b-dxf">Descargar DXF de las piezas</button>
+        <button class="btn" type="button" id="b-dxf-lam">DXF de las láminas acomodadas</button>
+        <button class="btn" type="button" id="b-pdf">Imprimir o guardar PDF</button>
+      </div>
+      <p class="nota-pie">El DXF está en milímetros, a escala 1:1: el corte en la capa CORTE; los dobleces de las esquinas y las líneas de prensado en MARCADO; textos y lámina en REFERENCIA y LAMINA (no se cortan).</p>
+      <h3>Todas las medidas</h3>
+      <div class="tabla"><table>
+        <thead><tr><th>Medida</th><th>Valor</th><th>Para qué sirve</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table></div>
+      <h3 class="no-imprimir">Cómo se hace en el taller</h3>
+      <ol class="pasos-taller no-imprimir">
+        <li>Corte las piezas con el DXF. En MARCADO van las líneas de doblez (de cada esquina al redondo) y las de prensado.</li>
+        <li>Doble las 4 líneas de esquina y vaya prensando suave en cada línea del abanico para formar la parte redonda.</li>
+        <li>Cierre la pieza y suelde la costura (va en la mitad de un lado recto).</li>
+        <li>Revise el redondo con una plantilla o con la tapa, y el lado recto con escuadra.</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<div class="pie-pdf solo-imprimir" aria-hidden="true"><span>Lycan Developments · EDWIN CNC · 2026 · Calculadora de cuadrado a redondo, versión 1.0</span><span id="pie-fecha"></span></div>
+<footer>
+  <div class="ancho"><p><b>EDWIN CNC Taller</b> · Lycan Developments · EDWIN CNC · 2026 · versión 1.0 de prueba. Las medidas son de cálculo: compruebe antes de cortar en serie.</p></div>
+</footer>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const FIRMA = 'Lycan Developments - EDWIN CNC 2026 - Calculadora de cuadrado a redondo v1.0';
+  const IN = 25.4, ACERO = 7.85e-6, GRAD = Math.PI / 180;
+  let unidad = 'mm';
+
+  function leer(txt) {
+    if (txt == null) return NaN;
+    let t = String(txt).trim().replace(/["”]|pulg(adas)?|in\b|mm/gi, '').trim();
+    if (!t) return NaN;
+    t = t.replace(',', '.');
+    const m = t.match(/^(\d+(?:\.\d+)?)?\s*(?:(\d+)\s*\/\s*(\d+))?$/);
+    if (!m || (!m[1] && !m[2])) return NaN;
+    let v = m[1] ? parseFloat(m[1]) : 0;
+    if (m[2]) { const d = parseFloat(m[3]); if (!d) return NaN; v += parseFloat(m[2]) / d; }
+    return v;
+  }
+  const aMM = v => unidad === 'in' ? v * IN : v;
+  const f0 = v => v.toLocaleString('es-CO', { maximumFractionDigits: 0 });
+  const f1 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const f2 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const mm = v => unidad === 'in' ? `${f1(v)} mm (${f2(v / IN)}")` : `${f1(v)} mm`;
+
+  // ============ geometría 3D ============
+  // Rectángulo a × b arriba (z = H) y redondo de radio R abajo (z = 0), centrados.
+  // Esquinas: C0 (-,-) C1 (+,-) C2 (+,+) C3 (-,+). Lado i va de Ci a Ci+1: 0 frente, 1 derecha, 2 fondo, 3 izquierda.
+  const SG = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+  const ANG_LADO = [270, 0, 90, 180].map(g => g * GRAD);   // hacia dónde mira cada lado
+  function geometria(a, b, D, H, N) {
+    const R = D / 2, C = SG.map(([sx, sy]) => [sx * a / 2, sy * b / 2, H]);
+    const M = [0, 1, 2, 3].map(i => [(C[i][0] + C[(i + 1) % 4][0]) / 2, (C[i][1] + C[(i + 1) % 4][1]) / 2, H]);
+    // los puntos del redondo se abren un poquito para que el borde (hecho de cuerdas) mida justo π·D
+    const n = 4 * N, Rp = R * (Math.PI / n) / Math.sin(Math.PI / n);
+    const P = ang => [Rp * Math.cos(ang), Rp * Math.sin(ang), 0];
+    return { a, b, R, Rp, H, N, C, M, P };
+  }
+  const d3 = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+  const igual3 = (p, q) => d3(p, q) < 1e-9;
+  // rayos (línea recta de la boca cuadrada al redondo) desde la mitad del lado s, recorriendo n lados
+  function rayos(G, s, n) {
+    const out = [{ r: G.M[s % 4], p: G.P(ANG_LADO[s % 4]), t: 'borde' }];
+    for (let k = 0; k < n; k++) {
+      const lado = (s + k) % 4, esq = (lado + 1) % 4, a0 = ANG_LADO[lado];
+      out.push({ r: G.C[esq], p: G.P(a0), t: 'doblez' });                // fin de la cara plana del lado
+      for (let t = 1; t <= G.N; t++) out.push({ r: G.C[esq], p: G.P(a0 + t * Math.PI / 2 / G.N), t: t === G.N ? 'doblez' : 'prensa' });
+    }
+    out.push({ r: G.M[(s + n) % 4], p: G.P(ANG_LADO[(s + n) % 4]), t: 'borde' });
+    return out;
+  }
+  // punto 2D a distancias dp de P y dq de Q, del lado contrario a R
+  function circulos(P, Q, dp, dq, R) {
+    const dx = Q[0] - P[0], dy = Q[1] - P[1], L = Math.hypot(dx, dy);
+    const x = (dp * dp - dq * dq + L * L) / (2 * L), y = Math.sqrt(Math.max(0, dp * dp - x * x));
+    const ux = dx / L, uy = dy / L;
+    const c1 = [P[0] + ux * x - uy * y, P[1] + uy * x + ux * y], c2 = [P[0] + ux * x + uy * y, P[1] + uy * x - ux * y];
+    const lado = C => Math.sign((Q[0] - P[0]) * (C[1] - P[1]) - (Q[1] - P[1]) * (C[0] - P[0]));
+    return lado(c1) !== lado(R) ? c1 : c2;
+  }
+  // desarrolla la tira de triángulos: cada par de rayos seguidos comparte su punto de arriba o el de abajo
+  function desarrollar(G, s, n) {
+    const ry = rayos(G, s, n);
+    const R2 = [[0, 0]], P2 = [[0, -d3(ry[0].r, ry[0].p)]];
+    let tercero = [-1e9, -d3(ry[0].r, ry[0].p) / 2];   // el primer triángulo va hacia la derecha
+    for (let k = 1; k < ry.length; k++) {
+      const A = ry[k - 1], B = ry[k], a2 = R2[k - 1], b2 = P2[k - 1];
+      if (igual3(A.r, B.r)) {          // abanico: mismo punto arriba, punto nuevo en el redondo
+        const np = circulos(a2, b2, d3(A.r, B.p), d3(A.p, B.p), tercero);
+        R2.push(a2); P2.push(np); tercero = b2;
+      } else if (igual3(A.p, B.p)) {   // cara plana: mismo punto en el redondo, punto nuevo arriba
+        const nr = circulos(a2, b2, d3(A.r, B.r), d3(A.p, B.r), tercero);
+        R2.push(nr); P2.push(b2); tercero = a2;
+      } else throw new Error('rayos sin punto común');
+    }
+    // contorno: borde recto (sin repetir) + redondo de vuelta
+    const recto = [], curvo = [];
+    for (let k = 0; k < ry.length; k++) {
+      if (!recto.length || Math.hypot(R2[k][0] - recto[recto.length - 1][0], R2[k][1] - recto[recto.length - 1][1]) > 1e-6) recto.push(R2[k]);
+      if (!curvo.length || Math.hypot(P2[k][0] - curvo[curvo.length - 1][0], P2[k][1] - curvo[curvo.length - 1][1]) > 1e-6) curvo.push(P2[k]);
+    }
+    const pts = [...recto, ...curvo.reverse()];
+    const dobleces = [];
+    for (let k = 1; k < ry.length - 1; k++) dobleces.push([R2[k], P2[k], ry[k].t]);
+    const costura = [d3(ry[0].r, ry[0].p), d3(ry[ry.length - 1].r, ry[ry.length - 1].p)];
+    return { tipo: 'poli', pts, dobleces, recto, costura, n };
+  }
+  const areaPoli = pts => { let s = 0; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) s += (pts[j][0] + pts[i][0]) * (pts[j][1] - pts[i][1]); return Math.abs(s) / 2; };
+
+  // ============ acomodo (filas de piezas iguales + estantes) ============
+  const rot = (pts, a) => { const c = Math.cos(a), s = Math.sin(a); return pts.map(([x, y]) => [x * c - y * s, x * s + y * c]); };
+  function caja(pts) { let x0 = 1e18, y0 = 1e18, x1 = -1e18, y1 = -1e18; for (const [x, y] of pts) { if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; } return [x0, y0, x1, y1]; }
+  function distSeg(px, py, ax, ay, bx, by) { const dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy; let t = L ? ((px - ax) * dx + (py - ay) * dy) / L : 0; t = t < 0 ? 0 : t > 1 ? 1 : t; return Math.hypot(px - ax - t * dx, py - ay - t * dy); }
+  function dentro([x, y], poly) { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; }
+  function cruzan(ax, ay, bx, by, cx, cy, dx, dy) { const o = (px, py, qx, qy, rx, ry) => (qx - px) * (ry - py) - (qy - py) * (rx - px); return ((o(ax, ay, bx, by, cx, cy) > 0) !== (o(ax, ay, bx, by, dx, dy) > 0)) && ((o(cx, cy, dx, dy, ax, ay) > 0) !== (o(cx, cy, dx, dy, bx, by) > 0)); }
+  function libres(A, B, gap) {
+    const [a0, a1, a2, a3] = caja(A), [b0, b1, b2, b3] = caja(B);
+    if (a2 + gap < b0 || b2 + gap < a0 || a3 + gap < b1 || b3 + gap < a1) return true;
+    if (dentro(A[0], B) || dentro(B[0], A)) return false;
+    for (let i = 0, j = A.length - 1; i < A.length; j = i++) for (let k = 0, l = B.length - 1; k < B.length; l = k++) if (cruzan(A[j][0], A[j][1], A[i][0], A[i][1], B[l][0], B[l][1], B[k][0], B[k][1])) return false;
+    for (const [P, Q] of [[A, B], [B, A]]) for (const [px, py] of P) for (let i = 0, j = Q.length - 1; i < Q.length; j = i++) if (distSeg(px, py, Q[j][0], Q[j][1], Q[i][0], Q[i][1]) < gap) return false;
+    return true;
+  }
+  function fila(p, W, H, gap) {
+    const base = p.pts, cands = [];
+    for (let k = 0; k < 180; k++) { const q = rot(base, k * GRAD), [x0, y0, x1, y1] = caja(q), w = x1 - x0, h = y1 - y0; if (h <= H + 1e-6 && w <= W + 1e-6) cands.push({ k, w, h }); }
+    if (!cands.length) return null;
+    cands.sort((a, b) => a.w - b.w);
+    const elegidos = [];
+    for (const c of cands) { if (elegidos.every(e => Math.abs(e.k - c.k) >= 3)) elegidos.push(c); if (elegidos.length >= 16) break; }
+    let mejor = null;
+    for (const c of elegidos) {
+      const q = rot(base, c.k * GRAD), [x0, y0] = caja(q), A = q.map(([x, y]) => [x - x0, y - y0]);
+      const q2 = rot(base, c.k * GRAD + Math.PI), [u0, v0] = caja(q2), B0 = q2.map(([x, y]) => [x - u0, y - v0]);
+      const paso = B => { let lo = 0, hi = c.w + gap; if (!libres(A, B.map(([x, y]) => [x + hi, y]), gap * 0.999)) return Infinity; for (let it = 0; it < 22; it++) { const m = (lo + hi) / 2; if (libres(A, B.map(([x, y]) => [x + m, y]), gap * 0.999)) hi = m; else lo = m; } return hi; };
+      const pA = paso(B0), pI = paso(A), cuantas = p => p === Infinity ? 1 : Math.max(1, Math.floor((W - c.w) / p + 1e-9) + 1);
+      const o = cuantas(pA) > cuantas(pI) ? { alterna: true, pitch: pA, m: cuantas(pA) } : { alterna: false, pitch: pI, m: cuantas(pI) };
+      if (!mejor || o.m > mejor.m || (o.m === mejor.m && c.h < mejor.h)) mejor = { ...o, k: c.k, w: c.w, h: c.h };
+    }
+    return mejor;
+  }
+  function acomodar(grupos, hoja, gap) {
+    const W = hoja.w - 2 * gap, Hh = hoja.h - 2 * gap, filas = [];
+    for (const [gi, g] of grupos.entries()) {
+      const f = fila(g.p, W, Hh, gap); if (!f) return null; g.f = f;
+      let quedan = g.n; while (quedan > 0) { const k = Math.min(quedan, f.m); filas.push({ g: gi, k, h: f.h }); quedan -= k; }
+    }
+    filas.sort((a, b) => b.h - a.h);
+    const laminas = [];
+    for (const fl of filas) {
+      let puesta = false;
+      for (const L of laminas) if (L.alto + gap + fl.h <= Hh + 1e-6) { fl.y = L.alto + gap; L.alto += gap + fl.h; L.filas.push(fl); puesta = true; break; }
+      if (!puesta) { fl.y = 0; laminas.push({ alto: fl.h, filas: [fl] }); }
+    }
+    return laminas;
+  }
+  function colocaciones(grupos, L, gap) {
+    const out = [], cont = {};
+    for (const fl of L.filas) {
+      const g = grupos[fl.g], f = g.f;
+      for (let j = 0; j < fl.k; j++) {
+        const giro = f.k * GRAD + (f.alterna && j % 2 ? Math.PI : 0), q = rot(g.p.pts, giro), [x0, y0] = caja(q);
+        const tx = gap + j * f.pitch - x0, ty = gap + fl.y - y0;
+        cont[fl.g] = (cont[fl.g] || 0) + 1;
+        out.push({ g, gi: fl.g, ang: giro, tx, ty, pts: q.map(([x, y]) => [x + tx, y + ty]), nombre: g.letra + cont[fl.g] });
+      }
+    }
+    return out;
+  }
+
+  // la pieza desarrollada no se monta sobre sí misma (tolvas muy planas en una sola pieza)
+  function simple(P) {
+    const n = P.length;
+    for (let i = 0; i < n; i++) for (let j = i + 2; j < n; j++) {
+      if (i === 0 && j === n - 1) continue;
+      const a = P[i], b = P[(i + 1) % n], c = P[j], d = P[(j + 1) % n];
+      if (cruzan(a[0], a[1], b[0], b[1], c[0], c[1], d[0], d[1])) return false;
+    }
+    return true;
+  }
+  // ============ opciones de corte ============
+  function opciones(G, hoja, gap) {
+    const costA = Math.hypot(G.H, Math.abs(G.b / 2 - G.R)), costB = Math.hypot(G.H, Math.abs(G.a / 2 - G.R));
+    const configs = [
+      { desc: 'Una sola pieza (costura en el frente)', partes: [[0, 4]] },
+      { desc: 'Una sola pieza (costura en el lado)', partes: [[1, 4]] },
+      { desc: 'Dos piezas iguales (costuras en frente y fondo)', partes: [[0, 2], [2, 2]] },
+      { desc: 'Dos piezas iguales (costuras en los lados)', partes: [[1, 2], [3, 2]] },
+      { desc: 'Cuatro piezas (una por lado)', partes: [[0, 1], [1, 1], [2, 1], [3, 1]] },
+    ];
+    const res = [];
+    for (const cf of configs) {
+      if (Math.abs(G.a - G.b) < 0.01 && (cf.partes[0][0] === 1)) continue;   // cuadrado: da lo mismo
+      const grupos = []; let malo = false, sold = 0;
+      for (const [s0, m] of cf.partes) {
+        const p = desarrollar(G, s0, m);
+        if (!simple(p.pts)) { malo = true; break; }
+        sold += (s0 % 2 === 0 ? costA : costB);
+        const igual = grupos.find(g => g.m === m && Math.abs(areaPoli(g.p.pts) - areaPoli(p.pts)) < 1);
+        if (igual) igual.n++; else grupos.push({ p, n: 1, m, letra: String.fromCharCode(65 + grupos.length) });
+      }
+      if (malo) continue;
+      const laminas = acomodar(grupos, hoja, gap);
+      if (!laminas) continue;
+      const area = grupos.reduce((s, g) => s + g.n * areaPoli(g.p.pts), 0);
+      res.push({ ...cf, grupos, laminas, piezas: cf.partes.length, soldadura: sold, dobleces: 8, util: area / (laminas.length * hoja.w * hoja.h) });
+    }
+    if (!res.length) return [];
+    const lam = o => o.laminas.length;
+    res.sort((a, b) => lam(a) - lam(b) || a.soldadura - b.soldadura);
+    const lista = [{ o: res[0], etiq: 'Ahorra lámina' }];
+    const s = res.filter(o => lam(o) <= lam(res[0]) + 2).sort((a, b) => a.soldadura - b.soldadura || lam(a) - lam(b))[0];
+    if (s !== res[0] && s.soldadura < res[0].soldadura - 1) lista.push({ o: s, etiq: 'Ahorra soldadura' });
+    for (const o of res) {
+      if (lista.length >= 3) break;
+      if (lista.some(x => x.o === o)) continue;
+      if (lista.some(x => lam(x.o) <= lam(o) && x.o.soldadura <= o.soldadura + 1)) continue;
+      lista.push({ o, etiq: '' });
+    }
+    return lista;
+  }
+
+  // ============ estado ============
+  let ultimo = null, elegida = 0;
+  function calcular() {
+    const a = aMM(leer($('A').value)), b = aMM(leer($('B').value)), D = aMM(leer($('D').value)), H = aMM(leer($('H').value));
+    const N = Math.round(leer($('N').value || '6'));
+    const gap = aMM(leer($('separa').value || '0')), esp = aMM(leer($('espesor').value || '0'));
+    const [hw, hl] = $('lamina').value.split('x').map(Number), hoja = { w: hl, h: hw };
+    const err = [];
+    for (const [v, n] of [[a, 'el largo del cuadrado (1)'], [b, 'el ancho del cuadrado (2)'], [D, 'el diámetro del redondo (3)'], [H, 'el alto (4)']]) if (!(v > 0)) err.push(`Escriba ${n}.`);
+    if (!(N >= 2 && N <= 24)) err.push('Las divisiones por cuarto deben estar entre 2 y 24 (5).');
+    if (err.length) return { err };
+    const G = geometria(a, b, D, H, N);
+    const ops = opciones(G, hoja, gap);
+    if (!ops.length) return { err: ['La pieza no cabe en esta lámina ni partida en 4. Pruebe una lámina más grande (Más opciones ▸ 6).'] };
+    // litros: fórmula del prismatoide con la sección del medio (exacta para superficies regladas)
+    const loop = rayos(G, 0, 4), medio = loop.map(r => [(r.r[0] + r.p[0]) / 2, (r.r[1] + r.p[1]) / 2]);
+    const Am = areaPoli(medio), A1 = a * b, A2 = Math.PI * G.R * G.R;
+    const litros = H / 6 * (A1 + 4 * Am + A2) / 1e6;
+    const areaTot = [0, 1, 2, 3].reduce((s, i) => s + areaPoli(desarrollar(G, i, 1).pts), 0);
+    // tabla de trazado: largos reales de una esquina (C1) a cada punto de su cuarto de redondo
+    const traz = [];
+    for (let t = 0; t <= N; t++) traz.push(d3(G.C[1], G.P(ANG_LADO[0] + t * Math.PI / 2 / N)));
+    const cuerda = 2 * G.R * Math.sin(Math.PI / 4 / N);
+    const incl = Math.atan2(H, Math.hypot(a / 2, b / 2) - G.R) / GRAD;
+    return { a, b, D, H, N, G, gap, esp, hoja, ops, litros, areaTot, traz, cuerda, incl,
+             costA: Math.hypot(H, Math.abs(b / 2 - G.R)), costB: Math.hypot(H, Math.abs(a / 2 - G.R)) };
+  }
+
+  // ============ dibujo ============
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, at, padre) { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (padre) padre.appendChild(e); return e; }
+  function texto(padre, x, y, t, cls, anchor = 'middle') { const e = el('text', { x, y, 'text-anchor': anchor, class: cls || '' }, padre); e.textContent = t; return e; }
+  function planos(c, op) {
+    const cont = $('planos'); cont.innerHTML = '';
+    for (const g of op.o.grupos) {
+      const svg = el('svg', { viewBox: '0 0 700 440', role: 'img', 'aria-label': `Plano de la pieza ${g.letra}` }, cont);
+      texto(svg, 20, 28, `PIEZA ${g.letra} · cortar ${g.n} · ${g.m === 4 ? 'transición completa' : g.m === 2 ? 'media transición' : 'un cuarto'}`, 'titulo', 'start');
+      const [x0, y0, x1, y1] = caja(g.p.pts), k = Math.min(620 / (x1 - x0), 320 / (y1 - y0));
+      const S = ([x, y]) => [350 + (x - (x0 + x1) / 2) * k, 60 + (y1 - y) * k];
+      const d = g.p.pts.map((q, i) => (i ? 'L' : 'M') + S(q).join(',')).join(' ') + ' Z';
+      el('path', { d, class: 'relleno' }, svg);
+      for (const [P, Q, t] of g.p.dobleces) { const [px, py] = S(P), [qx, qy] = S(Q); el('line', { x1: px, y1: py, x2: qx, y2: qy, class: 'doblez', 'stroke-width': t === 'doblez' ? 1.8 : 0.8, 'stroke-dasharray': t === 'doblez' ? '8 5' : '3 4' }, svg); }
+      el('path', { d, class: 'corte' }, svg);
+      // tramos rectos de la boca cuadrada
+      for (let i = 1; i < g.p.recto.length; i++) {
+        const A = g.p.recto[i - 1], B = g.p.recto[i], L = Math.hypot(B[0] - A[0], B[1] - A[1]);
+        const [ax, ay] = S(A), [bx, by] = S(B);
+        texto(svg, (ax + bx) / 2, (ay + by) / 2 - 8, f1(L));
+      }
+      texto(svg, 20, 410, `Costura ${f1(g.p.costura[0])} · cuerda entre divisiones del redondo ${f1(c.cuerda)} · ${c.N * g.m} divisiones`, '', 'start');
+      texto(svg, 20, 432, 'Líneas largas punteadas: doblez de esquina · cortas: prensado', 'marca-t', 'start');
+    }
+  }
+  function hojas(c, op) {
+    const cont = $('hojas'); cont.innerHTML = '';
+    op.o.laminas.forEach((L, li) => {
+      const k = 660 / c.hoja.w, Wp = c.hoja.w * k, Hp = c.hoja.h * k;
+      const svg = el('svg', { viewBox: `0 0 ${Wp + 40} ${Hp + 60}`, role: 'img', 'aria-label': `Lámina ${li + 1}` }, cont);
+      texto(svg, 20, 24, `LÁMINA ${li + 1} de ${op.o.laminas.length} · ${f0(c.hoja.h)} × ${f0(c.hoja.w)} mm`, 'titulo', 'start');
+      el('rect', { x: 20, y: 36, width: Wp, height: Hp, class: 'hoja' }, svg);
+      for (const pl of colocaciones(op.o.grupos, L, c.gap)) {
+        const T = ([x, y]) => [20 + x * k, 36 + Hp - y * k];
+        const d = pl.pts.map((q, i) => (i ? 'L' : 'M') + T(q).join(',')).join(' ') + ' Z';
+        const b = pl.gi % 2 ? ' b' : '';
+        el('path', { d, class: 'relleno' + b }, svg); el('path', { d, class: 'corte' + b }, svg);
+        for (const [P, Q] of pl.g.p.dobleces) { const [P2, Q2] = rot([P, Q], pl.ang).map(([x, y]) => T([x + pl.tx, y + pl.ty])); el('line', { x1: P2[0], y1: P2[1], x2: Q2[0], y2: Q2[1], class: 'doblez' }, svg); }
+        const [x0, y0, x1, y1] = caja(pl.pts.map(T));
+        texto(svg, (x0 + x1) / 2, (y0 + y1) / 2 + 5, pl.nombre, 'num-p');
+      }
+    });
+  }
+
+  function pintar() {
+    const c = calcular();
+    const errBox = $('error');
+    if (c.err) { errBox.hidden = false; errBox.innerHTML = c.err.map(e => `<div>${e}</div>`).join(''); ultimo = null; ['r-lam', 'r-pz', 'r-sol', 'r-lt'].forEach(i => $(i).textContent = '—'); ['opciones', 'planos', 'hojas', 'tabla', 'avisos'].forEach(i => $(i).innerHTML = ''); return; }
+    errBox.hidden = true; ultimo = c;
+    if (elegida >= c.ops.length) elegida = 0;
+    $('opciones').innerHTML = c.ops.map((x, i) => `<label class="opcion"><input type="radio" name="op" value="${i}" ${i === elegida ? 'checked' : ''}><span><b>${x.o.desc}</b>${x.etiq ? `<span class="etiq ${i === 0 ? 'a' : ''}">${x.etiq}</span>` : ''}</span>
+      <span class="det">${x.o.laminas.length} ${x.o.laminas.length === 1 ? 'lámina' : 'láminas'} · ${x.o.piezas} ${x.o.piezas === 1 ? 'pieza' : 'piezas'} · ${f1(x.o.soldadura / 1000)} m de soldadura · aprovecha ${f0(x.o.util * 100)} %</span></label>`).join('');
+    document.querySelectorAll('input[name="op"]').forEach(r => r.addEventListener('change', () => { elegida = +r.value; pintar(); }));
+    const op = c.ops[elegida];
+    $('r-lam').textContent = `${op.o.laminas.length}`; $('r-pz').textContent = `${op.o.piezas}`;
+    $('r-sol').textContent = `${f1(op.o.soldadura / 1000)} m`; $('r-lt').textContent = `${f0(c.litros)} L`;
+    planos(c, op); hojas(c, op);
+    const filas = [
+      ['Capacidad', `${f0(c.litros)} litros`, 'Volumen entre las dos bocas.'],
+      ['Costura en frente y fondo', mm(c.costA), 'Largo real de la costura si va en la mitad del frente o del fondo.'],
+    ];
+    if (Math.abs(c.a - c.b) > 0.01) filas.push(['Costura en los lados', mm(c.costB), 'Largo real si va en la mitad de un lado.']);
+    filas.push(['Cuerda entre divisiones', mm(c.cuerda), `El redondo se parte en ${4 * c.N} divisiones iguales.`]);
+    c.traz.forEach((L, t) => filas.push([`Trazado: esquina → punto ${t}`, mm(L), t === 0 ? 'Largo real de la esquina al punto del redondo frente al lado (empieza la cara plana).' : t === c.N ? 'Hasta el punto frente al lado siguiente.' : 'Para trazar a mano con compás desde la esquina.']));
+    filas.push(['Inclinación más acostada', `${f1(c.incl)}°`, 'En las esquinas. Si es tolva, conviene más de 45–60° según el material.'],
+      ['Lámina de la pieza', `${f2(c.areaTot / 1e6)} m²`, 'Sin desperdicio.'],
+      ['Soldadura', `${f1(op.o.soldadura / 1000)} m`, `${op.o.piezas} ${op.o.piezas === 1 ? 'costura' : 'costuras'}.`],
+      ['Aprovechamiento', `${f0(op.o.util * 100)} %`, op.o.util < 0.5 ? 'Sobra bastante lámina: sirve para bridas, tapas u otro trabajo.' : '']);
+    if (c.esp > 0) filas.push(['Peso', `${f1(c.areaTot * c.esp * ACERO)} kg`, `En acero de ${f1(c.esp)} mm.`]);
+    $('tabla').innerHTML = filas.map(([a, b, d]) => `<tr><td>${a}</td><td class="v">${b}</td><td>${d}</td></tr>`).join('');
+    const av = [];
+    if (c.G.R > Math.min(c.a, c.b) / 2) av.push('El redondo es más ancho que el lado del cuadrado: la pieza sale hacia afuera en esa parte. Se calcula igual.');
+    if (c.incl < 45) av.push(`Las esquinas quedan muy acostadas (${f1(c.incl)}°): si es tolva, muchos materiales se quedan pegados.`);
+    $('avisos').innerHTML = av.map(a => `<div class="aviso">${a}</div>`).join('');
+    $('imp-medidas').textContent = `Cuadrado a redondo: ${f1(c.a)} × ${f1(c.b)} mm a Ø ${f1(c.D)} mm · alto ${f1(c.H)} mm · ${4 * c.N} divisiones · lámina ${f0(c.hoja.h)} × ${f0(c.hoja.w)} mm.`;
+    guardar();
+  }
+
+  // ============ DXF ============
+  function capa(n, color) { return `0\nLAYER\n2\n${n}\n70\n0\n62\n${color}\n6\nCONTINUOUS\n`; }
+  function dxf(ents) { return '0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n9\n$INSUNITS\n70\n4\n0\nENDSEC\n0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n4\n' + capa('CORTE', 1) + capa('MARCADO', 2) + capa('REFERENCIA', 8) + capa('LAMINA', 9) + '0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n' + ents.join('') + '0\nENDSEC\n0\nEOF\n'; }
+  const N = v => (Math.round(v * 10000) / 10000).toString();
+  const linea = (x0, y0, x1, y1, c = 'CORTE') => `0\nLINE\n8\n${c}\n10\n${N(x0)}\n20\n${N(y0)}\n30\n0\n11\n${N(x1)}\n21\n${N(y1)}\n31\n0\n`;
+  const txt = (x, y, h, t, c = 'REFERENCIA') => `0\nTEXT\n8\n${c}\n10\n${N(x)}\n20\n${N(y)}\n30\n0\n40\n${N(h)}\n1\n${t}\n`;
+  function piezaDXF(p, ang, tx, ty, nombre) {
+    const T = q => rot([q], ang).map(([x, y]) => [x + tx, y + ty])[0];
+    const P = p.pts.map(T), e = [];
+    for (let i = 0; i < P.length; i++) e.push(linea(...P[i], ...P[(i + 1) % P.length]));
+    for (const [a, b] of p.dobleces) e.push(linea(...T(a), ...T(b), 'MARCADO'));
+    if (nombre) { const [x0, y0, x1, y1] = caja(P); e.push(txt((x0 + x1) / 2 - 20, (y0 + y1) / 2, 30, nombre)); }
+    return e;
+  }
+  function dxfPiezas(c, op) {
+    let e = [], x = 0;
+    for (const g of op.o.grupos) {
+      const [x0, y0, x1, y1] = caja(g.p.pts);
+      e = e.concat(piezaDXF(g.p, 0, x - x0, -y0, ''));
+      e.push(txt(x, (y1 - y0) + 30, 25, `Pieza ${g.letra}: cortar ${g.n}`));
+      x += (x1 - x0) + 200;
+    }
+    e.push(txt(0, -60, 18, FIRMA));
+    return dxf(e);
+  }
+  function dxfLaminas(c, op) {
+    let e = [], ox = 0;
+    op.o.laminas.forEach((L, li) => {
+      const W = c.hoja.w, H = c.hoja.h;
+      e.push(linea(ox, 0, ox + W, 0, 'LAMINA'), linea(ox + W, 0, ox + W, H, 'LAMINA'), linea(ox + W, H, ox, H, 'LAMINA'), linea(ox, H, ox, 0, 'LAMINA'), txt(ox, -50, 30, `LAMINA ${li + 1} de ${op.o.laminas.length}`));
+      for (const pl of colocaciones(op.o.grupos, L, c.gap)) e = e.concat(piezaDXF(pl.g.p, pl.ang, ox + pl.tx, pl.ty, pl.nombre));
+      ox += W + 300;
+    });
+    e.push(txt(0, -110, 20, FIRMA));
+    return dxf(e);
+  }
+  function bajar(nombre, contenido) { const blob = new Blob([contenido], { type: 'application/dxf' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombre; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+  const base = c => `cuadrado-redondo-${Math.round(c.a)}x${Math.round(c.b)}-D${Math.round(c.D)}-H${Math.round(c.H)}`;
+  $('b-dxf').addEventListener('click', () => { if (ultimo) bajar(base(ultimo) + '-piezas.dxf', dxfPiezas(ultimo, ultimo.ops[elegida])); });
+  $('b-dxf-lam').addEventListener('click', () => { if (ultimo) bajar(base(ultimo) + '-laminas.dxf', dxfLaminas(ultimo, ultimo.ops[elegida])); });
+  function fechaPie() { $('pie-fecha').textContent = 'Impreso el ' + new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' }); }
+  window.addEventListener('beforeprint', fechaPie);
+  $('b-pdf').addEventListener('click', () => { fechaPie(); window.print(); });
+
+  // ============ unidades, ilustración, memoria ============
+  const CAMPOS = ['A', 'B', 'D', 'H', 'N', 'separa', 'espesor'];
+  function ponerUnidad(u) {
+    if (u === unidad) return;
+    CAMPOS.forEach(id => { if (id === 'N') return; const v = leer($(id).value); if (isNaN(v)) return; const m = unidad === 'in' ? v * IN : v; $(id).value = u === 'in' ? f2(m / IN).replace(/,00$/, '') : f1(m).replace(/,0$/, ''); });
+    unidad = u; $('u-mm').setAttribute('aria-pressed', u === 'mm'); $('u-in').setAttribute('aria-pressed', u === 'in');
+    document.querySelectorAll('.entrada .u').forEach(s => s.textContent = u === 'in' ? 'pulg' : 'mm'); pintar();
+  }
+  $('u-mm').addEventListener('click', () => ponerUnidad('mm'));
+  $('u-in').addEventListener('click', () => ponerUnidad('in'));
+  document.querySelectorAll('.campo[data-cota] input').forEach(inp => {
+    const campo = inp.closest('.campo');
+    inp.addEventListener('focus', () => { document.querySelectorAll('.ilu-cota').forEach(x => x.classList.remove('on')); $(campo.dataset.cota).classList.add('on'); document.querySelectorAll('.campo').forEach(x => x.classList.remove('activo')); campo.classList.add('activo'); });
+  });
+  const CLAVE = 'edwin-cuadrado-redondo-v1';
+  function guardar() { try { localStorage.setItem(CLAVE, JSON.stringify({ unidad, lamina: $('lamina').value, v: CAMPOS.map(i => $(i).value) })); } catch (e) {} }
+  try {
+    const g = JSON.parse(localStorage.getItem(CLAVE) || 'null');
+    if (g && Array.isArray(g.v)) { CAMPOS.forEach((i, k) => { if (g.v[k] != null) $(i).value = g.v[k]; }); if (g.lamina) $('lamina').value = g.lamina; if (g.unidad === 'in') { unidad = 'in'; $('u-mm').setAttribute('aria-pressed', false); $('u-in').setAttribute('aria-pressed', true); document.querySelectorAll('.entrada .u').forEach(s => s.textContent = 'pulg'); } }
+  } catch (e) {}
+  let espera = null;
+  const programar = () => { clearTimeout(espera); espera = setTimeout(() => { elegida = 0; pintar(); }, 250); };
+  document.querySelectorAll('input:not([name="op"])').forEach(i => i.addEventListener('input', programar));
+  $('lamina').addEventListener('change', () => { elegida = 0; pintar(); });
+  pintar();
+  window.__cr = { calcular, desarrollar, geometria, rayos, dxfPiezas: () => dxfPiezas(ultimo, ultimo.ops[elegida]), dxfLaminas: () => dxfLaminas(ultimo, ultimo.ops[elegida]), elegir: i => { elegida = i; pintar(); } };
+})();
+</script>
+</body>
+</html>
