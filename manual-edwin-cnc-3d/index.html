@@ -170,6 +170,15 @@ details p { margin: 8px 0 0; }
 
 footer { grid-column: 1 / -1; margin-top: 48px; padding-top: 18px; border-top: 3px solid var(--tinta); font-size: 14px; color: var(--suave); }
 footer p { max-width: none; margin: 4px 0; }
+/* Render: grupos de materiales */
+.muestras { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: start; margin: 18px 0; }
+@media (max-width: 760px) { .muestras { grid-template-columns: minmax(0, 1fr); } }
+.muestras > div { min-width: 0; background: var(--papel); border: 1px solid var(--linea); padding: 12px 14px; }
+.muestras h4 { font-family: var(--f-titulo); font-size: 20px; margin: 0; letter-spacing: .02em; }
+.muestras .que { margin: 0 0 6px; font-size: 14px; color: var(--suave); }
+.muestras ul { margin: 0; padding-left: 18px; font-size: 15.5px; }
+.muestras li { margin: 2px 0; }
+.tiempo td:nth-child(2), .tiempo td:nth-child(3) { font-family: var(--f-medida); font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 400; }
 </style>
 
 </head>
@@ -181,10 +190,10 @@ footer p { max-width: none; margin: 4px 0; }
       <div class="logo" aria-hidden="true">3D</div>
       <div>
         <h1>Manual EDWIN CNC 3D</h1>
-        <p class="sub">Del modelo en 3D a la lámina cortada en la mesa de plasma.</p>
+        <p class="sub">Del modelo en 3D a la lámina cortada en la mesa de plasma, y a la foto de la pieza terminada.</p>
       </div>
     </div>
-    <span class="version">Versión 1.0.2 · Windows 64 bits</span>
+    <span class="version">Versión 1.0.3 · Windows 64 bits</span>
   </header>
 
   <nav class="indice" aria-label="Contenido">
@@ -195,6 +204,7 @@ footer p { max-width: none; margin: 4px 0; }
       <li><a href="#helicoidal">Helicoidal (sinfín)</a></li>
       <li><a href="#escala">Escala por 2 puntos</a></li>
       <li><a href="#foto">Foto → DXF</a></li>
+      <li><a href="#render">Render con Materiales EDWIN</a></li>
       <li><a href="#capas">Capas del DXF</a></li>
       <li><a href="#problemas">Problemas comunes</a></li>
     </ol>
@@ -213,7 +223,7 @@ footer p { max-width: none; margin: 4px 0; }
 
       <h3>Instalar</h3>
       <ol class="pasos">
-        <li><div>Descargue el instalador <span class="donde">EDWIN-CNC-3D-1.0.2-Windows-64-bits.exe</span> desde <a href="https://ingemaqsewing.github.io/#descargas">ingemaqsewing.github.io</a> (versión de prueba) y siga los pasos. Funciona en Windows 10 y 11 de 64 bits.</div></li>
+        <li><div>Descargue el instalador <span class="donde">EDWIN-CNC-3D-1.0.3-Windows-64-bits.exe</span> desde <a href="https://ingemaqsewing.github.io/#descargas">ingemaqsewing.github.io</a> (versión de prueba) y siga los pasos. Funciona en Windows 10 y 11 de 64 bits.</div></li>
         <li><div>Si ya tenía una versión anterior, instale encima: no hace falta desinstalar nada.</div></li>
       </ol>
 
@@ -376,6 +386,111 @@ footer p { max-width: none; margin: 4px 0; }
       <div class="ojo"><p><b class="rotulo">Antes de cortar</b>Una foto tiene error. Con la hoja y una buena foto queda cerca de ±1 mm; con piezas grandes, más. Mida siempre la pieza con el flexómetro y compare. Si la ventana dice «toca el borde o se mete en una marca», la pieza puede estar recortada: tome otra foto con la pieza más centrada.</p></div>
     </section>
 
+    <section id="render">
+      <h2><span class="cinta" aria-hidden="true"></span>Render con Materiales EDWIN</h2>
+      <p>Saca una foto realista del modelo, como las que se hacían con V-Ray: metal que brilla, pintura con reflejos y llantas con su labrado. La imagen la hace <b>Blender</b> por detrás; usted no tiene que abrirlo.</p>
+      <figure>
+        <img src="img/render-materiales.jpg" width="960" height="540" alt="Render de estudio: caja galvanizada sobre lámina de inox cepillado, llanta con labrado, cilindro de cromo, caja roja en esmalte brillante, caja amarilla con pintura texturizada y tapa negro mate, y caja azul metalizada">
+        <figcaption>Ambiente Estudio en Cycles, calidad media: 1 minuto en una portátil de 8 GB sin tarjeta de video.</figcaption>
+      </figure>
+
+      <h3>1. Tener Blender</h3>
+      <p>Instale Blender desde <span class="donde">blender.org</span>. EDWIN CNC 3D lo encuentra solo. Si no lo encuentra, en la pestaña <b>Renderizar</b> toque <b>Elegir…</b> y busque <span class="donde">blender.exe</span>.</p>
+
+      <h3>2. Pintar y escoger el acabado</h3>
+      <div class="dos">
+        <div>
+          <ol class="pasos">
+            <li><div>Pinte las caras con un <b>material con nombre</b> de la bandeja de materiales, por ejemplo «Llanta trasera» o «Rojo esmalte».</div></li>
+            <li><div><b>Clic derecho</b> sobre ese material en la bandeja ▸ <b>Acabado para el render</b>.</div></li>
+            <li><div>Escoja un grupo (<b>Metales</b>, <b>Pinturas sobre metal</b> o <b>Llantas y caucho</b>) y el acabado.</div></li>
+          </ol>
+          <div class="nota"><p><b>Automático</b>Si no escoge nada, el programa lo adivina por el nombre: «Llanta» o «neumático» sale como llanta, «inox» como metal, «madera» como satinado.</p></div>
+        </div>
+        <figure>
+          <img src="img/menu-2-acabado.png" width="264" height="252" alt="Menú Acabado para el render: Automático, los seis acabados básicos y los grupos Metales, Pinturas sobre metal, Llantas y caucho">
+          <figcaption>Clic derecho en el material ▸ Acabado para el render.</figcaption>
+        </figure>
+      </div>
+
+      <div class="muestras">
+        <div>
+          <h4>Metales</h4>
+          <p class="que">Traen su propio color.</p>
+          <ul>
+            <li>Acero natural (cold rolled)</li>
+            <li>Inox cepillado</li>
+            <li>Cromo / inox espejo</li>
+            <li>Galvanizado</li>
+            <li>Aluminio</li>
+            <li>Lámina hot rolled</li>
+            <li>Oro, bronce y cobre</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Pinturas sobre metal</h4>
+          <p class="que">Usan el color con que pintó.</p>
+          <ul>
+            <li>Mate (polvo electrostático)</li>
+            <li>Satinada</li>
+            <li>Brillante / esmalte</li>
+            <li>Texturizada (arrugada)</li>
+            <li>Metalizada (escarcha)</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Llantas y caucho</h4>
+          <p class="que">El labrado sigue la rueda.</p>
+          <ul>
+            <li>Llanta (caucho con labrado)</li>
+            <li>Caucho liso</li>
+            <li>Caucho usado (opaco)</li>
+            <li>Rin de aluminio maquinado</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>3. Llantas</h3>
+      <p>Dibuje la llanta como un sólido redondo y píntela con un material de acabado <b>Llanta</b>. Al renderizar, el programa busca el centro y el eje de cada rueda y le pone el labrado: bloques en V y tres canales alrededor. Funciona con varias ruedas a la vez.</p>
+      <p>Para el rin use <b>Rin de aluminio maquinado</b> (rayitas de torno alrededor del eje), <b>Cromo</b> o una pintura (negro mate, gris).</p>
+      <figure>
+        <img src="img/render-llanta.jpg" width="1280" height="720" alt="Acercamiento a una llanta con labrado en V y canales, caucho negro satinado, con una caja roja de esmalte al lado que refleja las cajas de luz">
+        <figcaption>Calidad alta: 5 ½ minutos.</figcaption>
+      </figure>
+      <div class="nota"><p><b>De cerca</b>El labrado es un relieve dibujado en la superficie: de lejos y a media distancia se ve real. Para una toma muy cercana se ve mejor un labrado modelado de verdad.</p></div>
+
+      <h3>4. Renderizar</h3>
+      <div class="dos">
+        <div>
+          <ol class="pasos">
+            <li><div>Ponga la vista como quiere la foto (orbitar, acercar).</div></li>
+            <li><div>Abra la pestaña <b>Renderizar</b> en la barra lateral.</div></li>
+            <li><div><b>Motor:</b> EEVEE para probar rápido; Cycles para la foto final (reflejos reales y bordes suavizados).</div></li>
+            <li><div><b>Ambiente:</b> «Estudio — fondo curvo y cajas de luz» para foto de producto. Día, Noche o Nublado para exteriores.</div></li>
+            <li><div>Toque <b>Renderizar</b>. Al terminar, la imagen se abre: <b>Guardar imagen…</b></div></li>
+          </ol>
+        </div>
+        <figure>
+          <img src="img/panel-renderizar.png" width="380" height="440" alt="Pestaña Renderizar: Blender encontrado, Motor Cycles, Calidad Media, Ancho 1920 px y Ambiente Estudio">
+          <figcaption>Pestaña Renderizar con el ambiente Estudio.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Cuánto tarda</h3>
+      <div class="tabla tiempo">
+        <table>
+          <thead><tr><th>Para qué</th><th>Motor</th><th>Tiempo aprox.</th></tr></thead>
+          <tbody>
+            <tr><td>Probar el encuadre</td><td>EEVEE · Borrador</td><td>30–45 s</td></tr>
+            <tr><td>Foto para mostrar</td><td>Cycles · Media</td><td>1–2 min</td></tr>
+            <tr><td>Foto final de cerca</td><td>Cycles · Alta</td><td>5–6 min</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Tiempos en una portátil de 8 GB sin tarjeta de video, a 960–1280 px de ancho. Con una tarjeta de video NVIDIA, Cycles es mucho más rápido.</p>
+      <div class="nota"><p><b>Guardar el .blend</b>Marque «Guardar también el .blend» si quiere abrir la escena en Blender y retocar luces o materiales a mano.</p></div>
+    </section>
+
     <section id="capas">
       <h2><span class="cinta" aria-hidden="true"></span>Capas del DXF</h2>
       <p>Los DXF salen en milímetros, con las mismas capas que usa EDWIN CNC CAD-CAM:</p>
@@ -421,12 +536,20 @@ footer p { max-width: none; margin: 4px 0; }
         <summary>Escalé y algo no cambió de tamaño</summary>
         <p>Los grupos bloqueados, las líneas guía, los textos y las cotas no se escalan. Desbloquee el grupo y repita. Recuerde que si tenía algo seleccionado, solo se escaló eso.</p>
       </details>
+      <details>
+        <summary>El render sale con los materiales sin brillo</summary>
+        <p>El acabado se escoge en el <b>material con nombre</b> (clic derecho en la bandeja). La pintura sin nombre se queda en mate. Para la foto final use el motor Cycles.</p>
+      </details>
+      <details>
+        <summary>La llanta sale sin labrado</summary>
+        <p>Use el acabado <b>Llanta (caucho con labrado)</b> y dibuje la llanta redonda, de más diámetro que ancho. «Caucho liso» no lleva labrado.</p>
+      </details>
     </section>
   </main>
 
   <footer>
     <p><b>EDWIN CNC 3D</b> viene con las máquinas EDWIN CNC. Está basado en IngeTrazo (licencia GPL-3).</p>
-    <p>Manual de la versión 1.0.2, noviembre de 2026.</p>
+    <p>Manual de la versión 1.0.3, noviembre de 2026. El render usa Blender (blender.org).</p>
   </footer>
 </div>
 </body>
