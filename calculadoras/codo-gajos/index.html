@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Calculadora de codo de gajos · EDWIN CNC Taller</title>
+<meta name="description" content="Codo de gajos para tubo o ducto: desarrollo de cada gajo, tabla de ordenadas para trazar a mano, acomodo intercalado en láminas con corte compartido. PDF y DXF para plasma.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: hoja de taller — formulario a la izquierda; gajos, tabla de ordenadas y láminas a la derecha. */
+:root {
+  --bg: #f4f3ee; --papel: #ffffff; --tinta: #1d1d1b; --suave: #5b5a55; --linea: #d9d6cc;
+  --amarillo: #f2b705; --rojo: #c8321e; --azul: #1f5fa8; --nota: #fff6d6; --campo: #faf9f5;
+  --corte: #c8321e; --cota: #1f5fa8; --lamina: #e9e6dc; --pieza2: #2f6d3a; --marca: #b07a00;
+  --f-titulo: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-texto: "Barlow", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-medida: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151513; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #36352f;
+    --rojo: #f0705c; --azul: #7fb0ec; --nota: #2b2615; --campo: #262622; --corte: #f0705c; --cota: #7fb0ec; --lamina: #2a2a26; --pieza2: #7cc488; --marca: #f2c14e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151513; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #36352f;
+  --rojo: #f0705c; --azul: #7fb0ec; --nota: #2b2615; --campo: #262622; --corte: #f0705c; --cota: #7fb0ec; --lamina: #2a2a26; --pieza2: #7cc488; --marca: #f2c14e;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--tinta); font-family: var(--f-texto); font-size: 17px; line-height: 1.55; }
+a { color: inherit; }
+.ancho { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.cab { border-bottom: 3px solid var(--tinta); background: var(--papel); }
+header.cab .ancho { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.marca { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo { width: 44px; height: 44px; flex: none; background: var(--amarillo); color: #1d1d1b; border: 3px solid #1d1d1b; display: grid; place-items: center; font-family: var(--f-titulo); font-weight: 700; font-size: 17px; }
+.marca b { font-family: var(--f-titulo); font-size: 22px; display: block; line-height: 1; }
+.marca span { font-size: 13.5px; color: var(--suave); }
+nav.migas { font-size: 15px; color: var(--suave); }
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(32px, 5vw, 46px); line-height: 1.05; margin: 26px 0 6px; text-wrap: balance; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+h1 .cinta { width: 54px; height: 14px; flex: none; background: repeating-linear-gradient(-45deg, var(--amarillo) 0 8px, #1d1d1b 8px 16px); }
+.intro { margin: 0 0 22px; color: var(--suave); max-width: 72ch; }
+h2 { font-family: var(--f-titulo); font-size: 25px; margin: 0 0 10px; }
+h3 { font-family: var(--f-titulo); font-size: 21px; margin: 20px 0 8px; }
+.rejilla { display: grid; grid-template-columns: minmax(0, 390px) minmax(0, 1fr); gap: 28px; align-items: start; padding-bottom: 48px; }
+@media (max-width: 900px) { .rejilla { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--papel); border: 1px solid var(--linea); padding: 18px; min-width: 0; }
+.selector { display: inline-flex; border: 2px solid var(--tinta); margin: 0 8px 12px 0; flex-wrap: wrap; }
+.selector button { font: 600 15px var(--f-texto); padding: 6px 12px; border: 0; background: transparent; color: var(--tinta); cursor: pointer; }
+.selector button[aria-pressed="true"] { background: var(--tinta); color: var(--bg); }
+.campo { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; padding: 10px 0; border-top: 1px solid var(--linea); }
+.num { width: 28px; height: 28px; display: grid; place-items: center; background: var(--tinta); color: var(--bg); font-family: var(--f-titulo); font-weight: 700; font-size: 17px; }
+.campo label { font-weight: 600; align-self: center; }
+.campo label small { font-weight: 400; color: var(--suave); }
+.entrada { grid-column: 2; display: flex; align-items: center; gap: 8px; }
+.entrada input, .entrada select { width: 100%; min-width: 0; font: 500 19px var(--f-medida); padding: 8px 10px; border: 2px solid var(--linea); background: var(--campo); color: var(--tinta); border-radius: 0; }
+.entrada select { font: 500 16px var(--f-texto); }
+.entrada input:focus, .entrada select:focus { outline: none; border-color: var(--amarillo); box-shadow: 0 0 0 2px var(--amarillo); }
+.entrada .u { font-family: var(--f-medida); color: var(--suave); min-width: 34px; }
+.ayuda { grid-column: 2; font-size: 14.5px; color: var(--suave); margin: 0; }
+.campo.activo .num { background: var(--amarillo); color: #1d1d1b; }
+details.mas { margin-top: 12px; border-top: 2px solid var(--tinta); padding-top: 10px; }
+details.mas summary { cursor: pointer; font-family: var(--f-titulo); font-size: 19px; }
+.error { background: var(--nota); border-left: 5px solid var(--rojo); padding: 10px 12px; margin: 12px 0 0; font-size: 15.5px; }
+.aviso { background: var(--nota); border-left: 5px solid var(--amarillo); padding: 10px 12px; margin: 12px 0 0; font-size: 15.5px; }
+figure.ilu { margin: 0 0 10px; }
+figure.ilu svg { width: 100%; height: auto; display: block; }
+figure.ilu figcaption { font-size: 13.5px; color: var(--suave); }
+.ilu-cota { stroke: var(--suave); fill: var(--suave); }
+.ilu-cota text { font: 600 15px var(--f-medida); stroke: none; }
+.ilu-cota.on { stroke: var(--rojo); fill: var(--rojo); }
+.ilu-cota.on line { stroke-width: 2.6; }
+.resumen { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.dato { border: 2px solid var(--tinta); padding: 8px 12px; background: var(--papel); }
+.dato span { display: block; font-size: 13.5px; color: var(--suave); }
+.dato b { font-family: var(--f-medida); font-size: 21px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.dato.grande { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.dato.grande span { color: #3d3416; }
+.opciones { display: grid; gap: 8px; margin-bottom: 8px; }
+.opcion { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 2px 10px; align-items: start; border: 2px solid var(--linea); padding: 10px 12px; cursor: pointer; background: var(--papel); }
+.opcion:has(input:checked) { border-color: var(--tinta); box-shadow: inset 5px 0 0 var(--amarillo); }
+.opcion input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: #1d1d1b; }
+.opcion b { font-family: var(--f-titulo); font-size: 19px; }
+.opcion .det { grid-column: 2; font-size: 15px; color: var(--suave); }
+.etiq { display: inline-block; font: 600 12.5px var(--f-texto); letter-spacing: .05em; text-transform: uppercase; padding: 1px 7px; margin-left: 6px; border: 1.5px solid var(--tinta); vertical-align: 2px; }
+.etiq.a { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.plano svg, .laminas svg { width: 100%; height: auto; display: block; background: var(--papel); }
+.corte { fill: none; stroke: var(--corte); stroke-width: 2.2; }
+.laminas .corte { stroke-width: 1.4; }
+.relleno { fill: var(--corte); opacity: .08; }
+.laminas .relleno { opacity: .13; }
+.laminas .relleno.b { fill: var(--pieza2); }
+.laminas .corte.b { stroke: var(--pieza2); }
+.hoja { fill: var(--lamina); stroke: var(--tinta); stroke-width: 1.4; }
+.rolado { stroke: var(--marca); stroke-width: 1.6; stroke-dasharray: 8 5; fill: none; }
+.cota { stroke: var(--cota); stroke-width: 1.2; fill: none; }
+.flecha { fill: var(--cota); }
+.plano text, .laminas text { font: 500 16px var(--f-medida); fill: var(--cota); paint-order: stroke; stroke: var(--papel); stroke-width: 6px; stroke-linejoin: round; }
+text.titulo { fill: var(--tinta) !important; font: 700 20px var(--f-titulo) !important; }
+text.num-p { fill: var(--tinta) !important; font: 700 15px var(--f-titulo) !important; stroke-width: 4px; }
+text.marca-t { fill: var(--marca) !important; font-size: 14px !important; }
+.tabla { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--linea); vertical-align: top; }
+td.v { font-family: var(--f-medida); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th { font-family: var(--f-titulo); font-size: 16px; letter-spacing: .05em; text-transform: uppercase; border-bottom: 2px solid var(--tinta); }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px; }
+.btn { font: 600 16px var(--f-texto); padding: 10px 16px; border: 2px solid var(--tinta); background: var(--papel); color: var(--tinta); cursor: pointer; }
+.btn.principal { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.btn:focus-visible, .selector button:focus-visible, .opcion:focus-within { outline: 3px solid var(--azul); outline-offset: 2px; }
+.nota-pie { font-size: 14.5px; color: var(--suave); }
+.pasos-taller { padding-left: 20px; margin: 6px 0; }
+.pasos-taller li { margin: 4px 0; max-width: 70ch; }
+footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size: 14px; color: var(--suave); }
+.solo-imprimir { display: none; }
+.pie-pdf { font-size: 9pt; color: #444; border-top: 1px solid #999; padding-top: 4px; justify-content: space-between; gap: 12px; }
+@media print {
+  @page { size: A4 portrait; margin: 12mm; }
+  body { background: #fff; color: #000; font-size: 11.5pt; }
+  header.cab, .panel.formulario, .botones, footer, .no-imprimir, details.mas, .intro, .nota-pie { display: none !important; }
+  .rejilla { display: block; }
+  .panel { border: 0; padding: 0; }
+  .solo-imprimir { display: block; }
+  .pie-pdf { display: flex !important; position: fixed; left: 0; right: 0; bottom: 0; background: #fff; }
+  main { padding-bottom: 12mm; }
+  .plano svg { max-height: 95mm; }
+  .laminas { break-before: page; }
+  .laminas svg { max-height: 80mm; }
+  .opcion:not(:has(input:checked)) { display: none; }
+  h1 { margin-top: 0; font-size: 22pt; }
+}
+</style>
+</head>
+<body>
+<header class="cab">
+  <div class="ancho">
+    <a class="marca" href="../">
+      <span class="logo" aria-hidden="true">CNC</span>
+      <span><b>EDWIN CNC Taller</b><span>Herramientas de diseño y calculadoras de metalmecánica</span></span>
+    </a>
+    <nav class="migas" aria-label="Ruta"><a href="../">Calculadoras</a> › Codo de gajos</nav>
+  </div>
+</header>
+
+<main class="ancho">
+  <h1><span class="cinta" aria-hidden="true"></span>Codo de gajos</h1>
+  <p class="intro">Codo hecho con tramos cortos de tubo (gajos), para ductos, chimeneas y tuberías grandes. Escriba el diámetro, el ángulo del codo, qué tan abierto lo quiere y cuántas piezas. La calculadora le da cada gajo desarrollado con su tabla de medidas y los acomoda intercalados, para que compartan el corte y casi no sobre lámina.</p>
+
+  <div class="rejilla">
+    <section class="panel formulario" aria-labelledby="t-medidas">
+      <h2 id="t-medidas">Medidas del codo</h2>
+      <div class="selector" role="group" aria-label="Unidades">
+        <button type="button" id="u-mm" aria-pressed="true">mm</button>
+        <button type="button" id="u-in" aria-pressed="false">pulg</button>
+      </div>
+      <figure class="ilu" aria-hidden="true">
+        <svg viewBox="0 0 420 280">
+          <defs><marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>
+          <path d="M60,250 L60,175 L82,118 L127,73 L185,51 L260,51 M130,250 L130,190 L141,159 L162,138 L193,127 L260,127" fill="none" stroke="var(--tinta)" stroke-width="2.2"/>
+          <path d="M60,175 L130,190 M82,118 L141,159 M127,73 L162,138 M185,51 L193,127" stroke="var(--tinta)" stroke-width="1.4" fill="none"/>
+          <path d="M95,250 L95,185 A165,165 0 0 1 226,89 L260,89" fill="none" stroke="var(--suave)" stroke-width="1" stroke-dasharray="8 4 2 4"/>
+          <circle cx="260" cy="250" r="3" fill="var(--suave)"/>
+          <g class="ilu-cota" id="c-d"><line x1="60" y1="266" x2="130" y2="266" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><text x="64" y="282">1 Ø</text></g>
+          <g class="ilu-cota" id="c-a"><path d="M260,205 A45,45 0 0 0 215,250" fill="none" stroke-width="1.6" marker-start="url(#fl)" marker-end="url(#fl)"/><text x="268" y="214">2 Ángulo</text></g>
+          <g class="ilu-cota" id="c-r"><line x1="260" y1="250" x2="157" y2="134" marker-end="url(#fl)" stroke-width="1.6"/><text x="214" y="182">3 Radio</text></g>
+          <g class="ilu-cota" id="c-n"><text x="290" y="60">4 Piezas</text></g>
+        </svg>
+        <figcaption>Codo de 90° en 4 piezas visto de lado. La medida que está escribiendo se marca en rojo.</figcaption>
+      </figure>
+      <div class="campo" data-cota="c-d">
+        <span class="num">1</span><label for="D">Diámetro del tubo</label>
+        <div class="entrada"><input id="D" inputmode="decimal" autocomplete="off" value="300"><span class="u">mm</span></div>
+        <p class="ayuda">El diámetro con que se va a rolar la lámina.</p>
+      </div>
+      <div class="campo" data-cota="c-a">
+        <span class="num">2</span><label for="ang">Ángulo del codo</label>
+        <div class="entrada"><input id="ang" inputmode="decimal" autocomplete="off" value="90"><span class="u">°</span></div>
+        <p class="ayuda">90° es una escuadra; 45° es medio codo.</p>
+      </div>
+      <div class="campo" data-cota="c-r">
+        <span class="num">3</span><label for="R">Radio de la curva <small>(al centro del tubo)</small></label>
+        <div class="entrada"><input id="R" inputmode="decimal" autocomplete="off" value="450"><span class="u">mm</span></div>
+        <p class="ayuda">Del centro de la curva al centro del tubo. Lo normal es 1 a 1,5 veces el diámetro.</p>
+      </div>
+      <div class="campo" data-cota="c-n">
+        <span class="num">4</span><label for="N">Número de piezas</label>
+        <div class="entrada"><input id="N" inputmode="numeric" autocomplete="off" value="4"></div>
+        <p class="ayuda">Contando las dos de los extremos (que son medios gajos). Más piezas, curva más suave.</p>
+      </div>
+      <details class="mas">
+        <summary>Más opciones</summary>
+        <div class="campo">
+          <span class="num">5</span><label for="recto">Tramo recto en cada extremo</label>
+          <div class="entrada"><input id="recto" inputmode="decimal" autocomplete="off" value="0"><span class="u">mm</span></div>
+          <p class="ayuda">Un pedazo de tubo derecho pegado a las piezas de los extremos, para soldar o embridar.</p>
+        </div>
+        <div class="campo">
+          <span class="num">6</span><label for="div">Divisiones para la tabla</label>
+          <div class="entrada"><input id="div" inputmode="numeric" autocomplete="off" value="16"></div>
+          <p class="ayuda">En cuántas partes se divide el perímetro para la tabla de medidas (trazado a mano).</p>
+        </div>
+        <div class="campo">
+          <span class="num">7</span><label for="lamina">Lámina</label>
+          <div class="entrada"><select id="lamina">
+            <option value="1220x2440">4 × 8 pies (1220 × 2440 mm)</option>
+            <option value="1220x3050">4 × 10 pies (1220 × 3050 mm)</option>
+            <option value="1500x3000">1500 × 3000 mm</option>
+            <option value="1524x3048">5 × 10 pies (1524 × 3048 mm)</option>
+          </select></div>
+        </div>
+        <div class="campo">
+          <span class="num">8</span><label for="separa">Separación entre piezas y del borde</label>
+          <div class="entrada"><input id="separa" inputmode="decimal" autocomplete="off" value="10"><span class="u">mm</span></div>
+          <p class="ayuda">Con 0 los gajos comparten la línea de corte (un solo corte entre gajo y gajo).</p>
+        </div>
+        <div class="campo">
+          <span class="num">9</span><label for="espesor">Espesor <small>(solo para el peso)</small></label>
+          <div class="entrada"><input id="espesor" inputmode="decimal" autocomplete="off" value="2"><span class="u">mm</span></div>
+        </div>
+      </details>
+      <div id="error" class="error" hidden role="alert"></div>
+    </section>
+
+    <section class="panel resultado" aria-labelledby="t-res" aria-live="polite">
+      <h2 id="t-res">Gajos a cortar</h2>
+      <p class="solo-imprimir" id="imp-medidas"></p>
+      <div class="resumen">
+        <div class="dato grande"><span>Láminas</span><b id="r-lam">—</b></div>
+        <div class="dato"><span>Piezas</span><b id="r-pz">—</b></div>
+        <div class="dato"><span>Ángulo de corte</span><b id="r-cor">—</b></div>
+        <div class="dato"><span>Soldadura</span><b id="r-sol">—</b></div>
+      </div>
+      <div id="avisos"></div>
+      <h3>Plano de las piezas</h3>
+      <div class="plano" id="planos"></div>
+      <h3>Tabla de medidas (trazado a mano)</h3>
+      <div class="tabla"><table>
+        <thead id="t-cab"></thead>
+        <tbody id="t-ord"></tbody>
+      </table></div>
+      <p class="nota-pie">Divida el perímetro en partes iguales empezando por la costura. En cada línea mida desde el centro de la pieza hacia arriba y hacia abajo.</p>
+      <div class="laminas">
+        <h3>Acomodo en las láminas</h3>
+        <div id="hojas"></div>
+      </div>
+      <div class="botones">
+        <button class="btn principal" type="button" id="b-dxf">Descargar DXF de las piezas</button>
+        <button class="btn" type="button" id="b-dxf-lam">DXF de las láminas acomodadas</button>
+        <button class="btn" type="button" id="b-pdf">Imprimir o guardar PDF</button>
+      </div>
+      <p class="nota-pie">El DXF está en milímetros, a escala 1:1: el corte en la capa CORTE; la línea de centro y las del dorso y la garganta en MARCADO; textos y lámina en REFERENCIA y LAMINA (no se cortan).</p>
+      <h3>Todas las medidas</h3>
+      <div class="tabla"><table>
+        <thead><tr><th>Medida</th><th>Valor</th><th>Para qué sirve</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table></div>
+      <h3 class="no-imprimir">Cómo se hace en el taller</h3>
+      <ol class="pasos-taller no-imprimir">
+        <li>Corte las piezas con el DXF. Las marcas del dorso (lado de afuera) y de la garganta (lado de adentro) le ayudan a alinearlas.</li>
+        <li>Role cada pieza y suelde su costura. Las costuras quedan alternadas: una en la garganta, la siguiente en el dorso.</li>
+        <li>Presente los gajos girándolos para que las marcas del dorso queden en línea, y puntee.</li>
+        <li>Revise el ángulo del codo con transportador o escuadra antes de soldar todo.</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<div class="pie-pdf solo-imprimir" aria-hidden="true"><span>Lycan Developments · EDWIN CNC · 2026 · Calculadora de codo de gajos, versión 1.0</span><span id="pie-fecha"></span></div>
+<footer>
+  <div class="ancho"><p><b>EDWIN CNC Taller</b> · Lycan Developments · EDWIN CNC · 2026 · versión 1.0 de prueba. Las medidas son de cálculo: compruebe antes de cortar en serie.</p></div>
+</footer>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const FIRMA = 'Lycan Developments - EDWIN CNC 2026 - Calculadora de codo de gajos v1.0';
+  const IN = 25.4, ACERO = 7.85e-6, GRAD = Math.PI / 180, PASOS = 96;
+  let unidad = 'mm';
+
+  function leer(txt) {
+    if (txt == null) return NaN;
+    let t = String(txt).trim().replace(/["”°]|pulg(adas)?|in\b|mm/gi, '').trim();
+    if (!t) return NaN;
+    t = t.replace(',', '.');
+    const m = t.match(/^(\d+(?:\.\d+)?)?\s*(?:(\d+)\s*\/\s*(\d+))?$/);
+    if (!m || (!m[1] && !m[2])) return NaN;
+    let v = m[1] ? parseFloat(m[1]) : 0;
+    if (m[2]) { const d = parseFloat(m[3]); if (!d) return NaN; v += parseFloat(m[2]) / d; }
+    return v;
+  }
+  const aMM = v => unidad === 'in' ? v * IN : v;
+  const f0 = v => v.toLocaleString('es-CO', { maximumFractionDigits: 0 });
+  const f1 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const f2 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const mm = v => unidad === 'in' ? `${f1(v)} mm (${f2(v / IN)}")` : `${f1(v)} mm`;
+
+  // ============ geometría ============
+  // Un gajo es un tubo cortado por dos planos inclinados. Sobre la lámina, x va alrededor del tubo
+  // (0 a π·D, la costura en los bordes) e y a lo largo del tubo. En un punto del perímetro a la
+  // distancia ρ = Rc + r·cos(φ + φ0) del eje de la curva, cada corte inclinado β se aleja ρ·tan β
+  // de la línea de centro del gajo. φ0 = π: costura en la garganta; φ0 = 0: costura en el dorso.
+  function gajo(r, Rc, bAbajo, bArriba, rAbajo, rArriba, costuraDorso, fiA = 0, fiB = 2 * Math.PI) {
+    const f0_ = costuraDorso ? 0 : Math.PI, arriba = [], abajo = [];
+    for (let i = 0; i <= PASOS; i++) {
+      const fi = fiA + (fiB - fiA) * i / PASOS, x = r * (fi - fiA), rho = Rc + r * Math.cos(fi + f0_);
+      arriba.push([x, rArriba + rho * Math.tan(bArriba)]);
+      abajo.push([x, -(rAbajo + rho * Math.tan(bAbajo))]);
+    }
+    return { arriba, abajo, ancho: r * (fiB - fiA), costuraDorso, bAbajo, bArriba, rAbajo, rArriba, fiA, fiB };
+  }
+  const contorno = g => [...g.abajo, ...g.arriba.slice().reverse()];
+  const yMin = g => Math.min(...g.abajo.map(p => p[1])), yMax = g => Math.max(...g.arriba.map(p => p[1]));
+
+  // ============ cálculo ============
+  let ultimo = null;
+  function calcular() {
+    const D = aMM(leer($('D').value)), ang = leer($('ang').value), Rc = aMM(leer($('R').value));
+    const N = Math.round(leer($('N').value)), recto = aMM(leer($('recto').value || '0'));
+    const div = Math.round(leer($('div').value || '16'));
+    const gap = aMM(leer($('separa').value || '0')), esp = aMM(leer($('espesor').value || '0'));
+    const [hw, hl] = $('lamina').value.split('x').map(Number), hoja = { w: hl, h: hw };
+    const err = [];
+    if (!(D > 0)) err.push('Escriba el diámetro del tubo (1).');
+    if (!(ang > 0 && ang <= 180)) err.push('El ángulo del codo debe estar entre 1° y 180° (2).');
+    if (!(Rc > 0)) err.push('Escriba el radio de la curva (3).');
+    if (!(N >= 2 && N <= 30)) err.push('El número de piezas debe estar entre 2 y 30 (4).');
+    if (!(recto >= 0)) err.push('El tramo recto no puede ser negativo (5).');
+    if (!(div >= 4 && div <= 72)) err.push('Las divisiones de la tabla deben estar entre 4 y 72 (6).');
+    if (err.length) return { err };
+    const r = D / 2;
+    if (Rc <= r) return { err: [`El radio de la curva (${f0(Rc)}) debe ser mayor que medio diámetro (${f0(r)}): si no, el gajo se cruza por dentro.`] };
+    const alfa = ang * GRAD / (N - 1);         // ángulo de un gajo completo
+    const b = alfa / 2;                         // cada corte se inclina la mitad
+    // piezas: extremo, (N-2) completos, extremo; costuras alternadas (garganta, dorso, garganta…)
+    // si el perímetro no cabe en la lámina, cada gajo se parte en tramos iguales alrededor
+    const util = Math.max(hoja.w, hoja.h) - 2 * gap;
+    const partes = Math.max(1, Math.ceil(Math.PI * D / util - 1e-9));
+    const piezas = [];
+    for (let k = 0; k < N; k++) {
+      const ini = k === 0, fin = k === N - 1;
+      for (let q = 0; q < partes; q++) {
+        const fA = 2 * Math.PI * q / partes, fB = 2 * Math.PI * (q + 1) / partes;
+        const g = gajo(r, Rc, ini ? 0 : b, fin ? 0 : b, ini ? recto : 0, fin ? recto : 0, k % 2 === 1, fA, fB);
+        g.nombre = partes > 1 ? `${k + 1}${String.fromCharCode(97 + q)}` : `${k + 1}`; g.tipo = ini || fin ? 'extremo' : 'completo';
+        g.parte = q;
+        piezas.push(g);
+      }
+    }
+    if (N === 2) piezas.forEach(g => g.tipo = 'extremo');
+    const L = acomodar(piezas, hoja, gap);
+    if (!L) return { err: [`El gajo (${f0(2 * Math.PI * r)} mm alrededor) no cabe en esta lámina. Pruebe una lámina más grande (Más opciones ▸ 7).`] };
+    const area = piezas.reduce((s, g) => s + areaGajo(g), 0);
+    const soldadura = piezas.reduce((s, g) => s + (g.arriba[0][1] - g.abajo[0][1]), 0) + (N - 1) * Math.PI * D;
+    const partesTxt = partes;
+    return { D, r, ang, Rc, N, partes, recto, div, gap, esp, hoja, alfa, b, piezas, laminas: L.laminas, orient: L.orient, area, soldadura, util: area / (L.laminas.length * hoja.w * hoja.h) };
+  }
+  function areaGajo(g) { let s = 0; for (let i = 1; i < g.arriba.length; i++) { const dx = g.arriba[i][0] - g.arriba[i - 1][0]; s += dx * ((g.arriba[i][1] + g.arriba[i - 1][1]) / 2 - (g.abajo[i][1] + g.abajo[i - 1][1]) / 2); } return s; }
+
+  // ============ acomodo: columnas de ancho π·D; los gajos se apilan y encajan ============
+  function acomodar(piezas, hoja, gap) {
+    const ancho = piezas[0].ancho;
+    // la columna va a lo largo de la lámina si cabe a lo ancho; si no, al revés
+    let orient = null;
+    if (ancho <= hoja.h - 2 * gap) orient = { largo: hoja.w, otro: hoja.h, giro: false };
+    else if (ancho <= hoja.w - 2 * gap) orient = { largo: hoja.h, otro: hoja.w, giro: true };
+    else return null;
+    const colsPorHoja = Math.max(1, Math.floor((orient.otro - gap) / (ancho + gap)));
+    const tope = orient.largo - gap;
+    const columnas = [];
+    let col = null;
+    const orden = [...piezas].sort((a, b) => (a.parte || 0) - (b.parte || 0));
+    for (const g of orden) {
+      const alto = yMax(g) - yMin(g);
+      if (alto > tope - gap) return null;
+      // un tramo solo encaja con el mismo tramo del gajo vecino
+      if (col && (col.piezas[col.piezas.length - 1].g.parte || 0) !== (g.parte || 0)) col = null;
+      if (col) {
+        // pegar este gajo al anterior: lo más abajo posible sin cruzarse (la curva de abajo de este
+        // encaja en la de arriba del otro si las costuras se alternan)
+        const prev = col.piezas[col.piezas.length - 1];
+        let dy = -Infinity;
+        for (let i = 0; i <= PASOS; i++) dy = Math.max(dy, prev.oy + prev.g.arriba[i][1] - g.abajo[i][1] + gap);
+        if (dy + yMax(g) <= tope) { col.piezas.push({ g, oy: dy }); continue; }
+      }
+      col = { piezas: [{ g, oy: gap - yMin(g) }] };
+      columnas.push(col);
+    }
+    const laminas = [];
+    columnas.forEach((c, i) => { const h = Math.floor(i / colsPorHoja); (laminas[h] = laminas[h] || []).push({ ...c, ox: gap + (i % colsPorHoja) * (ancho + gap) }); });
+    return { laminas, orient };
+  }
+  // pieza colocada → puntos en mm de la lámina (x a lo largo, y a lo ancho)
+  function aLamina(pts, ox, oy, orient, hoja) {
+    // en la columna: u = alrededor (ox + x), v = a lo largo (oy + y)
+    return pts.map(([x, y]) => orient.giro ? [ox + x, oy + y] : [oy + y, ox + x]);
+  }
+
+  // ============ dibujo ============
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, at, padre) { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (padre) padre.appendChild(e); return e; }
+  function texto(padre, x, y, t, cls, anchor = 'middle') { const e = el('text', { x, y, 'text-anchor': anchor, class: cls || '' }, padre); e.textContent = t; return e; }
+  const tipos = c => { const vistos = []; for (const g of c.piezas) { const k = g.tipo + (g.tipo === 'extremo' ? (g.rAbajo > 0 || g.bAbajo === 0 ? 'a' : 'b') : ''); if (!vistos.some(v => v.k === k)) vistos.push({ k, g, n: c.piezas.filter(h => h.tipo === g.tipo).length }); } return vistos; };
+  function planos(c) {
+    const cont = $('planos'); cont.innerHTML = '';
+    const vistos = [];
+    for (const g of c.piezas) { if (!vistos.some(v => v.tipo === g.tipo)) vistos.push(g); }
+    for (const g of vistos) {
+      const n = c.piezas.filter(h => h.tipo === g.tipo).length;
+      const svg = el('svg', { viewBox: '0 0 700 360', role: 'img', 'aria-label': `Plano del gajo ${g.tipo}` }, cont);
+      texto(svg, 20, 28, `${g.tipo === 'completo' ? 'GAJO COMPLETO' : 'GAJO DE EXTREMO'} · cortar ${n}${c.partes > 1 ? ` (tramo 1 de ${c.partes}; los demás son iguales corridos)` : ''}`, 'titulo', 'start');
+      const y0 = yMin(g), y1 = yMax(g), k = Math.min(600 / g.ancho, 220 / (y1 - y0));
+      const S = ([x, y]) => [50 + x * k, 60 + (y1 - y) * k];
+      const pts = contorno(g).map(S), d = pts.map((q, i) => (i ? 'L' : 'M') + q.join(',')).join(' ') + ' Z';
+      el('path', { d, class: 'relleno' }, svg); el('path', { d, class: 'corte' }, svg);
+      // línea de centro y marcas de dorso y garganta
+      const [cx0, cy] = S([0, 0]), [cx1] = S([g.ancho, 0]);
+      el('line', { x1: cx0, y1: cy, x2: cx1, y2: cy, class: 'doblez' }, svg);
+      const xDorso = g.costuraDorso ? [0, g.ancho] : [g.ancho / 2], xGarg = g.costuraDorso ? [g.ancho / 2] : [0, g.ancho];
+      for (const x of xDorso) texto(svg, S([x, 0])[0], 60 + (y1 - y0) * k + 22, 'dorso', 'marca-t');
+      for (const x of xGarg) texto(svg, S([x, 0])[0], 60 + (y1 - y0) * k + 22, 'garganta', 'marca-t');
+      // cotas: ancho y largos máx/mín
+      texto(svg, 50 + g.ancho * k / 2, 60 + (y1 - y0) * k + 48, `alrededor ${f1(g.ancho)} (π·D)`);
+      const lmax = Math.max(...g.arriba.map((p, i) => p[1] - g.abajo[i][1])), lmin = Math.min(...g.arriba.map((p, i) => p[1] - g.abajo[i][1]));
+      texto(svg, 20, 345, `Largo en el dorso ${f1(lmax)} · en la garganta ${f1(lmin)} · costura en ${g.costuraDorso ? 'el dorso' : 'la garganta'}`, '', 'start');
+    }
+  }
+  function tablaOrdenadas(c) {
+    const vistos = []; for (const g of c.piezas) if (!vistos.some(v => v.tipo === g.tipo && v.costuraDorso === g.costuraDorso)) vistos.push(g);
+    const usar = vistos.filter((g, i, arr) => arr.findIndex(h => h.tipo === g.tipo) === i);
+    $('t-cab').innerHTML = `<tr><th>Línea</th><th>Desde la costura</th>${usar.map(g => `<th>${g.tipo === 'completo' ? 'Gajo completo' : 'Extremo'}: arriba / abajo</th>`).join('')}</tr>`;
+    const filas = [];
+    for (let i = 0; i <= c.div; i++) {
+      const fi = 2 * Math.PI * i / c.div, x = c.r * fi;
+      const celdas = usar.map(g => {
+        const rho = c.Rc + c.r * Math.cos(fi + (g.costuraDorso ? 0 : Math.PI));
+        return `${f1(g.rArriba + rho * Math.tan(g.bArriba))} / ${f1(g.rAbajo + rho * Math.tan(g.bAbajo))}`;
+      });
+      filas.push(`<tr><td>${i}</td><td class="v">${f1(x)}</td>${celdas.map(t => `<td class="v">${t}</td>`).join('')}</tr>`);
+    }
+    $('t-ord').innerHTML = filas.join('');
+  }
+  function hojas(c) {
+    const cont = $('hojas'); cont.innerHTML = '';
+    c.laminas.forEach((cols, li) => {
+      const k = 660 / c.hoja.w, Wp = c.hoja.w * k, Hp = c.hoja.h * k;
+      const svg = el('svg', { viewBox: `0 0 ${Wp + 40} ${Hp + 60}`, role: 'img', 'aria-label': `Lámina ${li + 1}` }, cont);
+      texto(svg, 20, 24, `LÁMINA ${li + 1} de ${c.laminas.length} · ${f0(c.hoja.h)} × ${f0(c.hoja.w)} mm`, 'titulo', 'start');
+      el('rect', { x: 20, y: 36, width: Wp, height: Hp, class: 'hoja' }, svg);
+      for (const col of cols) for (const pz of col.piezas) {
+        const pts = aLamina(contorno(pz.g), col.ox, pz.oy, c.orient, c.hoja).map(([x, y]) => [20 + x * k, 36 + Hp - y * k]);
+        const d = pts.map((q, i) => (i ? 'L' : 'M') + q.join(',')).join(' ') + ' Z';
+        const b = pz.g.tipo === 'extremo' ? ' b' : '';
+        el('path', { d, class: 'relleno' + b }, svg); el('path', { d, class: 'corte' + b }, svg);
+        const xs = pts.map(q => q[0]), ys = pts.map(q => q[1]);
+        texto(svg, (Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...ys) + Math.max(...ys)) / 2 + 5, pz.g.nombre, 'num-p');
+      }
+    });
+  }
+
+  function pintar() {
+    const c = calcular(), errBox = $('error');
+    if (c.err) { errBox.hidden = false; errBox.innerHTML = c.err.map(e => `<div>${e}</div>`).join(''); ultimo = null; ['r-lam', 'r-pz', 'r-cor', 'r-sol'].forEach(i => $(i).textContent = '—'); ['planos', 'hojas', 'tabla', 'avisos', 't-cab', 't-ord'].forEach(i => $(i).innerHTML = ''); return; }
+    errBox.hidden = true; ultimo = c;
+    $('r-lam').textContent = `${c.laminas.length}`; $('r-pz').textContent = c.partes > 1 ? `${c.N} × ${c.partes}` : `${c.N}`;
+    $('r-cor').textContent = `${f2(c.b / GRAD)}°`; $('r-sol').textContent = `${f1(c.soldadura / 1000)} m`;
+    planos(c); tablaOrdenadas(c); hojas(c);
+    const filas = [
+      ['Piezas', `${c.N}: 2 de extremo${c.N > 2 ? ` + ${c.N - 2} completas` : ''}${c.partes > 1 ? ` (cada una en ${c.partes} tramos)` : ''}`, c.partes > 1 ? `El perímetro no cabe en la lámina: cada gajo se corta en ${c.partes} tramos y se suelda por ${c.partes} costuras.` : 'Las de los extremos son medio gajo (un solo corte inclinado).'],
+      ['Ángulo de un gajo completo', `${f2(c.alfa / GRAD)}°`, `${f1(c.ang)}° repartidos en ${c.N - 1} partes.`],
+      ['Ángulo de cada corte', `${f2(c.b / GRAD)}°`, 'Lo que se inclina cada corte respecto a un corte recto.'],
+      ['Perímetro (alrededor)', mm(Math.PI * c.D), 'Ancho de cada pieza desarrollada.'],
+      ['Largo del gajo completo en el centro', mm(2 * c.Rc * Math.tan(c.b)), 'Medido sobre la línea de centro del tubo.'],
+      ['Largo en el dorso / garganta', `${f1(2 * (c.Rc + c.r) * Math.tan(c.b))} / ${f1(2 * (c.Rc - c.r) * Math.tan(c.b))} mm`, 'Del gajo completo: lado de afuera y lado de adentro.'],
+      ['Soldadura', `${f1(c.soldadura / 1000)} m`, `${c.N} costuras a lo largo y ${c.N - 1} costuras alrededor.`],
+      ['Lámina de las piezas', `${f2(c.area / 1e6)} m²`, ''],
+      ['Aprovechamiento', `${f0(c.util * 100)} %`, 'Los gajos encajan uno en otro y comparten la curva de corte.'],
+    ];
+    if (c.esp > 0) filas.push(['Peso', `${f1(c.area * c.esp * ACERO)} kg`, `En acero de ${f1(c.esp)} mm.`]);
+    $('tabla').innerHTML = filas.map(([a, b, d]) => `<tr><td>${a}</td><td class="v">${b}</td><td>${d}</td></tr>`).join('');
+    const av = [];
+    if (c.Rc < c.D) av.push('El radio de la curva es menor que el diámetro: el codo queda muy cerrado y la garganta muy corta.');
+    if (c.b / GRAD > 22.5) av.push('Cada corte es muy inclinado (más de 22,5°): el codo se verá quebrado. Use más piezas.');
+    $('avisos').innerHTML = av.map(a => `<div class="aviso">${a}</div>`).join('');
+    $('imp-medidas').textContent = `Codo de gajos: Ø ${f1(c.D)} mm · ${f1(c.ang)}° · radio ${f1(c.Rc)} mm · ${c.N} piezas · lámina ${f0(c.hoja.h)} × ${f0(c.hoja.w)} mm.`;
+    guardar();
+  }
+
+  // ============ DXF ============
+  function capa(n, color) { return `0\nLAYER\n2\n${n}\n70\n0\n62\n${color}\n6\nCONTINUOUS\n`; }
+  function dxf(ents) { return '0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n9\n$INSUNITS\n70\n4\n0\nENDSEC\n0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n4\n' + capa('CORTE', 1) + capa('MARCADO', 2) + capa('REFERENCIA', 8) + capa('LAMINA', 9) + '0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n' + ents.join('') + '0\nENDSEC\n0\nEOF\n'; }
+  const Nn = v => (Math.round(v * 10000) / 10000).toString();
+  const linea = (x0, y0, x1, y1, c = 'CORTE') => `0\nLINE\n8\n${c}\n10\n${Nn(x0)}\n20\n${Nn(y0)}\n30\n0\n11\n${Nn(x1)}\n21\n${Nn(y1)}\n31\n0\n`;
+  const txt = (x, y, h, t, c = 'REFERENCIA') => `0\nTEXT\n8\n${c}\n10\n${Nn(x)}\n20\n${Nn(y)}\n30\n0\n40\n${Nn(h)}\n1\n${t}\n`;
+  function piezaDXF(g, T, nombre) {
+    const e = [], P = contorno(g).map(T);
+    for (let i = 0; i < P.length; i++) e.push(linea(...P[i], ...P[(i + 1) % P.length]));
+    // línea de centro y marcas (dorso/garganta) en MARCADO
+    e.push(linea(...T([0, 0]), ...T([g.ancho, 0]), 'MARCADO'));
+    const yb = i => g.abajo[i][1], ya = i => g.arriba[i][1], mid = PASOS / 2;
+    e.push(linea(...T([g.ancho / 2, yb(mid)]), ...T([g.ancho / 2, ya(mid)]), 'MARCADO'));
+    if (nombre) { const xs = P.map(p => p[0]), ys = P.map(p => p[1]); e.push(txt((Math.min(...xs) + Math.max(...xs)) / 2 - 15, (Math.min(...ys) + Math.max(...ys)) / 2 + 10, 25, nombre)); }
+    return e;
+  }
+  function dxfPiezas(c) {
+    let e = [], y = 0;
+    const vistos = []; for (const g of c.piezas) if (!vistos.some(v => v.tipo === g.tipo)) vistos.push(g);
+    for (const g of vistos) {
+      const n = c.piezas.filter(h => h.tipo === g.tipo).length, y0 = yMin(g), y1 = yMax(g);
+      e = e.concat(piezaDXF(g, ([x, yy]) => [x, y - y0 + yy], ''));
+      e.push(txt(0, y + (y1 - y0) + 25, 25, `${g.tipo === 'completo' ? 'Gajo completo' : 'Gajo de extremo'}: cortar ${n}`));
+      y += (y1 - y0) + 140;
+    }
+    e.push(txt(0, -60, 18, FIRMA));
+    return dxf(e);
+  }
+  function dxfLaminas(c) {
+    let e = [], ox = 0;
+    c.laminas.forEach((cols, li) => {
+      const W = c.hoja.w, H = c.hoja.h;
+      e.push(linea(ox, 0, ox + W, 0, 'LAMINA'), linea(ox + W, 0, ox + W, H, 'LAMINA'), linea(ox + W, H, ox, H, 'LAMINA'), linea(ox, H, ox, 0, 'LAMINA'), txt(ox, -50, 30, `LAMINA ${li + 1} de ${c.laminas.length}`));
+      for (const col of cols) for (const pz of col.piezas) e = e.concat(piezaDXF(pz.g, q => { const [x, y] = aLamina([q], col.ox, pz.oy, c.orient, c.hoja)[0]; return [x + ox, y]; }, pz.g.nombre));
+      ox += W + 300;
+    });
+    e.push(txt(0, -110, 20, FIRMA));
+    return dxf(e);
+  }
+  function bajar(nombre, contenido) { const blob = new Blob([contenido], { type: 'application/dxf' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombre; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+  const base = c => `codo-gajos-D${Math.round(c.D)}-${Math.round(c.ang)}g-R${Math.round(c.Rc)}-${c.N}p`;
+  $('b-dxf').addEventListener('click', () => { if (ultimo) bajar(base(ultimo) + '-piezas.dxf', dxfPiezas(ultimo)); });
+  $('b-dxf-lam').addEventListener('click', () => { if (ultimo) bajar(base(ultimo) + '-laminas.dxf', dxfLaminas(ultimo)); });
+  function fechaPie() { $('pie-fecha').textContent = 'Impreso el ' + new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' }); }
+  window.addEventListener('beforeprint', fechaPie);
+  $('b-pdf').addEventListener('click', () => { fechaPie(); window.print(); });
+
+  // ============ unidades, ilustración, memoria ============
+  const CAMPOS = ['D', 'ang', 'R', 'N', 'recto', 'div', 'separa', 'espesor'], LARGOS = ['D', 'R', 'recto', 'separa', 'espesor'];
+  function ponerUnidad(u) {
+    if (u === unidad) return;
+    LARGOS.forEach(id => { const v = leer($(id).value); if (isNaN(v)) return; const m = unidad === 'in' ? v * IN : v; $(id).value = u === 'in' ? f2(m / IN).replace(/,00$/, '') : f1(m).replace(/,0$/, ''); });
+    unidad = u; $('u-mm').setAttribute('aria-pressed', u === 'mm'); $('u-in').setAttribute('aria-pressed', u === 'in');
+    document.querySelectorAll('.entrada .u').forEach(s => { if (s.textContent !== '°') s.textContent = u === 'in' ? 'pulg' : 'mm'; }); pintar();
+  }
+  $('u-mm').addEventListener('click', () => ponerUnidad('mm'));
+  $('u-in').addEventListener('click', () => ponerUnidad('in'));
+  document.querySelectorAll('.campo[data-cota] input').forEach(inp => {
+    const campo = inp.closest('.campo');
+    inp.addEventListener('focus', () => { document.querySelectorAll('.ilu-cota').forEach(x => x.classList.remove('on')); $(campo.dataset.cota).classList.add('on'); document.querySelectorAll('.campo').forEach(x => x.classList.remove('activo')); campo.classList.add('activo'); });
+  });
+  const CLAVE = 'edwin-codo-gajos-v1';
+  function guardar() { try { localStorage.setItem(CLAVE, JSON.stringify({ unidad, lamina: $('lamina').value, v: CAMPOS.map(i => $(i).value) })); } catch (e) {} }
+  try {
+    const g = JSON.parse(localStorage.getItem(CLAVE) || 'null');
+    if (g && Array.isArray(g.v)) { CAMPOS.forEach((i, k) => { if (g.v[k] != null) $(i).value = g.v[k]; }); if (g.lamina) $('lamina').value = g.lamina; if (g.unidad === 'in') { unidad = 'in'; $('u-mm').setAttribute('aria-pressed', false); $('u-in').setAttribute('aria-pressed', true); document.querySelectorAll('.entrada .u').forEach(s => { if (s.textContent !== '°') s.textContent = 'pulg'; }); } }
+  } catch (e) {}
+  let espera = null;
+  const programar = () => { clearTimeout(espera); espera = setTimeout(pintar, 200); };
+  document.querySelectorAll('input').forEach(i => i.addEventListener('input', programar));
+  $('lamina').addEventListener('change', pintar);
+  pintar();
+  window.__codo = { calcular, dxfPiezas: () => dxfPiezas(ultimo), dxfLaminas: () => dxfLaminas(ultimo) };
+})();
+</script>
+</body>
+</html>
