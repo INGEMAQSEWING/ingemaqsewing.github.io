@@ -116,14 +116,17 @@ th { font-family: var(--f-titulo); font-size: 16px; letter-spacing: .05em; text-
 .pasos-taller li { margin: 4px 0; max-width: 70ch; }
 footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size: 14px; color: var(--suave); }
 .solo-imprimir { display: none; }
+.pie-pdf { font-size: 9pt; color: #444; border-top: 1px solid #999; padding-top: 4px; justify-content: space-between; gap: 12px; }
 
 @media print {
   @page { size: A4 portrait; margin: 12mm; }
   body { background: #fff; color: #000; font-size: 12pt; }
-  header.cab, .panel.formulario, .botones, footer, .no-imprimir, details.mas { display: none !important; }
+  header.cab, .panel.formulario, .botones, footer, .no-imprimir, details.mas, .intro, .nota-pie { display: none !important; }
   .rejilla { display: block; }
   .panel { border: 0; padding: 0; }
   .solo-imprimir { display: block; }
+  .pie-pdf { display: flex !important; position: fixed; left: 0; right: 0; bottom: 0; background: #fff; }
+  main { padding-bottom: 12mm; }
   .plano svg { max-height: 150mm; }
   h1 { margin-top: 0; font-size: 22pt; }
 }
@@ -246,7 +249,7 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
       </table></div>
 
       <h3 class="no-imprimir">Cómo se hace en el taller</h3>
-      <ol class="pasos-taller">
+      <ol class="pasos-taller no-imprimir">
         <li>Corte las arandelas con el DXF. Antes de cortarlas todas, <b>corte una de prueba</b>, estírela y mida el paso.</li>
         <li>Abra cada arandela por la abertura y estírela (con gato, prensa o a mano) hasta que avance un paso.</li>
         <li>Métala en el tubo y suéldela a tope con la siguiente: cada arandela es una vuelta.</li>
@@ -256,15 +259,17 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
   </div>
 </main>
 
+<div class="pie-pdf solo-imprimir" aria-hidden="true"><span>Lycan Developments · EDWIN CNC · 2026 · Calculadora de helicoidal, versión 1.0</span><span id="pie-fecha"></span></div>
 <footer>
   <div class="ancho">
-    <p><b>EDWIN CNC Taller</b> · versión de prueba. Las medidas son de cálculo: compruebe siempre con una pieza de prueba antes de cortar en serie.</p>
+    <p><b>EDWIN CNC Taller</b> · Lycan Developments · EDWIN CNC · 2026 · versión 1.0 de prueba. Las medidas son de cálculo: compruebe siempre con una pieza de prueba antes de cortar en serie.</p>
   </div>
 </footer>
 
 <script>
 (() => {
   const $ = id => document.getElementById(id);
+  const FIRMA = 'Lycan Developments - EDWIN CNC 2026 - Calculadora de helicoidal v1.0';
   const IN = 25.4, LAM_W = 2440, LAM_H = 1220, ACERO = 7.85e-6; // kg/mm³
   let unidad = 'mm';
 
@@ -472,6 +477,7 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
     if (conTexto) {
       const h = Math.max(4, Math.min(12, c.b / 6));
       e.push(txt(x - c.R * 0.55, y - c.r - c.b * 0.55, h, `Di ${f1(c.di)} De ${f1(c.de)} P ${f1(c.p)}`.replace(/\./g, '')));
+      e.push(txt(x - c.R, y - c.R - 3 * h, h * 0.8, FIRMA));
     }
     return e;
   }
@@ -488,6 +494,7 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
     const total = Math.ceil(c.vueltas - 1e-9), cuantas = Math.min(total, c.n.n);
     let e = [linea(0, 0, LAM_W, 0, 'LAMINA'), linea(LAM_W, 0, LAM_W, LAM_H, 'LAMINA'), linea(LAM_W, LAM_H, 0, LAM_H, 'LAMINA'), linea(0, LAM_H, 0, 0, 'LAMINA')];
     c.n.pos.slice(0, cuantas).forEach(([x, y]) => { e = e.concat(arandela(c, x, y, false)); });
+    e.push(txt(10, -60, 16, FIRMA));
     e.push(txt(10, -30, 20, `${cuantas} arandelas Di ${f1(c.di)} De ${f1(c.de)} P ${f1(c.p)} - lamina 1220 x 2440`.replace(/\./g, '')));
     return [cuantas, dxf(e)];
   }
@@ -498,7 +505,9 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
     bajar(nombreBase(c) + `-lamina-${cuantas}.dxf`, texto);
   });
   function alertar(t) { $('avisos').insertAdjacentHTML('afterbegin', `<div class="aviso">${t}</div>`); }
-  $('b-pdf').addEventListener('click', () => window.print());
+  function fechaPie() { $('pie-fecha').textContent = 'Impreso el ' + new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' }); }
+  window.addEventListener('beforeprint', fechaPie);
+  $('b-pdf').addEventListener('click', () => { fechaPie(); window.print(); });
 
   // ---------- unidades
   function ponerUnidad(u) {
