@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Calculadora de tolva cónica (valde) · EDWIN CNC Taller</title>
+<meta name="description" content="Desarrollo de una tolva cónica o valde: radios, ángulo, cuerdas, litros, cómo partirla y acomodarla en láminas de 4 × 8. Plano acotado, PDF y DXF para plasma.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: hoja de taller — formulario a la izquierda; opciones de corte, plano de la pieza y láminas a la derecha. */
+:root {
+  --bg: #f4f3ee; --papel: #ffffff; --tinta: #1d1d1b; --suave: #5b5a55; --linea: #d9d6cc;
+  --amarillo: #f2b705; --rojo: #c8321e; --azul: #1f5fa8; --nota: #fff6d6; --campo: #faf9f5;
+  --corte: #c8321e; --cota: #1f5fa8; --lamina: #e9e6dc; --pieza2: #2f6d3a;
+  --f-titulo: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-texto: "Barlow", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-medida: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151513; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #36352f;
+    --rojo: #f0705c; --azul: #7fb0ec; --nota: #2b2615; --campo: #262622; --corte: #f0705c; --cota: #7fb0ec; --lamina: #2a2a26; --pieza2: #7cc488;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151513; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #36352f;
+  --rojo: #f0705c; --azul: #7fb0ec; --nota: #2b2615; --campo: #262622; --corte: #f0705c; --cota: #7fb0ec; --lamina: #2a2a26; --pieza2: #7cc488;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--tinta); font-family: var(--f-texto); font-size: 17px; line-height: 1.55; }
+a { color: inherit; }
+.ancho { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.cab { border-bottom: 3px solid var(--tinta); background: var(--papel); }
+header.cab .ancho { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.marca { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo { width: 44px; height: 44px; flex: none; background: var(--amarillo); color: #1d1d1b; border: 3px solid #1d1d1b; display: grid; place-items: center; font-family: var(--f-titulo); font-weight: 700; font-size: 17px; }
+.marca b { font-family: var(--f-titulo); font-size: 22px; display: block; line-height: 1; }
+.marca span { font-size: 13.5px; color: var(--suave); }
+nav.migas { font-size: 15px; color: var(--suave); }
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(32px, 5vw, 46px); line-height: 1.05; margin: 26px 0 6px; text-wrap: balance; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+h1 .cinta { width: 54px; height: 14px; flex: none; background: repeating-linear-gradient(-45deg, var(--amarillo) 0 8px, #1d1d1b 8px 16px); }
+.intro { margin: 0 0 22px; color: var(--suave); max-width: 72ch; }
+h2 { font-family: var(--f-titulo); font-size: 25px; margin: 0 0 10px; }
+h3 { font-family: var(--f-titulo); font-size: 21px; margin: 20px 0 8px; }
+.rejilla { display: grid; grid-template-columns: minmax(0, 390px) minmax(0, 1fr); gap: 28px; align-items: start; padding-bottom: 48px; }
+@media (max-width: 900px) { .rejilla { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--papel); border: 1px solid var(--linea); padding: 18px; min-width: 0; }
+.unidades { display: inline-flex; border: 2px solid var(--tinta); margin-bottom: 14px; }
+.unidades button { font: 600 15px var(--f-texto); padding: 6px 14px; border: 0; background: transparent; color: var(--tinta); cursor: pointer; }
+.unidades button[aria-pressed="true"] { background: var(--tinta); color: var(--bg); }
+.campo { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; padding: 10px 0; border-top: 1px solid var(--linea); }
+.num { width: 28px; height: 28px; display: grid; place-items: center; background: var(--tinta); color: var(--bg); font-family: var(--f-titulo); font-weight: 700; font-size: 17px; }
+.campo label { font-weight: 600; align-self: center; }
+.campo label small { font-weight: 400; color: var(--suave); }
+.entrada { grid-column: 2; display: flex; align-items: center; gap: 8px; }
+.entrada input, .entrada select { width: 100%; min-width: 0; font: 500 19px var(--f-medida); padding: 8px 10px; border: 2px solid var(--linea); background: var(--campo); color: var(--tinta); border-radius: 0; }
+.entrada select { font: 500 16px var(--f-texto); }
+.entrada input:focus, .entrada select:focus { outline: none; border-color: var(--amarillo); box-shadow: 0 0 0 2px var(--amarillo); }
+.entrada .u { font-family: var(--f-medida); color: var(--suave); min-width: 34px; }
+.ayuda { grid-column: 2; font-size: 14.5px; color: var(--suave); margin: 0; }
+.campo.activo .num { background: var(--amarillo); color: #1d1d1b; }
+details.mas { margin-top: 12px; border-top: 2px solid var(--tinta); padding-top: 10px; }
+details.mas summary { cursor: pointer; font-family: var(--f-titulo); font-size: 19px; }
+.error { background: var(--nota); border-left: 5px solid var(--rojo); padding: 10px 12px; margin: 12px 0 0; font-size: 15.5px; }
+.aviso { background: var(--nota); border-left: 5px solid var(--amarillo); padding: 10px 12px; margin: 12px 0 0; font-size: 15.5px; }
+figure.ilu { margin: 0 0 10px; }
+figure.ilu svg { width: 100%; height: auto; display: block; }
+figure.ilu figcaption { font-size: 13.5px; color: var(--suave); }
+.ilu-cota { stroke: var(--suave); fill: var(--suave); }
+.ilu-cota text { font: 600 15px var(--f-medida); stroke: none; }
+.ilu-cota.on { stroke: var(--rojo); fill: var(--rojo); }
+.ilu-cota.on line { stroke-width: 2.6; }
+.resumen { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.dato { border: 2px solid var(--tinta); padding: 8px 12px; background: var(--papel); }
+.dato span { display: block; font-size: 13.5px; color: var(--suave); }
+.dato b { font-family: var(--f-medida); font-size: 21px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.dato.grande { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.dato.grande span { color: #3d3416; }
+.opciones { display: grid; gap: 8px; margin-bottom: 8px; }
+.opcion { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 2px 10px; align-items: start; border: 2px solid var(--linea); padding: 10px 12px; cursor: pointer; background: var(--papel); }
+.opcion:has(input:checked) { border-color: var(--tinta); box-shadow: inset 5px 0 0 var(--amarillo); }
+.opcion input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: #1d1d1b; }
+.opcion b { font-family: var(--f-titulo); font-size: 19px; }
+.opcion .det { grid-column: 2; font-size: 15px; color: var(--suave); }
+.etiq { display: inline-block; font: 600 12.5px var(--f-texto); letter-spacing: .05em; text-transform: uppercase; padding: 1px 7px; margin-left: 6px; border: 1.5px solid var(--tinta); vertical-align: 2px; }
+.etiq.a { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.plano svg, .laminas svg { width: 100%; height: auto; display: block; background: var(--papel); }
+.plano .corte, .laminas .corte { fill: none; stroke: var(--corte); stroke-width: 2.2; }
+.laminas .corte { stroke-width: 1.4; }
+.plano .relleno { fill: var(--corte); opacity: .07; }
+.laminas .relleno { fill: var(--corte); opacity: .12; }
+.laminas .relleno.b { fill: var(--pieza2); }
+.laminas .corte.b { stroke: var(--pieza2); }
+.laminas .hoja { fill: var(--lamina); stroke: var(--tinta); stroke-width: 1.4; }
+.plano .cota { stroke: var(--cota); stroke-width: 1.2; fill: none; }
+.plano .flecha { fill: var(--cota); }
+.plano .eje { stroke: var(--suave); stroke-width: 1; stroke-dasharray: 10 4 2 4; fill: none; }
+.plano text, .laminas text { font: 500 16px var(--f-medida); fill: var(--cota); paint-order: stroke; stroke: var(--papel); stroke-width: 6px; stroke-linejoin: round; }
+.plano text.titulo, .laminas text.titulo { fill: var(--tinta); font: 700 20px var(--f-titulo); }
+.laminas text.num-p { fill: var(--tinta); font: 700 15px var(--f-titulo); stroke-width: 4px; }
+.tabla { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--linea); vertical-align: top; }
+td.v { font-family: var(--f-medida); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th { font-family: var(--f-titulo); font-size: 16px; letter-spacing: .05em; text-transform: uppercase; border-bottom: 2px solid var(--tinta); }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px; }
+.btn { font: 600 16px var(--f-texto); padding: 10px 16px; border: 2px solid var(--tinta); background: var(--papel); color: var(--tinta); cursor: pointer; }
+.btn.principal { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.btn:focus-visible, .unidades button:focus-visible, .opcion:focus-within { outline: 3px solid var(--azul); outline-offset: 2px; }
+.nota-pie { font-size: 14.5px; color: var(--suave); }
+.pasos-taller { padding-left: 20px; margin: 6px 0; }
+.pasos-taller li { margin: 4px 0; max-width: 70ch; }
+footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size: 14px; color: var(--suave); }
+.solo-imprimir { display: none; }
+.pie-pdf { font-size: 9pt; color: #444; border-top: 1px solid #999; padding-top: 4px; justify-content: space-between; gap: 12px; }
+@media print {
+  @page { size: A4 portrait; margin: 12mm; }
+  body { background: #fff; color: #000; font-size: 11.5pt; }
+  header.cab, .panel.formulario, .botones, footer, .no-imprimir, details.mas, .intro, .nota-pie { display: none !important; }
+  .rejilla { display: block; }
+  .panel { border: 0; padding: 0; }
+  .solo-imprimir { display: block; }
+  .pie-pdf { display: flex !important; position: fixed; left: 0; right: 0; bottom: 0; background: #fff; }
+  main { padding-bottom: 12mm; }
+  .plano svg { max-height: 120mm; }
+  .laminas { break-before: page; }
+  .laminas svg { max-height: 80mm; }
+  .opcion:not(:has(input:checked)) { display: none; }
+  h1 { margin-top: 0; font-size: 22pt; }
+}
+</style>
+</head>
+<body>
+<header class="cab">
+  <div class="ancho">
+    <a class="marca" href="../">
+      <span class="logo" aria-hidden="true">CNC</span>
+      <span><b>EDWIN CNC Taller</b><span>Herramientas de diseño y calculadoras de metalmecánica</span></span>
+    </a>
+    <nav class="migas" aria-label="Ruta"><a href="../">Calculadoras</a> › Tolva cónica</nav>
+  </div>
+</header>
+
+<main class="ancho">
+  <h1><span class="cinta" aria-hidden="true"></span>Tolva cónica (valde o vagón)</h1>
+  <p class="intro">Escriba 3 medidas por dentro. La calculadora le da el desarrollo en lámina, cuántos litros le caben y, si no cabe en una lámina, cómo partirla: <b>ahorrando lámina</b> o <b>ahorrando soldadura</b>. Descargue el plano y el DXF para la mesa de plasma.</p>
+
+  <div class="rejilla">
+    <section class="panel formulario" aria-labelledby="t-medidas">
+      <h2 id="t-medidas">Medidas de la tolva</h2>
+      <div class="unidades" role="group" aria-label="Unidades">
+        <button type="button" id="u-mm" aria-pressed="true">Milímetros</button>
+        <button type="button" id="u-in" aria-pressed="false">Pulgadas</button>
+      </div>
+      <figure class="ilu" aria-hidden="true">
+        <svg viewBox="0 0 420 260">
+          <defs><marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>
+          <ellipse cx="200" cy="58" rx="130" ry="22" fill="none" stroke="var(--tinta)" stroke-width="2.2"/>
+          <path d="M70,58 L135,200 M330,58 L265,200" stroke="var(--tinta)" stroke-width="2.2" fill="none"/>
+          <path d="M135,200 A65,12 0 0 0 265,200" stroke="var(--tinta)" stroke-width="2.2" fill="none"/>
+          <path d="M135,200 A65,12 0 0 1 265,200" stroke="var(--tinta)" stroke-width="1.2" stroke-dasharray="5 4" fill="none"/>
+          <g class="ilu-cota" id="c-ds"><line x1="70" y1="22" x2="330" y2="22" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><line x1="70" y1="14" x2="70" y2="56" stroke-width="1"/><line x1="330" y1="14" x2="330" y2="56" stroke-width="1"/><text x="166" y="14">1 Ø arriba</text></g>
+          <g class="ilu-cota" id="c-di"><line x1="135" y1="238" x2="265" y2="238" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><line x1="135" y1="204" x2="135" y2="246" stroke-width="1"/><line x1="265" y1="204" x2="265" y2="246" stroke-width="1"/><text x="150" y="258">2 Ø abajo</text></g>
+          <g class="ilu-cota" id="c-h"><line x1="370" y1="58" x2="370" y2="200" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><line x1="334" y1="58" x2="378" y2="58" stroke-width="1"/><line x1="268" y1="200" x2="378" y2="200" stroke-width="1"/><text x="362" y="134" text-anchor="end">3 Alto</text></g>
+        </svg>
+        <figcaption>Tolva vista de lado. La medida que está escribiendo se marca en rojo.</figcaption>
+      </figure>
+      <div class="campo" data-cota="c-ds">
+        <span class="num">1</span><label for="ds">Diámetro de arriba <small>(boca ancha)</small></label>
+        <div class="entrada"><input id="ds" inputmode="decimal" autocomplete="off" value="1200"><span class="u">mm</span></div>
+        <p class="ayuda">Medido por dentro, de lado a lado de la boca.</p>
+      </div>
+      <div class="campo" data-cota="c-di">
+        <span class="num">2</span><label for="di">Diámetro de abajo <small>(salida)</small></label>
+        <div class="entrada"><input id="di" inputmode="decimal" autocomplete="off" value="600"><span class="u">mm</span></div>
+        <p class="ayuda">Si es igual al de arriba, es un cilindro.</p>
+      </div>
+      <div class="campo" data-cota="c-h">
+        <span class="num">3</span><label for="alto">Alto <small>(vertical, no inclinado)</small></label>
+        <div class="entrada"><input id="alto" inputmode="decimal" autocomplete="off" value="900"><span class="u">mm</span></div>
+        <p class="ayuda">De la boca a la salida, medido derecho, como con una plomada.</p>
+      </div>
+      <details class="mas">
+        <summary>Más opciones</summary>
+        <div class="campo">
+          <span class="num">4</span><label for="lamina">Lámina</label>
+          <div class="entrada"><select id="lamina">
+            <option value="1220x2440">4 × 8 pies (1220 × 2440 mm)</option>
+            <option value="1220x3050">4 × 10 pies (1220 × 3050 mm)</option>
+            <option value="1500x3000">1500 × 3000 mm</option>
+            <option value="1524x3048">5 × 10 pies (1524 × 3048 mm)</option>
+          </select></div>
+        </div>
+        <div class="campo">
+          <span class="num">5</span><label for="separa">Separación entre piezas y del borde</label>
+          <div class="entrada"><input id="separa" inputmode="decimal" autocomplete="off" value="10"><span class="u">mm</span></div>
+          <p class="ayuda">Espacio para el corte del plasma.</p>
+        </div>
+        <div class="campo">
+          <span class="num">6</span><label for="espesor">Espesor <small>(solo para el peso)</small></label>
+          <div class="entrada"><input id="espesor" inputmode="decimal" autocomplete="off" value="3"><span class="u">mm</span></div>
+        </div>
+      </details>
+      <div id="error" class="error" hidden role="alert"></div>
+    </section>
+
+    <section class="panel resultado" aria-labelledby="t-res" aria-live="polite">
+      <h2 id="t-res">Desarrollo y corte</h2>
+      <p class="solo-imprimir" id="imp-medidas"></p>
+      <div class="resumen">
+        <div class="dato grande"><span>Láminas</span><b id="r-lam">—</b></div>
+        <div class="dato"><span>Piezas</span><b id="r-pz">—</b></div>
+        <div class="dato"><span>Soldadura</span><b id="r-sol">—</b></div>
+        <div class="dato"><span>Capacidad</span><b id="r-lt">—</b></div>
+      </div>
+      <h3>¿Cómo la quiere partir?</h3>
+      <div class="opciones" id="opciones" role="radiogroup" aria-label="Formas de partir la tolva"></div>
+      <div id="avisos"></div>
+
+      <h3>Plano de las piezas</h3>
+      <div class="plano" id="planos"></div>
+
+      <div class="laminas">
+        <h3>Acomodo en las láminas</h3>
+        <div id="hojas"></div>
+      </div>
+
+      <div class="botones">
+        <button class="btn principal" type="button" id="b-dxf">Descargar DXF de las piezas</button>
+        <button class="btn" type="button" id="b-dxf-lam">DXF de las láminas acomodadas</button>
+        <button class="btn" type="button" id="b-pdf">Imprimir o guardar PDF</button>
+      </div>
+      <p class="nota-pie">El DXF está en milímetros, a escala 1:1: el corte en la capa CORTE; textos, lámina y cotas en REFERENCIA y LAMINA (no se cortan).</p>
+
+      <h3>Todas las medidas</h3>
+      <div class="tabla"><table>
+        <thead><tr><th>Medida</th><th>Valor</th><th>Para qué sirve</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table></div>
+
+      <h3 class="no-imprimir">Cómo se hace en el taller</h3>
+      <ol class="pasos-taller no-imprimir">
+        <li>Corte las piezas con el DXF. Cada pieza lleva su número.</li>
+        <li>Rólelas o dóblelas en la roladora siguiendo la curva, hasta que cierren el diámetro.</li>
+        <li>Si la tolva va en dos cuerpos, arme primero cada cuerpo y luego súbalos y suéldelos por la costura horizontal.</li>
+        <li>Si el radio es tan grande que no hay compás, trace con las <b>cuerdas y la flecha</b> de la tabla.</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<div class="pie-pdf solo-imprimir" aria-hidden="true"><span>Lycan Developments · EDWIN CNC · 2026 · Calculadora de tolva cónica, versión 1.0</span><span id="pie-fecha"></span></div>
+<footer>
+  <div class="ancho"><p><b>EDWIN CNC Taller</b> · Lycan Developments · EDWIN CNC · 2026 · versión 1.0 de prueba. Las medidas son de cálculo: compruebe antes de cortar en serie.</p></div>
+</footer>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const FIRMA = 'Lycan Developments - EDWIN CNC 2026 - Calculadora de tolva conica v1.0';
+  const IN = 25.4, ACERO = 7.85e-6;
+  const GRAD = Math.PI / 180;
+  let unidad = 'mm';
+
+  function leer(txt) {
+    if (txt == null) return NaN;
+    let t = String(txt).trim().replace(/["”]|pulg(adas)?|in\b|mm/gi, '').trim();
+    if (!t) return NaN;
+    t = t.replace(',', '.');
+    const m = t.match(/^(\d+(?:\.\d+)?)?\s*(?:(\d+)\s*\/\s*(\d+))?$/);
+    if (!m || (!m[1] && !m[2])) return NaN;
+    let v = m[1] ? parseFloat(m[1]) : 0;
+    if (m[2]) { const d = parseFloat(m[3]); if (!d) return NaN; v += parseFloat(m[2]) / d; }
+    return v;
+  }
+  const aMM = v => unidad === 'in' ? v * IN : v;
+  const f0 = v => v.toLocaleString('es-CO', { maximumFractionDigits: 0 });
+  const f1 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const f2 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const mm = v => unidad === 'in' ? `${f1(v)} mm (${f2(v / IN)}")` : `${f1(v)} mm`;
+
+  // ================= geometría =================
+  // Cuerpo = tronco de cono entre Ø d (abajo) y Ø D (arriba) con alto h.
+  function cuerpo(D, d, h) {
+    const R = Math.max(D, d) / 2, r = Math.min(D, d) / 2;
+    if (R - r < 0.05) {          // cilindro: rectángulo
+      return { cil: true, D, d, h, g: h, largo: Math.PI * 2 * R, area: Math.PI * 2 * R * h };
+    }
+    const g = Math.hypot(h, R - r), Ro = g * R / (R - r), Ri = Ro - g, th = 2 * Math.PI * R / Ro;
+    return { cil: false, D, d, h, g, Ro, Ri, th, area: th / 2 * (Ro * Ro - Ri * Ri) };
+  }
+  // pieza = 1/n del cuerpo
+  function pieza(c, n) {
+    if (c.cil) return { tipo: 'rect', w: c.largo / n, h: c.g, area: c.area / n };
+    return { tipo: 'sector', Ro: c.Ro, Ri: c.Ri, th: c.th / n, area: c.area / n };
+  }
+  // polígono local: sector centrado en +y con vértice en el origen; rectángulo desde el origen
+  function poligono(p, seg = 28) {
+    if (p.tipo === 'rect') return [[0, 0], [p.w, 0], [p.w, p.h], [0, p.h]];
+    const out = [], h = p.th / 2, n = Math.max(6, Math.ceil(seg * p.th / Math.PI));
+    for (let i = 0; i <= n; i++) { const a = Math.PI / 2 - h + p.th * i / n; out.push([p.Ro * Math.cos(a), p.Ro * Math.sin(a)]); }
+    for (let i = 0; i <= n; i++) { const a = Math.PI / 2 + h - p.th * i / n; out.push([p.Ri * Math.cos(a), p.Ri * Math.sin(a)]); }
+    return out;
+  }
+  const rot = (pts, a) => { const c = Math.cos(a), s = Math.sin(a); return pts.map(([x, y]) => [x * c - y * s, x * s + y * c]); };
+  function caja(pts) { let x0 = 1e18, y0 = 1e18, x1 = -1e18, y1 = -1e18; for (const [x, y] of pts) { if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; } return [x0, y0, x1, y1]; }
+
+  // distancia mínima entre polígonos (vértices contra lados) y si se cruzan
+  function distSeg(px, py, ax, ay, bx, by) {
+    const dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy;
+    let t = L ? ((px - ax) * dx + (py - ay) * dy) / L : 0; t = t < 0 ? 0 : t > 1 ? 1 : t;
+    return Math.hypot(px - ax - t * dx, py - ay - t * dy);
+  }
+  function dentro([x, y], poly) {
+    let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const [xi, yi] = poly[i], [xj, yj] = poly[j];
+      if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c;
+    } return c;
+  }
+  function cruzan(ax, ay, bx, by, cx, cy, dx, dy) {
+    const o = (px, py, qx, qy, rx, ry) => (qx - px) * (ry - py) - (qy - py) * (rx - px);
+    const d1 = o(ax, ay, bx, by, cx, cy), d2 = o(ax, ay, bx, by, dx, dy), d3 = o(cx, cy, dx, dy, ax, ay), d4 = o(cx, cy, dx, dy, bx, by);
+    return ((d1 > 0) !== (d2 > 0)) && ((d3 > 0) !== (d4 > 0));
+  }
+  // dos polígonos quedan separados al menos "gap": no se cruzan, ninguno está dentro del otro
+  // y la menor distancia (que siempre es de un vértice a un lado) es mayor que gap
+  function libres(A, B, gap) {
+    const [a0, a1, a2, a3] = caja(A), [b0, b1, b2, b3] = caja(B);
+    if (a2 + gap < b0 || b2 + gap < a0 || a3 + gap < b1 || b3 + gap < a1) return true;
+    if (dentro(A[0], B) || dentro(B[0], A)) return false;
+    for (let i = 0, j = A.length - 1; i < A.length; j = i++)
+      for (let k = 0, l = B.length - 1; k < B.length; l = k++)
+        if (cruzan(A[j][0], A[j][1], A[i][0], A[i][1], B[l][0], B[l][1], B[k][0], B[k][1])) return false;
+    for (const [P, Q] of [[A, B], [B, A]]) for (const [px, py] of P) for (let i = 0, j = Q.length - 1; i < Q.length; j = i++)
+      if (distSeg(px, py, Q[j][0], Q[j][1], Q[i][0], Q[i][1]) < gap) return false;
+    return true;
+  }
+
+  // Mejor forma de poner una fila de piezas iguales en la franja útil (W × H)
+  const cacheFila = new Map();
+  function fila(p, W, H, gap) {
+    const key = JSON.stringify([p.tipo, p.Ro, p.Ri, p.th, p.w, p.h, W, H, gap].map(v => v == null ? v : +(+v).toFixed(2)));
+    if (cacheFila.has(key)) return cacheFila.get(key);
+    const base = poligono(p);
+    const cands = [];
+    for (let k = 0; k < 180; k += 1) {
+      const q = rot(base, k * GRAD), [x0, y0, x1, y1] = caja(q), w = x1 - x0, h = y1 - y0;
+      if (h <= H + 1e-6 && w <= W + 1e-6) cands.push({ k, w, h });
+    }
+    let mejor = null;
+    if (cands.length) {
+      cands.sort((a, b) => a.w - b.w);
+      const elegidos = [];
+      for (const c of cands) { if (elegidos.every(e => Math.abs(e.k - c.k) >= 3)) elegidos.push(c); if (elegidos.length >= 16) break; }
+      if (!elegidos.some(e => e.k === 0) && cands.find(c => c.k === 0)) elegidos.push(cands.find(c => c.k === 0));
+      for (const c of elegidos) {
+        const q = rot(base, c.k * GRAD), [x0, y0] = caja(q);
+        const A = q.map(([x, y]) => [x - x0, y - y0]);
+        const q2 = rot(base, c.k * GRAD + Math.PI), [u0, v0] = caja(q2);
+        const B0 = q2.map(([x, y]) => [x - u0, y - v0]);
+        const paso = (B, alterna) => {
+          let lo = 0, hi = c.w + gap;
+          if (!libres(A, B.map(([x, y]) => [x + hi, y]), gap * 0.999)) return Infinity;
+          for (let it = 0; it < 22; it++) { const m = (lo + hi) / 2; if (libres(A, B.map(([x, y]) => [x + m, y]), gap * 0.999)) hi = m; else lo = m; }
+          return hi;
+        };
+        const pAlt = paso(B0, true), pIg = paso(A, false);
+        // con alternado, el paso entre piezas iguales es el doble del medio paso
+        const porFila = (pitch) => pitch === Infinity ? 1 : Math.max(1, Math.floor((W - c.w) / pitch + 1e-9) + 1);
+        const nAlt = porFila(pAlt), nIg = porFila(pIg);
+        const opcion = nAlt > nIg ? { alterna: true, pitch: pAlt, m: nAlt } : { alterna: false, pitch: pIg, m: nIg };
+        if (!mejor || opcion.m > mejor.m || (opcion.m === mejor.m && c.h < mejor.h)) mejor = { ...opcion, k: c.k, w: c.w, h: c.h };
+      }
+    }
+    cacheFila.set(key, mejor);
+    return mejor;
+  }
+
+  // Plan completo: cortes en altura (cuerpos) + n piezas por cuerpo → piezas, láminas, soldadura
+  function plan(D, d, H, cortes, ns, hoja, gap) {
+    const W = hoja.w - 2 * gap, Hh = hoja.h - 2 * gap;
+    const niveles = [0, ...cortes, H];
+    const cuerpos = [], filas = [];
+    let soldadura = 0, area = 0, piezas = 0;
+    for (let i = 0; i < niveles.length - 1; i++) {
+      const y0 = niveles[i], y1 = niveles[i + 1];
+      const dAb = d + (D - d) * y0 / H, dAr = d + (D - d) * y1 / H;
+      const c = cuerpo(dAr, dAb, y1 - y0), n = ns[i], p = pieza(c, n);
+      const f = fila(p, W, Hh, gap);
+      if (!f) return null;
+      cuerpos.push({ i, c, n, p, f, dAb, dAr, y0, y1 });
+      soldadura += n * c.g + (i > 0 ? Math.PI * dAb : 0);
+      area += c.area; piezas += n;
+      let quedan = n;
+      while (quedan > 0) { const k = Math.min(quedan, f.m); filas.push({ cu: i, k, h: f.h, largo: f.w + (k - 1) * f.pitch }); quedan -= k; }
+    }
+    // estantes: filas apiladas en láminas (las más altas primero)
+    filas.sort((a, b) => b.h - a.h);
+    const laminas = [];
+    for (const fl of filas) {
+      let puesta = false;
+      for (const L of laminas) { if (L.alto + gap + fl.h <= Hh + 1e-6) { fl.y = L.alto + gap; L.alto += gap + fl.h; L.filas.push(fl); puesta = true; break; } }
+      if (!puesta) { fl.y = 0; laminas.push({ alto: fl.h, filas: [fl] }); }
+    }
+    return { cortes, ns, cuerpos, laminas, soldadura, area, piezas, util: area / (laminas.length * hoja.w * hoja.h) };
+  }
+
+  function opcionesDe(D, d, H, hoja, gap) {
+    const todos = [];
+    for (let n = 1; n <= 10; n++) { const p = plan(D, d, H, [], [n], hoja, gap); if (p) { todos.push(p); } }
+    // si ya cabe entera en una lámina, no hace falta partirla en cuerpos
+    const cabeEntera = todos.some(p => p.laminas.length === 1 && p.ns[0] === 1);
+    if (!cabeEntera)
+    for (const fr of [0.3, 0.4, 0.5, 0.6, 0.7]) {
+      const cut = Math.round(H * fr);
+      for (let n1 = 1; n1 <= 4; n1++) for (let n2 = 1; n2 <= 8; n2++) { const p = plan(D, d, H, [cut], [n1, n2], hoja, gap); if (p) todos.push(p); }
+    }
+    if (!todos.length) return [];
+    const lam = p => p.laminas.length;
+    todos.sort((a, b) => lam(a) - lam(b) || a.soldadura - b.soldadura || a.piezas - b.piezas);
+    const ahorroLamina = todos[0];
+    const minL = lam(ahorroLamina);
+    const candS = todos.filter(p => lam(p) <= minL + 2).sort((a, b) => a.soldadura - b.soldadura || lam(a) - lam(b));
+    const ahorroSold = candS[0];
+    const lista = [{ p: ahorroLamina, etiq: 'Ahorra lámina' }];
+    if (ahorroSold !== ahorroLamina) lista.push({ p: ahorroSold, etiq: 'Ahorra soldadura' });
+    // otras opciones razonables (distintas), máximo 4 en total
+    for (const p of todos) {
+      if (lista.length >= 4) break;
+      if (lista.some(o => o.p === p)) continue;
+      if (lam(p) > minL + 2) continue;
+      // solo opciones que mejoran algo: menos láminas o menos soldadura que las ya listadas
+      if (lista.some(o => lam(o.p) <= lam(p) && o.p.soldadura <= p.soldadura + 1)) continue;
+      const firma = p.cortes.length + ':' + p.ns.join(',');
+      if (lista.some(o => o.p.cortes.length + ':' + o.p.ns.join(',') === firma)) continue;
+      lista.push({ p, etiq: '' });
+    }
+    return lista;
+  }
+
+  // ================= lectura y estado =================
+  let ultimo = null, elegida = 0;
+  function calcular() {
+    const D = aMM(leer($('ds').value)), d = aMM(leer($('di').value)), H = aMM(leer($('alto').value));
+    const gap = aMM(leer($('separa').value || '0')), esp = aMM(leer($('espesor').value || '0'));
+    const [hw, hl] = $('lamina').value.split('x').map(Number);
+    const hoja = { w: hl, h: hw };
+    const err = [];
+    if (!(D > 0)) err.push('Escriba el diámetro de arriba (1).');
+    if (!(d > 0)) err.push('Escriba el diámetro de abajo (2).');
+    if (!(H > 0)) err.push('Escriba el alto (3).');
+    if (!(gap >= 0) || gap > 100) err.push('La separación debe estar entre 0 y 100 mm (5).');
+    if (err.length) return { err };
+    const total = cuerpo(D, d, H);
+    const R = D / 2, r = d / 2;
+    const litros = Math.PI * H * (R * R + R * r + r * r) / 3 / 1e6;
+    let nivel80 = H;
+    { let lo = 0, hi = H; const Vt = litros * 1e6 * 0.8; for (let i = 0; i < 60; i++) { const y = (lo + hi) / 2, ry = r + (R - r) * y / H, v = Math.PI * y * (r * r + r * ry + ry * ry) / 3; if (v < Vt) lo = y; else hi = y; } nivel80 = (lo + hi) / 2; }
+    const ops = opcionesDe(D, d, H, hoja, gap);
+    if (!ops.length) return { err: ['Con esta lámina no se encontró cómo partir la tolva. Pruebe una lámina más grande (Más opciones ▸ 4).'] };
+    return { D, d, H, gap, esp, hoja, total, litros, nivel80, ops };
+  }
+
+  // ================= dibujo =================
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, at, padre) { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (padre) padre.appendChild(e); return e; }
+  function texto(padre, x, y, t, cls, anchor = 'middle') { const e = el('text', { x, y, 'text-anchor': anchor, class: cls || '' }, padre); e.textContent = t; return e; }
+  function flecha(padre, x, y, ang) { const s = 10, a1 = ang + 2.7, a2 = ang - 2.7; el('path', { d: `M${x},${y} L${x + s * Math.cos(a1)},${y + s * Math.sin(a1)} L${x + s * Math.cos(a2)},${y + s * Math.sin(a2)} z`, class: 'flecha' }, padre); }
+  function cotaLineal(svg, x0, y0, x1, y1, txt, lado = 1) {
+    el('line', { x1: x0, y1: y0, x2: x1, y2: y1, class: 'cota' }, svg);
+    const a = Math.atan2(y1 - y0, x1 - x0); flecha(svg, x0, y0, a + Math.PI); flecha(svg, x1, y1, a);
+    texto(svg, (x0 + x1) / 2, (y0 + y1) / 2 - 8 * lado, txt);
+  }
+
+  function planoPieza(cu, num, total) {
+    const svg = el('svg', { viewBox: '0 0 700 500', role: 'img', 'aria-label': `Plano de la pieza del cuerpo ${num}` });
+    const p = cu.p, c = cu.c;
+    const tit = total > 1 ? `CUERPO ${num === 1 ? 'INFERIOR' : 'SUPERIOR'}` : 'CUERPO';
+    texto(svg, 20, 30, `${tit} · ${cu.n} ${cu.n === 1 ? 'pieza' : 'piezas iguales'}`, 'titulo', 'start');
+    texto(svg, 20, 54, `Ø abajo ${f1(cu.dAb)} · Ø arriba ${f1(cu.dAr)} · alto ${f1(cu.y1 - cu.y0)} · mm`, '', 'start');
+    if (p.tipo === 'rect') {
+      const k = Math.min(520 / p.w, 300 / p.h), w = p.w * k, h = p.h * k, x0 = (700 - w) / 2, y0 = 100;
+      el('rect', { x: x0, y: y0, width: w, height: h, class: 'relleno' }, svg);
+      el('rect', { x: x0, y: y0, width: w, height: h, class: 'corte' }, svg);
+      cotaLineal(svg, x0, y0 + h + 30, x0 + w, y0 + h + 30, `${f1(p.w)}`, -2.6);
+      cotaLineal(svg, x0 - 30, y0 + h, x0 - 30, y0, `${f1(p.h)}`);
+      return svg;
+    }
+    const h2 = p.th / 2;
+    // caja de la pieza (vértice en el origen, eje +y) para escalar
+    const pts = poligono(p, 40), [x0, y0, x1, y1] = caja(pts);
+    const k = Math.min(560 / (x1 - x0), 290 / (y1 - y0));
+    const ox = 350 - (x0 + x1) / 2 * k, oy = 120 + y1 * k;            // pantalla: y hacia abajo
+    const S = ([x, y]) => [ox + x * k, oy - y * k];
+    const d = pts.map((q, i) => (i ? 'L' : 'M') + S(q).join(',')).join(' ') + ' Z';
+    el('path', { d, class: 'relleno' }, svg); el('path', { d, class: 'corte' }, svg);
+    // puntos clave
+    const PE = a => S([p.Ro * Math.cos(a), p.Ro * Math.sin(a)]), PI_ = a => S([p.Ri * Math.cos(a), p.Ri * Math.sin(a)]);
+    const aI = Math.PI / 2 + h2, aD = Math.PI / 2 - h2;
+    const [eix, eiy] = PE(aI), [edx, edy] = PE(aD), [iix, iiy] = PI_(aI), [idx, idy] = PI_(aD);
+    // cuerda exterior (arriba)
+    const cE = 2 * p.Ro * Math.sin(h2), cI = 2 * p.Ri * Math.sin(h2), fE = p.Ro * (1 - Math.cos(h2));
+    if (p.th < Math.PI) {
+      el('line', { x1: eix, y1: eiy, x2: edx, y2: edy, class: 'eje' }, svg);
+      texto(svg, (eix + edx) / 2, Math.min(eiy, edy, PE(Math.PI / 2)[1]) - 12, `C ${f1(cE)}`);
+      el('line', { x1: iix, y1: iiy, x2: idx, y2: idy, class: 'eje' }, svg);
+      texto(svg, (iix + idx) / 2, Math.max(iiy, idy) + 22, `c ${f1(cI)}`);
+      // flecha (sagita) exterior
+      const [tx, ty] = PE(Math.PI / 2);
+      el('line', { x1: tx, y1: ty, x2: tx, y2: (eiy + edy) / 2, class: 'cota' }, svg);
+      texto(svg, (eix + edx) / 2, PE(Math.PI / 2)[1] + 24, `f ${f1(fE)}`);
+    }
+    // lado recto g
+    { const gx = (eix + iix) / 2, gy = (eiy + iiy) / 2; if (gx < 130) texto(svg, gx + 14, gy - 10, `g ${f1(c.g)}`, '', 'start'); else texto(svg, gx - 10, gy, `g ${f1(c.g)}`, '', 'end'); }
+    // radios y ángulo (texto)
+    texto(svg, 20, 490, `R ext ${f1(p.Ro)} · R int ${f1(p.Ri)} · ángulo ${f2(p.th / GRAD)}° (centro ${p.Ro * k > 600 ? 'fuera del dibujo' : 'marcado +'})`, '', 'start');
+    if (oy < 470 && oy > 0 && p.Ro * k <= 600) { el('line', { x1: ox - 8, y1: oy, x2: ox + 8, y2: oy, class: 'cota' }, svg); el('line', { x1: ox, y1: oy - 8, x2: ox, y2: oy + 8, class: 'cota' }, svg); }
+    // líneas hacia el centro
+    el('line', { x1: iix, y1: iiy, x2: iix + (ox - iix) * 0.25, y2: iiy + (oy - iiy) * 0.25, class: 'eje' }, svg);
+    el('line', { x1: idx, y1: idy, x2: idx + (ox - idx) * 0.25, y2: idy + (oy - idy) * 0.25, class: 'eje' }, svg);
+    return svg;
+  }
+
+  function dibujarHojas(c, op) {
+    const cont = $('hojas'); cont.innerHTML = '';
+    const { hoja, gap } = c;
+    op.p.laminas.forEach((L, li) => {
+      const k = 660 / hoja.w, Wp = hoja.w * k, Hp = hoja.h * k;
+      const svg = el('svg', { viewBox: `0 0 ${Wp + 40} ${Hp + 60}`, role: 'img', 'aria-label': `Lámina ${li + 1}` }, cont);
+      texto(svg, 20, 24, `LÁMINA ${li + 1} de ${op.p.laminas.length} · ${f0(hoja.h)} × ${f0(hoja.w)} mm`, 'titulo', 'start');
+      el('rect', { x: 20, y: 36, width: Wp, height: Hp, class: 'hoja' }, svg);
+      colocaciones(op.p, L, gap).forEach(pl => {
+        const pts = pl.pts.map(([x, y]) => [20 + x * k, 36 + Hp - y * k]);
+        const d = pts.map((q, i) => (i ? 'L' : 'M') + q.join(',')).join(' ') + ' Z';
+        const b = pl.cu % 2 ? ' b' : '';
+        el('path', { d, class: 'relleno' + b }, svg); el('path', { d, class: 'corte' + b }, svg);
+        const [x0, y0, x1, y1] = caja(pts);
+        texto(svg, (x0 + x1) / 2, (y0 + y1) / 2 + 5, pl.nombre, 'num-p');
+      });
+    });
+  }
+
+  // posiciones reales de cada pieza en una lámina: [{pts (mm), cu, ang, tx, ty, p, nombre}]
+  function colocaciones(pl, L, gap) {
+    const out = [];
+    const cont = {};
+    for (const fl of L.filas) {
+      const cu = pl.cuerpos[fl.cu], f = cu.f, p = cu.p, base = poligono(p);
+      for (let j = 0; j < fl.k; j++) {
+        const giro = f.k * GRAD + (f.alterna && j % 2 ? Math.PI : 0);
+        const q = rot(base, giro), [x0, y0] = caja(q);
+        const tx = gap + j * f.pitch - x0, ty = gap + fl.y - y0;
+        cont[fl.cu] = (cont[fl.cu] || 0) + 1;
+        out.push({ pts: q.map(([x, y]) => [x + tx, y + ty]), cu: fl.cu, ang: giro, tx, ty, p, nombre: (pl.cuerpos.length > 1 ? (fl.cu === 0 ? 'I' : 'S') : 'P') + cont[fl.cu] });
+      }
+    }
+    return out;
+  }
+
+  // ================= pintar =================
+  function pintar() {
+    const c = calcular();
+    const errBox = $('error');
+    if (c.err) { errBox.hidden = false; errBox.innerHTML = c.err.map(e => `<div>${e}</div>`).join(''); ultimo = null; ['r-lam', 'r-pz', 'r-sol', 'r-lt'].forEach(i => $(i).textContent = '—'); $('opciones').innerHTML = ''; $('planos').innerHTML = ''; $('hojas').innerHTML = ''; $('tabla').innerHTML = ''; $('avisos').innerHTML = ''; return; }
+    errBox.hidden = true; ultimo = c;
+    if (elegida >= c.ops.length) elegida = 0;
+    // opciones
+    $('opciones').innerHTML = c.ops.map((o, i) => {
+      const p = o.p, desc = p.cuerpos.length === 1
+        ? (p.ns[0] === 1 ? 'Una sola pieza' : `Un cuerpo en ${p.ns[0]} piezas iguales`)
+        : `Dos cuerpos: inferior en ${p.ns[0]} ${p.ns[0] === 1 ? 'pieza' : 'piezas'} y superior en ${p.ns[1]} (corte a ${f0(p.cortes[0])} mm de abajo)`;
+      return `<label class="opcion"><input type="radio" name="op" value="${i}" ${i === elegida ? 'checked' : ''}><span><b>${desc}</b>${o.etiq ? `<span class="etiq ${i === 0 ? 'a' : ''}">${o.etiq}</span>` : ''}</span>
+        <span class="det">${p.laminas.length} ${p.laminas.length === 1 ? 'lámina' : 'láminas'} · ${p.piezas} ${p.piezas === 1 ? 'pieza' : 'piezas'} · ${f1(p.soldadura / 1000)} m de soldadura · aprovecha ${f0(p.util * 100)} % de la lámina</span></label>`;
+    }).join('');
+    document.querySelectorAll('input[name="op"]').forEach(r => r.addEventListener('change', () => { elegida = +r.value; pintar(); }));
+    const op = c.ops[elegida], p = op.p;
+    $('r-lam').textContent = `${p.laminas.length}`;
+    $('r-pz').textContent = `${p.piezas}`;
+    $('r-sol').textContent = `${f1(p.soldadura / 1000)} m`;
+    $('r-lt').textContent = `${f0(c.litros)} L`;
+    // planos
+    const pl = $('planos'); pl.innerHTML = '';
+    p.cuerpos.forEach((cu, i) => pl.appendChild(planoPieza(cu, i + 1, p.cuerpos.length)));
+    dibujarHojas(c, op);
+    // tabla
+    const filas = [
+      ['Capacidad', `${f0(c.litros)} litros`, `Llena hasta la boca. El 80 % (${f0(c.litros * 0.8)} L) llega a ${f0(c.nivel80)} mm de alto, no al 80 % de la altura.`],
+      ['Lámina del cuerpo', `${f2(c.total.area / 1e6)} m²`, 'Sin contar desperdicio.'],
+      ['Largo inclinado (g)', mm(c.total.g), 'Lo que mide la pared de la tolva de arriba a abajo.'],
+    ];
+    if (!c.total.cil) filas.push(['Ángulo del desarrollo completo', `${f2(c.total.th / GRAD)}°`, 'Si se cortara en una sola pieza.'], ['Inclinación de la pared', `${f1(Math.atan2(c.H, Math.abs(c.D - c.d) / 2) / GRAD)}°`, 'Respecto al piso. Para que el material baje solo, conviene más de 45–60° según el material.']);
+    p.cuerpos.forEach((cu, i) => {
+      const q = cu.p, nom = p.cuerpos.length > 1 ? (i === 0 ? 'Cuerpo inferior' : 'Cuerpo superior') : 'Pieza';
+      if (q.tipo === 'rect') { filas.push([`${nom}: rectángulo`, `${f1(q.w)} × ${f1(q.h)} mm`, `${cu.n} ${cu.n === 1 ? 'pieza' : 'piezas'}; se rolan como cilindro.`]); return; }
+      const h2 = q.th / 2;
+      filas.push(
+        [`${nom}: radio exterior`, mm(q.Ro), 'Desde el centro (vértice) hasta el borde de afuera.'],
+        [`${nom}: radio interior`, mm(q.Ri), 'Desde el centro hasta el borde de adentro.'],
+        [`${nom}: ángulo de cada pieza`, `${f2(q.th / GRAD)}°`, `${cu.n} ${cu.n === 1 ? 'pieza' : 'piezas iguales'}.`],
+        [`${nom}: cuerda exterior C`, mm(2 * q.Ro * Math.sin(h2)), 'Recta entre las puntas de afuera (para trazar sin compás).'],
+        [`${nom}: flecha f`, mm(q.Ro * (1 - Math.cos(h2))), 'Lo que se levanta el arco de afuera sobre su cuerda, en el centro.'],
+        [`${nom}: cuerda interior c`, mm(2 * q.Ri * Math.sin(h2)), 'Recta entre las puntas de adentro.'],
+        [`${nom}: lado recto g`, mm(cu.c.g), 'Largo de la costura vertical.']);
+    });
+    filas.push(['Soldadura total', `${f1(p.soldadura / 1000)} m`, p.cuerpos.length > 1 ? 'Costuras verticales de todas las piezas más la costura horizontal entre cuerpos.' : 'Costuras verticales entre piezas.']);
+    filas.push(['Aprovechamiento', `${f0(p.util * 100)} %`, p.util < 0.5 ? 'Sobra bastante lámina: guárdela para el fondo, refuerzos u otro trabajo.' : 'Lámina usada por las piezas.']);
+    if (c.esp > 0) filas.push(['Peso del cuerpo', `${f1(c.total.area * c.esp * ACERO)} kg`, `En acero de ${f1(c.esp)} mm.`]);
+    $('tabla').innerHTML = filas.map(([a, b, d]) => `<tr><td>${a}</td><td class="v">${b}</td><td>${d}</td></tr>`).join('');
+    const av = [];
+    if (p.util < 0.5) av.push(`Esta forma aprovecha solo el ${f0(p.util * 100)} % de la lámina: el resto le sirve para otras piezas.`);
+    if (!c.total.cil && Math.atan2(c.H, Math.abs(c.D - c.d) / 2) / GRAD < 45) av.push('La pared es muy acostada (menos de 45°): muchos materiales no bajan solos.');
+    if (c.d > c.D) av.push('El diámetro de abajo es más grande que el de arriba: se calcula igual (tolva invertida).');
+    $('avisos').innerHTML = av.map(a => `<div class="aviso">${a}</div>`).join('');
+    $('imp-medidas').textContent = `Tolva: Ø arriba ${f1(c.D)} mm · Ø abajo ${f1(c.d)} mm · alto ${f1(c.H)} mm · lámina ${f0(c.hoja.h)} × ${f0(c.hoja.w)} mm.`;
+    guardar();
+  }
+
+  // ================= DXF =================
+  function capa(n, color) { return `0\nLAYER\n2\n${n}\n70\n0\n62\n${color}\n6\nCONTINUOUS\n`; }
+  function dxf(ents) {
+    return '0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n9\n$INSUNITS\n70\n4\n0\nENDSEC\n0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n3\n' +
+      capa('CORTE', 1) + capa('REFERENCIA', 8) + capa('LAMINA', 9) + '0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n' + ents.join('') + '0\nENDSEC\n0\nEOF\n';
+  }
+  const N = v => (Math.round(v * 10000) / 10000).toString();
+  const arco = (cx, cy, r, a0, a1, c = 'CORTE') => `0\nARC\n8\n${c}\n10\n${N(cx)}\n20\n${N(cy)}\n30\n0\n40\n${N(r)}\n50\n${N(a0)}\n51\n${N(a1)}\n`;
+  const linea = (x0, y0, x1, y1, c = 'CORTE') => `0\nLINE\n8\n${c}\n10\n${N(x0)}\n20\n${N(y0)}\n30\n0\n11\n${N(x1)}\n21\n${N(y1)}\n31\n0\n`;
+  const txt = (x, y, h, t, c = 'REFERENCIA') => `0\nTEXT\n8\n${c}\n10\n${N(x)}\n20\n${N(y)}\n30\n0\n40\n${N(h)}\n1\n${t}\n`;
+  const sinTilde = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+  // pieza puesta con giro ang (rad) y traslado (tx, ty)
+  function piezaDXF(p, ang, tx, ty, nombre) {
+    const e = [];
+    if (p.tipo === 'rect') {
+      const P = rot([[0, 0], [p.w, 0], [p.w, p.h], [0, p.h]], ang).map(([x, y]) => [x + tx, y + ty]);
+      for (let i = 0; i < 4; i++) e.push(linea(...P[i], ...P[(i + 1) % 4]));
+    } else {
+      const h2 = p.th / 2, a0 = (Math.PI / 2 - h2 + ang) / GRAD, a1 = (Math.PI / 2 + h2 + ang) / GRAD;
+      e.push(arco(tx, ty, p.Ro, a0, a1), arco(tx, ty, p.Ri, a0, a1));
+      for (const a of [Math.PI / 2 - h2 + ang, Math.PI / 2 + h2 + ang])
+        e.push(linea(tx + p.Ri * Math.cos(a), ty + p.Ri * Math.sin(a), tx + p.Ro * Math.cos(a), ty + p.Ro * Math.sin(a)));
+    }
+    if (nombre) {
+      const [x0, y0, x1, y1] = caja(rot(poligono(p), ang).map(([x, y]) => [x + tx, y + ty]));
+      e.push(txt((x0 + x1) / 2 - 20, (y0 + y1) / 2, 30, nombre));
+    }
+    return e;
+  }
+  function dxfPiezas(c, op) {
+    let e = [], y = 0;
+    op.p.cuerpos.forEach((cu, i) => {
+      const p = cu.p, nom = op.p.cuerpos.length > 1 ? (i === 0 ? 'Cuerpo inferior' : 'Cuerpo superior') : 'Cuerpo';
+      const [x0, y0, x1, y1] = caja(poligono(p));
+      e = e.concat(piezaDXF(p, 0, -x0, y - y0, ''));
+      const det = p.tipo === 'rect' ? `${f1(p.w)} x ${f1(p.h)}` : `Rext ${f1(p.Ro)} Rint ${f1(p.Ri)} ang ${f2(p.th / GRAD)}`;
+      e.push(txt(0, y + (y1 - y0) + 30, 25, sinTilde(`${nom}: cortar ${cu.n} - ${det}`)));
+      y += (y1 - y0) + 140;
+    });
+    e.push(txt(0, -60, 18, FIRMA));
+    return dxf(e);
+  }
+  function dxfLaminas(c, op) {
+    let e = [], ox = 0;
+    op.p.laminas.forEach((L, li) => {
+      const W = c.hoja.w, H = c.hoja.h;
+      e.push(linea(ox, 0, ox + W, 0, 'LAMINA'), linea(ox + W, 0, ox + W, H, 'LAMINA'), linea(ox + W, H, ox, H, 'LAMINA'), linea(ox, H, ox, 0, 'LAMINA'));
+      e.push(txt(ox, -50, 30, `LAMINA ${li + 1} de ${op.p.laminas.length}`));
+      colocaciones(op.p, L, c.gap).forEach(pl => { e = e.concat(piezaDXF(pl.p, pl.ang, ox + pl.tx, pl.ty, pl.nombre)); });
+      ox += W + 300;
+    });
+    e.push(txt(0, -110, 20, FIRMA));
+    return dxf(e);
+  }
+  function bajar(nombre, contenido) {
+    const blob = new Blob([contenido], { type: 'application/dxf' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombre;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  const nombreBase = c => `tolva-conica-${Math.round(c.D)}-${Math.round(c.d)}-${Math.round(c.H)}`;
+  $('b-dxf').addEventListener('click', () => { if (ultimo) bajar(nombreBase(ultimo) + '-piezas.dxf', dxfPiezas(ultimo, ultimo.ops[elegida])); });
+  $('b-dxf-lam').addEventListener('click', () => { if (ultimo) bajar(nombreBase(ultimo) + '-laminas.dxf', dxfLaminas(ultimo, ultimo.ops[elegida])); });
+  function fechaPie() { $('pie-fecha').textContent = 'Impreso el ' + new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' }); }
+  window.addEventListener('beforeprint', fechaPie);
+  $('b-pdf').addEventListener('click', () => { fechaPie(); window.print(); });
+
+  // ================= unidades, ilustración, memoria =================
+  const CAMPOS = ['ds', 'di', 'alto', 'separa', 'espesor'];
+  function ponerUnidad(u) {
+    if (u === unidad) return;
+    CAMPOS.forEach(id => { const v = leer($(id).value); if (isNaN(v)) return; const m = unidad === 'in' ? v * IN : v; $(id).value = u === 'in' ? f2(m / IN).replace(/,00$/, '') : f1(m).replace(/,0$/, ''); });
+    unidad = u; $('u-mm').setAttribute('aria-pressed', u === 'mm'); $('u-in').setAttribute('aria-pressed', u === 'in');
+    document.querySelectorAll('.entrada .u').forEach(s => s.textContent = u === 'in' ? 'pulg' : 'mm'); pintar();
+  }
+  $('u-mm').addEventListener('click', () => ponerUnidad('mm'));
+  $('u-in').addEventListener('click', () => ponerUnidad('in'));
+  document.querySelectorAll('.campo[data-cota] input').forEach(inp => {
+    const campo = inp.closest('.campo');
+    inp.addEventListener('focus', () => { document.querySelectorAll('.ilu-cota').forEach(x => x.classList.remove('on')); $(campo.dataset.cota).classList.add('on'); document.querySelectorAll('.campo').forEach(x => x.classList.remove('activo')); campo.classList.add('activo'); });
+  });
+  const CLAVE = 'edwin-tolva-conica-v1';
+  function guardar() { try { localStorage.setItem(CLAVE, JSON.stringify({ unidad, lamina: $('lamina').value, v: CAMPOS.map(i => $(i).value) })); } catch (e) {} }
+  try {
+    const g = JSON.parse(localStorage.getItem(CLAVE) || 'null');
+    if (g && Array.isArray(g.v)) { CAMPOS.forEach((i, k) => { if (g.v[k] != null) $(i).value = g.v[k]; }); if (g.lamina) $('lamina').value = g.lamina; if (g.unidad === 'in') { unidad = 'in'; $('u-mm').setAttribute('aria-pressed', false); $('u-in').setAttribute('aria-pressed', true); document.querySelectorAll('.entrada .u').forEach(s => s.textContent = 'pulg'); } }
+  } catch (e) {}
+  let espera = null;
+  const programar = () => { clearTimeout(espera); espera = setTimeout(() => { elegida = 0; pintar(); }, 250); };
+  document.querySelectorAll('input:not([name="op"])').forEach(i => i.addEventListener('input', programar));
+  $('lamina').addEventListener('change', () => { elegida = 0; pintar(); });
+  pintar();
+  window.__tolva = { calcular, cuerpo, plan, dxfPiezas: () => dxfPiezas(ultimo, ultimo.ops[elegida]), dxfLaminas: () => dxfLaminas(ultimo, ultimo.ops[elegida]), elegir: i => { elegida = i; pintar(); } };
+})();
+</script>
+</body>
+</html>
