@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Calculadora de helicoidal (arandela de sinfín) · EDWIN CNC Taller</title>
+<meta name="description" content="Calcule la arandela abierta para fabricar la helicoidal de un sinfín: radios, abertura, cuerdas y cuántas piezas cortar. Plano acotado, PDF y DXF para plasma.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: hoja de taller — formulario a la izquierda, plano acotado a la derecha; una columna en el celular. */
+:root {
+  --bg: #f4f3ee; --papel: #ffffff; --tinta: #1d1d1b; --suave: #5b5a55; --linea: #d9d6cc;
+  --amarillo: #f2b705; --rojo: #c8321e; --azul: #1f5fa8; --nota: #fff6d6; --campo: #faf9f5;
+  --corte: #c8321e; --cota: #1f5fa8;
+  --f-titulo: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-texto: "Barlow", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-medida: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151513; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #36352f;
+    --rojo: #f0705c; --azul: #7fb0ec; --nota: #2b2615; --campo: #262622; --corte: #f0705c; --cota: #7fb0ec;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151513; --papel: #1f1f1c; --tinta: #ecebe6; --suave: #a9a79f; --linea: #36352f;
+  --rojo: #f0705c; --azul: #7fb0ec; --nota: #2b2615; --campo: #262622; --corte: #f0705c; --cota: #7fb0ec;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--tinta); font-family: var(--f-texto); font-size: 17px; line-height: 1.55; }
+a { color: inherit; }
+.ancho { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+header.cab { border-bottom: 3px solid var(--tinta); background: var(--papel); }
+header.cab .ancho { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.marca { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo { width: 44px; height: 44px; flex: none; background: var(--amarillo); color: #1d1d1b; border: 3px solid #1d1d1b; display: grid; place-items: center; font-family: var(--f-titulo); font-weight: 700; font-size: 17px; letter-spacing: .02em; }
+.marca b { font-family: var(--f-titulo); font-size: 22px; display: block; line-height: 1; }
+.marca span { font-size: 13.5px; color: var(--suave); }
+nav.migas { font-size: 15px; color: var(--suave); }
+
+h1 { font-family: var(--f-titulo); font-weight: 700; font-size: clamp(32px, 5vw, 46px); line-height: 1.05; margin: 26px 0 6px; text-wrap: balance; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+h1 .cinta { width: 54px; height: 14px; flex: none; background: repeating-linear-gradient(-45deg, var(--amarillo) 0 8px, #1d1d1b 8px 16px); }
+.intro { margin: 0 0 22px; color: var(--suave); max-width: 70ch; }
+h2 { font-family: var(--f-titulo); font-size: 25px; margin: 0 0 10px; letter-spacing: .01em; }
+h3 { font-family: var(--f-titulo); font-size: 20px; margin: 18px 0 8px; }
+
+.rejilla { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 28px; align-items: start; padding-bottom: 48px; }
+@media (max-width: 900px) { .rejilla { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--papel); border: 1px solid var(--linea); padding: 18px; min-width: 0; }
+
+/* Unidades */
+.unidades { display: inline-flex; border: 2px solid var(--tinta); margin-bottom: 14px; }
+.unidades button { font: 600 15px var(--f-texto); padding: 6px 14px; border: 0; background: transparent; color: var(--tinta); cursor: pointer; }
+.unidades button[aria-pressed="true"] { background: var(--tinta); color: var(--bg); }
+
+/* Campos */
+.campo { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; padding: 10px 0; border-top: 1px solid var(--linea); }
+.campo:first-of-type { border-top: 0; }
+.num { width: 28px; height: 28px; display: grid; place-items: center; background: var(--tinta); color: var(--bg); font-family: var(--f-titulo); font-weight: 700; font-size: 17px; }
+.campo label { font-weight: 600; align-self: center; }
+.campo label small { font-weight: 400; color: var(--suave); }
+.entrada { grid-column: 2; display: flex; align-items: center; gap: 8px; }
+.entrada input { width: 100%; min-width: 0; font: 500 19px var(--f-medida); padding: 8px 10px; border: 2px solid var(--linea); background: var(--campo); color: var(--tinta); border-radius: 0; }
+.entrada input:focus { outline: none; border-color: var(--amarillo); box-shadow: 0 0 0 2px var(--amarillo); }
+.entrada .u { font-family: var(--f-medida); color: var(--suave); min-width: 34px; }
+.ayuda { grid-column: 2; font-size: 14.5px; color: var(--suave); margin: 0; }
+.campo.activo .num { background: var(--amarillo); color: #1d1d1b; }
+details.mas { margin-top: 12px; border-top: 2px solid var(--tinta); padding-top: 10px; }
+details.mas summary { cursor: pointer; font-family: var(--f-titulo); font-size: 19px; }
+.error { background: var(--nota); border-left: 5px solid var(--rojo); padding: 10px 12px; margin: 12px 0 0; font-size: 15.5px; }
+.aviso { background: var(--nota); border-left: 5px solid var(--amarillo); padding: 10px 12px; margin: 12px 0 0; font-size: 15.5px; }
+
+/* Ilustración del sinfín */
+figure.sinfin { margin: 0 0 14px; }
+figure.sinfin svg { width: 100%; height: auto; display: block; }
+figure.sinfin figcaption { font-size: 13.5px; color: var(--suave); }
+.ilu-cota { stroke: var(--suave); fill: var(--suave); }
+.ilu-cota text { font: 600 15px var(--f-medida); stroke: none; }
+.ilu-cota.on { stroke: var(--rojo); fill: var(--rojo); }
+.ilu-cota.on line, .ilu-cota.on path { stroke-width: 2.6; }
+
+/* Resultados */
+.resumen { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.dato { border: 2px solid var(--tinta); padding: 8px 12px; background: var(--papel); }
+.dato span { display: block; font-size: 13.5px; color: var(--suave); }
+.dato b { font-family: var(--f-medida); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.dato.grande { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.dato.grande span { color: #3d3416; }
+.plano svg { width: 100%; height: auto; display: block; background: var(--papel); }
+.plano .corte { fill: none; stroke: var(--corte); stroke-width: 2.2; }
+.plano .relleno { fill: var(--corte); opacity: .07; }
+.plano .cota { stroke: var(--cota); stroke-width: 1.2; fill: none; }
+.plano .flecha { fill: var(--cota); }
+.plano .eje { stroke: var(--suave); stroke-width: 1; stroke-dasharray: 10 4 2 4; fill: none; }
+.plano text { font: 500 17px var(--f-medida); fill: var(--cota); paint-order: stroke; stroke: var(--papel); stroke-width: 6px; stroke-linejoin: round; }
+.plano text.titulo { fill: var(--tinta); font: 700 20px var(--f-titulo); }
+.tabla { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--linea); vertical-align: top; }
+td.v { font-family: var(--f-medida); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th { font-family: var(--f-titulo); font-size: 16px; letter-spacing: .05em; text-transform: uppercase; border-bottom: 2px solid var(--tinta); }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px; }
+.btn { font: 600 16px var(--f-texto); padding: 10px 16px; border: 2px solid var(--tinta); background: var(--papel); color: var(--tinta); cursor: pointer; }
+.btn.principal { background: var(--amarillo); color: #1d1d1b; border-color: #1d1d1b; }
+.btn:focus-visible, .unidades button:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+.btn:hover { transform: translateY(-1px); }
+.nota-pie { font-size: 14.5px; color: var(--suave); }
+.pasos-taller { padding-left: 20px; margin: 6px 0; }
+.pasos-taller li { margin: 4px 0; max-width: 70ch; }
+footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size: 14px; color: var(--suave); }
+.solo-imprimir { display: none; }
+
+@media print {
+  @page { size: A4 portrait; margin: 12mm; }
+  body { background: #fff; color: #000; font-size: 12pt; }
+  header.cab, .panel.formulario, .botones, footer, .no-imprimir, details.mas { display: none !important; }
+  .rejilla { display: block; }
+  .panel { border: 0; padding: 0; }
+  .solo-imprimir { display: block; }
+  .plano svg { max-height: 150mm; }
+  h1 { margin-top: 0; font-size: 22pt; }
+}
+@media (prefers-reduced-motion: reduce) { .btn:hover { transform: none; } }
+</style>
+</head>
+<body>
+<header class="cab">
+  <div class="ancho">
+    <a class="marca" href="../">
+      <span class="logo" aria-hidden="true">CNC</span>
+      <span><b>EDWIN CNC Taller</b><span>Herramientas de diseño y calculadoras de metalmecánica</span></span>
+    </a>
+    <nav class="migas" aria-label="Ruta"><a href="../">Calculadoras</a> › Helicoidal</nav>
+  </div>
+</header>
+
+<main class="ancho">
+  <h1><span class="cinta" aria-hidden="true"></span>Helicoidal para sinfín</h1>
+  <p class="intro">Escriba 4 medidas de su sinfín. La calculadora le da la <b>arandela abierta</b> que se corta en lámina y se estira para formar la helicoidal: el plano con sus medidas, cuántas piezas cortar y el archivo DXF para la mesa de plasma.</p>
+
+  <div class="rejilla">
+    <!-- FORMULARIO -->
+    <section class="panel formulario" aria-labelledby="t-medidas">
+      <h2 id="t-medidas">Medidas del sinfín</h2>
+      <div class="unidades" role="group" aria-label="Unidades">
+        <button type="button" id="u-mm" aria-pressed="true">Milímetros</button>
+        <button type="button" id="u-in" aria-pressed="false">Pulgadas</button>
+      </div>
+
+      <figure class="sinfin" aria-hidden="true">
+        <svg viewBox="0 0 600 250" id="ilustracion">
+          <defs>
+            <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker>
+          </defs>
+          <!-- tubo -->
+          <rect x="70" y="104" width="440" height="42" fill="var(--linea)" stroke="var(--tinta)" stroke-width="2"/>
+          <!-- helicoidal (vista de lado) -->
+          <g id="espiras" fill="none" stroke="var(--tinta)" stroke-width="2.4"></g>
+          <!-- cotas -->
+          <g class="ilu-cota" id="c-di"><line x1="545" y1="104" x2="545" y2="146" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><line x1="512" y1="104" x2="552" y2="104" stroke-width="1"/><line x1="512" y1="146" x2="552" y2="146" stroke-width="1"/><text x="556" y="131">1 Di</text></g>
+          <g class="ilu-cota" id="c-de"><line x1="30" y1="60" x2="30" y2="190" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><line x1="22" y1="60" x2="88" y2="60" stroke-width="1"/><line x1="22" y1="190" x2="88" y2="190" stroke-width="1"/><text x="2" y="44">2 De</text></g>
+          <g class="ilu-cota" id="c-p"><line x1="190" y1="38" x2="290" y2="38" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><line x1="190" y1="30" x2="190" y2="60" stroke-width="1"/><line x1="290" y1="30" x2="290" y2="60" stroke-width="1"/><text x="214" y="26">3 Paso</text></g>
+          <g class="ilu-cota" id="c-l"><line x1="70" y1="222" x2="510" y2="222" marker-start="url(#fl)" marker-end="url(#fl)" stroke-width="1.6"/><line x1="70" y1="196" x2="70" y2="230" stroke-width="1"/><line x1="510" y1="196" x2="510" y2="230" stroke-width="1"/><text x="236" y="246">4 Largo</text></g>
+        </svg>
+        <figcaption>Sinfín visto de lado. La medida que está escribiendo se marca en rojo.</figcaption>
+      </figure>
+
+      <div class="campo" data-cota="c-di">
+        <span class="num">1</span><label for="di">Diámetro del eje <small>(Di, tubo)</small></label>
+        <div class="entrada"><input id="di" inputmode="decimal" autocomplete="off" value="76"><span class="u">mm</span></div>
+        <p class="ayuda">El diámetro de afuera del tubo donde va soldada la helicoidal.</p>
+      </div>
+      <div class="campo" data-cota="c-de">
+        <span class="num">2</span><label for="de">Diámetro exterior <small>(De)</small></label>
+        <div class="entrada"><input id="de" inputmode="decimal" autocomplete="off" value="300"><span class="u">mm</span></div>
+        <p class="ayuda">De punta a punta de la helicoidal. Suele ser el ancho de la canal o tubo donde gira, menos la holgura.</p>
+      </div>
+      <div class="campo" data-cota="c-p">
+        <span class="num">3</span><label for="paso">Paso <small>(de cresta a cresta)</small></label>
+        <div class="entrada"><input id="paso" inputmode="decimal" autocomplete="off" value="300"><span class="u">mm</span></div>
+        <p class="ayuda">Lo que avanza la helicoidal en una vuelta. Lo normal es igual al diámetro exterior.</p>
+      </div>
+      <div class="campo" data-cota="c-l">
+        <span class="num">4</span><label for="largo">Largo del tornillo <small>(tramo con helicoidal)</small></label>
+        <div class="entrada"><input id="largo" inputmode="decimal" autocomplete="off" value="2500"><span class="u">mm</span></div>
+        <p class="ayuda">Solo la parte del tubo que lleva helicoidal.</p>
+      </div>
+
+      <details class="mas">
+        <summary>Más opciones</summary>
+        <div class="campo">
+          <span class="num">5</span><label for="holgura">Holgura del agujero</label>
+          <div class="entrada"><input id="holgura" inputmode="decimal" autocomplete="off" value="1"><span class="u">mm</span></div>
+          <p class="ayuda">Cuánto más grande se corta el agujero que el tubo, para que entre al soldar. De 0 a 3 mm.</p>
+        </div>
+        <div class="campo">
+          <span class="num">6</span><label for="espesor">Espesor de la lámina <small>(solo para el peso)</small></label>
+          <div class="entrada"><input id="espesor" inputmode="decimal" autocomplete="off" value="3"><span class="u">mm</span></div>
+          <p class="ayuda">No cambia el corte; sirve para saber cuánto pesa.</p>
+        </div>
+        <div class="campo">
+          <span class="num">7</span><label for="real">Paso que le dio la pieza de prueba <small>(opcional)</small></label>
+          <div class="entrada"><input id="real" inputmode="decimal" autocomplete="off" placeholder="vacío = sin ajuste"><span class="u">mm</span></div>
+          <p class="ayuda">Si ya cortó y estiró una arandela con estas medidas y el paso le salió distinto, escríbalo: la calculadora corrige el corte para su material.</p>
+        </div>
+        <div class="campo">
+          <span class="num">8</span><label for="separa">Separación entre piezas en la lámina</label>
+          <div class="entrada"><input id="separa" inputmode="decimal" autocomplete="off" value="10"><span class="u">mm</span></div>
+          <p class="ayuda">Espacio entre arandelas al acomodarlas en la lámina de 4 × 8 pies (1220 × 2440 mm).</p>
+        </div>
+      </details>
+      <div id="error" class="error" hidden role="alert"></div>
+    </section>
+
+    <!-- RESULTADO -->
+    <section class="panel resultado" aria-labelledby="t-res" aria-live="polite">
+      <h2 id="t-res">Arandela a cortar</h2>
+      <p class="solo-imprimir" id="imp-medidas"></p>
+      <div class="resumen">
+        <div class="dato grande"><span>Piezas a cortar</span><b id="r-piezas">—</b></div>
+        <div class="dato"><span>Radio exterior R</span><b id="r-R">—</b></div>
+        <div class="dato"><span>Radio interior r</span><b id="r-r">—</b></div>
+        <div class="dato"><span>Abertura θ</span><b id="r-th">—</b></div>
+      </div>
+      <div class="plano"><svg id="plano" viewBox="0 0 700 560" role="img" aria-label="Plano acotado de la arandela abierta"></svg></div>
+      <div id="avisos"></div>
+
+      <div class="botones">
+        <button class="btn principal" type="button" id="b-dxf">Descargar DXF (1 arandela)</button>
+        <button class="btn" type="button" id="b-dxf-lamina">DXF de la lámina 4 × 8</button>
+        <button class="btn" type="button" id="b-pdf">Imprimir o guardar PDF</button>
+      </div>
+      <p class="nota-pie">El DXF está en milímetros, a escala 1:1: el corte en la capa CORTE y los textos en REFERENCIA (no se cortan).</p>
+
+      <h3>Todas las medidas</h3>
+      <div class="tabla"><table>
+        <thead><tr><th>Medida</th><th>Valor</th><th>Para qué sirve</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table></div>
+
+      <h3 class="no-imprimir">Cómo se hace en el taller</h3>
+      <ol class="pasos-taller">
+        <li>Corte las arandelas con el DXF. Antes de cortarlas todas, <b>corte una de prueba</b>, estírela y mida el paso.</li>
+        <li>Abra cada arandela por la abertura y estírela (con gato, prensa o a mano) hasta que avance un paso.</li>
+        <li>Métala en el tubo y suéldela a tope con la siguiente: cada arandela es una vuelta.</li>
+        <li>Si el paso de la prueba salió distinto, escríbalo en <b>Más opciones ▸ 7</b> y vuelva a descargar el DXF.</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="ancho">
+    <p><b>EDWIN CNC Taller</b> · versión de prueba. Las medidas son de cálculo: compruebe siempre con una pieza de prueba antes de cortar en serie.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const IN = 25.4, LAM_W = 2440, LAM_H = 1220, ACERO = 7.85e-6; // kg/mm³
+  let unidad = 'mm';
+
+  // ---------- lectura de números: coma o punto, fracciones "1 1/2", "3/4"
+  function leer(txt) {
+    if (txt == null) return NaN;
+    let t = String(txt).trim().replace(/["”]|pulg(adas)?|in\b|mm/gi, '').trim();
+    if (!t) return NaN;
+    t = t.replace(',', '.');
+    const m = t.match(/^(\d+(?:\.\d+)?)?\s*(?:(\d+)\s*\/\s*(\d+))?$/);
+    if (!m || (!m[1] && !m[2])) return NaN;
+    let v = m[1] ? parseFloat(m[1]) : 0;
+    if (m[2]) { const d = parseFloat(m[3]); if (!d) return NaN; v += parseFloat(m[2]) / d; }
+    return v;
+  }
+  const aMM = v => unidad === 'in' ? v * IN : v;
+  const f1 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const f2 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const mm = v => unidad === 'in' ? `${f1(v)} mm (${f2(v / IN)}")` : `${f1(v)} mm`;
+  const mmCorto = v => `${f1(v)}`;
+
+  // ---------- cálculo (fórmula de taller de la arandela abierta)
+  function calcular() {
+    const di = aMM(leer($('di').value)), de = aMM(leer($('de').value));
+    const p = aMM(leer($('paso').value)), L = aMM(leer($('largo').value));
+    const hol = aMM(leer($('holgura').value || '0'));
+    const esp = aMM(leer($('espesor').value || '0'));
+    const realTxt = $('real').value.trim();
+    const real = realTxt ? aMM(leer(realTxt)) : NaN;
+    const sep = aMM(leer($('separa').value || '0'));
+    const err = [];
+    if (!(di > 0)) err.push('Escriba el diámetro del eje (1).');
+    if (!(de > 0)) err.push('Escriba el diámetro exterior (2).');
+    if (!(p > 0)) err.push('Escriba el paso (3).');
+    if (!(L > 0)) err.push('Escriba el largo del tornillo (4).');
+    if (di > 0 && de > 0 && di + hol >= de) err.push('El diámetro del eje debe ser menor que el exterior. ¿Los escribió al revés?');
+    if (hol < 0 || hol > 20 || isNaN(hol)) err.push('La holgura debe estar entre 0 y 3 mm (5).');
+    if (realTxt && !(real > 0)) err.push('El paso de la prueba (7) no es un número.');
+    if (err.length) return { err };
+    // ajuste por material: si con paso p salió "real", se corta para p·p/real
+    const pc = real > 0 ? p * p / real : p;
+    const dic = di + hol;
+    const lo = Math.hypot(Math.PI * de, pc);     // largo del borde exterior en una vuelta
+    const li = Math.hypot(Math.PI * dic, pc);    // largo junto al eje
+    const b = (de - dic) / 2;                    // ancho de la arandela
+    const r = b * li / (lo - li);
+    const R = r + b;
+    const fi = lo / R;                           // ángulo de la pieza (rad)
+    if (fi >= 2 * Math.PI) return { err: ['Con estas medidas la arandela se cierra sola: revise el paso.'] };
+    const th = 2 * Math.PI - fi;                 // abertura (rad)
+    const cuerdaE = 2 * R * Math.sin(th / 2), cuerdaI = 2 * r * Math.sin(th / 2);
+    const vueltas = L / p;
+    const enteras = Math.floor(vueltas + 1e-9);
+    const parcial = vueltas - enteras;
+    const angParcial = parcial * fi * 180 / Math.PI;
+    const area = (fi / 2) * (R * R - r * r);
+    const peso = esp > 0 ? area * esp * ACERO : 0;
+    const helInt = Math.atan(pc / (Math.PI * dic)) * 180 / Math.PI;
+    const n = acomodo(R, sep);
+    return { di, de, p, pc, L, hol, dic, esp, real, b, r, R, fi, th, cuerdaE, cuerdaI, lo, li,
+             vueltas, enteras, parcial, angParcial, area, peso, helInt, n, sep };
+  }
+
+  // ---------- cuántas caben en la lámina (rejilla o tresbolillo, la mejor)
+  function acomodo(R, sep) {
+    const d = 2 * R + sep;
+    let mejor = { n: 0, pos: [] };
+    for (const [W, H] of [[LAM_W, LAM_H]]) {
+      if (d - sep > H) break;
+      // rejilla
+      const cx = Math.floor((W - 2 * R) / d) + 1, cy = Math.floor((H - 2 * R) / d) + 1;
+      const pos1 = [];
+      for (let j = 0; j < cy; j++) for (let i = 0; i < cx; i++) pos1.push([R + i * d, R + j * d]);
+      if (pos1.length > mejor.n) mejor = { n: pos1.length, pos: pos1 };
+      // tresbolillo (filas desplazadas)
+      const dy = d * Math.sqrt(3) / 2, pos2 = [];
+      for (let j = 0; R + j * dy <= H - R + 1e-6; j++) {
+        const off = (j % 2) ? d / 2 : 0;
+        for (let i = 0; R + off + i * d <= W - R + 1e-6; i++) pos2.push([R + off + i * d, R + j * dy]);
+      }
+      if (pos2.length > mejor.n) mejor = { n: pos2.length, pos: pos2 };
+    }
+    return mejor;
+  }
+
+  // ---------- plano acotado (SVG)
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, at, padre) { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (padre) padre.appendChild(e); return e; }
+  function texto(padre, x, y, t, cls, anchor = 'middle') { const e = el('text', { x, y, 'text-anchor': anchor, class: cls || '' }, padre); e.textContent = t; return e; }
+  function flecha(padre, x, y, ang) {
+    const s = 11, a1 = ang + 2.7, a2 = ang - 2.7;
+    el('path', { d: `M${x},${y} L${x + s * Math.cos(a1)},${y + s * Math.sin(a1)} L${x + s * Math.cos(a2)},${y + s * Math.sin(a2)} z`, class: 'flecha' }, padre);
+  }
+
+  function dibujar(c) {
+    const svg = $('plano'); svg.innerHTML = '';
+    if (c.err) return;
+    const W = 700, H = 560, cx = 330, cy = 290;
+    const k = 205 / c.R;                    // escala del dibujo
+    const R = c.R * k, r = c.r * k, t2 = c.th / 2;
+    // la abertura mira a la derecha (ángulo 0); en SVG y crece hacia abajo
+    const P = (rad, a) => [cx + rad * Math.cos(a), cy - rad * Math.sin(a)];
+    const a0 = t2, a1 = 2 * Math.PI - t2, grande = (a1 - a0) > Math.PI ? 1 : 0;
+    const [ox0, oy0] = P(R, a0), [ox1, oy1] = P(R, a1), [ix0, iy0] = P(r, a0), [ix1, iy1] = P(r, a1);
+    const d = `M${ox0},${oy0} A${R},${R} 0 ${grande} 0 ${ox1},${oy1} L${ix1},${iy1} A${r},${r} 0 ${grande} 1 ${ix0},${iy0} Z`;
+    el('path', { d, class: 'relleno' }, svg);
+    el('path', { d, class: 'corte' }, svg);
+    // ejes de centro
+    el('line', { x1: cx - R - 18, y1: cy, x2: cx + R + 18, y2: cy, class: 'eje' }, svg);
+    el('line', { x1: cx, y1: cy - R - 18, x2: cx, y2: cy + R + 18, class: 'eje' }, svg);
+    // R (a 135°)
+    const aR = 3 * Math.PI / 4, [rx, ry] = P(R, aR);
+    el('line', { x1: cx, y1: cy, x2: rx, y2: ry, class: 'cota' }, svg); flecha(svg, rx, ry, Math.atan2(ry - cy, rx - cx));
+    const [tx, ty] = P(R * 0.62, aR); texto(svg, tx - 6, ty - 10, `R ${mmCorto(c.R)}`, '', 'end');
+    // r (a 225°)
+    const ar = 5 * Math.PI / 4, [qx, qy] = P(r, ar);
+    el('line', { x1: cx, y1: cy, x2: qx, y2: qy, class: 'cota' }, svg); flecha(svg, qx, qy, Math.atan2(qy - cy, qx - cx));
+    texto(svg, qx - 10, qy + 22, `r ${mmCorto(c.r)}`, '', 'end');
+    // ángulo de abertura θ: líneas del centro a los bordes y arco
+    el('line', { x1: cx, y1: cy, x2: ox0, y2: oy0, class: 'eje' }, svg);
+    el('line', { x1: cx, y1: cy, x2: ox1, y2: oy1, class: 'eje' }, svg);
+    const ra = Math.max(r * 0.55, 34), [b0x, b0y] = P(ra, a0), [b1x, b1y] = P(ra, -t2);
+    el('path', { d: `M${b0x},${b0y} A${ra},${ra} 0 0 1 ${b1x},${b1y}`, class: 'cota' }, svg);
+    texto(svg, cx + ra + 8, cy - 8, `θ ${f1(c.th * 180 / Math.PI)}°`, '', 'start');
+    // cuerda exterior (paralela, afuera de la abertura)
+    const off = 34, nx = 1, ny = 0;  // la abertura mira a +x: se acota a la derecha
+    const c0 = [ox0 + off, oy0], c1 = [ox1 + off, oy1];
+    el('line', { x1: ox0 + 4, y1: oy0, x2: c0[0] + 6, y2: c0[1], class: 'cota' }, svg);
+    el('line', { x1: ox1 + 4, y1: oy1, x2: c1[0] + 6, y2: c1[1], class: 'cota' }, svg);
+    el('line', { x1: c0[0], y1: c0[1], x2: c1[0], y2: c1[1], class: 'cota' }, svg);
+    flecha(svg, c0[0], c0[1], -Math.PI / 2); flecha(svg, c1[0], c1[1], Math.PI / 2);
+    texto(svg, c0[0] + 10, cy - 4, `C ${mmCorto(c.cuerdaE)}`, '', 'start');
+    texto(svg, c0[0] + 10, cy + 20, `c ${mmCorto(c.cuerdaI)}`, '', 'start');
+    // ancho b sobre el borde de la abertura
+    const [mx, my] = P((R + r) / 2, a0);
+    texto(svg, mx + 4, my - 12, `b ${mmCorto(c.b)}`, '', 'start');
+    // títulos
+    texto(svg, 20, 34, 'ARANDELA ABIERTA (1 vuelta)', 'titulo', 'start');
+    texto(svg, 20, 58, `Di ${mmCorto(c.di)} · De ${mmCorto(c.de)} · Paso ${mmCorto(c.p)} · medidas en mm`, '', 'start');
+    texto(svg, 20, H - 16, `Cortar: ${textoPiezas(c)}`, 'titulo', 'start');
+  }
+
+  function textoPiezas(c) {
+    if (c.parcial < 0.02) return `${c.enteras} arandelas completas`;
+    if (c.enteras === 0) return `1 arandela parcial de ${f1(c.angParcial)}°`;
+    return `${c.enteras} completas + 1 parcial de ${f1(c.angParcial)}°`;
+  }
+
+  // ---------- tabla, avisos y resumen
+  function pintar() {
+    const c = calcular();
+    const errBox = $('error');
+    if (c.err) { errBox.hidden = false; errBox.innerHTML = c.err.map(e => `<div>${e}</div>`).join(''); dibujar(c); ['r-piezas', 'r-R', 'r-r', 'r-th'].forEach(i => $(i).textContent = '—'); $('tabla').innerHTML = ''; $('avisos').innerHTML = ''; ultimo = null; return; }
+    errBox.hidden = true;
+    ultimo = c;
+    $('r-piezas').textContent = c.parcial < 0.02 ? `${c.enteras}` : `${c.enteras} + parcial`;
+    $('r-R').textContent = `${f1(c.R)} mm`;
+    $('r-r').textContent = `${f1(c.r)} mm`;
+    $('r-th').textContent = `${f1(c.th * 180 / Math.PI)}°`;
+    dibujar(c);
+    const filas = [
+      ['Piezas a cortar', textoPiezas(c), `El tornillo de ${f1(c.L)} mm con paso ${f1(c.p)} mm tiene ${f2(c.vueltas)} vueltas; cada arandela es una vuelta.`],
+      ['Radio exterior R', mm(c.R), 'Círculo de afuera del corte.'],
+      ['Radio interior r', mm(c.r), `Agujero del corte. Es más chico que el tubo (Ø ${f1(c.di)}) porque al estirar la arandela el agujero se abre.`],
+      ['Ancho b', mm(c.b), 'De borde a borde de la arandela.'],
+      ['Abertura θ', `${f1(c.th * 180 / Math.PI)}°`, 'El pedazo que se quita para poder estirarla.'],
+      ['Ángulo de la pieza', `${f1(c.fi * 180 / Math.PI)}°`, 'Lo que queda de lámina (360° − θ).'],
+      ['Cuerda exterior C', mm(c.cuerdaE), 'Distancia recta entre las dos puntas de afuera. Sirve para medir con flexómetro.'],
+      ['Cuerda interior c', mm(c.cuerdaI), 'Distancia recta entre las dos puntas de adentro.'],
+      ['Borde exterior estirado', mm(c.lo), 'Largo de la espiral de afuera en una vuelta.'],
+      ['Borde interior estirado', mm(c.li), 'Largo de la espiral junto al tubo en una vuelta.'],
+      ['Piezas por lámina 4 × 8', `${c.n.n}`, `Lámina de 1220 × 2440 mm, con ${f1(c.sep)} mm entre piezas.`],
+      ['Láminas para todo el tornillo', `${c.n.n ? Math.ceil(Math.ceil(c.vueltas - 1e-9) / c.n.n) : '—'}`, 'Contando la pieza parcial como una entera.'],
+    ];
+    if (c.peso > 0) filas.push(['Peso de una arandela', `${f2(c.peso)} kg`, `En acero de ${f1(c.esp)} mm. Todas: ${f1(c.peso * c.vueltas)} kg.`]);
+    if (c.real > 0) filas.push(['Ajuste por material', `paso de corte ${f1(c.pc)} mm`, `Su prueba dio ${f1(c.real)} mm; se corta como si el paso fuera ${f1(c.pc)} mm para que quede en ${f1(c.p)} mm.`]);
+    $('tabla').innerHTML = filas.map(([a, b, d]) => `<tr><td>${a}</td><td class="v">${b}</td><td>${d}</td></tr>`).join('');
+    const av = [];
+    if (c.helInt > 60) av.push(`La helicoidal es muy empinada junto al tubo (${f1(c.helInt)}°): será difícil de estirar. Use un tubo más grueso o un paso más corto.`);
+    if (2 * c.R > LAM_H) av.push('La arandela no cabe en el ancho de una lámina de 4 pies (1220 mm). Córtela en dos medias arandelas y únalas con soldadura.');
+    if (c.p > 1.5 * c.de) av.push('El paso es mucho más largo que el diámetro: revise la medida, lo normal es paso = diámetro.');
+    if (c.hol > 3) av.push('La holgura es grande: la helicoidal puede quedar floja en el tubo.');
+    $('avisos').innerHTML = av.map(a => `<div class="aviso">${a}</div>`).join('');
+    $('imp-medidas').textContent = `Sinfín: Di ${f1(c.di)} mm · De ${f1(c.de)} mm · Paso ${f1(c.p)} mm · Largo ${f1(c.L)} mm · Holgura ${f1(c.hol)} mm.`;
+    guardar();
+  }
+
+  // ---------- DXF (R12, mm). Ángulos en grados, antihorario.
+  function dxf(entidades) {
+    const cab = '0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n9\n$INSUNITS\n70\n4\n0\nENDSEC\n' +
+      '0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n3\n' +
+      capa('CORTE', 1) + capa('REFERENCIA', 8) + capa('LAMINA', 9) + '0\nENDTAB\n0\nENDSEC\n';
+    return cab + '0\nSECTION\n2\nENTITIES\n' + entidades.join('') + '0\nENDSEC\n0\nEOF\n';
+  }
+  function capa(n, color) { return `0\nLAYER\n2\n${n}\n70\n0\n62\n${color}\n6\nCONTINUOUS\n`; }
+  const N = v => (Math.round(v * 10000) / 10000).toString();
+  function arco(cx, cy, rad, a0, a1, c = 'CORTE') { return `0\nARC\n8\n${c}\n10\n${N(cx)}\n20\n${N(cy)}\n30\n0\n40\n${N(rad)}\n50\n${N(a0)}\n51\n${N(a1)}\n`; }
+  function linea(x0, y0, x1, y1, c = 'CORTE') { return `0\nLINE\n8\n${c}\n10\n${N(x0)}\n20\n${N(y0)}\n30\n0\n11\n${N(x1)}\n21\n${N(y1)}\n31\n0\n`; }
+  function txt(x, y, h, t, c = 'REFERENCIA') { return `0\nTEXT\n8\n${c}\n10\n${N(x)}\n20\n${N(y)}\n30\n0\n40\n${N(h)}\n1\n${t}\n`; }
+  function arandela(c, x, y, conTexto) {
+    const t2 = c.th / 2 * 180 / Math.PI, g0 = t2, g1 = 360 - t2, rad = c.th / 2;
+    const e = [arco(x, y, c.R, g0, g1), arco(x, y, c.r, g0, g1),
+      linea(x + c.r * Math.cos(rad), y + c.r * Math.sin(rad), x + c.R * Math.cos(rad), y + c.R * Math.sin(rad)),
+      linea(x + c.r * Math.cos(-rad), y + c.r * Math.sin(-rad), x + c.R * Math.cos(-rad), y + c.R * Math.sin(-rad))];
+    if (conTexto) {
+      const h = Math.max(4, Math.min(12, c.b / 6));
+      e.push(txt(x - c.R * 0.55, y - c.r - c.b * 0.55, h, `Di ${f1(c.di)} De ${f1(c.de)} P ${f1(c.p)}`.replace(/\./g, '')));
+    }
+    return e;
+  }
+  function bajar(nombre, contenido) {
+    const blob = new Blob([contenido], { type: 'application/dxf' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombre;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  const nombreBase = c => `arandela-helicoidal-Di${Math.round(c.di)}-De${Math.round(c.de)}-P${Math.round(c.p)}`;
+
+  let ultimo = null;
+  $('b-dxf').addEventListener('click', () => { if (!ultimo) return; bajar(nombreBase(ultimo) + '.dxf', dxf(arandela(ultimo, 0, 0, true))); });
+  function dxfLamina(c) {
+    const total = Math.ceil(c.vueltas - 1e-9), cuantas = Math.min(total, c.n.n);
+    let e = [linea(0, 0, LAM_W, 0, 'LAMINA'), linea(LAM_W, 0, LAM_W, LAM_H, 'LAMINA'), linea(LAM_W, LAM_H, 0, LAM_H, 'LAMINA'), linea(0, LAM_H, 0, 0, 'LAMINA')];
+    c.n.pos.slice(0, cuantas).forEach(([x, y]) => { e = e.concat(arandela(c, x, y, false)); });
+    e.push(txt(10, -30, 20, `${cuantas} arandelas Di ${f1(c.di)} De ${f1(c.de)} P ${f1(c.p)} - lamina 1220 x 2440`.replace(/\./g, '')));
+    return [cuantas, dxf(e)];
+  }
+  $('b-dxf-lamina').addEventListener('click', () => {
+    const c = ultimo; if (!c) return;
+    if (!c.n.n) { alertar('La arandela no cabe en la lámina de 4 × 8: córtela en medias arandelas.'); return; }
+    const [cuantas, texto] = dxfLamina(c);
+    bajar(nombreBase(c) + `-lamina-${cuantas}.dxf`, texto);
+  });
+  function alertar(t) { $('avisos').insertAdjacentHTML('afterbegin', `<div class="aviso">${t}</div>`); }
+  $('b-pdf').addEventListener('click', () => window.print());
+
+  // ---------- unidades
+  function ponerUnidad(u) {
+    if (u === unidad) return;
+    const campos = ['di', 'de', 'paso', 'largo', 'holgura', 'espesor', 'real', 'separa'];
+    campos.forEach(id => {
+      const v = leer($(id).value); if (isNaN(v)) return;
+      const mmv = unidad === 'in' ? v * IN : v;
+      $(id).value = u === 'in' ? f2(mmv / IN).replace(/,00$/, '') : f1(mmv).replace(/,0$/, '');
+    });
+    unidad = u;
+    $('u-mm').setAttribute('aria-pressed', u === 'mm'); $('u-in').setAttribute('aria-pressed', u === 'in');
+    document.querySelectorAll('.entrada .u').forEach(s => s.textContent = u === 'in' ? 'pulg' : 'mm');
+    pintar();
+  }
+  $('u-mm').addEventListener('click', () => ponerUnidad('mm'));
+  $('u-in').addEventListener('click', () => ponerUnidad('in'));
+
+  // ---------- ilustración: espiras y medida resaltada
+  (function espiras() {
+    const g = $('espiras'); let d = '';
+    for (let x = 90; x < 500; x += 50) d += `M${x},60 C${x + 20},60 ${x + 30},190 ${x + 50},190 `;
+    g.innerHTML = `<path d="${d}"/>`;
+  })();
+  document.querySelectorAll('.campo[data-cota] input').forEach(inp => {
+    const campo = inp.closest('.campo');
+    inp.addEventListener('focus', () => { document.querySelectorAll('.ilu-cota').forEach(c => c.classList.remove('on')); $(campo.dataset.cota).classList.add('on'); document.querySelectorAll('.campo').forEach(c => c.classList.remove('activo')); campo.classList.add('activo'); });
+  });
+
+  // ---------- recordar las últimas medidas (solo en este navegador)
+  const CLAVE = 'edwin-helicoidal-v1';
+  function guardar() { try { localStorage.setItem(CLAVE, JSON.stringify({ unidad, v: ['di', 'de', 'paso', 'largo', 'holgura', 'espesor', 'real', 'separa'].map(i => $(i).value) })); } catch (e) {} }
+  try {
+    const g = JSON.parse(localStorage.getItem(CLAVE) || 'null');
+    if (g && Array.isArray(g.v)) { ['di', 'de', 'paso', 'largo', 'holgura', 'espesor', 'real', 'separa'].forEach((i, k) => { if (g.v[k] != null) $(i).value = g.v[k]; }); if (g.unidad === 'in') { unidad = 'in'; $('u-mm').setAttribute('aria-pressed', false); $('u-in').setAttribute('aria-pressed', true); document.querySelectorAll('.entrada .u').forEach(s => s.textContent = 'pulg'); } }
+  } catch (e) {}
+
+  document.querySelectorAll('input').forEach(i => i.addEventListener('input', pintar));
+  pintar();
+  window.__helicoidal = { calcular, leer, acomodo, dxfUna: () => dxf(arandela(ultimo, 0, 0, true)), dxfLamina: () => dxfLamina(ultimo)[1] };
+})();
+</script>
+</body>
+</html>
