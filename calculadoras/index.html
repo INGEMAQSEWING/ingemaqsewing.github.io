@@ -26,7 +26,7 @@ header .ancho { padding-block: 34px 26px; display: flex; gap: 16px; align-items:
 h1 { font: 700 clamp(34px, 6vw, 52px)/1 var(--f-titulo); margin: 0; text-wrap: balance; }
 .sub { margin: 6px 0 0; color: var(--suave); }
 main { padding-block: 28px 56px; }
-.tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
 .tarjeta { background: var(--papel); border: 2px solid var(--tinta); padding: 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; text-decoration: none; color: inherit; }
 a.tarjeta:hover, a.tarjeta:focus-visible { border-color: var(--amarillo); box-shadow: 0 0 0 3px var(--amarillo); outline: none; }
 .tarjeta h2 { font: 700 27px var(--f-titulo); margin: 0; }
@@ -36,6 +36,11 @@ a.tarjeta:hover, a.tarjeta:focus-visible { border-color: var(--amarillo); box-sh
 .tarjeta.pronto { opacity: .7; border-style: dashed; }
 .tarjeta svg { width: 100%; height: 110px; }
 .tarjeta svg * { vector-effect: non-scaling-stroke; }
+.grupo { margin-bottom: 34px; }
+.grupo-t { font: 700 clamp(26px, 4vw, 32px)/1.1 var(--f-titulo); margin: 0 0 2px; display: flex; align-items: center; gap: 12px; }
+.grupo-t::before { content: ""; width: 44px; height: 12px; flex: none; background: repeating-linear-gradient(-45deg, var(--amarillo) 0 7px, var(--tinta) 7px 14px); }
+.grupo-s { margin: 0 0 12px; color: var(--suave); }
+.tarjeta h2 { font-size: 25px; }
 footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; color: var(--suave); font-size: 14px; }
 </style>
 </head>
@@ -50,57 +55,73 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; color: va
   </div>
 </header>
 <main class="ancho">
-  <div class="tarjetas">
-    <a class="tarjeta" href="helicoidal/">
-      <svg viewBox="0 0 200 110" aria-hidden="true"><path d="M150,40 A50,50 0 1 1 150,70 L118,62 A18,18 0 1 0 118,48 Z" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
+  <section class="grupo">
+    <h2 class="grupo-t">Sinfín</h2>
+    <p class="grupo-s">Transportadores de tornillo.</p>
+    <div class="tarjetas">
+      <a class="tarjeta" href="helicoidal/">
+      <svg viewBox="0 0 200 110" aria-hidden="true"><path d="M140.8,36.0 A45,45 0 1 0 140.8,74.0 L116.3,62.6 A18,18 0 1 1 116.3,47.4 Z" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
       <span class="estado lista">Lista para probar</span>
       <h2>Helicoidal para sinfín</h2>
       <p>La arandela abierta para formar la helicoidal: radios, abertura, cuántas piezas y cuántas caben en la lámina.</p>
     </a>
-    <a class="tarjeta" href="tolva-conica/">
+    </div>
+  </section>
+  <section class="grupo">
+    <h2 class="grupo-t">Tolvas</h2>
+    <p class="grupo-s">Por medidas o por litros, con cómo partirlas en láminas de 4 × 8.</p>
+    <div class="tarjetas">
+      <a class="tarjeta" href="tolva-conica/">
       <svg viewBox="0 0 200 110" aria-hidden="true"><path d="M40,15 L160,15 L130,95 L70,95 Z" fill="none" stroke="#c8321e" stroke-width="2.5"/><line x1="52" y1="55" x2="148" y2="55" stroke="#c8321e" stroke-dasharray="4 3"/></svg>
       <span class="estado lista">Lista para probar</span>
       <h2>Tolva cónica (valde)</h2>
       <p>Diámetro de arriba, de abajo y alto. Si no cabe en una lámina, le dice cómo partirla: ahorrar lámina o ahorrar soldadura.</p>
     </a>
-    <a class="tarjeta" href="tolva-u/">
+      <a class="tarjeta" href="tolva-u/">
       <svg viewBox="0 0 200 110" aria-hidden="true"><path d="M40,15 L40,60 A60,40 0 0 0 160,60 L160,15" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
       <span class="estado lista">Lista para probar</span>
       <h2>Tolva horizontal en U</h2>
       <p>Por largo o por capacidad en litros. El cuerpo, las dos tapas y el acomodo en láminas de 4 × 8.</p>
     </a>
-    <a class="tarjeta" href="tolva-piramidal/">
+      <a class="tarjeta" href="tolva-piramidal/">
       <svg viewBox="0 0 200 110" aria-hidden="true"><path d="M30,20 L170,20 L120,95 L80,95 Z M30,20 L60,8 L190,8 L170,20 M190,8 L130,85 L120,95" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
       <span class="estado lista">Lista para probar</span>
       <h2>Tolva piramidal</h2>
       <p>Boca y salida cuadradas o rectangulares. Caras en medida real, ángulo de doblez y corte en 1, 2 o 4 piezas.</p>
     </a>
-    <a class="tarjeta" href="cuadrado-redondo/">
+    </div>
+  </section>
+  <section class="grupo">
+    <h2 class="grupo-t">Tubos, ductos y transiciones</h2>
+    <p class="grupo-s">Para chimeneas, ductos, extractores y tuberías hechas de lámina.</p>
+    <div class="tarjetas">
+      <a class="tarjeta" href="cuadrado-redondo/">
       <svg viewBox="0 0 200 110" aria-hidden="true"><path d="M40,18 L160,18 L160,18 M40,18 L72,92 M160,18 L128,92 M40,18 L100,86 M160,18 L100,86" fill="none" stroke="#c8321e" stroke-width="2"/><rect x="40" y="10" width="120" height="16" fill="none" stroke="#c8321e" stroke-width="2.5"/><ellipse cx="100" cy="92" rx="30" ry="8" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
       <span class="estado lista">Lista para probar</span>
       <h2>Cuadrado a redondo</h2>
       <p>Transición de boca cuadrada o rectangular a redonda, por triangulación: pieza plana, dobleces, prensado y tabla de trazado.</p>
     </a>
-    <a class="tarjeta" href="codo-gajos/">
-      <svg viewBox="0 0 200 110" aria-hidden="true"><path d="M30,100 L30,60 L45,32 L72,14 L110,8 M70,100 L70,68 L78,52 L94,42 L110,38 M30,60 L70,68 M45,32 L78,52 M72,14 L94,42" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
-      <span class="estado lista">Lista para probar</span>
-      <h2>Codo de gajos</h2>
-      <p>Para tubo y ducto: cada gajo desarrollado, tabla de ordenadas para trazar a mano y acomodo intercalado que comparte el corte.</p>
-    </a>
-    <a class="tarjeta" href="boca-pescado/">
-      <svg viewBox="0 0 200 110" aria-hidden="true"><rect x="10" y="66" width="180" height="34" fill="none" stroke="#c8321e" stroke-width="2.5"/><path d="M80,66 C84,74 116,74 120,66 L126,10 L74,10 Z" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
-      <span class="estado lista">Lista para probar</span>
-      <h2>Boca de pescado</h2>
-      <p>Tubo que entra en otro, a escuadra o inclinado, centrado o corrido: ramal desarrollado y agujero del principal.</p>
-    </a>
-    <a class="tarjeta" href="reduccion-excentrica/">
+      <a class="tarjeta" href="reduccion-excentrica/">
       <svg viewBox="0 0 200 110" aria-hidden="true"><ellipse cx="90" cy="18" rx="70" ry="10" fill="none" stroke="#c8321e" stroke-width="2.5"/><ellipse cx="125" cy="94" rx="35" ry="6" fill="none" stroke="#c8321e" stroke-width="2.5"/><path d="M20,18 L90,94 M160,18 L160,94" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
       <span class="estado lista">Lista para probar</span>
       <h2>Reducción excéntrica</h2>
       <p>Redondo a redondo con los centros corridos (cono oblicuo): pieza plana por triangulación y tabla de trazado.</p>
     </a>
-  </div>
+      <a class="tarjeta" href="codo-gajos/">
+      <svg viewBox="0 0 200 110" aria-hidden="true"><path d="M30,100 L30,60 L45,32 L72,14 L110,8 M70,100 L70,68 L78,52 L94,42 L110,38 M30,60 L70,68 M45,32 L78,52 M72,14 L94,42" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
+      <span class="estado lista">Lista para probar</span>
+      <h2>Codo de gajos</h2>
+      <p>Para tubo y ducto: cada gajo desarrollado, tabla de ordenadas para trazar a mano y acomodo intercalado que comparte el corte.</p>
+    </a>
+      <a class="tarjeta" href="boca-pescado/">
+      <svg viewBox="0 0 200 110" aria-hidden="true"><rect x="10" y="66" width="180" height="34" fill="none" stroke="#c8321e" stroke-width="2.5"/><path d="M80,66 C84,74 116,74 120,66 L126,10 L74,10 Z" fill="none" stroke="#c8321e" stroke-width="2.5"/></svg>
+      <span class="estado lista">Lista para probar</span>
+      <h2>Boca de pescado</h2>
+      <p>Tubo que entra en otro, a escuadra o inclinado, centrado o corrido: ramal desarrollado y agujero del principal.</p>
+    </a>
+    </div>
+  </section>
 </main>
-<footer><div class="ancho">EDWIN CNC Taller · versión de prueba.</div></footer>
+<footer><div class="ancho">EDWIN CNC Taller · Lycan Developments · EDWIN CNC · 2026 · versión de prueba. Todas las calculadoras entregan plano, PDF y DXF a escala 1:1.</div></footer>
 </body>
 </html>
