@@ -287,6 +287,7 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
     return v;
   }
   const aMM = v => unidad === 'in' ? v * IN : v;
+  const f0 = v => v.toLocaleString('es-CO', { maximumFractionDigits: 0 });
   const f1 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const f2 = v => v.toLocaleString('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const mm = v => unidad === 'in' ? `${f1(v)} mm (${f2(v / IN)}")` : `${f1(v)} mm`;
@@ -330,29 +331,101 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
     const peso = esp > 0 ? area * esp * ACERO : 0;
     const helInt = Math.atan(pc / (Math.PI * dic)) * 180 / Math.PI;
     const n = acomodo(R, sep);
+    // si la arandela entera no cabe en el ancho de la lámina: medias arandelas (corte en el lado opuesto a la abertura)
+    const medias = n.n === 0 ? acomodoMedias(R, r, fi, sep, vueltas) : null;
     return { di, de, p, pc, L, hol, dic, esp, real, b, r, R, fi, th, cuerdaE, cuerdaI, lo, li,
-             vueltas, enteras, parcial, angParcial, area, peso, helInt, n, sep };
+             vueltas, enteras, parcial, angParcial, area, peso, helInt, n, sep, medias };
+  }
+
+  // ---------- medias arandelas: cada mitad es un sector de ángulo fi/2.
+  // Se ponen en fila, alternando una boca arriba y la siguiente boca abajo, para que encajen.
+  function poliMedia(R, r, a, dir) {
+    const out = [], n = 40;
+    for (let k = 0; k <= n; k++) { const g = dir - a + 2 * a * k / n; out.push([R * Math.cos(g), R * Math.sin(g)]); }
+    for (let k = 0; k <= n; k++) { const g = dir + a - 2 * a * k / n; out.push([r * Math.cos(g), r * Math.sin(g)]); }
+    return out;
+  }
+  function caja(P) { let x0 = 1e18, y0 = 1e18, x1 = -1e18, y1 = -1e18; for (const [x, y] of P) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); } return [x0, y0, x1, y1]; }
+  function distSeg(px, py, ax, ay, bx, by) { const dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy; let t = L ? ((px - ax) * dx + (py - ay) * dy) / L : 0; t = t < 0 ? 0 : t > 1 ? 1 : t; return Math.hypot(px - ax - t * dx, py - ay - t * dy); }
+  function dentro([x, y], P) { let c = false; for (let i = 0, j = P.length - 1; i < P.length; j = i++) { const [xi, yi] = P[i], [xj, yj] = P[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c; } return c; }
+  function cruzan(ax, ay, bx, by, cx, cy, dx, dy) { const o = (px, py, qx, qy, rx, ry) => (qx - px) * (ry - py) - (qy - py) * (rx - px); return ((o(ax, ay, bx, by, cx, cy) > 0) !== (o(ax, ay, bx, by, dx, dy) > 0)) && ((o(cx, cy, dx, dy, ax, ay) > 0) !== (o(cx, cy, dx, dy, bx, by) > 0)); }
+  function libres(A, B, gap) {
+    const [a0, a1, a2, a3] = caja(A), [b0, b1, b2, b3] = caja(B);
+    if (a2 + gap < b0 || b2 + gap < a0 || a3 + gap < b1 || b3 + gap < a1) return true;
+    if (dentro(A[0], B) || dentro(B[0], A)) return false;
+    for (let i = 0, j = A.length - 1; i < A.length; j = i++) for (let k = 0, l = B.length - 1; k < B.length; l = k++) if (cruzan(A[j][0], A[j][1], A[i][0], A[i][1], B[l][0], B[l][1], B[k][0], B[k][1])) return false;
+    for (const [P, Q] of [[A, B], [B, A]]) for (const [px, py] of P) for (let i = 0, j = Q.length - 1; i < Q.length; j = i++) if (distSeg(px, py, Q[j][0], Q[j][1], Q[i][0], Q[i][1]) < gap) return false;
+    return true;
+  }
+  // prueba partir la arandela en 2, 3 o 4 partes y se queda con la que gasta menos láminas
+  function acomodoMedias(R, r, fi, sep, vueltas) {
+    const total = Math.ceil(vueltas - 1e-9);
+    let mejor = null;
+    for (const k of [2, 3, 4]) {
+      const o = acomodoPartes(R, r, fi, sep, k);
+      if (!o.n) continue;
+      o.laminas = Math.ceil(k * total / o.n);
+      if (!mejor || o.laminas < mejor.laminas) mejor = o;
+    }
+    return mejor || { n: 0, pos: [], k: 2, a: fi / 4, laminas: 0 };
+  }
+  function acomodoPartes(R, r, fi, sep, k) {
+    const a = fi / (2 * k), W = LAM_W - 2 * sep, H = LAM_H - 2 * sep;
+    let mejor = { n: 0, pos: [], a, k };
+    // probar la fila a lo largo (bisectriz vertical) y a lo ancho (bisectriz horizontal)
+    for (const giro of [false, true]) {
+      const dirA = giro ? 0 : 90, dirB = dirA + 180;
+      const A0 = poliMedia(R, r, a, dirA * Math.PI / 180), B0 = poliMedia(R, r, a, dirB * Math.PI / 180);
+      const [ax0, ay0, ax1, ay1] = caja(A0), [bx0, by0, bx1, by1] = caja(B0);
+      const largo = giro ? H : W, alto = giro ? W : H;           // la fila corre por «largo»
+      const wA = giro ? ay1 - ay0 : ax1 - ax0, hA = giro ? ax1 - ax0 : ay1 - ay0;
+      if (wA > largo || hA > alto) continue;
+      // normalizar a esquina (0,0) y, si va girada, cambiar ejes para trabajar igual
+      const norm = (P, x0, y0) => P.map(([x, y]) => giro ? [y - y0, x - x0] : [x - x0, y - y0]);
+      const A = norm(A0, ax0, ay0), B = norm(B0, bx0, by0);
+      const pasoDe = Q => { let lo = 0, hi = wA + sep; for (let it = 0; it < 24; it++) { const m = (lo + hi) / 2; if (libres(A, Q.map(([x, y]) => [x + m, y]), sep * 0.999)) hi = m; else lo = m; } return hi; };
+      const pAlt = pasoDe(B), pIg = wA + sep;
+      const usaAlt = pAlt < pIg - 1;
+      const paso = usaAlt ? pAlt : pIg;
+      const porFila = Math.floor((largo - wA) / paso + 1e-9) + 1;
+      const filas = Math.floor((alto + sep) / (hA + sep) + 1e-9);
+      const n = porFila * filas;
+      if (n > mejor.n) {
+        const pos = [];
+        for (let f = 0; f < filas; f++) for (let k = 0; k < porFila; k++) {
+          const abajo = usaAlt && k % 2 === 1, u = k * paso, v = f * (hA + sep);
+          // vértice de la pieza en coordenadas de la fila (u a lo largo, v a lo ancho)
+          const vx = abajo ? -bx0 : -ax0, vy = abajo ? -by0 : -ay0;
+          const [lu, lv] = giro ? [vy, vx] : [vx, vy];
+          const X = giro ? sep + v + lv : sep + u + lu, Y = giro ? sep + u + lu : sep + v + lv;
+          pos.push({ x: giro ? sep + v + (abajo ? -bx0 : -ax0) : sep + u + (abajo ? -bx0 : -ax0),
+                     y: giro ? sep + u + (abajo ? -by0 : -ay0) : sep + v + (abajo ? -by0 : -ay0),
+                     dir: abajo ? dirB : dirA });
+        }
+        mejor = { n, pos, a, giro, alterna: usaAlt, k };
+      }
+    }
+    return mejor;
   }
 
   // ---------- cuántas caben en la lámina (rejilla o tresbolillo, la mejor)
   function acomodo(R, sep) {
-    const d = 2 * R + sep;
+    // las arandelas quedan a «sep» del borde de la lámina y a «sep» entre ellas
+    const d = 2 * R + sep, W = LAM_W - 2 * sep, H = LAM_H - 2 * sep;
     let mejor = { n: 0, pos: [] };
-    for (const [W, H] of [[LAM_W, LAM_H]]) {
-      if (d - sep > H) break;
-      // rejilla
-      const cx = Math.floor((W - 2 * R) / d) + 1, cy = Math.floor((H - 2 * R) / d) + 1;
-      const pos1 = [];
-      for (let j = 0; j < cy; j++) for (let i = 0; i < cx; i++) pos1.push([R + i * d, R + j * d]);
-      if (pos1.length > mejor.n) mejor = { n: pos1.length, pos: pos1 };
-      // tresbolillo (filas desplazadas)
-      const dy = d * Math.sqrt(3) / 2, pos2 = [];
-      for (let j = 0; R + j * dy <= H - R + 1e-6; j++) {
-        const off = (j % 2) ? d / 2 : 0;
-        for (let i = 0; R + off + i * d <= W - R + 1e-6; i++) pos2.push([R + off + i * d, R + j * dy]);
-      }
-      if (pos2.length > mejor.n) mejor = { n: pos2.length, pos: pos2 };
+    if (2 * R > H || 2 * R > W) return mejor;
+    // rejilla
+    const cx = Math.floor((W - 2 * R) / d) + 1, cy = Math.floor((H - 2 * R) / d) + 1;
+    const pos1 = [];
+    for (let j = 0; j < cy; j++) for (let i = 0; i < cx; i++) pos1.push([sep + R + i * d, sep + R + j * d]);
+    if (pos1.length > mejor.n) mejor = { n: pos1.length, pos: pos1 };
+    // tresbolillo (filas desplazadas)
+    const dy = d * Math.sqrt(3) / 2, pos2 = [];
+    for (let j = 0; R + j * dy <= H - R + 1e-6; j++) {
+      const off = (j % 2) ? d / 2 : 0;
+      for (let i = 0; R + off + i * d <= W - R + 1e-6; i++) pos2.push([sep + R + off + i * d, sep + R + j * dy]);
     }
+    if (pos2.length > mejor.n) mejor = { n: pos2.length, pos: pos2 };
     return mejor;
   }
 
@@ -407,6 +480,13 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
     // ancho b sobre el borde de la abertura
     const [mx, my] = P((R + r) / 2, a0);
     texto(svg, mx + 4, my - 12, `b ${mmCorto(c.b)}`, '', 'start');
+    if (c.medias) {
+      for (let q = 1; q < c.medias.k; q++) {
+        const g = t2 + 2 * c.medias.a * q, [m0x, m0y] = P(r, g), [m1x, m1y] = P(R, g);
+        el('line', { x1: m0x, y1: m0y, x2: m1x, y2: m1y, class: 'corte', 'stroke-dasharray': '10 6' }, svg);
+      }
+      texto(svg, 20, 82, `Partida en ${c.medias.k} partes iguales (líneas punteadas)`, '', 'start');
+    }
     // títulos
     texto(svg, 20, 34, 'ARANDELA ABIERTA (1 vuelta)', 'titulo', 'start');
     texto(svg, 20, 58, `Di ${mmCorto(c.di)} · De ${mmCorto(c.de)} · Paso ${mmCorto(c.p)} · medidas en mm`, '', 'start');
@@ -442,15 +522,19 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
       ['Cuerda interior c', mm(c.cuerdaI), 'Distancia recta entre las dos puntas de adentro.'],
       ['Borde exterior estirado', mm(c.lo), 'Largo de la espiral de afuera en una vuelta.'],
       ['Borde interior estirado', mm(c.li), 'Largo de la espiral junto al tubo en una vuelta.'],
-      ['Piezas por lámina 4 × 8', `${c.n.n}`, `Lámina de 1220 × 2440 mm, con ${f1(c.sep)} mm entre piezas.`],
-      ['Láminas para todo el tornillo', `${c.n.n ? Math.ceil(Math.ceil(c.vueltas - 1e-9) / c.n.n) : '—'}`, 'Contando la pieza parcial como una entera.'],
+      c.medias
+        ? [`Partes (1/${c.medias.k} de arandela) por lámina 4 × 8`, `${c.medias.n}`, `La arandela entera no cabe en 1220 mm: se corta en ${c.medias.k} partes iguales por vuelta que se sueldan a tope. Se escogió ${c.medias.k} partes porque gasta menos láminas.`]
+        : ['Piezas por lámina 4 × 8', `${c.n.n}`, `Lámina de 1220 × 2440 mm, con ${f1(c.sep)} mm entre piezas.`],
+      c.medias
+        ? ['Láminas para todo el tornillo', `${c.medias.n ? c.medias.laminas : '—'}`, 'Contando la pieza parcial como una entera.']
+        : ['Láminas para todo el tornillo', `${c.n.n ? Math.ceil(Math.ceil(c.vueltas - 1e-9) / c.n.n) : '—'}`, 'Contando la pieza parcial como una entera.'],
     ];
     if (c.peso > 0) filas.push(['Peso de una arandela', `${f2(c.peso)} kg`, `En acero de ${f1(c.esp)} mm. Todas: ${f1(c.peso * c.vueltas)} kg.`]);
     if (c.real > 0) filas.push(['Ajuste por material', `paso de corte ${f1(c.pc)} mm`, `Su prueba dio ${f1(c.real)} mm; se corta como si el paso fuera ${f1(c.pc)} mm para que quede en ${f1(c.p)} mm.`]);
     $('tabla').innerHTML = filas.map(([a, b, d]) => `<tr><td>${a}</td><td class="v">${b}</td><td>${d}</td></tr>`).join('');
     const av = [];
     if (c.helInt > 60) av.push(`La helicoidal es muy empinada junto al tubo (${f1(c.helInt)}°): será difícil de estirar. Use un tubo más grueso o un paso más corto.`);
-    if (2 * c.R > LAM_H) av.push('La arandela no cabe en el ancho de una lámina de 4 pies (1220 mm). Córtela en dos medias arandelas y únalas con soldadura.');
+    if (c.medias) av.push(`La arandela entera (Ø ${f0(2 * c.R)}) no cabe en el ancho de la lámina de 4 pies: los DXF ya salen partidos en <b>${c.medias.k} partes por vuelta</b> (soldarlas a tope).`);
     if (c.p > 1.5 * c.de) av.push('El paso es mucho más largo que el diámetro: revise la medida, lo normal es paso = diámetro.');
     if (c.hol > 3) av.push('La holgura es grande: la helicoidal puede quedar floja en el tubo.');
     $('avisos').innerHTML = av.map(a => `<div class="aviso">${a}</div>`).join('');
@@ -482,6 +566,16 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
     }
     return e;
   }
+  // media arandela con el vértice en (x, y) y la bisectriz hacia el ángulo dir (grados)
+  function media(c, x, y, dir, conTexto, nombre) {
+    const a = c.medias.a * 180 / Math.PI, g0 = dir - a, g1 = dir + a;
+    const P = (rad, g) => [x + rad * Math.cos(g * Math.PI / 180), y + rad * Math.sin(g * Math.PI / 180)];
+    const e = [arco(x, y, c.R, g0, g1), arco(x, y, c.r, g0, g1), linea(...P(c.r, g0), ...P(c.R, g0)), linea(...P(c.r, g1), ...P(c.R, g1))];
+    const h = Math.max(4, Math.min(14, c.b / 6));
+    if (nombre) { const [tx, ty] = P((c.R + c.r) / 2, dir); e.push(txt(tx - h, ty, h, nombre)); }
+    if (conTexto) e.push(txt(x - c.R * 0.6, y + c.r * 0.2, h, `1/${c.medias.k} de arandela Di ${f1(c.di)} De ${f1(c.de)} P ${f1(c.p)}`.replace(/\./g, '')));
+    return e;
+  }
   function bajar(nombre, contenido) {
     const blob = new Blob([contenido], { type: 'application/dxf' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombre;
@@ -490,8 +584,21 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
   const nombreBase = c => `arandela-helicoidal-Di${Math.round(c.di)}-De${Math.round(c.de)}-P${Math.round(c.p)}`;
 
   let ultimo = null;
-  $('b-dxf').addEventListener('click', () => { if (!ultimo) return; bajar(nombreBase(ultimo) + '.dxf', dxf(arandela(ultimo, 0, 0, true))); });
+  function dxfUna(c) {
+    if (!c.medias) return dxf(arandela(c, 0, 0, true));
+    // dos medias arandelas iguales una al lado de la otra (cortar 2 por cada vuelta)
+    return dxf([...media(c, 0, 0, 90, true, `cortar ${c.medias.k} por vuelta`), txt(-c.R, -c.R * 0.3, 10, FIRMA)]);
+  }
+  $('b-dxf').addEventListener('click', () => { if (!ultimo) return; bajar(nombreBase(ultimo) + (ultimo.medias ? '-medias' : '') + '.dxf', dxfUna(ultimo)); });
   function dxfLamina(c) {
+    if (c.medias) {
+      const total = c.medias.k * Math.ceil(c.vueltas - 1e-9), cuantas = Math.min(total, c.medias.n);
+      let e = [linea(0, 0, LAM_W, 0, 'LAMINA'), linea(LAM_W, 0, LAM_W, LAM_H, 'LAMINA'), linea(LAM_W, LAM_H, 0, LAM_H, 'LAMINA'), linea(0, LAM_H, 0, 0, 'LAMINA')];
+      c.medias.pos.slice(0, cuantas).forEach((q, i) => { e = e.concat(media(c, q.x, q.y, q.dir, false, `${i + 1}`)); });
+      e.push(txt(10, -60, 16, FIRMA));
+      e.push(txt(10, -30, 20, `${cuantas} partes (1/${c.medias.k}) de arandela Di ${f1(c.di)} De ${f1(c.de)} P ${f1(c.p)} - lamina 1220 x 2440`.replace(/\./g, '')));
+      return [cuantas, dxf(e)];
+    }
     const total = Math.ceil(c.vueltas - 1e-9), cuantas = Math.min(total, c.n.n);
     let e = [linea(0, 0, LAM_W, 0, 'LAMINA'), linea(LAM_W, 0, LAM_W, LAM_H, 'LAMINA'), linea(LAM_W, LAM_H, 0, LAM_H, 'LAMINA'), linea(0, LAM_H, 0, 0, 'LAMINA')];
     c.n.pos.slice(0, cuantas).forEach(([x, y]) => { e = e.concat(arandela(c, x, y, false)); });
@@ -501,7 +608,7 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
   }
   $('b-dxf-lamina').addEventListener('click', () => {
     const c = ultimo; if (!c) return;
-    if (!c.n.n) { alertar('La arandela no cabe en la lámina de 4 × 8: córtela en medias arandelas.'); return; }
+    if (!c.n.n && !(c.medias && c.medias.n)) { alertar('Ni la media arandela cabe en la lámina de 4 × 8.'); return; }
     const [cuantas, texto] = dxfLamina(c);
     bajar(nombreBase(c) + `-lamina-${cuantas}.dxf`, texto);
   });
@@ -548,7 +655,7 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
 
   document.querySelectorAll('input').forEach(i => i.addEventListener('input', pintar));
   pintar();
-  window.__helicoidal = { calcular, leer, acomodo, dxfUna: () => dxf(arandela(ultimo, 0, 0, true)), dxfLamina: () => dxfLamina(ultimo)[1] };
+  window.__helicoidal = { calcular, leer, acomodo, dxfUna: () => dxfUna(ultimo), dxfLamina: () => dxfLamina(ultimo)[1] };
 })();
 </script>
 </body>
