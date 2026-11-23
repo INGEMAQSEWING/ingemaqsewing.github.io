@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>OpenDuctus · Suite abierta de diseño, ingeniería y fabricación</title>
+<meta name="description" content="OpenDuctus: modelador 3D, desdoblado de lámina, DXF, código G para plasma, calculadoras de taller y control CNC desde el celular. De código abierto, en español y sin licencias ni suscripciones.">
+<link rel="canonical" href="https://ingemaqsewing.github.io/openductus/">
+<meta name="theme-color" content="#050b18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='9'%20fill='%230c1a33'/%3E%3Cpath%20d='M7%2031%20L13%2013%20C15%209%2018%209%2020%2012%20L25%2020%20C27%2023%2030%2023%2033%2021'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.6'%20stroke-linecap='round'/%3E%3Ccircle%20cx='33'%20cy='21'%20r='2.4'%20fill='%23ff6b8a'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpenDuctus · Lycan Developments">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://ingemaqsewing.github.io/openductus/">
+<meta property="og:title" content="OpenDuctus · Del trazo al cálculo, abierto para todos">
+<meta property="og:description" content="Suite abierta para talleres, estudiantes y docentes: modelado 3D, desdoblado, DXF, código G para plasma y calculadoras de taller. Sin licencias ni suscripciones.">
+<meta property="og:image" content="https://ingemaqsewing.github.io/og-portada.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --fondo: #050b18; --fondo-2: #0a1428; --placa: #0c1a33; --linea: #16345c;
+  --texto: #e6f1ff; --texto-2: #c4d4ea; --suave: #8ea6c8;
+  --cian: #22e3ff; --verde: #35f2a0; --ambar: #ffc94d; --rosa: #ff6b8a;
+  --f-titulo: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --f-texto: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --f-dato: "JetBrains Mono", Consolas, "Courier New", monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh;
+  background:
+    radial-gradient(900px 520px at 50% -140px, rgba(34,227,255,.15), transparent 70%),
+    linear-gradient(var(--fondo), var(--fondo-2) 60%, var(--fondo));
+  background-repeat: no-repeat; background-color: var(--fondo);
+  color: var(--texto); font-family: var(--f-texto); font-size: 17px; line-height: 1.6; overflow-x: hidden;
+}
+a { color: var(--cian); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--cian); outline-offset: 3px; border-radius: 4px; }
+.ancho { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-titulo); text-wrap: balance; }
+.eti { font-family: var(--f-dato); font-size: 12.5px; color: var(--cian); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 10px; }
+
+/* barra */
+.barra { border-bottom: 1px solid var(--linea); background: rgba(5,11,24,.78); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; backdrop-filter: blur(8px); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--fondo); }
+.barra .ancho { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; justify-content: space-between; padding-block: 12px; }
+.marca { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--texto); }
+.marca svg { width: 32px; height: 32px; flex: none; }
+.marca b { font-family: var(--f-titulo); font-size: 20px; letter-spacing: .03em; }
+.marca b span { color: var(--cian); }
+.menu { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 14.5px; }
+.menu a { color: var(--suave); text-decoration: none; padding-block: 6px; }
+.menu a:hover { color: var(--cian); }
+
+/* portada */
+.portada { padding-block: 52px 40px; border-bottom: 1px solid var(--linea); }
+.portada .ancho { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+h1 { font-weight: 700; font-size: clamp(38px, 6.4vw, 68px); line-height: 1.02; margin: 0; }
+h1 em { font-style: normal; color: var(--cian); text-shadow: 0 0 20px rgba(34,227,255,.5); }
+.lema { color: var(--texto-2); font-size: 19px; max-width: 54ch; margin: 18px 0 0; }
+.firma { color: var(--suave); font-size: 14.5px; margin: 14px 0 0; font-family: var(--f-dato); letter-spacing: .04em; }
+.acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.boton { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 16px; border: 1px solid var(--linea); color: var(--texto); background: var(--placa); }
+.boton.principal { background: var(--cian); color: #04111f; border-color: var(--cian); box-shadow: 0 0 22px rgba(34,227,255,.35); }
+.boton:hover { border-color: var(--cian); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
+.chips li { font-family: var(--f-dato); font-size: 12.5px; color: var(--texto-2); border: 1px solid var(--linea); border-radius: 999px; padding: 4px 12px; background: rgba(12,26,51,.6); }
+
+.curva { background: linear-gradient(180deg, rgba(12,26,51,.9), rgba(10,20,40,.9)); border: 1px solid var(--linea); border-radius: 16px; padding: 18px 18px 12px; min-width: 0; }
+.curva svg { width: 100%; height: auto; display: block; }
+.curva figcaption { color: var(--suave); font-size: 14px; margin-top: 8px; }
+
+/* secciones */
+section { padding-block: 56px; border-bottom: 1px solid var(--linea); scroll-margin-top: 70px; }
+section > .ancho > h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 8px; }
+.intro { color: var(--texto-2); max-width: 66ch; margin: 0 0 28px; }
+.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+.tarjeta { background: linear-gradient(180deg, rgba(12,26,51,.95), rgba(10,20,40,.95)); border: 1px solid var(--linea); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tarjeta:hover { border-color: rgba(34,227,255,.45); }
+.tarjeta h3 { font-size: 23px; margin: 0; line-height: 1.15; }
+.tarjeta h3 small { display: block; font-family: var(--f-dato); font-size: 12.5px; color: var(--suave); letter-spacing: .06em; font-weight: 400; margin-top: 4px; text-transform: uppercase; }
+.tarjeta p { margin: 0; color: var(--texto-2); }
+.tarjeta ul { margin: 0; padding-left: 20px; color: var(--texto-2); font-size: 15.5px; }
+.req { font-family: var(--f-dato); font-size: 13px; color: var(--suave); border-top: 1px dashed var(--linea); padding-top: 10px; margin-top: auto !important; }
+.enlaces { display: flex; flex-wrap: wrap; gap: 8px; }
+.enlaces a { font-size: 14.5px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--linea); text-decoration: none; color: var(--texto); background: rgba(5,11,24,.5); }
+.enlaces a.prin { border-color: var(--cian); color: var(--cian); }
+.enlaces a:hover { background: rgba(34,227,255,.08); }
+.estado { align-self: flex-start; font-family: var(--f-dato); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+.estado.listo { color: var(--verde); border-color: rgba(53,242,160,.5); background: rgba(53,242,160,.08); }
+.estado.beta { color: var(--ambar); border-color: rgba(255,201,77,.5); background: rgba(255,201,77,.08); }
+.estado.plan { color: var(--suave); border-color: var(--linea); }
+.nota { color: var(--suave); font-size: 14.5px; margin: 18px 0 0; max-width: 80ch; }
+
+/* flujo */
+.flujo { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; counter-reset: paso; }
+.paso { border: 1px solid var(--linea); border-radius: 12px; padding: 16px; background: rgba(12,26,51,.7); position: relative; min-width: 0; }
+.paso::before { counter-increment: paso; content: "0" counter(paso); font-family: var(--f-dato); color: var(--cian); font-size: 13px; letter-spacing: .1em; }
+.paso b { display: block; font-family: var(--f-titulo); font-size: 19px; margin: 4px 0; }
+.paso p { margin: 0; color: var(--texto-2); font-size: 15px; }
+.paso span { font-family: var(--f-dato); font-size: 12px; color: var(--suave); display: block; margin-top: 8px; }
+
+/* calculadoras */
+.calcs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; }
+.calcs a { display: block; border: 1px solid var(--linea); border-radius: 10px; padding: 12px 14px; text-decoration: none; color: var(--texto); background: rgba(12,26,51,.6); }
+.calcs a:hover { border-color: var(--cian); }
+.calcs a b { display: block; font-weight: 600; }
+.calcs a span { color: var(--suave); font-size: 14px; }
+
+/* hoja de ruta */
+.ruta { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.etapa { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 18px; border: 1px solid var(--linea); border-radius: 14px; padding: 20px; background: rgba(12,26,51,.6); }
+.etapa .num { font-family: var(--f-titulo); font-size: 30px; color: var(--cian); line-height: 1; }
+.etapa .num small { display: block; font-family: var(--f-dato); font-size: 12px; color: var(--suave); letter-spacing: .08em; margin-top: 6px; text-transform: uppercase; }
+.etapa h3 { margin: 0 0 6px; font-size: 21px; }
+.etapa p { margin: 0 0 8px; color: var(--texto-2); }
+.etapa .motores { font-family: var(--f-dato); font-size: 13px; color: var(--suave); margin: 0; }
+.etapa.actual { border-color: rgba(34,227,255,.55); box-shadow: 0 0 24px rgba(34,227,255,.08); }
+
+/* reglas */
+.reglas { counter-reset: r; list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; max-width: 80ch; }
+.reglas li { padding-left: 44px; position: relative; color: var(--texto-2); }
+.reglas li::before { counter-increment: r; content: counter(r); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--cian); color: var(--cian); font-family: var(--f-dato); display: grid; place-items: center; font-size: 14px; }
+.reglas b { color: var(--texto); }
+
+.copiar { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.copiar code { font-family: var(--f-dato); font-size: 15px; background: var(--placa); border: 1px solid var(--linea); padding: 6px 10px; border-radius: 8px; user-select: all; }
+.copiar button { font: inherit; font-size: 14px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--linea); background: transparent; color: var(--texto); cursor: pointer; }
+
+footer { padding-block: 34px 50px; color: var(--suave); font-size: 14.5px; }
+footer .ancho { display: grid; gap: 12px; }
+footer p { margin: 0; max-width: 90ch; }
+
+@media (max-width: 900px) {
+  .portada .ancho { grid-template-columns: minmax(0, 1fr); }
+  .flujo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .etapa { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+}
+@media (max-width: 520px) { .flujo { grid-template-columns: minmax(0, 1fr); } .menu { display: none; } }
+</style>
+
+</head>
+<body>
+<header class="barra">
+  <div class="ancho">
+    <a class="marca" href="#inicio" aria-label="OpenDuctus, inicio">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#0c1a33" stroke="#16345c"/><path d="M7 31 L13 13 C15 9 18 9 20 12 L25 20 C27 23 30 23 33 21" fill="none" stroke="#22e3ff" stroke-width="2.6" stroke-linecap="round"/><circle cx="33" cy="21" r="2.4" fill="#ff6b8a"/></svg>
+      <b>Open<span>Ductus</span></b>
+    </a>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#descargas">Descargas</a><a href="#calc">Calculadoras</a><a href="#flujo">Cómo se trabaja</a><a href="#ruta">Hoja de ruta</a><a href="#plugins">Plugins</a><a href="#comunidad">Comunidad</a>
+    </nav>
+  </div>
+</header>
+
+<div class="portada" id="inicio">
+  <div class="ancho">
+    <div>
+      <p class="eti">Suite abierta de diseño, ingeniería y fabricación</p>
+      <h1>Del trazo<br>al <em>cálculo</em>,<br>abierto para todos.</h1>
+      <p class="lema">Modela en 3D, desdobla la lámina, saca el DXF, genera el código G y corta. Hecho en español, en milímetros y para el taller real: láminas de 1220 × 2440, calibres locales y mesas de plasma con Mach3. Sin licencias ni suscripciones.</p>
+      <p class="firma">OpenDuctus, por EDWIN CNC · Lycan Developments</p>
+      <div class="acciones">
+        <a class="boton principal" href="#descargas">Descargar la suite</a>
+        <a class="boton" href="https://ingemaqsewing.github.io/calculadoras/">Usar las calculadoras en línea</a>
+      </div>
+      <ul class="chips" aria-label="Datos clave">
+        <li>Código abierto · GPL</li><li>Windows 10/11</li><li>Abre .skp 2013–2026</li><li>DXF · STL · IFC · GLB</li><li>8 calculadoras de taller</li>
+      </ul>
+    </div>
+    <figure class="curva" style="margin:0">
+      <svg viewBox="0 0 460 300" role="img" aria-labelledby="t-curva">
+        <title id="t-curva">Curva esfuerzo–deformación de un acero dúctil</title>
+        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#22e3ff"/><stop offset="1" stop-color="#35f2a0"/></linearGradient></defs>
+        <g stroke="#16345c" stroke-width="1">
+          <line x1="50" y1="40" x2="440" y2="40"/><line x1="50" y1="100" x2="440" y2="100"/><line x1="50" y1="160" x2="440" y2="160"/><line x1="50" y1="220" x2="440" y2="220"/>
+        </g>
+        <line x1="50" y1="260" x2="445" y2="260" stroke="#8ea6c8" stroke-width="1.4"/>
+        <line x1="50" y1="260" x2="50" y2="22" stroke="#8ea6c8" stroke-width="1.4"/>
+        <text x="445" y="282" fill="#8ea6c8" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="end">deformación ε</text>
+        <text x="58" y="30" fill="#8ea6c8" font-family="JetBrains Mono, monospace" font-size="12">esfuerzo σ (MPa)</text>
+        <path d="M50 260 L92 124 L98 132 L104 126 L112 130 L128 128 C170 92 235 72 290 70 C330 70 360 84 384 112 L400 140" fill="none" stroke="url(#g)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="400" cy="140" r="5" fill="#ff6b8a"/>
+        <g font-family="JetBrains Mono, monospace" font-size="11.5" fill="#c4d4ea">
+          <text x="60" y="200">elástica</text>
+          <text x="96" y="114">fluencia σy</text>
+          <text x="196" y="66">endurecimiento</text>
+          <text x="300" y="60">σu</text>
+          <text x="352" y="166">estricción</text>
+          <text x="384" y="128" fill="#ff6b8a">rotura</text>
+        </g>
+        <path d="M128 240 L400 240" stroke="#ffc94d" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="264" y="234" fill="#ffc94d" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">ductilidad: deformarse sin romperse</text>
+      </svg>
+      <figcaption><b>Ductus</b>, en latín, es <i>trazo</i> y es la raíz de <i>dúctil</i>: la propiedad del acero de deformarse sin romperse. Lo que el maestro hace a ojo, el ingeniero lo calcula.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<main>
+<section id="descargas">
+  <div class="ancho">
+    <p class="eti">01 · Descargas</p>
+    <h2>Los programas de la suite</h2>
+    <p class="intro">Tres programas que trabajan juntos. Cada uno se descarga de GitHub, donde está también su código y su historial de versiones, o de la carpeta de respaldo en MEGA.</p>
+    <div class="rejilla">
+      <article class="tarjeta">
+        <span class="estado listo">Disponible · 1.0.3</span>
+        <h3>Ductus Model<small>Modelador 3D · desdoblado · render</small></h3>
+        <p>Dibuja como en SketchUp: empujar/tirar, medidas tecleadas, ejes con colores, copias en serie. Y para el taller:</p>
+        <ul>
+          <li>Desdoblado de caras a DXF para plasma, con arcos reales y marcas de doblez.</li>
+          <li>Helicoidal de sinfín, Foto → DXF, escala por dos puntos.</li>
+          <li>Redondeo y chaflán 3D, herramientas de sólidos, intersecar caras.</li>
+          <li>Abre .skp, DXF, DWG, STL, OBJ; exporta STL para impresión 3D, IFC y GLB; render con Blender.</li>
+        </ul>
+        <div class="enlaces">
+          <a class="prin" href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/releases/download/v1.0.3-prueba/EDWIN-CNC-3D-1.0.3-Windows-64-bits.exe">Instalador Windows</a>
+          <a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/releases/download/v1.0.3-prueba/EDWIN-CNC-3D-1.0.3-portable.zip">Portable (.zip)</a>
+          <a href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/XwtXhQLL">Respaldo MEGA</a>
+          <a href="https://ingemaqsewing.github.io/manual-edwin-cnc-3d/">Manual</a>
+        </div>
+        <p class="req">Windows 10/11 de 64 bits · 8 GB de RAM recomendados · hoy se instala como «EDWIN CNC 3D»</p>
+      </article>
+      <article class="tarjeta">
+        <span class="estado listo">Disponible · 1.0.14</span>
+        <h3>Ductus Draft<small>Dibujo 2D DXF · código G para plasma</small></h3>
+        <p>El dibujo plano para cortar. Abre el DXF que sale del desdoblado o de las calculadoras, lo ajusta y genera el código G para mesas de plasma con Mach3.</p>
+        <ul>
+          <li>Dibujo 2D preciso en milímetros, capas y cotas.</li>
+          <li>Del DXF al código G en el mismo programa, con lado del corte automático, por fuera, por dentro o sobre la línea.</li>
+          <li>Dos versiones en el mismo paquete: con menús clásicos, o con comandos de teclado en español (escribe 100 y Enter para trazar 100 mm).</li>
+        </ul>
+        <div class="enlaces">
+          <a class="prin" href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/download/v1.0.14-prueba/EDWIN-CNC-CAD-CAM-1.0.14-Windows-32-y-64-bits.exe">Instalador Windows</a>
+          <a href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/jh8FVYJa">Respaldo MEGA</a>
+          <a href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases">Todas las versiones</a>
+        </div>
+        <p class="req">Windows de 32 o 64 bits · hoy se instala como «EDWIN CNC CAD-CAM»</p>
+      </article>
+      <article class="tarjeta">
+        <span class="estado beta">Beta · en mejora constante</span>
+        <h3>Ductus Mobile<small>Control de la mesa CNC desde el celular</small></h3>
+        <p>Mueve la mesa de plasma desde el celular antes de cortar: flechas, inicio y parada. El celular se conecta al PC como un teclado Bluetooth, sin instalar nada en el computador.</p>
+        <ul>
+          <li>Asistente para configurar las teclas de tu Mach3.</li>
+          <li>La mesa solo se mueve mientras el dedo está sobre la flecha.</li>
+          <li><b>No reemplaza la parada de emergencia física</b> de la máquina.</li>
+        </ul>
+        <div class="enlaces">
+          <a class="prin" href="https://mega.nz/folder/Tsc2AI4R#UQSuL5jwxSaSA0L0LWr_Qg/file/XlUmRZKA">Descargar APK (beta)</a>
+        </div>
+        <p class="req">Android 9 o superior con Bluetooth · PC con Mach3 · hoy se instala como «CNC Control Phone»</p>
+      </article>
+    </div>
+    <p class="nota">Los programas se están renombrando a OpenDuctus: por ahora se instalan con su nombre anterior (EDWIN CNC). Tus archivos siguen funcionando igual.</p>
+  </div>
+</section>
+
+<section id="calc">
+  <div class="ancho">
+    <p class="eti">02 · Ductus Calc</p>
+    <h2>Calculadoras de taller en línea</h2>
+    <p class="intro">Sin instalar nada: escribes las medidas, ves el desarrollo acotado y descargas el DXF para cortar y el PDF a escala 1:1 para trazar.</p>
+    <div class="calcs">
+      <a href="https://ingemaqsewing.github.io/calculadoras/helicoidal/"><b>Helicoidal de sinfín</b><span>Arandela abierta, cantidad y acomodo en la lámina</span></a>
+      <a href="https://ingemaqsewing.github.io/calculadoras/tolva-conica/"><b>Tolva cónica</b><span>Valde en 1 o 2 cuerpos, ahorro de lámina o de soldadura</span></a>
+      <a href="https://ingemaqsewing.github.io/calculadoras/tolva-u/"><b>Tolva en U</b><span>Por medidas o por litros, con tapas</span></a>
+      <a href="https://ingemaqsewing.github.io/calculadoras/tolva-piramidal/"><b>Tolva piramidal</b><span>Ángulos de doblez y caras</span></a>
+      <a href="https://ingemaqsewing.github.io/calculadoras/cuadrado-redondo/"><b>Cuadrado a redondo</b><span>Transición por triangulación</span></a>
+      <a href="https://ingemaqsewing.github.io/calculadoras/reduccion-excentrica/"><b>Reducción excéntrica</b><span>Cono oblicuo con lado a plomo</span></a>
+      <a href="https://ingemaqsewing.github.io/calculadoras/codo-gajos/"><b>Codo de gajos</b><span>Gajos intercalados y tabla de ordenadas</span></a>
+      <a href="https://ingemaqsewing.github.io/calculadoras/boca-pescado/"><b>Boca de pescado</b><span>Tubo con tubo, de 15° a 90°</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="flujo">
+  <div class="ancho">
+    <p class="eti">03 · Cómo se trabaja</p>
+    <h2>De la idea a la pieza cortada</h2>
+    <p class="intro">El mismo camino que hace un taller, sin cambiar de programa a cada paso ni pagar uno distinto para cada cosa.</p>
+    <div class="flujo">
+      <div class="paso"><b>Dibuja</b><p>Modela la pieza o la máquina en 3D, o ábrela desde un .skp.</p><span>Ductus Model</span></div>
+      <div class="paso"><b>Desdobla</b><p>Selecciona las caras y obtén la lámina plana con sus dobleces.</p><span>Ductus Model</span></div>
+      <div class="paso"><b>DXF</b><p>Contornos cerrados en milímetros, capas de corte y de marcado.</p><span>Model · Calc</span></div>
+      <div class="paso"><b>Código G</b><p>Ajusta el dibujo y genera el programa de corte.</p><span>Ductus Draft</span></div>
+      <div class="paso"><b>Corta</b><p>Posiciona la mesa desde el celular y lanza el corte.</p><span>Ductus Mobile</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="estudiantes">
+  <div class="ancho">
+    <p class="eti">04 · Para estudiantes y docentes</p>
+    <h2>Una alternativa abierta para aprender ingeniería</h2>
+    <p class="intro">Los programas de ingeniería más usados cuestan licencias que muchos estudiantes y talleres no pueden pagar. OpenDuctus se puede instalar en cualquier computador del aula o de la casa, estudiar por dentro y mejorar.</p>
+    <div class="rejilla">
+      <article class="tarjeta"><h3>Modelado y planos</h3><p>Modelado 3D directo, secciones, escenas y planos a escala en PDF. Abre los .skp que ya tienes de 3D Warehouse o de otros cursos.</p></article>
+      <article class="tarjeta"><h3>Impresión 3D y render</h3><p>Exporta STL para imprimir prototipos y renderiza con Blender, con materiales de metal, pintura y caucho ya preparados.</p></article>
+      <article class="tarjeta"><h3>Fabricación real</h3><p>Desarrollo de lámina, DXF y código G: lo que se aprende en clase se puede cortar en un taller el mismo día.</p></article>
+      <article class="tarjeta"><h3>Código abierto</h3><p>Escrito en Python, con plugins. Ideal para proyectos de grado, semilleros de investigación y prácticas de programación aplicada a la ingeniería.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="ruta">
+  <div class="ancho">
+    <p class="eti">05 · Hoja de ruta</p>
+    <h2>Hacia dónde va OpenDuctus</h2>
+    <p class="intro">Por etapas, sobre motores de ingeniería de código abierto que ya usan universidades y centros de investigación en el mundo. Cada resultado de cálculo se validará contra casos de libro antes de publicarse.</p>
+    <ol class="ruta">
+      <li class="etapa actual"><div class="num">1<small>En curso</small></div><div><h3>Taller</h3><p>Exportar para corte (DXF 2D cerrado con arcos), estructuras con biblioteca de perfiles y lista de corte con peso y precio, chapa con espesor y factor K, planos de fabricación con todas las cotas, acomodo de piezas en la lámina, guardar como .skp.</p><p class="motores">Ductus Model · Ductus Draft</p></div></li>
+      <li class="etapa"><div class="num">2<small>Planeada</small></div><div><h3>Ingeniería</h3><p>Sólidos exactos y piezas paramétricas: cambias una medida y todo se actualiza. Intercambio en STEP con los programas de ingeniería más usados. Biblioteca de piezas estándar.</p><p class="motores">Motor: OpenCascade</p></div></li>
+      <li class="etapa"><div class="num">3<small>Planeada</small></div><div><h3>Ductus Sim · simulación</h3><p>Elementos finitos: esfuerzos, deformaciones y factor de seguridad de una pieza, vistos en colores. Herramientas previstas: <b>Mohr</b> (estado de esfuerzos en un punto) y <b>Tresca</b> (revisión de fluencia).</p><p class="motores">Motores: Gmsh · CalculiX · Code_Aster</p></div></li>
+      <li class="etapa"><div class="num">4<small>Planeada</small></div><div><h3>Ductus Struct · estructuras</h3><p>Pórticos, cerchas y vigas: cargas, momentos, deflexión y revisión de perfiles.</p><p class="motores">Motores: OpenSees · PyNite</p></div></li>
+      <li class="etapa"><div class="num">5<small>Planeada</small></div><div><h3>Ductus AI · asistente</h3><p>Un asistente en español que dibuja a partir de una descripción («una tolva de 500 litros»), desdobla, simula, renderiza y prepara el DXF, el código G o el archivo para impresión 3D.</p><p class="motores">Ya existe una primera versión dentro de Ductus Model</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="plugins">
+  <div class="ancho">
+    <p class="eti">06 · Ductus Plugins</p>
+    <h2>Reglas del catálogo de plugins</h2>
+    <p class="intro">Ductus Model acepta plugins escritos en Python, que se instalan desde su gestor de extensiones o copiándolos en la carpeta de plugins. El catálogo oficial se rige por estas reglas:</p>
+    <ol class="reglas">
+      <li><b>Sin costo, siempre.</b> En el catálogo oficial solo se publican plugins que la comunidad puede usar sin pagar.</li>
+      <li><b>Código abierto.</b> Cada plugin publica su código con una licencia compatible con la GPL, para que cualquiera pueda revisarlo, aprender de él y mejorarlo.</li>
+      <li><b>Revisado.</b> Antes de entrar al catálogo se revisa que no dañe archivos, no envíe datos sin avisar y se deshaga con un solo Ctrl+Z.</li>
+      <li><b>En español primero.</b> Textos y unidades pensados para el taller y el aula de habla hispana; otros idiomas son bienvenidos.</li>
+      <li><b>Con crédito.</b> Cada plugin muestra a su autor; las ideas tomadas de otros proyectos se reconocen.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="comunidad">
+  <div class="ancho">
+    <p class="eti">07 · Comunidad</p>
+    <h2>Constrúyelo con nosotros</h2>
+    <p class="intro">OpenDuctus mejora con lo que la gente vive en el taller y en el aula. Todo aporte cuenta.</p>
+    <div class="rejilla">
+      <article class="tarjeta"><h3>Pregunta y propone</h3><p>El foro de la comunidad está en GitHub: dudas, ideas de mejora y diseños para compartir.</p><div class="enlaces"><a class="prin" href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/discussions">Ir al foro</a></div></article>
+      <article class="tarjeta"><h3>Reporta una falla</h3><p>Cuéntanos qué hiciste, qué esperabas y qué pasó. Si puedes, adjunta el archivo y una captura.</p><div class="enlaces"><a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/issues">Reportar en GitHub</a></div></article>
+      <article class="tarjeta"><h3>Universidades y talleres</h3><p>Para usarlo en cursos, semilleros o proyectos de grado, o para validar resultados con casos reales, escríbenos.</p><div class="copiar"><code id="correo">ingemaqsewing@gmail.com</code><button type="button" id="btn-copiar">Copiar</button></div></article>
+      <article class="tarjeta" id="apoya"><h3>Apoya el proyecto</h3><p>OpenDuctus seguirá sin licencias ni suscripciones. Si te sirve, compártelo en tu foro o grupo, enséñalo en clase o aporta código. Muy pronto habrá una forma de apoyar económicamente su desarrollo.</p></article>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="creditos">
+  <div class="ancho">
+    <p><b>OpenDuctus</b>, por EDWIN CNC · Lycan Developments · 2026.</p>
+    <p>Agradecemos a quienes dieron el paso inicial: Ductus Model nace de <a href="https://github.com/ingelibre/ingetrazo">IngeTrazo</a> (GPL-3) y Ductus Draft de <a href="https://github.com/LibreCAD/LibreCAD">LibreCAD</a> (GPL-2). Los .skp se leen con <a href="https://github.com/iamahsanmehmood/openskp">openskp</a>. Cada programa conserva la licencia libre de su origen.</p>
+    <p>SketchUp, Mach3 y las demás marcas citadas pertenecen a sus dueños; OpenDuctus no está afiliado a ellas. Ductus Mobile no reemplaza la parada de emergencia física de ninguna máquina.</p>
+    <p><a href="https://ingemaqsewing.github.io/">Volver a Lycan Developments</a></p>
+  </div>
+</footer>
+
+<script>
+document.getElementById('btn-copiar').addEventListener('click', function () {
+  var b = this, t = document.getElementById('correo');
+  function marcar() { var r = document.createRange(); r.selectNodeContents(t); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  try {
+    navigator.clipboard.writeText(t.textContent).then(function () { b.textContent = 'Copiado'; setTimeout(function () { b.textContent = 'Copiar'; }, 1800); }, marcar);
+  } catch (e) { marcar(); }
+});
+</script>
+
+</body>
+</html>
