@@ -104,6 +104,15 @@ section > .ancho > h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 8px; }
 .paso p { margin: 0; color: var(--texto-2); font-size: 15px; }
 .paso span { font-family: var(--f-dato); font-size: 12px; color: var(--suave); display: block; margin-top: 8px; }
 
+/* comparacion */
+.tabla { overflow-x: auto; border: 1px solid var(--linea); border-radius: 14px; background: rgba(12,26,51,.6); }
+.tabla table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 15.5px; }
+.tabla th, .tabla td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--linea); vertical-align: top; }
+.tabla thead th { font-family: var(--f-dato); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); font-weight: 500; }
+.tabla tbody tr:last-child td { border-bottom: 0; }
+.tabla td:first-child { font-weight: 600; color: var(--texto); }
+.tabla td { color: var(--texto-2); }
+.tabla .ref { font-family: var(--f-dato); font-size: 13.5px; color: var(--suave); }
 /* calculadoras */
 .calcs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; }
 .calcs a { display: block; border: 1px solid var(--linea); border-radius: 10px; padding: 12px 14px; text-decoration: none; color: var(--texto); background: rgba(12,26,51,.6); }
@@ -152,7 +161,7 @@ footer p { margin: 0; max-width: 90ch; }
       <b>Open<span>Ductus</span></b>
     </a>
     <nav class="menu" aria-label="Secciones">
-      <a href="#descargas">Descargas</a><a href="#calc">Calculadoras</a><a href="#flujo">Cómo se trabaja</a><a href="#ruta">Hoja de ruta</a><a href="#plugins">Plugins</a><a href="#comunidad">Comunidad</a>
+      <a href="#descargas">Descargas</a><a href="#lo-mejor">Comparación</a><a href="#calc">Calculadoras</a><a href="#flujo">Cómo se trabaja</a><a href="#ruta">Hoja de ruta</a><a href="#plugins">Plugins</a><a href="#comunidad">Comunidad</a>
     </nav>
   </div>
 </header>
@@ -261,9 +270,36 @@ footer p { margin: 0; max-width: 90ch; }
   </div>
 </section>
 
+<section id="lo-mejor">
+  <div class="ancho">
+    <p class="eti">02 · Lo mejor de cada uno</p>
+    <h2>Lo que hoy reparten varios programas, en una sola suite</h2>
+    <p class="intro">Un taller o un estudiante suele necesitar varios programas, cada uno con su licencia: uno para dibujar fácil, otro para lámina, otro para perfiles, otro para simular, otro para estructuras y otro para el código G. OpenDuctus toma como referencia lo mejor de cada uno y lo reúne en un mismo lugar. Esto es lo que ya está y lo que viene:</p>
+    <div class="tabla">
+      <table>
+        <thead><tr><th>Capacidad</th><th>Referentes del mercado</th><th>En OpenDuctus</th></tr></thead>
+        <tbody>
+          <tr><td>Dibujo 3D rápido e intuitivo</td><td class="ref">SketchUp</td><td><span class="estado listo">Hoy</span> Empujar/tirar, medidas tecleadas, ejes con colores, copias en serie, abre .skp</td></tr>
+          <tr><td>Redondeo, chaflán y operaciones entre sólidos</td><td class="ref">SolidWorks · Solid Edge · Fusion</td><td><span class="estado listo">Hoy</span> Redondear 3D, unión, resta, intersección y división de sólidos</td></tr>
+          <tr><td>Desarrollo de lámina a DXF</td><td class="ref">Solid Edge · SolidWorks · Inventor</td><td><span class="estado listo">Hoy</span> Desdoblado con arcos reales y marcas de doblez · <span class="estado beta">Etapa 1</span> espesor, radio y factor K</td></tr>
+          <tr><td>Del DXF al código G para plasma</td><td class="ref">Fusion · SheetCam</td><td><span class="estado listo">Hoy</span> Ductus Draft con lado del corte · <span class="estado beta">Etapa 1</span> acomodo de piezas en la lámina</td></tr>
+          <tr><td>Render realista</td><td class="ref">KeyShot · V-Ray</td><td><span class="estado listo">Hoy</span> Render con Blender y materiales de metal, pintura y caucho</td></tr>
+          <tr><td>Estructuras soldadas con perfiles y lista de corte</td><td class="ref">SolidWorks (soldaduras) · Inventor</td><td><span class="estado beta">Etapa 1</span> Biblioteca de perfiles, barras de 6 m, peso y precio</td></tr>
+          <tr><td>Planos de fabricación</td><td class="ref">SolidWorks · Solid Edge · AutoCAD</td><td><span class="estado listo">Hoy</span> Láminas a escala en PDF · <span class="estado beta">Etapa 1</span> cotas de radio y ángulo, cajetín</td></tr>
+          <tr><td>Sólidos exactos y piezas paramétricas, intercambio STEP</td><td class="ref">SolidWorks · CATIA · Solid Edge · Creo</td><td><span class="estado plan">Etapa 2</span> Sobre el motor abierto OpenCascade</td></tr>
+          <tr><td>Simulación por elementos finitos</td><td class="ref">Ansys · Abaqus · simulación de SolidWorks</td><td><span class="estado plan">Etapa 3</span> Ductus Sim, con Gmsh y CalculiX</td></tr>
+          <tr><td>Análisis estructural</td><td class="ref">SAP2000 · ETABS</td><td><span class="estado plan">Etapa 4</span> Ductus Struct, con OpenSees</td></tr>
+          <tr><td>Asistente con inteligencia artificial</td><td class="ref">Asistentes recientes de los grandes</td><td><span class="estado listo">Hoy</span> primera versión · <span class="estado plan">Etapa 5</span> Ductus AI en español</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="nota">Los programas citados son referentes de la industria y marcas de sus dueños; OpenDuctus no está afiliado a ellos ni dice ser una copia: los usa como meta de calidad.</p>
+  </div>
+</section>
+
 <section id="calc">
   <div class="ancho">
-    <p class="eti">02 · Ductus Calc</p>
+    <p class="eti">03 · Ductus Calc</p>
     <h2>Calculadoras de taller en línea</h2>
     <p class="intro">Sin instalar nada: escribes las medidas, ves el desarrollo acotado y descargas el DXF para cortar y el PDF a escala 1:1 para trazar.</p>
     <div class="calcs">
@@ -281,7 +317,7 @@ footer p { margin: 0; max-width: 90ch; }
 
 <section id="flujo">
   <div class="ancho">
-    <p class="eti">03 · Cómo se trabaja</p>
+    <p class="eti">04 · Cómo se trabaja</p>
     <h2>De la idea a la pieza cortada</h2>
     <p class="intro">El mismo camino que hace un taller, sin cambiar de programa a cada paso ni pagar uno distinto para cada cosa.</p>
     <div class="flujo">
@@ -296,7 +332,7 @@ footer p { margin: 0; max-width: 90ch; }
 
 <section id="estudiantes">
   <div class="ancho">
-    <p class="eti">04 · Para estudiantes y docentes</p>
+    <p class="eti">05 · Para estudiantes y docentes</p>
     <h2>Una alternativa abierta para aprender ingeniería</h2>
     <p class="intro">Los programas de ingeniería más usados cuestan licencias que muchos estudiantes y talleres no pueden pagar. OpenDuctus se puede instalar en cualquier computador del aula o de la casa, estudiar por dentro y mejorar.</p>
     <div class="rejilla">
@@ -310,7 +346,7 @@ footer p { margin: 0; max-width: 90ch; }
 
 <section id="ruta">
   <div class="ancho">
-    <p class="eti">05 · Hoja de ruta</p>
+    <p class="eti">06 · Hoja de ruta</p>
     <h2>Hacia dónde va OpenDuctus</h2>
     <p class="intro">Por etapas, sobre motores de ingeniería de código abierto que ya usan universidades y centros de investigación en el mundo. Cada resultado de cálculo se validará contra casos de libro antes de publicarse.</p>
     <ol class="ruta">
@@ -325,7 +361,7 @@ footer p { margin: 0; max-width: 90ch; }
 
 <section id="plugins">
   <div class="ancho">
-    <p class="eti">06 · Ductus Plugins</p>
+    <p class="eti">07 · Ductus Plugins</p>
     <h2>Reglas del catálogo de plugins</h2>
     <p class="intro">Ductus Model acepta plugins escritos en Python, que se instalan desde su gestor de extensiones o copiándolos en la carpeta de plugins. El catálogo oficial se rige por estas reglas:</p>
     <ol class="reglas">
@@ -340,7 +376,7 @@ footer p { margin: 0; max-width: 90ch; }
 
 <section id="comunidad">
   <div class="ancho">
-    <p class="eti">07 · Comunidad</p>
+    <p class="eti">08 · Comunidad</p>
     <h2>Constrúyelo con nosotros</h2>
     <p class="intro">OpenDuctus mejora con lo que la gente vive en el taller y en el aula. Todo aporte cuenta.</p>
     <div class="rejilla">
@@ -357,7 +393,7 @@ footer p { margin: 0; max-width: 90ch; }
   <div class="ancho">
     <p><b>OpenDuctus</b>, por EDWIN CNC · Lycan Developments · 2026.</p>
     <p>Agradecemos a quienes dieron el paso inicial: Ductus Model nace de <a href="https://github.com/ingelibre/ingetrazo">IngeTrazo</a> (GPL-3) y Ductus Draft de <a href="https://github.com/LibreCAD/LibreCAD">LibreCAD</a> (GPL-2). Los .skp se leen con <a href="https://github.com/iamahsanmehmood/openskp">openskp</a>. Cada programa conserva la licencia libre de su origen.</p>
-    <p>SketchUp, Mach3 y las demás marcas citadas pertenecen a sus dueños; OpenDuctus no está afiliado a ellas. Ductus Mobile no reemplaza la parada de emergencia física de ninguna máquina.</p>
+    <p>SketchUp, SolidWorks, CATIA, Solid Edge, Inventor, Fusion, Creo, Ansys, Abaqus, SAP2000, ETABS, AutoCAD, KeyShot, V-Ray, SheetCam, Mach3 y las demás marcas citadas pertenecen a sus dueños; OpenDuctus no está afiliado a ellas. Ductus Mobile no reemplaza la parada de emergencia física de ninguna máquina.</p>
     <p><a href="https://ingemaqsewing.github.io/">Volver a Lycan Developments</a></p>
   </div>
 </footer>
