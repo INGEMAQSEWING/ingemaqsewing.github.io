@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Demos 3D · OpenDuctus</title>
+<meta name="description" content="Demos 3D de OpenDuctus: una brida que se arma pieza por pieza, una lámina que se dobla hasta formar una caja y un sinfín cuya aleta se aplana en el anillo que se corta con plasma. Se giran con el dedo, en el navegador.">
+<link rel="canonical" href="https://ingemaqsewing.github.io/openductus/demos/">
+<meta name="theme-color" content="#050b18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='9'%20fill='%230c1a33'/%3E%3Cpath%20d='M7%2031%20L13%2013%20C15%209%2018%209%2020%2012%20L25%2020%20C27%2023%2030%2023%2033%2021'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.6'%20stroke-linecap='round'/%3E%3Ccircle%20cx='33'%20cy='21'%20r='2.4'%20fill='%23ff6b8a'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpenDuctus · Lycan Developments">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://ingemaqsewing.github.io/openductus/demos/">
+<meta property="og:title" content="Demos 3D de OpenDuctus: brida, lámina y sinfín">
+<meta property="og:description" content="Demos 3D de OpenDuctus: una brida que se arma pieza por pieza, una lámina que se dobla hasta formar una caja y un sinfín cuya aleta se aplana en el anillo que se corta con plasma. Se giran con el dedo, en el navegador.">
+<meta property="og:image" content="https://ingemaqsewing.github.io/og-portada.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: misma identidad que ingemaqsewing.github.io (azul noche, cian, Chakra Petch). Cada demo = escenario 3D + ficha al lado; en celular se apilan. */
+:root{
+  --fondo:#050b18; --fondo-2:#0a1428; --placa:#0c1a33; --linea:#16345c;
+  --texto:#e6f1ff; --texto-2:#c4d4ea; --suave:#8ea6c8;
+  --cian:#22e3ff; --cian-oscuro:#0aa6c2; --verde:#35f2a0; --ambar:#ffc94d;
+  --f-titulo:"Chakra Petch","Bahnschrift","Arial Narrow",sans-serif;
+  --f-texto:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --f-dato:"JetBrains Mono",Consolas,"Courier New",monospace;
+  color-scheme:dark;
+}
+html,body{background:var(--fondo);color:var(--texto)}
+body{font-family:var(--f-texto);font-size:16px;line-height:1.6;
+  background:radial-gradient(900px 500px at 50% -120px,rgba(34,227,255,.16),transparent 70%),linear-gradient(var(--fondo),var(--fondo-2) 60%,var(--fondo));background-repeat:no-repeat;background-color:var(--fondo)}
+.sd{max-width:1240px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:56px}
+.sd-top{display:flex;align-items:center;gap:12px;font-family:var(--f-titulo);font-size:18px;letter-spacing:.04em}
+.sd-logo{width:34px;height:34px;border:2px solid var(--cian);border-radius:50%;display:grid;place-items:center;color:var(--cian);font-size:14px;box-shadow:0 0 14px rgba(34,227,255,.35)}
+.sd-tag{margin-left:auto;font:500 12px var(--f-dato);color:var(--ambar);border:1px solid currentColor;border-radius:999px;padding:2px 10px}
+.eyebrow{font:500 12.5px var(--f-dato);letter-spacing:.16em;text-transform:uppercase;color:var(--cian);margin:0}
+h1{font-family:var(--f-titulo);font-weight:700;text-transform:uppercase;font-size:clamp(36px,6vw,68px);line-height:.98;margin:10px 0 14px;text-wrap:balance}
+h1 span{color:var(--cian);text-shadow:0 0 26px rgba(34,227,255,.45)}
+.lead{max-width:62ch;color:var(--texto-2);margin:0;font-size:17px}
+.demo{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:22px;align-items:stretch}
+.demo.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)}
+.demo.flip .escenario{order:2}
+@media (max-width:860px){.demo,.demo.flip{grid-template-columns:minmax(0,1fr)}.demo.flip .escenario{order:0}}
+.escenario{position:relative;height:clamp(320px,52vw,520px);border:1px solid var(--linea);border-radius:14px;overflow:hidden;
+  background:radial-gradient(80% 70% at 50% 40%,#10264a 0%,#060d1c 75%)}
+.escenario::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(rgba(34,227,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(34,227,255,.08) 1px,transparent 1px);background-size:32px 32px}
+.escenario canvas{position:relative;display:block;width:100%;height:100%;cursor:grab}
+.escenario canvas:active{cursor:grabbing}
+.pista{position:absolute;left:12px;bottom:10px;font:400 12px var(--f-dato);color:var(--suave);pointer-events:none}
+.cps{position:absolute;right:12px;top:10px;font:500 11.5px var(--f-dato);color:var(--suave);background:#050b18cc;border-radius:6px;padding:2px 8px;font-variant-numeric:tabular-nums}
+.burbuja{position:absolute;left:12px;top:10px;max-width:min(320px,70%);background:#050b18e8;border:1px solid var(--cian-oscuro);border-radius:10px;padding:8px 12px;font-size:13.5px}
+.burbuja b{display:block;font-family:var(--f-titulo);font-size:16px;color:var(--cian)}
+.ficha{background:var(--placa);border:1px solid var(--linea);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.ficha h2{font-family:var(--f-titulo);text-transform:uppercase;font-size:26px;line-height:1.05;margin:0;letter-spacing:.02em}
+.ficha p{margin:0;color:var(--texto-2);font-size:15px}
+.fila{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sw{width:30px;height:30px;border-radius:50%;border:2px solid var(--linea);padding:0;cursor:pointer}
+.sw[aria-pressed=true]{border-color:var(--cian);box-shadow:0 0 0 2px var(--placa) inset,0 0 10px rgba(34,227,255,.5)}
+.btn{background:var(--cian);color:#041022;border:0;border-radius:8px;padding:9px 14px;font:600 14px var(--f-texto);cursor:pointer}
+.btn.linea{background:transparent;color:var(--texto);border:1px solid var(--linea)}
+.btn:focus-visible,.sw:focus-visible{outline:2px solid var(--cian);outline-offset:2px}
+input[type=range]{width:100%;accent-color:var(--cian)}
+.datos{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:14px}
+.datos dt{color:var(--suave)}
+.datos dd{margin:0;font-family:var(--f-dato);text-align:right;font-variant-numeric:tabular-nums}
+.uso{font-size:13.5px;color:var(--suave);border-top:1px solid var(--linea);padding-top:12px}
+.uso b{color:var(--ambar);font-weight:600}
+.proximo{border:1px dashed var(--cian-oscuro);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:6px}
+.proximo h2{font-family:var(--f-titulo);text-transform:uppercase;margin:0;font-size:24px}
+.proximo p{margin:0;color:var(--texto-2);max-width:70ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.sd-marca{display:flex;align-items:center;gap:10px;color:var(--texto);text-decoration:none;font-family:var(--f-titulo);font-size:20px;font-weight:700}
+.sd-marca span{color:var(--cian)}
+.sd-volver{margin-left:auto;font-size:14px;color:var(--cian);text-decoration:none}
+.sd-volver:hover,.sd-marca:hover{text-decoration:underline}
+.proximo a{color:var(--cian)}
+</style>
+
+</head>
+<body>
+<div class="sd">
+  <nav class="sd-top" aria-label="OpenDuctus"><a class="sd-marca" href="../"><svg viewBox="0 0 40 40" aria-hidden="true" width="34" height="34"><rect width="40" height="40" rx="9" fill="#0c1a33" stroke="#16345c"/><path d="M7 31 L13 13 C15 9 18 9 20 12 L25 20 C27 23 30 23 33 21" fill="none" stroke="#22e3ff" stroke-width="2.6" stroke-linecap="round"/><circle cx="33" cy="21" r="2.4" fill="#ff6b8a"/></svg><b>Open<span>Ductus</span></b></a><a class="sd-volver" href="../">← Volver a OpenDuctus</a></nav>
+
+  <header id="portada">
+    <p class="eyebrow">OpenDuctus · demos 3D</p>
+    <h1>Lo que podemos <span>construir</span></h1>
+    <p class="lead">Tres muestras que se pueden tocar. Todas están hechas con código, se mueven en el navegador y no necesitan instalar nada. Gírelas con el dedo o el ratón.</p>
+  </header>
+
+  <section class="demo" id="demo-ensamble">
+    <div class="escenario"><canvas id="c3" aria-label="Brida que se arma pieza por pieza"></canvas>
+      <span class="cps" id="cps3">— cps</span><span class="pista">Arrastre para girar · toque una pieza</span>
+      <div class="burbuja" id="burbuja" hidden><b id="bT"></b><span id="bD"></span></div></div>
+    <div class="ficha">
+      <p class="eyebrow">Ingeniería · vista explotada</p>
+      <h2>Cada pieza en su lugar</h2>
+      <p>Una brida que se arma pieza por pieza: placa, empaque, brida, tornillos y tuercas. Toque una pieza para ver qué es.</p>
+      <input type="range" id="armado" min="0" max="1000" value="1000" aria-label="Armado de la brida">
+      <div class="fila"><button type="button" class="btn" id="armar">Ver cómo se arma</button><button type="button" class="btn linea" id="explotar">Separar piezas</button></div>
+      <dl class="datos"><dt>Placa</dt><dd>200 × 200 × 12 mm</dd><dt>Brida</dt><dd>Ø 160 mm · 4 agujeros</dd><dt>Tornillos</dt><dd>M12 × 50</dd></dl>
+      <p class="uso"><b>Sirve para:</b> manuales de montaje, propuestas a clientes y la demo de OpenDuctus.</p>
+    </div>
+  </section>
+
+  <section class="demo flip" id="demo-lamina">
+    <div class="escenario"><canvas id="c2" aria-label="Lámina que se dobla hasta formar una caja"></canvas>
+      <span class="cps" id="cps2">— cps</span><span class="pista">Arrastre para girar</span></div>
+    <div class="ficha">
+      <p class="eyebrow">Taller · desdoblado de lámina</p>
+      <h2>De la lámina plana a la pieza</h2>
+      <p>La lámina cortada en la mesa de plasma se dobla sola hasta formar la caja. Es lo mismo que hace EDWIN CNC 3D, pero al revés y en la web.</p>
+      <input type="range" id="doblez" min="0" max="1000" value="0" aria-label="Doblado de la lámina">
+      <div class="fila"><button type="button" class="btn" id="doblar">Doblar</button><button type="button" class="btn linea" id="aplanar">Aplanar</button></div>
+      <dl class="datos"><dt>Caja</dt><dd>200 × 150 × 80 mm</dd><dt>Lámina</dt><dd>Calibre 18 · 1,2 mm</dd><dt>Desarrollo</dt><dd>360 × 310 mm</dd><dt>Dobleces</dt><dd id="dobleN">0 de 4</dd></dl>
+      <p class="uso"><b>Sirve para:</b> mostrar trabajos del taller, cotizar piezas y enseñar en OpenDuctus.</p>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-helicoide">
+    <div class="escenario"><canvas id="c1" aria-label="Tornillo sinfín que se separa y una aleta que se aplana"></canvas>
+      <span class="cps" id="cps1">— cps</span><span class="pista">Arrastre para girar</span></div>
+    <div class="ficha">
+      <p class="eyebrow">Taller · desarrollo de helicoide</p>
+      <h2>Del sinfín a la lámina</h2>
+      <p>El tornillo sinfín armado se separa en sus aletas, y una de ellas se aplana hasta quedar como el anillo abierto que se corta en la mesa de plasma. Las medidas del anillo se calculan solas.</p>
+      <input type="range" id="heli" min="0" max="1000" value="0" aria-label="Armado, separado y aplanado del helicoide">
+      <div class="fila"><button type="button" class="btn" id="hVer">Ver todo</button><button type="button" class="btn linea" id="hArmar">Armar</button></div>
+      <dl class="datos"><dt>Sinfín</dt><dd>Ø 300 · eje Ø 100 · paso 300</dd><dt>Estado</dt><dd id="hFase">Armado</dd><dt>Anillo, Ø exterior</dt><dd id="hDe">—</dd><dt>Anillo, Ø interior</dt><dd id="hDi">—</dd><dt>Abertura del anillo</dt><dd id="hCorte">—</dd></dl>
+      <p class="uso"><b>Sirve para:</b> transportadores de sinfín, mezcladoras y tolvas. Es lo que calcula el plugin Helicoidal de EDWIN CNC 3D.</p>
+    </div>
+  </section>
+
+  <section class="proximo" id="proximo">
+    <p class="eyebrow">Siguiente en el laboratorio</p>
+    <h2>Muévalo con la mano</h2>
+    <p><a href="../../lycan-mouse-control/">Lycan Mouse Control</a> ya reconoce la mano con la cámara del portátil. El paso siguiente es usarlo dentro de estas demos: la mano a la derecha gira la pieza, el puño la acerca.</p>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js"></script>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=x=>x<=0?0:x>=1?1:x*x*(3-2*x);
+
+/* ---------- Visor reutilizable: dibuja solo si está a la vista ---------- */
+function visor(canvasId,cpsId,opt){
+  const canvas=$(canvasId), box=canvas.parentElement;
+  const r=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  r.setPixelRatio(Math.min(devicePixelRatio||1,1.75)); r.outputEncoding=THREE.sRGBEncoding;
+  r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=.82;
+  const scene=new THREE.Scene(); const pm=new THREE.PMREMGenerator(r);
+  scene.environment=pm.fromScene(new THREE.RoomEnvironment(),0.04).texture;
+  const key=new THREE.DirectionalLight(0xffffff,0.9); key.position.set(200,320,240); scene.add(key);
+  const rim=new THREE.DirectionalLight(0x22e3ff,0.6); rim.position.set(-260,120,-200); scene.add(rim);
+  const cam=new THREE.PerspectiveCamera(35,1,1,4000); cam.position.copy(opt.cam);
+  const ctl=new THREE.OrbitControls(cam,canvas); ctl.target.copy(opt.target);
+  ctl.enableDamping=true; ctl.dampingFactor=.08; ctl.enablePan=false; ctl.enableZoom=false;
+  ctl.minPolarAngle=.35; ctl.maxPolarAngle=1.45; ctl.autoRotate=!reduce&&!!opt.spin; ctl.autoRotateSpeed=opt.spin||0;
+  ctl.addEventListener('start',()=>{ctl.autoRotate=false;});
+  canvas.style.touchAction='pan-y'; // en el celular, deslizar hacia arriba sigue bajando la página
+  const v={r,scene,cam,ctl,canvas,dirty:true,tick:null,visible:false};
+  new ResizeObserver(()=>{const w=box.clientWidth,h=box.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<520?44:35;cam.updateProjectionMatrix();v.dirty=true;}).observe(box);
+  new IntersectionObserver(e=>{v.visible=e[0].isIntersecting;}).observe(box);
+  let fr=0,t0=performance.now();
+  (function loop(now){requestAnimationFrame(loop); if(!v.visible||document.hidden) return;
+    if(v.tick) v.tick(now); const m=ctl.update();
+    if(m||v.dirty||ctl.autoRotate){r.render(scene,cam);v.dirty=false;}
+    fr++; if(now-t0>=1000){$(cpsId).textContent=Math.round(fr*1000/(now-t0))+' cps';fr=0;t0=now;} })(performance.now());
+  // tocar sin arrastrar
+  let d=null; canvas.addEventListener('pointerdown',e=>{d={x:e.clientX,y:e.clientY};});
+  canvas.addEventListener('pointerup',e=>{ if(!d) return; const mv=Math.hypot(e.clientX-d.x,e.clientY-d.y); d=null; if(mv>6||!v.onTap) return;
+    const b=canvas.getBoundingClientRect(); v.onTap(new THREE.Vector2(((e.clientX-b.left)/b.width)*2-1,-((e.clientY-b.top)/b.height)*2+1)); });
+  return v;
+}
+function swatches(el,list,cur,pick){ el.innerHTML=''; list.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='sw';b.style.background=c.c;b.title=c.n;b.setAttribute('aria-label',c.n);b.setAttribute('aria-pressed',String(c.id===cur));b.onclick=()=>pick(c.id);el.appendChild(b);}); }
+function anim(dur,from,to,set,done){ if(reduce){set(to);done&&done();return;} const t0=performance.now();
+  (function f(now){const k=Math.min(1,(now-t0)/dur);set(from+(to-from)*k);if(k<1)requestAnimationFrame(f);else done&&done();})(t0); }
+
+/* ================= DEMO 3: helicoide que se separa y se aplana ================= */
+(function(){
+  const v=visor('c1','cps1',{cam:new THREE.Vector3(700,520,1250),target:new THREE.Vector3(0,-40,0),spin:.6});
+  const D=300,d=100,P=300,N=4,SEL=1;
+  // Desarrollo clásico de una aleta de helicoide (una vuelta)
+  const w=(D-d)/2, Lo=Math.hypot(Math.PI*D,P), Li=Math.hypot(Math.PI*d,P);
+  const r=w*Li/(Lo-Li), R=r+w, TH=Lo/R, abertura=360-TH*180/Math.PI;
+  const f1=x=>x.toFixed(1).replace('.',',');
+  $('hDe').textContent='Ø '+f1(2*R)+' mm'; $('hDi').textContent='Ø '+f1(2*r)+' mm'; $('hCorte').textContent=f1(abertura)+'°';
+  const U=160,V=6;
+  function aleta(){
+    const mat=new THREE.MeshStandardMaterial({color:'#b9c3cd',metalness:.88,roughness:.32,side:THREE.DoubleSide,transparent:true});
+    const pos=new Float32Array((U+1)*(V+1)*3), idx=[];
+    for(let i=0;i<U;i++)for(let j=0;j<V;j++){const a=i*(V+1)+j,b=a+V+1;idx.push(a,b,a+1,b,b+1,a+1);}
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setIndex(idx);
+    const mesh=new THREE.Mesh(g,mat);
+    const ep=new Float32Array((U+1)*2*3), eg=new THREE.BufferGeometry(); eg.setAttribute('position',new THREE.BufferAttribute(ep,3));
+    const borde=new THREE.LineLoop(eg,new THREE.LineBasicMaterial({color:0x22e3ff,transparent:true,opacity:.9})); mesh.add(borde);
+    function update(t){
+      const Phi=2*Math.PI+(TH-2*Math.PI)*t, pit=P*(1-t), ri=d/2+(r-d/2)*t, ro=D/2+(R-D/2)*t;
+      const pt=(u,vv,o,k)=>{const an=Phi*u-Phi/2, rho=ri+vv*(ro-ri); o[k]=rho*Math.cos(an); o[k+1]=pit*u-pit/2; o[k+2]=rho*Math.sin(an);};
+      for(let i=0;i<=U;i++)for(let j=0;j<=V;j++) pt(i/U,j/V,pos,(i*(V+1)+j)*3);
+      let k=0; for(let i=0;i<=U;i++){pt(i/U,1,ep,k);k+=3;} for(let i=U;i>=0;i--){pt(i/U,0,ep,k);k+=3;}
+      g.attributes.position.needsUpdate=true; eg.attributes.position.needsUpdate=true; g.computeVertexNormals(); g.computeBoundingSphere(); eg.computeBoundingSphere();
+    }
+    update(0); return {mesh,mat,borde,update};
+  }
+  const aletas=[]; for(let i=0;i<N;i++){ const a=aleta(); v.scene.add(a.mesh); aletas.push(a); }
+  const eje=new THREE.Mesh(new THREE.CylinderGeometry(d/2-1,d/2-1,N*P+220,40),new THREE.MeshStandardMaterial({color:'#7d8893',metalness:.9,roughness:.35,transparent:true}));
+  eje.rotation.z=-Math.PI/2; v.scene.add(eje);
+  const grid=new THREE.GridHelper(1800,36,0x16345c,0x0f2444); grid.position.y=-230; v.scene.add(grid);
+  let p=0, ultimoT=-1;
+  function set(x){ p=x;
+    const s=ease(p*3), b=ease(p*3-1), c=ease(p*3-2);
+    aletas.forEach((a,i)=>{ const k=i-(N-1)/2, xEnTornillo=k*(P+160*s);
+      if(i===SEL){ a.mesh.position.set(xEnTornillo*(1-b), -110*b, 0); a.mesh.rotation.z=-Math.PI/2*(1-b); }
+      else { a.mesh.position.set(xEnTornillo, 520*b, 0); a.mesh.rotation.z=-Math.PI/2; a.mat.opacity=1-.92*b; a.borde.material.opacity=.9*(1-.92*b); a.mesh.visible=b<.99; } });
+    eje.material.opacity=1-s; eje.visible=s<.99;
+    if(Math.abs(c-ultimoT)>1e-4){ aletas[SEL].update(c); ultimoT=c; }
+    const dist=2150-1300*b, dir=v.cam.position.clone().sub(v.ctl.target).normalize(); v.cam.position.copy(v.ctl.target).addScaledVector(dir,dist);
+    $('hFase').textContent=p<.02?'Armado':p<.34?'Separando':p<.67?'Aleta elegida':p<.99?'Aplanando':'Plano, listo para cortar';
+    $('heli').value=Math.round(p*1000); v.dirty=true; }
+  $('heli').addEventListener('input',e=>set(e.target.value/1000));
+  $('hVer').onclick=()=>{ set(0); anim(7500,0,1,set); };
+  $('hArmar').onclick=()=>anim(1600,p,0,set);
+  set(0);
+  let visto=false; new IntersectionObserver(e=>{ if(e[0].isIntersecting&&!visto){visto=true; setTimeout(()=>anim(7500,0,1,set),600);} },{threshold:.5}).observe($('c1'));
+})();
+
+/* ================= DEMO 2: lámina que se dobla ================= */
+(function(){
+  const v=visor('c2','cps2',{cam:new THREE.Vector3(260,300,360),target:new THREE.Vector3(0,20,0),spin:.9});
+  const W=200,D=150,H=80,T=1.2*3; // espesor exagerado x3 para que se vea
+  const mat=new THREE.MeshStandardMaterial({color:'#aeb8c3',metalness:.85,roughness:.38});
+  const edge=new THREE.LineBasicMaterial({color:0x22e3ff,transparent:true,opacity:.85});
+  function plate(w,d){ const m=new THREE.Mesh(new THREE.BoxGeometry(w,T,d),mat); m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),edge)); return m; }
+  const root=new THREE.Group(); v.scene.add(root);
+  root.add(plate(W,D));
+  const flaps=[];
+  function flap(px,pz,w,d,ox,oz,axis,sign,orden){ const piv=new THREE.Group(); piv.position.set(px,0,pz); const p=plate(w,d); p.position.set(ox,0,oz); piv.add(p); root.add(piv); flaps.push({piv,axis,sign,orden}); }
+  flap(0, D/2, W,H, 0, H/2,'x',-1,0);  // frente
+  flap(0,-D/2, W,H, 0,-H/2,'x', 1,0);  // atrás
+  flap(-W/2,0, H,D,-H/2,0,'z',-1,1);   // izquierda
+  flap( W/2,0, H,D, H/2,0,'z', 1,1);   // derecha
+  // sombra de la lámina plana
+  const grid=new THREE.GridHelper(520,26,0x16345c,0x0f2444); grid.position.y=-3; v.scene.add(grid);
+  let p=0;
+  function set(x){ p=x; flaps.forEach(f=>{ const lp=ease(p*2-f.orden); f.piv.rotation[f.axis]=f.sign*lp*Math.PI/2; });
+    const n=flaps.filter(f=>ease(p*2-f.orden)>.99).length; $('dobleN').textContent=n+' de 4'; $('doblez').value=Math.round(p*1000); v.dirty=true; }
+  $('doblez').addEventListener('input',e=>set(e.target.value/1000));
+  $('doblar').onclick=()=>anim(2600,p,1,set);
+  $('aplanar').onclick=()=>anim(1400,p,0,set);
+  set(0);
+  // se dobla solo la primera vez que aparece
+  let visto=false; new IntersectionObserver(e=>{ if(e[0].isIntersecting&&!visto){visto=true; setTimeout(()=>anim(2600,0,1,set),500);} },{threshold:.5}).observe($('c2'));
+})();
+
+/* ================= DEMO 3: brida que se arma ================= */
+(function(){
+  const v=visor('c3','cps3',{cam:new THREE.Vector3(300,260,330),target:new THREE.Vector3(0,40,0),spin:1.0});
+  const acero=new THREE.MeshStandardMaterial({color:'#b8c2cc',metalness:.92,roughness:.3});
+  const pintura=new THREE.MeshStandardMaterial({color:'#d99a1c',metalness:.15,roughness:.55});
+  const caucho=new THREE.MeshStandardMaterial({color:'#15181d',metalness:0,roughness:.9});
+  const pavon=new THREE.MeshStandardMaterial({color:'#3a4048',metalness:.85,roughness:.35});
+  const BC=62, ang=[45,135,225,315].map(a=>a*Math.PI/180);
+  function holed(outerShape,holes,depth){ holes.forEach(h=>{const p=new THREE.Path();p.absarc(h[0],h[1],h[2],0,Math.PI*2,true);outerShape.holes.push(p);});
+    const g=new THREE.ExtrudeGeometry(outerShape,{depth,bevelEnabled:false,curveSegments:40}); g.rotateX(-Math.PI/2); return g; }
+  const boltHoles=r=>ang.map(a=>[Math.cos(a)*BC,Math.sin(a)*BC,r]);
+  const sq=()=>{const s=new THREE.Shape();s.moveTo(-100,-100);s.lineTo(100,-100);s.lineTo(100,100);s.lineTo(-100,100);s.lineTo(-100,-100);return s;};
+  const circ=r=>{const s=new THREE.Shape();s.absarc(0,0,r,0,Math.PI*2,false);return s;};
+  const piezas=[];
+  function pieza(mesh,y0,yx,grupo,info){ mesh.position.y=y0; mesh.userData.info=info; v.scene.add(mesh); piezas.push({mesh,y0,yx,grupo}); }
+  pieza(new THREE.Mesh(holed(sq(),[[0,0,30],...boltHoles(7)],12),pintura),0,0,0,{t:'Placa base',d:'Lámina de 12 mm cortada con plasma: 200 × 200 mm, agujero central de Ø 60 y 4 agujeros de Ø 14.'});
+  pieza(new THREE.Mesh(holed(circ(80),[[0,0,30],...boltHoles(7)],3),caucho),12,60,1,{t:'Empaque',d:'Caucho de 3 mm. Sella la unión para que no haya fugas.'});
+  const brida=new THREE.Group();
+  brida.add(new THREE.Mesh(holed(circ(80),[[0,0,30],...boltHoles(7)],14),acero));
+  const cuello=new THREE.Mesh(holed(circ(40),[[0,0,30]],60),acero); cuello.position.y=14; brida.add(cuello);
+  brida.children.forEach(m=>m.userData.info={t:'Brida',d:'Acero de Ø 160 mm con cuello para soldar el tubo. 4 agujeros en un círculo de Ø 124.'});
+  pieza(brida,15,130,2,null);
+  ang.forEach(a=>{ const x=Math.cos(a)*BC, z=-Math.sin(a)*BC;
+    const t=new THREE.Group(); const cab=new THREE.Mesh(new THREE.CylinderGeometry(10.5,10.5,8,6),pavon); cab.position.y=4;
+    const cuerpo=new THREE.Mesh(new THREE.CylinderGeometry(6,6,50,20),pavon); cuerpo.position.y=-25; t.add(cab,cuerpo);
+    t.children.forEach(m=>m.userData.info={t:'Tornillo M12 × 50',d:'Cabeza hexagonal. Atraviesa la brida, el empaque y la placa.'});
+    t.position.x=x; t.position.z=z; pieza(t,29,230,3,null);
+    const tu=new THREE.Mesh(new THREE.CylinderGeometry(10.5,10.5,9,6),pavon); tu.position.x=x; tu.position.z=z;
+    pieza(tu,-4.5,-80,4,{t:'Tuerca M12',d:'Aprieta el conjunto desde abajo de la placa.'}); });
+  const grid=new THREE.GridHelper(560,28,0x16345c,0x0f2444); grid.position.y=-40; v.scene.add(grid);
+  let p=1;
+  function set(x){ p=x; piezas.forEach(o=>{ const lp=o.grupo===0?1:ease(p*4-(o.grupo-1)); o.mesh.position.y=o.yx+(o.y0-o.yx)*lp; }); $('armado').value=Math.round(p*1000); v.dirty=true; }
+  $('armado').addEventListener('input',e=>set(e.target.value/1000));
+  $('armar').onclick=()=>{ set(0); anim(4200,0,1,set); };
+  $('explotar').onclick=()=>anim(1200,p,0,set);
+  const ray=new THREE.Raycaster();
+  v.onTap=pt=>{ ray.setFromCamera(pt,v.cam); const hit=ray.intersectObjects(v.scene.children,true).find(h=>h.object.userData.info);
+    if(!hit){ $('burbuja').hidden=true; v.dirty=true; return; }
+    $('bT').textContent=hit.object.userData.info.t; $('bD').textContent=hit.object.userData.info.d; $('burbuja').hidden=false; v.dirty=true; };
+  set(1);
+})();
+})();
+</script>
+</body>
+</html>
