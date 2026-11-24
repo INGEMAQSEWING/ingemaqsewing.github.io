@@ -346,10 +346,78 @@ details.versiones summary { cursor: pointer; font-size: 14px; color: var(--suave
 footer { margin-top: 80px; border-top: 1px solid var(--linea); }
 footer .ancho { padding-block: 26px 40px; color: var(--suave); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
 footer p { margin: 0; }
+/* ===== CAPA DE VIDRIO ===== */
+/* Fondo de luces que flotan detrás del vidrio */
+.luces{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.luces i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:flotar 24s ease-in-out infinite alternate}
+.luces i:nth-child(1){width:46vmax;height:46vmax;left:-12vmax;top:-10vmax;background:radial-gradient(circle,#0aa6c2,transparent 65%)}
+.luces i:nth-child(2){width:40vmax;height:40vmax;right:-14vmax;top:24vh;background:radial-gradient(circle,#5b3fd6,transparent 65%);animation-duration:30s}
+.luces i:nth-child(3){width:34vmax;height:34vmax;left:30vw;bottom:-16vmax;background:radial-gradient(circle,#17c98a,transparent 65%);animation-duration:36s;opacity:.3}
+@keyframes flotar{to{transform:translate(8vw,6vh) scale(1.12)}}
+.saltar{z-index:30}
+main,footer{position:relative;z-index:1}
+/* Menú: barra de vidrio pegada arriba que al bajar se encoge en píldora; una luz cian marca la sección */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:25;background:var(--fondo)}
+.barra{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;border:0;background:transparent;padding-block:10px 0}
+.barra .ancho{background:rgba(14,32,62,.5);border:1px solid rgba(140,200,255,.22);border-radius:18px;-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 18px 40px -22px rgba(0,0,0,.7);padding-block:10px;max-width:1140px;
+  transition:max-width .5s cubic-bezier(.2,.8,.2,1),border-radius .5s,padding .5s}
+.barra.encogido .ancho{max-width:1060px;border-radius:999px;padding-block:6px;flex-wrap:nowrap}
+.barra.encogido .logo b{display:none}
+.barra.encogido nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1 1 auto;gap:2px}
+.barra.encogido nav::-webkit-scrollbar{display:none}
+.barra.encogido nav a{white-space:nowrap}
+.barra nav{position:relative}
+.barra nav a{position:relative;z-index:1;padding:5px 11px;border-radius:999px;transition:color .3s}
+.barra nav a.activo{color:#041022;font-weight:600}
+.barra .ind{position:absolute;z-index:0;left:0;top:0;height:0;width:0;border-radius:999px;background:var(--cian);box-shadow:0 0 16px rgba(34,227,255,.55);
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),width .45s cubic-bezier(.2,.8,.2,1),height .2s}
+@media (max-width:600px){
+  .barra nav{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:2px;width:100%}
+  .barra nav::-webkit-scrollbar{display:none}
+  .barra nav a{padding-block:6px;white-space:nowrap}
+}
+/* Secciones: tarjetas de vidrio que se apilan; la de abajo se encoge y oscurece cuando la siguiente pasa encima */
+main > section.ancho{position:sticky;border-radius:26px;background:rgba(14,32,62,.42);border:1px solid rgba(140,200,255,.2);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 24px 60px -24px rgba(0,0,0,.7);
+  padding-block:clamp(22px,3.5vw,40px);padding-inline:clamp(18px,3.5vw,40px);margin-bottom:10vh;transform-origin:50% 0}
+main > section.ancho + section.ancho{margin-top:0}
+.velo-v{position:absolute;inset:0;border-radius:inherit;background:#050b18;opacity:0;pointer-events:none;z-index:3}
+.tarjeta{background:linear-gradient(180deg,rgba(16,38,74,.6),rgba(10,22,44,.6))}
+.lista-d{background:rgba(12,26,51,.5)}
+.flujo li{background:rgba(12,26,51,.5)}
+/* Las tarjetas internas entran deslizándose la primera vez */
+.vidrio-anima .rejilla > *{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.vidrio-anima.vista .rejilla > *{opacity:1;transform:none}
+.vidrio-anima.vista .rejilla > *:nth-child(2){transition-delay:.08s}.vidrio-anima.vista .rejilla > *:nth-child(3){transition-delay:.16s}.vidrio-anima.vista .rejilla > *:nth-child(4){transition-delay:.24s}
+footer{border-top:0}
+/* Diagrama LD en volumen: inclinado en 3D, nodos de vidrio con grosor y luz que viaja más brillante */
+.mapa{perspective:1100px}
+.centro{transform:rotateX(var(--rx,16deg)) rotateY(var(--ry,-12deg));transform-style:preserve-3d;transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  filter:drop-shadow(0 26px 30px rgba(0,0,0,.55))}
+.centro-m{--rx:10deg;--ry:0deg}
+.centro .nodo rect{fill:url(#ldNodo);stroke:rgba(150,235,255,.85);
+  filter:drop-shadow(0 2px 0 #0d3c66) drop-shadow(0 2px 0 #0b3157) drop-shadow(0 2px 0 #092848) drop-shadow(0 10px 14px rgba(0,0,0,.55))}
+.centro a:hover .nodo rect{fill:url(#ldNodoOn);stroke-width:2.2}
+.centro .brillo{fill:url(#ldBrillo);pointer-events:none}
+.centro .nucleo{fill:url(#ldEsfera);filter:drop-shadow(0 0 18px rgba(34,227,255,.75)) drop-shadow(0 12px 16px rgba(0,0,0,.6))}
+.centro .cable{stroke:#18c4e0;opacity:.9;filter:drop-shadow(0 0 2px rgba(34,227,255,.6))}
+.centro .pulsos{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 8px #22e3ff) drop-shadow(0 0 16px #22e3ff)}
+.centro .pulso{stroke:#d9fbff;stroke-width:3.4;stroke-dasharray:18 2000}
+@media (prefers-reduced-motion:reduce){
+  .centro{transition:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .luces i{animation:none}.barra .ancho,.barra .ind{transition:none}
+  .vidrio-anima .rejilla > *{opacity:1;transform:none;transition:none}
+}
+/* ===== FIN CAPA DE VIDRIO ===== */
 </style>
-
 </head>
 <body>
+<div class="luces" aria-hidden="true"><i></i><i></i><i></i></div>
+
 <a class="saltar" href="#cadcam">Saltar al contenido</a>
 <header class="barra">
   <div class="ancho">
@@ -792,6 +860,82 @@ footer p { margin: 0; }
   document.querySelectorAll('.centro').forEach(function (c) {
     if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { c.classList.toggle('quieto', !e[0].isIntersecting); }).observe(c);
   });
+})();
+</script>
+<script>
+/* CAPA DE VIDRIO */
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var barra = document.querySelector('.barra'), nav = barra && barra.querySelector('nav');
+  var secciones = [].slice.call(document.querySelectorAll('main > section.ancho'));
+  if (!barra || !nav || !secciones.length) return;
+  var ind = document.createElement('span'); ind.className = 'ind'; ind.setAttribute('aria-hidden', 'true'); nav.insertBefore(ind, nav.firstChild);
+  var anclas = [].slice.call(nav.querySelectorAll('a'));
+  secciones.forEach(function (s) { var v = document.createElement('div'); v.className = 'velo-v'; s.appendChild(v); if (!reduce) s.classList.add('vidrio-anima'); });
+  // Cada sección se pega un poco más abajo que la anterior. Si es más alta que la pantalla,
+  // se pega por abajo para que se pueda leer completa antes de que la siguiente la tape.
+  function pegar() {
+    var base = barra.offsetHeight + 14, vh = innerHeight;
+    secciones.forEach(function (s, i) { var top = base + Math.min(i, 6) * 10, h = s.offsetHeight;
+      if (h > vh - top - 16) top = vh - h - 16;
+      s.style.top = top + 'px'; s.style.zIndex = i + 2; s.style.scrollMarginTop = (base + 6) + 'px'; });
+  }
+  function marcar(id) {
+    var hecho = false;
+    anclas.forEach(function (a) { var on = !!id && a.getAttribute('href') === '#' + id; a.classList.toggle('activo', on);
+      if (on) { hecho = true; ind.style.width = a.offsetWidth + 'px'; ind.style.height = a.offsetHeight + 'px';
+        ind.style.transform = 'translate(' + a.offsetLeft + 'px,' + a.offsetTop + 'px)';
+        if (a.offsetLeft < nav.scrollLeft || a.offsetLeft + a.offsetWidth > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = a.offsetLeft - 16; } });
+    if (!hecho) ind.style.width = '0px';
+  }
+  var pedido = false;
+  function cuadro() {
+    pedido = false; var vh = innerHeight, activa = null;
+    barra.classList.toggle('encogido', scrollY > 60);
+    secciones.forEach(function (s, i) {
+      var r = s.getBoundingClientRect(), sig = secciones[i + 1];
+      if (r.top < vh * .5) activa = s.id;
+      if (r.top < vh * .85) s.classList.add('vista');
+      var c = 0; if (sig) { var rs = sig.getBoundingClientRect(); c = Math.max(0, Math.min(1, (r.bottom - rs.top) / Math.min(r.height, vh))); }
+      if (!reduce) { s.style.transform = c > 0 ? 'scale(' + (1 - .05 * c).toFixed(4) + ')' : ''; s.lastChild.style.opacity = (.55 * c).toFixed(3); }
+    });
+    marcar(activa);
+  }
+  function pedir() { if (!pedido) { pedido = true; requestAnimationFrame(cuadro); } }
+  addEventListener('scroll', pedir, { passive: true });
+  addEventListener('resize', function () { pegar(); pedir(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { pegar(); pedir(); });
+  pegar(); cuadro();
+
+  // Diagrama LD de vidrio: degradados, brillo arriba de cada nodo y leve giro con el ratón
+  var NS = 'http://www.w3.org/2000/svg';
+  // los degradados van en un SVG aparte, visible pero de tamaño cero, para que sirvan a los dos diagramas
+  var hold = document.createElementNS(NS, 'svg'); hold.setAttribute('width', '0'); hold.setAttribute('height', '0');
+  hold.setAttribute('aria-hidden', 'true'); hold.style.position = 'absolute'; document.body.appendChild(hold);
+  document.querySelectorAll('svg.centro').forEach(function (svg, k) {
+    var d = document.createElementNS(NS, 'defs');
+    if (!k) hold.appendChild(d);
+    d.innerHTML = (k ? '' :
+      '<linearGradient id="ldNodo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(90,200,255,.42)"/><stop offset=".55" stop-color="rgba(16,44,86,.72)"/><stop offset="1" stop-color="rgba(8,24,50,.85)"/></linearGradient>' +
+      '<linearGradient id="ldNodoOn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(120,230,255,.6)"/><stop offset="1" stop-color="rgba(14,48,92,.9)"/></linearGradient>' +
+      '<linearGradient id="ldBrillo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(255,255,255,.38)"/><stop offset="1" stop-color="rgba(255,255,255,0)"/></linearGradient>' +
+      '<radialGradient id="ldEsfera" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#7beeff" stop-opacity=".55"/><stop offset=".35" stop-color="#0e3a66" stop-opacity=".85"/><stop offset="1" stop-color="#061226"/></radialGradient>');
+    svg.querySelectorAll('.nodo rect').forEach(function (r) {
+      var b = document.createElementNS(NS, 'rect');
+      ['x', 'y', 'width', 'rx'].forEach(function (a) { b.setAttribute(a, r.getAttribute(a)); });
+      b.setAttribute('x', +r.getAttribute('x') + 3); b.setAttribute('width', +r.getAttribute('width') - 6);
+      b.setAttribute('y', +r.getAttribute('y') + 2); b.setAttribute('height', (+r.getAttribute('height')) * .42);
+      b.setAttribute('class', 'brillo'); r.parentNode.insertBefore(b, r.nextSibling);
+    });
+  });
+  var mapa = document.querySelector('.mapa');
+  if (mapa && !reduce && matchMedia('(pointer: fine)').matches) {
+    mapa.addEventListener('pointermove', function (e) {
+      var r = mapa.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      mapa.querySelectorAll('.centro').forEach(function (s) { s.style.setProperty('--rx', (16 - y * 14).toFixed(2) + 'deg'); s.style.setProperty('--ry', (-12 + x * 22).toFixed(2) + 'deg'); });
+    });
+    mapa.addEventListener('pointerleave', function () { mapa.querySelectorAll('.centro').forEach(function (s) { s.style.removeProperty('--rx'); s.style.removeProperty('--ry'); }); });
+  }
 })();
 </script>
 </body>

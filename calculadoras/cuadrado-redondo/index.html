@@ -135,6 +135,42 @@ footer { border-top: 3px solid var(--tinta); padding-block: 18px 30px; font-size
   h1 { margin-top: 0; font-size: 22pt; }
 }
 </style>
+<style id="terminal-medidas">
+/* ===== TERMINAL DE MEDIDAS ===== */
+.panel.formulario{--tinta:#d6e2cf;--suave:#7f8c99;--linea:#243040;--campo:transparent;--bg:#0b0f14;--nota:#2a1215;
+  background:#0b0f14;color:#d6e2cf;border:1px solid #2a3440;border-radius:10px;padding:0 18px 18px;overflow:hidden;
+  box-shadow:0 22px 44px -22px rgba(0,0,0,.65);font-family:var(--f-medida)}
+.panel.formulario::before{content:"\25CF  \25CF  \25CF     C:\\EDWIN-CNC\\taller\\calculadora.exe";display:block;margin:0 -18px 16px;padding:9px 16px;
+  background:#1b222b;border-bottom:1px solid #2a3440;color:#8b98a5;font:500 12.5px var(--f-medida);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.panel.formulario h2{font-family:var(--f-medida);font-size:18px;color:#35f2a0;font-weight:500}
+.panel.formulario h2::before{content:"C:\\EDWIN-CNC> ";color:#8b98a5}
+.panel.formulario h2::after{content:"_";margin-left:4px;color:#35f2a0;animation:parpadeo 1s steps(1) infinite}
+@keyframes parpadeo{50%{opacity:0}}
+.panel.formulario .unidades{border:1px solid #35f2a0}
+.panel.formulario .unidades button{font:500 14px var(--f-medida);color:#35f2a0}
+.panel.formulario .unidades button[aria-pressed="true"]{background:#35f2a0;color:#0b0f14}
+.panel.formulario figure{--tinta:#1d1d1b;--suave:#5b5a55;--linea:#d9d6cc;--rojo:#c8321e;background:#f4f3ee;color:#1d1d1b;padding:8px;border-radius:6px;border:1px solid #2a3440}
+.panel.formulario figure figcaption{color:#5b5a55}
+.panel.formulario .campo{border-top:1px dashed #243040;grid-template-columns:42px minmax(0,1fr)}
+.panel.formulario .num{background:transparent;color:#ffc94d;font:500 15px var(--f-medida);width:auto;height:auto;place-items:start;white-space:nowrap;display:block}
+.panel.formulario .num::before{content:"["}.panel.formulario .num::after{content:"]"}
+.panel.formulario .campo.activo .num{background:transparent;color:#35f2a0}
+.panel.formulario .campo label{font:500 15.5px var(--f-medida);color:#e6edf3}
+.panel.formulario .campo label small{color:#7f8c99}
+.panel.formulario .entrada::before{content:">";color:#35f2a0;font:600 19px var(--f-medida)}
+.panel.formulario .entrada input,.panel.formulario select{background:transparent;color:#ffffff;border:0;border-bottom:1px dashed #35f2a0;caret-color:#35f2a0;font-family:var(--f-medida)}
+.panel.formulario select{border:1px dashed #35f2a0;padding:6px 8px}
+.panel.formulario select option{background:#0b0f14;color:#fff}
+.panel.formulario .entrada input:focus,.panel.formulario select:focus{outline:none;border-bottom:2px solid #ffc94d;box-shadow:none;background:rgba(53,242,160,.06)}
+.panel.formulario .entrada .u{color:#8b98a5}
+.panel.formulario .ayuda{color:#7f8c99;font-size:13.5px}
+.panel.formulario .ayuda::before{content:"# ";color:#4d5b69}
+.panel.formulario details.mas{border-top:1px dashed #35f2a0}
+.panel.formulario details.mas summary{font:500 16px var(--f-medida);color:#35f2a0}
+.panel.formulario .error{background:#2a1215;color:#ffb4b4;border-left-color:#ff6b6b}
+@media (prefers-reduced-motion:reduce){.panel.formulario h2::after{animation:none}}
+/* ===== FIN TERMINAL DE MEDIDAS ===== */
+</style>
 </head>
 <body>
 <header class="cab">
