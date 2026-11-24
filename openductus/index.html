@@ -72,6 +72,16 @@ h1 em { font-style: normal; color: var(--cian); text-shadow: 0 0 20px rgba(34,22
 
 .curva { background: linear-gradient(180deg, rgba(12,26,51,.9), rgba(10,20,40,.9)); border: 1px solid var(--linea); border-radius: 16px; padding: 18px 18px 12px; min-width: 0; }
 .curva svg { width: 100%; height: auto; display: block; }
+.lado { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.vitrina { position: relative; display: block; height: clamp(220px, 26vw, 290px); border: 1px solid var(--linea); border-radius: 16px; overflow: hidden; text-decoration: none;
+  background: radial-gradient(80% 70% at 50% 40%, #10264a 0%, #060d1c 75%); }
+.vitrina canvas { display: block; width: 100%; height: 100%; }
+.vitrina:hover, .vitrina:focus-visible { border-color: var(--cian); box-shadow: 0 0 18px rgba(34,227,255,.25); }
+.vit-eti { position: absolute; left: 12px; top: 10px; font: 500 12px var(--f-dato); color: var(--cian); background: rgba(5,11,24,.75); border: 1px solid var(--linea); border-radius: 999px; padding: 3px 10px; }
+.vit-ver { position: absolute; right: 12px; bottom: 10px; font: 600 13px var(--f-texto); color: var(--texto); }
+.vit-puntos { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 6px; }
+.vit-puntos i { width: 7px; height: 7px; border-radius: 50%; background: var(--linea); transition: background .3s; }
+.vit-puntos i.on { background: var(--cian); box-shadow: 0 0 8px var(--cian); }
 .curva figcaption { color: var(--suave); font-size: 14px; margin-top: 8px; }
 
 /* secciones */
@@ -182,6 +192,13 @@ footer p { margin: 0; max-width: 90ch; }
         <li>Código abierto · GPL</li><li>Windows 10/11</li><li>Abre .skp 2013–2026</li><li>DXF · STL · IFC · GLB</li><li>8 calculadoras de taller</li>
       </ul>
     </div>
+    <div class="lado">
+    <a class="vitrina" href="demos/" aria-label="Ver las demos 3D de OpenDuctus: helicoide, lámina y brida">
+      <canvas id="vit-c" aria-hidden="true"></canvas>
+      <span class="vit-eti" id="vit-eti">Ductus Model en 3D</span>
+      <span class="vit-puntos" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="vit-ver">Ver demos 3D →</span>
+    </a>
     <figure class="curva" style="margin:0">
       <svg viewBox="0 0 460 300" role="img" aria-labelledby="t-curva">
         <title id="t-curva">Curva esfuerzo–deformación de un acero dúctil</title>
@@ -208,6 +225,7 @@ footer p { margin: 0; max-width: 90ch; }
       </svg>
       <figcaption><b>Ductus</b>, en latín, es <i>trazo</i> y es la raíz de <i>dúctil</i>: la propiedad del acero de deformarse sin romperse. Lo que el maestro hace a ojo, el ingeniero lo calcula.</figcaption>
     </figure>
+    </div>
   </div>
 </div>
 
@@ -408,6 +426,9 @@ document.getElementById('btn-copiar').addEventListener('click', function () {
   } catch (e) { marcar(); }
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js" integrity="sha384-vV17nr/rMaJqmeZkFUzXLpHdQ+ME5QHKdydaqqN+3Ga39RJlNrTatJxHwGV4ml2C" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js" integrity="sha384-NG9Vjao8FDKsRPhzsQGvMRSCrkgzJlysZlYZ69P52mH1tEpkurCHq0M8jbSP7/gl" crossorigin="anonymous"></script>
+<script src="vitrina.js"></script>
 
 </body>
 </html>
