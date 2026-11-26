@@ -201,6 +201,8 @@ footer p { max-width: none; margin: 4px 0; }
     <ol>
       <li><a href="#empezar">Para empezar</a></li>
       <li><a href="#desdoblar">Desdoblar caras</a></li>
+      <li><a href="#pieza">Pieza por medidas</a></li>
+      <li><a href="#acomodar">Acomodar en láminas</a></li>
       <li><a href="#helicoidal">Helicoidal (sinfín)</a></li>
       <li><a href="#escala">Escala por 2 puntos</a></li>
       <li><a href="#foto">Foto → DXF</a></li>
@@ -223,15 +225,15 @@ footer p { max-width: none; margin: 4px 0; }
 
       <h3>Instalar</h3>
       <ol class="pasos">
-        <li><div>Descargue el instalador <span class="donde">EDWIN-CNC-3D-1.0.3-Windows-64-bits.exe</span> desde <a href="https://ingemaqsewing.github.io/#descargas">ingemaqsewing.github.io</a> (versión de prueba) y siga los pasos. Funciona en Windows 10 y 11 de 64 bits.</div></li>
+        <li><div>Descargue el instalador <span class="donde">EDWIN-CNC-3D-1.0.4-Windows-64-bits.exe</span> desde <a href="https://ingemaqsewing.github.io/#descargas">ingemaqsewing.github.io</a> (versión de prueba) y siga los pasos. Funciona en Windows 10 y 11 de 64 bits.</div></li>
         <li><div>Si ya tenía una versión anterior, instale encima: no hace falta desinstalar nada.</div></li>
       </ol>
 
       <h3>Dónde están las herramientas de EDWIN CNC</h3>
-      <p>Las cuatro herramientas para corte están en tres lugares:</p>
+      <p>Las herramientas para corte están en tres lugares:</p>
       <ul>
         <li>El menú <span class="donde">Extensiones ▸ EDWIN CNC</span>.</li>
-        <li>La barra de botones <b>EDWIN CNC</b>: <i>Desdoblar caras</i>, <i>Helicoidal</i>, <i>Escala 2 puntos</i> y <i>Foto → DXF</i>. Si no la ve, haga clic derecho en una zona vacía de las barras y active «EDWIN CNC».</li>
+        <li>La barra de botones <b>EDWIN CNC</b>: <i>Desdoblar caras</i>, <i>Pieza por medidas</i>, <i>Helicoidal</i>, <i>Escala 2 puntos</i> y <i>Foto → DXF</i>. Si no la ve, haga clic derecho en una zona vacía de las barras y active «EDWIN CNC».</li>
         <li>El <b>clic derecho</b> sobre caras o grupos seleccionados, para «Desdoblar caras (EDWIN CNC)…».</li>
       </ul>
       <div class="nota"><p><b class="rotulo">Medidas</b>El programa trabaja en milímetros. Dibuje la pieza con su <b>medida interna</b>: el plano sale con la medida tal cual está dibujada, sin compensar el espesor de la lámina.</p></div>
@@ -252,6 +254,29 @@ footer p { max-width: none; margin: 4px 0; }
         <figcaption>Tolva cónica de Ø600 a Ø300 y 400 de alto, desdoblada: sale una lámina de 1467,2 × 740,3 mm.</figcaption>
       </figure>
       <div class="nota"><p><b class="rotulo">Avisos</b>Si una cara está torcida (sus puntas no están en un mismo plano) o el plano se monta sobre sí mismo, la ventana lo avisa. En ese caso seleccione menos caras y desdoble por partes.</p></div>
+    </section>
+
+    <section id="pieza">
+      <h2><span class="cinta" aria-hidden="true"></span>Pieza por medidas</h2>
+      <p>Escriba las medidas y la pieza se dibuja sola en 3D, como lámina (sin espesor), lista para desdoblar. Son las mismas piezas de las calculadoras de taller: <b>tolva cónica</b>, <b>tolva en U</b> (mezcladora), <b>tolva piramidal</b>, <b>cuadrado a redondo</b>, <b>reducción excéntrica</b>, <b>codo de gajos</b> y <b>boca de pescado</b> (tubo con tubo). Desde la misma ventana también se abre la <a href="#helicoidal">helicoidal</a>.</p>
+      <ol class="pasos">
+        <li><div>Toque <b>Pieza por medidas</b> en la barra, o <span class="donde">Extensiones ▸ EDWIN CNC ▸ Pieza por medidas (tolvas, transiciones, tubos)…</span></div></li>
+        <li><div>Escoja la pieza, escriba las medidas en milímetros y toque <b>Dibujar</b>. Si una medida no sirve (por ejemplo una tolva en U más baja que la mitad de su ancho), la ventana dice por qué y no deja dibujar.</div></li>
+        <li><div>La pieza queda seleccionada. Toque <b>Desdoblar caras</b> para sacar el plano. Las partes curvas se toman con un solo clic.</div></li>
+      </ol>
+      <div class="nota"><p><b class="rotulo">Costuras</b>El codo sale con un grupo por gajo y las costuras alternadas (garganta, dorso…), y la boca de pescado sale con el tubo principal con su agujero exacto y el ramal aparte. Si quiere partir una pieza, seleccione solo las caras de cada parte y desdóblelas por separado.</p></div>
+    </section>
+
+    <section id="acomodar">
+      <h2><span class="cinta" aria-hidden="true"></span>Acomodar en láminas</h2>
+      <p>Acomoda las piezas desdobladas en láminas para gastar el menor material posible (en los talleres lo llaman <i>nesting</i>). Acomoda piezas de cualquier forma, las gira y hasta mete las pequeñas dentro de los huecos de las grandes.</p>
+      <ol class="pasos">
+        <li><div>En la ventana de <b>Desdoblar caras</b>, toque <b>Acomodar en láminas…</b></div></li>
+        <li><div>Escriba el tamaño de la lámina (por defecto <span class="mm">2440 × 1220</span>), el margen al borde, la separación entre piezas (ancho del corte más lo que quiera dejar), si se pueden girar y cuántas copias de cada pieza necesita.</div></li>
+        <li><div>Revise la vista previa: dice cuántas láminas usa y qué porcentaje de cada una se aprovecha. <b>Quitar acomodo</b> vuelve al plano sin acomodar.</div></li>
+        <li><div>Toque <b>Guardar DXF…</b>: las piezas van en CORTE y MARCADO, y las láminas dibujadas en REFERENCIA, una al lado de la otra.</div></li>
+      </ol>
+      <div class="nota"><p><b class="rotulo">Veta y giros</b>Si la lámina tiene veta o acabado que debe ir en un sentido, escoja <b>No girar</b>. <b>Cada 15°</b> aprovecha más en piezas raras, pero tarda más. La precisión <b>Fina</b> junta más las piezas y también tarda más.</p></div>
     </section>
 
     <section id="helicoidal">
