@@ -96,6 +96,13 @@ section > .ancho > h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 8px; }
 .tarjeta p { margin: 0; color: var(--texto-2); }
 .tarjeta ul { margin: 0; padding-left: 20px; color: var(--texto-2); font-size: 15.5px; }
 .req { font-family: var(--f-dato); font-size: 13px; color: var(--suave); border-top: 1px dashed var(--linea); padding-top: 10px; margin-top: auto !important; }
+.render-dest { border: 1px solid var(--cian); border-radius: 10px; padding: 12px; background: linear-gradient(160deg, rgba(34,227,255,.10), rgba(5,11,24,.4)); box-shadow: 0 0 18px rgba(34,227,255,.12); }
+.render-dest p { margin: 0 0 10px; font-size: 14.5px; }
+.render-dest p b { color: var(--cian); }
+.render-dest figure { margin: 0; }
+.render-dest img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.render-dest figcaption { font-size: 12.5px; color: var(--suave, #8ea6c8); margin-top: 6px; }
+.render-dest figcaption b { color: var(--texto); }
 .enlaces { display: flex; flex-wrap: wrap; gap: 8px; }
 .enlaces a { font-size: 14.5px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--linea); text-decoration: none; color: var(--texto); background: rgba(5,11,24,.5); }
 .enlaces a.prin { border-color: var(--cian); color: var(--cian); }
@@ -238,14 +245,21 @@ footer p { margin: 0; max-width: 90ch; }
     <div class="rejilla">
       <article class="tarjeta">
         <span class="estado listo">Disponible · 1.0.3</span>
-        <h3>Ductus Model<small>Modelador 3D · desdoblado · render</small></h3>
+        <h3>Ductus Model<small>Modelador 3D · desdoblado · render fotorrealista</small></h3>
         <p>Dibuja como en los modeladores más avanzados del mundo (SketchUp, SolidWorks, Solid Edge, CATIA): empujar/tirar, medidas tecleadas, ejes con colores, copias en serie. Y para el taller:</p>
         <ul>
           <li>Desdoblado de caras a DXF para plasma, con arcos reales y marcas de doblez.</li>
           <li>Helicoidal de sinfín, Foto → DXF, escala por dos puntos.</li>
           <li>Redondeo y chaflán 3D, herramientas de sólidos, intersecar caras.</li>
-          <li>Abre .skp, DXF, DWG, STL, OBJ; exporta STL para impresión 3D, IFC y GLB; render con Blender.</li>
+          <li>Abre .skp, DXF, DWG, STL, OBJ; exporta STL para impresión 3D, IFC y GLB.</li>
         </ul>
+        <div class="render-dest">
+          <p><b>Render fotorrealista, al estilo V-Ray.</b> Metales que reflejan, pinturas brillantes, mate o metalizadas, cromo, galvanizado, aluminio y llantas con labrado, con luces de estudio y sombras reales. Gratis, con el motor Cycles de Blender.</p>
+          <figure>
+            <a href="img/render-mezcladora-vertical.jpg" title="Ver la imagen en grande"><img src="img/render-mezcladora-vertical.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="Mezcladora vertical roja con tolva cónica y anillo de paneles grises, sobre un tráiler de un eje con llantas anchas, lanza de enganche y banda de descarga, en un estudio gris"></a>
+            <figcaption>Mezcladora vertical sobre tráiler, modelada y renderizada con <b>Ductus Model Render</b>.</figcaption>
+          </figure>
+        </div>
         <div class="enlaces">
           <a class="prin" href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/releases/download/v1.0.3-prueba/EDWIN-CNC-3D-1.0.3-Windows-64-bits.exe">Instalador Windows</a>
           <a href="https://github.com/INGEMAQSEWING/edwin-cnc-3d/releases/download/v1.0.3-prueba/EDWIN-CNC-3D-1.0.3-portable.zip">Portable (.zip)</a>
