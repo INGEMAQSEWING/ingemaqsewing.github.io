@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Demos 3D · OpenDuctus</title>
-<meta name="description" content="Demos 3D de OpenDuctus: una brida que se arma pieza por pieza, una lámina que se dobla hasta formar una caja y un sinfín cuya aleta se aplana en el anillo que se corta con plasma. Se giran con el dedo, en el navegador.">
+<meta name="description" content="Demos 3D de OpenDuctus: una brida que se arma pieza por pieza, una lámina que se dobla hasta formar una caja, un sinfín cuya aleta se aplana en el anillo que se corta con plasma la tolva en U de una mezcladora que se desdobla sobre una lámina 4×8 y una tolva cónica (valde) que se abre en abanico sobre dos láminas. Se giran con el dedo, en el navegador.">
 <link rel="canonical" href="https://ingemaqsewing.github.io/openductus/demos/">
 <meta name="theme-color" content="#050b18">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%3Crect%20width='40'%20height='40'%20rx='9'%20fill='%230c1a33'/%3E%3Cpath%20d='M7%2031%20L13%2013%20C15%209%2018%209%2020%2012%20L25%2020%20C27%2023%2030%2023%2033%2021'%20fill='none'%20stroke='%2322e3ff'%20stroke-width='2.6'%20stroke-linecap='round'/%3E%3Ccircle%20cx='33'%20cy='21'%20r='2.4'%20fill='%23ff6b8a'/%3E%3C/svg%3E">
@@ -12,8 +12,8 @@
 <meta property="og:site_name" content="OpenDuctus · Lycan Developments">
 <meta property="og:locale" content="es_CO">
 <meta property="og:url" content="https://ingemaqsewing.github.io/openductus/demos/">
-<meta property="og:title" content="Demos 3D de OpenDuctus: brida, lámina y sinfín">
-<meta property="og:description" content="Demos 3D de OpenDuctus: una brida que se arma pieza por pieza, una lámina que se dobla hasta formar una caja y un sinfín cuya aleta se aplana en el anillo que se corta con plasma. Se giran con el dedo, en el navegador.">
+<meta property="og:title" content="Demos 3D de OpenDuctus: brida, lámina, sinfín y tolvas">
+<meta property="og:description" content="Demos 3D de OpenDuctus: una brida que se arma pieza por pieza, una lámina que se dobla hasta formar una caja, un sinfín cuya aleta se aplana en el anillo que se corta con plasma la tolva en U de una mezcladora que se desdobla sobre una lámina 4×8 y una tolva cónica (valde) que se abre en abanico sobre dos láminas. Se giran con el dedo, en el navegador.">
 <meta property="og:image" content="https://ingemaqsewing.github.io/og-portada.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,7 +88,7 @@ input[type=range]{width:100%;accent-color:var(--cian)}
   <header id="portada">
     <p class="eyebrow">OpenDuctus · demos 3D</p>
     <h1>Lo que podemos <span>construir</span></h1>
-    <p class="lead">Tres muestras que se pueden tocar. Todas están hechas con código, se mueven en el navegador y no necesitan instalar nada. Gírelas con el dedo o el ratón.</p>
+    <p class="lead">Cinco muestras que se pueden tocar. Todas están hechas con código, se mueven en el navegador y no necesitan instalar nada. Gírelas con el dedo o el ratón.</p>
   </header>
 
   <section class="demo" id="demo-ensamble">
@@ -131,6 +131,34 @@ input[type=range]{width:100%;accent-color:var(--cian)}
       <div class="fila"><button type="button" class="btn" id="hVer">Ver todo</button><button type="button" class="btn linea" id="hArmar">Armar</button></div>
       <dl class="datos"><dt>Sinfín</dt><dd>Ø 300 · eje Ø 100 · paso 300</dd><dt>Estado</dt><dd id="hFase">Armado</dd><dt>Anillo, Ø exterior</dt><dd id="hDe">—</dd><dt>Anillo, Ø interior</dt><dd id="hDi">—</dd><dt>Abertura del anillo</dt><dd id="hCorte">—</dd></dl>
       <p class="uso"><b>Sirve para:</b> transportadores de sinfín, mezcladoras y tolvas. Es lo que calcula el plugin Helicoidal de EDWIN CNC 3D.</p>
+    </div>
+  </section>
+
+  <section class="demo flip" id="demo-tolva">
+    <div class="escenario"><canvas id="c4" aria-label="Tolva en U de mezcladora horizontal que se desdobla sobre una lámina 4 por 8"></canvas>
+      <span class="cps" id="cps4">— cps</span><span class="pista">Arrastre para girar</span></div>
+    <div class="ficha">
+      <p class="eyebrow">Taller · desdoblado de tolva</p>
+      <h2>La tolva de la mezcladora, en una lámina</h2>
+      <p>La tolva en U de una mezcladora horizontal suelta sus dos tapas, el cuerpo se desenrolla (pared, fondo redondo, pared) y todo queda acomodado en una lámina 4×8, listo para cortar con plasma. Las líneas ámbar marcan dónde empieza y termina el rolado.</p>
+      <input type="range" id="tolva" min="0" max="1000" value="0" aria-label="Armado y desdoblado de la tolva">
+      <div class="fila"><button type="button" class="btn" id="tVer">Ver cómo se desdobla</button><button type="button" class="btn linea" id="tArmar">Armar</button></div>
+      <dl class="datos"><dt>Tolva</dt><dd id="tMed">—</dd><dt>Capacidad</dt><dd id="tLit">—</dd><dt>Estado</dt><dd id="tFase">Armada</dd><dt>Cuerpo desarrollado</dt><dd id="tCuerpo">—</dd><dt>Tapas</dt><dd id="tTapas">—</dd><dt>Lámina</dt><dd>1 de 1220 × 2440 mm</dd></dl>
+      <p class="uso"><b>Sirve para:</b> mezcladoras horizontales de cinta o de paletas y transportadores de sinfín. Las medidas de cualquier tolva así las saca la <a href="../../calculadoras/tolva-u/" style="color:var(--cian)">calculadora Tolva en U</a>, con su DXF.</p>
+    </div>
+  </section>
+
+  <section class="demo" id="demo-valde">
+    <div class="escenario"><canvas id="c5" aria-label="Tolva cónica tipo valde que se abre en dos mitades y se desenrolla sobre dos láminas 4 por 8"></canvas>
+      <span class="cps" id="cps5">— cps</span><span class="pista">Arrastre para girar</span></div>
+    <div class="ficha">
+      <p class="eyebrow">Taller · desarrollo de cono</p>
+      <h2>El valde, abierto en abanico</h2>
+      <p>La tolva cónica (valde o vagón) se parte en dos mitades. Cada mitad se desenrolla hasta quedar como un abanico plano, que se acomoda en su propia lámina 4×8 para cortar con plasma.</p>
+      <input type="range" id="valde" min="0" max="1000" value="0" aria-label="Armado y desenrollado de la tolva cónica">
+      <div class="fila"><button type="button" class="btn" id="vVer">Ver cómo se abre</button><button type="button" class="btn linea" id="vArmar">Armar</button></div>
+      <dl class="datos"><dt>Valde</dt><dd id="vMed">—</dd><dt>Capacidad</dt><dd id="vLit">—</dd><dt>Estado</dt><dd id="vFase">Armado</dd><dt>Radio mayor / menor</dt><dd id="vRad">—</dd><dt>Abanico completo</dt><dd id="vAng">—</dd><dt>Láminas</dt><dd>2 de 1220 × 2440 mm</dd></dl>
+      <p class="uso"><b>Sirve para:</b> tolvas de alimentación, valdes y vagones. Las medidas de cualquier tolva así, en 1 o 2 cuerpos y ahorrando lámina o soldadura, las saca la <a href="../../calculadoras/tolva-conica/" style="color:var(--cian)">calculadora Tolva cónica</a>, con su DXF.</p>
     </div>
   </section>
 
@@ -301,6 +329,141 @@ function anim(dur,from,to,set,done){ if(reduce){set(to);done&&done();return;} co
     if(!hit){ $('burbuja').hidden=true; v.dirty=true; return; }
     $('bT').textContent=hit.object.userData.info.t; $('bD').textContent=hit.object.userData.info.d; $('burbuja').hidden=false; v.dirty=true; };
   set(1);
+})();
+
+/* ================= DEMO 4: tolva en U de mezcladora que se desdobla ================= */
+(function(){
+  const v=visor('c4','cps4',{cam:new THREE.Vector3(1250,900,1500),target:new THREE.Vector3(0,-120,0),spin:.5});
+  v.cam.far=12000; v.cam.updateProjectionMatrix();
+  // Medidas (mm): largo, radio del fondo, alto de la pared recta, lámina 4x8
+  const L=1200, R=300, h=250, LW=2440, LH=1220, M=10;
+  const S=2*h+Math.PI*R, SA=Math.PI*R/2;            // desarrollo del cuerpo y medio arco
+  const litros=(2*R*h+Math.PI*R*R/2)*L/1e6;
+  const n0=x=>Math.round(x).toLocaleString('es-CO');
+  $('tMed').textContent=n0(L)+' × '+n0(2*R)+' × '+n0(h+R)+' mm';
+  $('tLit').textContent='≈ '+n0(litros)+' litros';
+  $('tCuerpo').textContent=n0(S)+' × '+n0(L)+' mm';
+  $('tTapas').textContent='2 en U · '+n0(2*R)+' × '+n0(h+R)+' mm';
+  const acero=new THREE.MeshStandardMaterial({color:'#b9c3cd',metalness:.88,roughness:.32,side:THREE.DoubleSide});
+  const cian=new THREE.LineBasicMaterial({color:0x22e3ff,transparent:true,opacity:.9});
+  const ambar=new THREE.LineBasicMaterial({color:0xffc94d,transparent:true,opacity:.95});
+  // Perfil del cuerpo: s = largo medido sobre la lámina desde el centro del fondo. t=0 armado, t=1 plano.
+  function perfil(s,t){ const sg=s<0?-1:1, a=Math.abs(s), k=(1-t)/R, sa=Math.min(a,SA);
+    let x,y; if(k<1e-9){x=sa;y=-R;} else {x=Math.sin(k*sa)/k; y=-R+(1-Math.cos(k*sa))/k;}
+    if(a>SA){ const th=k*SA, e=a-SA; x+=e*Math.cos(th); y+=e*Math.sin(th); }
+    return [sg*x,y]; }
+  // Cuerpo (una lámina)
+  const NS=140, pos=new Float32Array((NS+1)*2*3), idx=[];
+  for(let i=0;i<NS;i++){const a=i*2;idx.push(a,a+2,a+1,a+1,a+2,a+3);}
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setIndex(idx);
+  const cuerpo=new THREE.Mesh(g,acero);
+  const ep=new Float32Array((NS+1)*2*3), eg=new THREE.BufferGeometry(); eg.setAttribute('position',new THREE.BufferAttribute(ep,3));
+  cuerpo.add(new THREE.LineLoop(eg,cian));
+  const rp=new Float32Array(4*3), rg=new THREE.BufferGeometry(); rg.setAttribute('position',new THREE.BufferAttribute(rp,3));
+  cuerpo.add(new THREE.LineSegments(rg,ambar));
+  v.scene.add(cuerpo);
+  function doblar(t){
+    for(let i=0;i<=NS;i++){ const [x,y]=perfil(-S/2+S*i/NS,t), k=i*6; pos[k]=x;pos[k+1]=y;pos[k+2]=-L/2; pos[k+3]=x;pos[k+4]=y;pos[k+5]=L/2; }
+    let k=0; for(let i=0;i<=NS;i++){const j=i*6; ep[k]=pos[j];ep[k+1]=pos[j+1];ep[k+2]=pos[j+2];k+=3;}
+    for(let i=NS;i>=0;i--){const j=i*6+3; ep[k]=pos[j];ep[k+1]=pos[j+1];ep[k+2]=pos[j+2];k+=3;}
+    [-SA,SA].forEach((s,n)=>{const [x,y]=perfil(s,t); rp.set([x,y+1.5,-L/2,x,y+1.5,L/2],n*6);});
+    [g,eg,rg].forEach(q=>{q.attributes.position.needsUpdate=true;q.computeBoundingSphere();}); g.computeVertexNormals(); }
+  // Tapas en U (el centro del arco queda en y=0, igual que el cuerpo)
+  const forma=new THREE.Shape(); forma.moveTo(-R,h); forma.lineTo(-R,0); forma.absarc(0,0,R,Math.PI,2*Math.PI,false); forma.lineTo(R,h); forma.lineTo(-R,h);
+  const tapas=[1,-1].map(lado=>{ const m=new THREE.Mesh(new THREE.ShapeGeometry(forma,48),acero);
+    m.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(forma.getPoints(48)),cian)); v.scene.add(m);
+    // acomodo final: lado derecho de la lámina, las dos rectas mirándose, lo redondo hacia afuera
+    const cz=lado*(LH/2-M-(h+R)/2);
+    return {m,lado,x1:LW/2-M-(LW-S-M)/2+M/2, z1:cz+lado*(h-R)/2}; });
+  // Lámina 4x8 y piso
+  const lam=new THREE.Group(); lam.position.y=-R-1.5; v.scene.add(lam);
+  const lamMat=new THREE.MeshBasicMaterial({color:0x22e3ff,transparent:true,opacity:0,depthWrite:false});
+  const lamPlano=new THREE.Mesh(new THREE.PlaneGeometry(LW,LH),lamMat); lamPlano.rotation.x=-Math.PI/2; lam.add(lamPlano);
+  const lamBorde=new THREE.LineBasicMaterial({color:0xffc94d,transparent:true,opacity:0});
+  lam.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints([[-1,-1],[1,-1],[1,1],[-1,1]].map(([a,b])=>new THREE.Vector3(a*LW/2,0,b*LH/2))),lamBorde));
+  const grid=new THREE.GridHelper(3600,36,0x16345c,0x0f2444); grid.position.y=-R-6; v.scene.add(grid);
+  const dxCuerpo=-LW/2+M+S/2;   // el cuerpo se corre al lado izquierdo de la lámina
+  let p=0, ultimoT=-1;
+  function set(x){ p=x;
+    const a=ease(p*4), b=ease(p*4-1), c=ease(p*4-2), d=ease(p*4-3);
+    if(Math.abs(b-ultimoT)>1e-4){ doblar(b); ultimoT=b; }
+    cuerpo.position.x=dxCuerpo*c;
+    tapas.forEach(o=>{ const z0=o.lado*(L/2+380*a);
+      o.m.position.set(o.x1*c, (-R+3)*c+260*Math.sin(Math.PI*c), z0+(o.z1-z0)*c);
+      o.m.rotation.x=-o.lado*Math.PI/2*c; });
+    lamMat.opacity=.07*d; lamBorde.opacity=.95*d;
+    // la cámara se aleja y, al final, mira más desde arriba para ver la lámina completa
+    const dist=2300+700*a+700*c, dir=v.cam.position.clone().sub(v.ctl.target), az=Math.atan2(dir.x,dir.z), el=.5+.45*c;
+    v.ctl.target.set(0,-120-180*c,0);
+    v.cam.position.set(Math.sin(az)*Math.cos(el),Math.sin(el),Math.cos(az)*Math.cos(el)).multiplyScalar(dist).add(v.ctl.target);
+    $('tFase').textContent=p<.02?'Armada':p<.25?'Soltando las tapas':p<.5?'Desenrollando el cuerpo':p<.75?'Acomodando en la lámina':p<.99?'Marcando la lámina 4×8':'Plana, lista para cortar';
+    $('tolva').value=Math.round(p*1000); v.dirty=true; }
+  $('tolva').addEventListener('input',e=>set(e.target.value/1000));
+  $('tVer').onclick=()=>{ set(0); anim(8000,0,1,set); };
+  $('tArmar').onclick=()=>anim(2200,p,0,set);
+  set(0);
+  let visto=false; new IntersectionObserver(e=>{ if(e[0].isIntersecting&&!visto){visto=true; setTimeout(()=>anim(8000,0,1,set),600);} },{threshold:.5}).observe($('c4'));
+})();
+
+/* ================= DEMO 5: tolva cónica (valde) que se abre en abanico ================= */
+(function(){
+  const v=visor('c5','cps5',{cam:new THREE.Vector3(1500,1500,1900),target:new THREE.Vector3(0,420,0),spin:.5});
+  v.cam.far=16000; v.cam.updateProjectionMatrix();
+  // Medidas (mm): Ø arriba, Ø abajo, alto; lámina 4x8
+  const D=1200, d=600, H=900, LW=2440, LH=1220, M=40;
+  const g_=Math.hypot((D-d)/2,H), Rg=g_*D/(D-d), rg=g_*d/(D-d);   // generatriz, radio mayor y menor del abanico
+  const TH=Math.PI*D/Rg, THh=TH/2, s0=(D/2)/Rg;                    // ángulo del abanico completo y de cada mitad
+  const litros=Math.PI*H/3*((D/2)**2+(D/2)*(d/2)+(d/2)**2)/1e6;
+  const n0=x=>Math.round(x).toLocaleString('es-CO'), f1=x=>x.toFixed(1).replace('.',',');
+  $('vMed').textContent='Ø '+n0(D)+' / Ø '+n0(d)+' · alto '+n0(H);
+  $('vLit').textContent='≈ '+n0(litros)+' litros';
+  $('vRad').textContent=n0(Rg)+' / '+n0(rg)+' mm';
+  $('vAng').textContent=f1(TH*180/Math.PI)+'° · 2 de '+f1(THh*180/Math.PI)+'°';
+  const acero=new THREE.MeshStandardMaterial({color:'#b9c3cd',metalness:.88,roughness:.32,side:THREE.DoubleSide});
+  const cian=new THREE.LineBasicMaterial({color:0x22e3ff,transparent:true,opacity:.9});
+  const U=90,V=6;
+  // Cada mitad: una franja del abanico. t=0 enrollada (cono), t=1 plana en el piso.
+  const mitades=[0,Math.PI].map(beta=>{
+    const pos=new Float32Array((U+1)*(V+1)*3), idx=[];
+    for(let i=0;i<U;i++)for(let j=0;j<V;j++){const a=i*(V+1)+j,b=a+V+1;idx.push(a,b,a+1,b,b+1,a+1);}
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setIndex(idx);
+    const mesh=new THREE.Mesh(g,acero);
+    const ep=new Float32Array((U+1)*2*3), eg=new THREE.BufferGeometry(); eg.setAttribute('position',new THREE.BufferAttribute(ep,3));
+    mesh.add(new THREE.LineLoop(eg,cian)); v.scene.add(mesh);
+    function update(t){
+      const sA=s0+(1-s0)*t, cA=Math.sqrt(Math.max(0,1-sA*sA));
+      const pt=(u,w,o,k)=>{ const ph=(u-.5)*THh, rho=rg+w*(Rg-rg), ps=beta+ph/sA, ra=rho*sA;
+        o[k]=ra*Math.cos(ps); o[k+1]=(rho-rg)*cA; o[k+2]=ra*Math.sin(ps); };
+      for(let i=0;i<=U;i++)for(let j=0;j<=V;j++) pt(i/U,j/V,pos,(i*(V+1)+j)*3);
+      let k=0; for(let i=0;i<=U;i++){pt(i/U,1,ep,k);k+=3;} for(let i=U;i>=0;i--){pt(i/U,0,ep,k);k+=3;}
+      g.attributes.position.needsUpdate=true; eg.attributes.position.needsUpdate=true; g.computeVertexNormals(); g.computeBoundingSphere(); eg.computeBoundingSphere(); }
+    return {mesh,beta,update}; });
+  // Dos láminas 4x8, una por mitad (el largo de la lámina va a lo largo del arco)
+  const medio=(rg*Math.cos(THh/2)+Rg)/2, centroLam=LH/2+M, offFinal=centroLam-medio;
+  const laminas=mitades.map(o=>{ const gr=new THREE.Group(); gr.position.set(Math.cos(o.beta)*centroLam,-1.5,Math.sin(o.beta)*centroLam); v.scene.add(gr);
+    const mp=new THREE.MeshBasicMaterial({color:0x22e3ff,transparent:true,opacity:0,depthWrite:false});
+    const pl=new THREE.Mesh(new THREE.PlaneGeometry(LH,LW),mp); pl.rotation.x=-Math.PI/2; gr.add(pl);
+    const mb=new THREE.LineBasicMaterial({color:0xffc94d,transparent:true,opacity:0});
+    gr.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints([[-1,-1],[1,-1],[1,1],[-1,1]].map(([a,b])=>new THREE.Vector3(a*LH/2,0,b*LW/2))),mb));
+    return {mp,mb}; });
+  const grid=new THREE.GridHelper(7200,48,0x16345c,0x0f2444); grid.position.y=-6; v.scene.add(grid);
+  let p=0, ultimoT=-1;
+  function set(x){ p=x;
+    const a=ease(p*4), b=ease((p-.25)*2), c=ease(p*4-3);
+    if(Math.abs(b-ultimoT)>1e-4){ mitades.forEach(o=>o.update(b)); ultimoT=b; }
+    const off=250*a+(offFinal-250)*c;
+    mitades.forEach(o=>o.mesh.position.set(Math.cos(o.beta)*off,0,Math.sin(o.beta)*off));
+    laminas.forEach(l=>{l.mp.opacity=.07*c; l.mb.opacity=.95*c;});
+    const dist=2700+1300*a+1500*b+400*c, dir=v.cam.position.clone().sub(v.ctl.target), az=Math.atan2(dir.x,dir.z), el=.48+.5*b;
+    v.ctl.target.set(0,420*(1-b),0);
+    v.cam.position.set(Math.sin(az)*Math.cos(el),Math.sin(el),Math.cos(az)*Math.cos(el)).multiplyScalar(dist).add(v.ctl.target);
+    $('vFase').textContent=p<.02?'Armado':p<.25?'Separando las 2 mitades':p<.75?'Desenrollando':p<.99?'Acomodando en 2 láminas 4×8':'Plano, listo para cortar';
+    $('valde').value=Math.round(p*1000); v.dirty=true; }
+  $('valde').addEventListener('input',e=>set(e.target.value/1000));
+  $('vVer').onclick=()=>{ set(0); anim(8000,0,1,set); };
+  $('vArmar').onclick=()=>anim(2200,p,0,set);
+  set(0);
+  let visto=false; new IntersectionObserver(e=>{ if(e[0].isIntersecting&&!visto){visto=true; setTimeout(()=>anim(8000,0,1,set),600);} },{threshold:.5}).observe($('c5'));
 })();
 })();
 </script>
