@@ -124,11 +124,11 @@ footer p { margin: 0; }
       <p class="lema">Planos de arquitectura listos para licencia, en metros o en pies. Escribe las medidas de la casa y el programa dibuja la planta; luego la amoblas y sacas el render para vender.</p>
       <p class="lema" style="font-size:15px;margin-top:-6px">Con normas técnicas de Colombia (NSR-10, ICONTEC) y de EE. UU. (Florida Building Code, Miami-Dade). En camino: otras de Latinoamérica, como COVENIN, NOM e INN.</p>
       <div class="acciones">
-        <a class="boton" id="descargar" href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/download/ductusarq-v1.0.31-prueba/DuctusArq-2D-1.0.31-Windows-32-y-64-bits.exe">⬇ Descargar para Windows</a>
+        <a class="boton" id="descargar" href="https://github.com/INGEMAQSEWING/edwin-cnc-cad-cam/releases/download/ductusarq-v1.0.33-prueba/DuctusArq-2D-1.0.33-Windows-32-y-64-bits.exe">⬇ Descargar para Windows</a>
         <a class="boton sec" href="#tutoriales">Ver tutoriales</a>
       </div>
       <ul class="datos">
-        <li>Versión 1.0.31 · prueba</li>
+        <li>Versión 1.0.33 · prueba</li>
         <li>Windows 7 a 11 · 32 y 64 bits</li>
         <li>Archivos DXF</li>
       </ul>
@@ -181,8 +181,17 @@ footer p { margin: 0; }
         </ol>
       </div>
       <div class="tarjeta">
-        <h3>Amoblar</h3>
+        <h3>Fachadas, cortes y pisos</h3>
         <ol style="--desde:11">
+          <li><b>Fachadas</b> <kbd>FAC</kbd>: las 4 fachadas salen solas de la planta, con puertas, ventanas, losa y niveles.</li>
+          <li><b>Corte</b> <kbd>COR</kbd>: marcas la línea en la planta y dibuja el corte con muros y losas cortados, antepechos y dinteles.</li>
+          <li><b>Escalera</b> <kbd>ESC</kbd>: calcula los escalones con la norma (NSR-10 o IRC) y la dibuja con la flecha SUBE.</li>
+          <li><b>Piso siguiente</b> <kbd>PISO</kbd>: arranca el segundo piso con los muros de fachada, las columnas y el hueco de la escalera.</li>
+        </ol>
+      </div>
+      <div class="tarjeta">
+        <h3>Amoblar</h3>
+        <ol style="--desde:15">
           <li><b>Mobiliario</b> <kbd>MOB</kbd>: camas, closets, sofás, comedores, escritorios.</li>
           <li><b>Electrodomésticos</b> <kbd>ELEC</kbd>: nevera, estufa, lavadora, secadora, aire, TV.</li>
           <li><b>Sanitarios</b> <kbd>SAN</kbd>: sanitario, lavamanos, ducha, tina, lavadero.</li>
@@ -190,20 +199,23 @@ footer p { margin: 0; }
       </div>
       <div class="tarjeta">
         <h3>Para ventas y mercadeo</h3>
-        <ol style="--desde:14">
+        <ol style="--desde:18">
           <li><b>Plano de ventas a color</b> <kbd>PV</kbd>: muros llenos, pisos de color según el espacio, nombre y medidas de cada uno, con el logo y el nombre del proyecto. Sale en PDF para folleto y en tamaños para Instagram e historias.</li>
           <li><b>Render 3D</b> <kbd>REN</kbd>: dos fotos de la planta amoblada, desde arriba y en perspectiva, con pisos de madera, cerámica, tapetes y plantas. Usa <a href="https://www.blender.org/download/" rel="noopener">Blender</a>, que se instala aparte.</li>
         </ol>
       </div>
       <div class="tarjeta">
         <h3>Ingeniería y presentación</h3>
-        <ol style="--desde:16">
+        <ol style="--desde:20">
           <li><b>Pórtico</b> <kbd>POR</kbd>: columnas, vigas y zapatas en alzado.</li>
           <li><b>Cimentación</b> <kbd>CIM</kbd>: zapatas y vigas de amarre en planta.</li>
           <li><b>Rótulo o cajetín</b> <kbd>ROT</kbd>: hojas A4 a A0, Carta, Tabloide y ARCH; 18 especialidades (arquitectónico, estructural, eléctrico, hidrosanitario, telecomunicaciones…).</li>
           <li><b>Superponer planos</b> <kbd>SUP</kbd>: trae el estructural, eléctrico o hidrosanitario (DWG o DXF) encima del arquitectónico, cada uno en su capa y su color, sin mezclar líneas; se prende y se apaga, y se cuadra por una esquina común.</li>
           <li><b>Revisar cruces</b> <kbd>CRU</kbd>: marca en rojo las columnas del estructural que caen en una puerta o ventana o que quedan sueltas dentro de un espacio.</li>
-          <li><b>Tutoriales</b> y <b>lista de comandos</b> con aspecto de consola, como al programar.</li>
+          <li><b>Revisar normas</b> <kbd>NOR</kbd>: Colombia y Bogotá (NSR-10, NTC, Decreto 555), Florida y Miami-Dade (FBC, IRC, NOA): puertas, pasillos, ventanas en alcobas, áreas mínimas, ventana de escape; con modo 3.ª edad y silla de ruedas.</li>
+          <li><b>Cantidades de obra</b> <kbd>CANT</kbd>: muros, columnas, pisos por material, cielo raso, pintura, zócalo, puertas y ventanas, en el plano y en Excel.</li>
+          <li><b>Plantilla de oficina</b> <kbd>PLANT</kbd>: capas, medidas y rótulo iguales en todos los computadores del equipo.</li>
+          <li><b>Tutoriales</b> en el menú Ayuda y <b>lista de comandos</b> con aspecto de consola, como al programar.</li>
         </ol>
       </div>
     </div>
